@@ -1040,7 +1040,12 @@ body {
   /* IE 9 */
   -webkit-transform: rotate(90deg);
   /* Chrome, Safari, Opera */
-  transform: rotate(90deg);
+  transform: rotate(90deg) translateX(2px);
+  -webkit-transition: transform 0.2s ease-in;
+  -moz-transition: transform 0.2s ease-in;
+  -o-transition: transform 0.2s ease-in;
+  -ms-transition: transform 0.2s ease-in;
+  transition: transform 0.2s ease-in;
   color: #F26322;
   text-decoration: none; }
 
@@ -1107,11 +1112,12 @@ body {
     color: #F26322; }
   .leftnav__item {
     height: 48px;
-    -webkit-transition: all 0.2s ease-in;
-    -moz-transition: all 0.2s ease-in;
-    -o-transition: all 0.2s ease-in;
-    -ms-transition: all 0.2s ease-in;
-    transition: all 0.2s ease-in; }
+    max-height: 48px;
+    -webkit-transition: max-height 0.2s ease-in;
+    -moz-transition: max-height 0.2s ease-in;
+    -o-transition: max-height 0.2s ease-in;
+    -ms-transition: max-height 0.2s ease-in;
+    transition: max-height 0.2s ease-in; }
   .leftnav__item.leftnav__item--open {
     height: auto;
     max-height: 300px; }

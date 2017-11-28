@@ -24,10 +24,45 @@ class Accordion extends Component {
     constructor() {
       super();
       this.filterLinkList = this.filterLinkList.bind(this);
+      this.toggleElem = this.toggleElem.bind(this);
     }
 
     componentDidMount() {
         document.addEventListener('keyup', this.filterLinkList, false);
+    }
+
+    /*
+        TODO: Explain this function
+
+     */
+    toggleElem(elem, display, requiresOpenClass, action, openClassName) {
+        // set default values
+        var i = 0;
+        var openClassName = openClassName ? openClassName : 'leftnav__item--open';
+        var display = display ? display : '';
+        var requiresOpenClass = requiresOpenClass ? requiresOpenClass : false;
+        var action = action ? action : 'add';
+
+        if (elem.length) {
+            // element is an array of multiple elements, enclose code in loop
+            for (i = 0; i < elem.length; i++) {
+                elem[i].style.display = display;
+                // element is an HTML object
+                if (requiresOpenClass && action === 'add') {
+                    elem[i].classList.add(openClassName);
+                } else if (requiresOpenClass && action === 'remove')  {
+                    elem[i].classList.remove(openClassName);
+                }
+            }
+        } else {
+            // element is an HTML object
+            if (requiresOpenClass && action === 'add') {
+                elem.classList.add(openClassName);
+            } else if (requiresOpenClass && action === 'remove')  {
+                elem.classList.remove(openClassName);
+            }
+            elem.style.display = display;
+        }
     }
 
     filterLinkList() {
@@ -35,77 +70,54 @@ class Accordion extends Component {
         // Declare variables
         var input, filter, ul, li, a, i, j;
         var result;
+        var mainLinkClass = 'leftnav__child';
+        var filteredMainLinks = [];
         input = document.getElementById('searchInput');
         filter = input.value.toUpperCase();
 
         ul = document.getElementById("linkList");
         li = ul.getElementsByTagName('li');
 
-        // Loop through all list items, and hide those who don't match the search query
+        // loop through all list items, and hide those who don't match the search query
         for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a");
+
             if (filter.length) {
-                //-if text has been input
-                a = li[i].getElementsByTagName("a");
 
                 for (j = 0; j < a.length; j++) {
 
-
                     if (a[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
-                        //- if it finds a result
-                        a[j].style.display = "";
 
-                        //-check if sublink or main linked
-
-                        if (a[j].classList.contains('leftnav__child')) {
-                            console.log('parent link');
-                        }
-
-
-                        //-if main-link.... then obscure allothers
-                        // li[i].classList.add('leftnav__item--open');
-                        // li[i].getElementsByClassName('leftnav__child')[0].style.display = "";
-                        // li[i].getElementsByClassName('leftnav__child')[1].style.display = "";
-                        // li[i].getElementsByClassName('leftnav__child')[2].style.display = "";
-                        // li[i].style.display = "";
+                        // if it finds a result, toggle ON all matching child links
+                        this.toggleElem(a[j]);
+                        filteredMainLinks.push(li[i]);
                         result = true;
 
                     } else {
-                        //-  if it doesn't find a result
-                        a[j].style.display = "none";
-                        li[i].classList.remove('leftnav__item--open');
-                        li[i].style.display = "none";
-                        // result = false;
+                        // if it doesn't find a result
+                        this.toggleElem(a[j], 'none');
+                        this.toggleElem(li[i], 'none', true, 'remove');
                     }
                 }
 
                 if (result) {
-                    li[i].classList.add('leftnav__item--open');
-                    li[i].getElementsByClassName('leftnav__child')[0].style.display = "";
-                    li[i].getElementsByClassName('leftnav__child')[1].style.display = "";
-                    li[i].getElementsByClassName('leftnav__child')[2].style.display = "";
-                    li[i].style.display = "";
-                }
 
+                    /* we need to toggle ON the main link groups for every child
+                       link that matches the search criteria, regardless of whether
+                       these links themselves match the search.
+                     */
+                    this.toggleElem(filteredMainLinks, '', true, 'add');
+                    this.toggleElem(li[i].getElementsByClassName(mainLinkClass), '');
+                }
 
             } else {
-                //- if the text box is empty
-                a = li[i].getElementsByTagName("a");
-                for (j = 0; j < a.length; j++) {
 
-                    if (a[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
-                        //-reset styles
-                        a[j].style.display = "";
-                        li[i].classList.add('leftnav__item--open');
-                        li[i].getElementsByClassName('leftnav__child')[0].style.display = "";
-                        li[i].getElementsByClassName('leftnav__child')[1].style.display = "";
-                        li[i].getElementsByClassName('leftnav__child')[2].style.display = "";
-                        li[i].style.display = "";
-
-                    }
-                }
-
-                li[i].classList.remove('leftnav__item--open');
-
+                /* if the text box is empty, or the user clears up the text they
+                   input, return the navigation to its default state.
+                 */
+                this.toggleElem(a, '');
+                this.toggleElem(li[i], '', true, 'remove');
+                this.toggleElem(li[i].getElementsByClassName(mainLinkClass), '');
             }
         }
     }
@@ -196,16 +208,6 @@ class Section extends Component {
         var allLinks;
 
         event.preventDefault();
-
-
-        //TODO: delete maybe
-        // // Section
-        // target = event.target.classList.contains(this.state.childClass) ? event.target.parentNode : event.target;
-        // sectionHeight = target.offsetHeight;
-        //
-        // // Sublink
-        // target = target.classList.contains(this.state.sectionClass) ? target.parentNode : target;
-        // subLinksHeight = target.getElementsByClassName('leftNav__subLinks').length ? target.getElementsByClassName('leftNav__subLinks')[0].offsetHeight : 10;
 
         if(this.state.open) {
             this.setState({
