@@ -29,6 +29,12 @@
     @include font($font-size-content, $font-weight-regular, $white);
 }
 
+.leftnav__fixed {
+    overflow: hidden;
+    border-bottom: 1px solid $blue-70;
+    @include font($font-size-content, $font-weight-regular, $white);
+}
+
 .leftnav__section {
     display: block;
 }
@@ -155,6 +161,10 @@
          transition: max-height 0.2s ease-in;
      }
 
+     .leftnav__fixed {
+         height: auto;
+     }
+
      .leftnav__item.leftnav__item--open {
          height: auto;
          max-height: 300px;
@@ -162,6 +172,10 @@
 
      .leftnav__section {
         padding: 15px 10px;
+     }
+
+     .leftnav__section--fixed {
+        margin: 15px 10px;
      }
 
      .leftnav__arrow {

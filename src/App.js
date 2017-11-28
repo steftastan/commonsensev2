@@ -31,9 +31,13 @@ class Accordion extends Component {
         document.addEventListener('keyup', this.filterLinkList, false);
     }
 
-    /*
-        TODO: Explain this function
-
+    /**
+     * logic behind showing or hiding the navigation elements when the search function is used
+     * @param elem - an HTML element or array of HTML elements to be hidden and shown.
+     * @param display - a string that takes a value for the CSS property display (none, block, inline, inline-block).
+     * @param requiresOpenClass - a boolean that specifies if the element will need to have a toggle class added to them.
+     * @param action - a string that determines what will be done with the openClass if it is required. accepted values are 'add' or 'remove'.
+     * @param openClassName - the CSS class that will be applied.
      */
     toggleElem(elem, display, requiresOpenClass, action, openClassName) {
         // set default values
@@ -66,7 +70,6 @@ class Accordion extends Component {
     }
 
     filterLinkList() {
-
         // Declare variables
         var input, filter, ul, li, a, i, j;
         var result;
@@ -83,9 +86,7 @@ class Accordion extends Component {
             a = li[i].getElementsByTagName("a");
 
             if (filter.length) {
-
                 for (j = 0; j < a.length; j++) {
-
                     if (a[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
 
                         // if it finds a result, toggle ON all matching child links
@@ -140,7 +141,7 @@ class Accordion extends Component {
             <div>
             <nav id="nav" className="wrapper leftnav">
                 <ul className="leftnav__list">
-                    <li className="leftnav__item">
+                    <li className="leftnav__fixed">
                         <div className="leftnav__section--fixed">
                             <span className="leftnav__user">Welcome, John Doe</span>
                             <form className="form">
@@ -156,7 +157,7 @@ class Accordion extends Component {
                             </form>
                         </div>
                     </li>
-                    <li className="leftnav__item">
+                    <li className="leftnav__fixed">
                         <div className="leftnav__section--fixed">
                             <span className="leftnav__search"></span>
                             <form className="form">

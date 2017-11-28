@@ -1013,6 +1013,13 @@ body {
   font-size: 12px;
   font-weight: 400; }
 
+.leftnav__fixed {
+  overflow: hidden;
+  border-bottom: 1px solid #2D408F;
+  color: #FFF;
+  font-size: 12px;
+  font-weight: 400; }
+
 .leftnav__section {
   display: block; }
 
@@ -1118,11 +1125,15 @@ body {
     -o-transition: max-height 0.2s ease-in;
     -ms-transition: max-height 0.2s ease-in;
     transition: max-height 0.2s ease-in; }
+  .leftnav__fixed {
+    height: auto; }
   .leftnav__item.leftnav__item--open {
     height: auto;
     max-height: 300px; }
   .leftnav__section {
     padding: 15px 10px; }
+  .leftnav__section--fixed {
+    margin: 15px 10px; }
   .leftnav__arrow {
     padding: 5px 0 0 0; }
   .leftnav--mobileHidden {
