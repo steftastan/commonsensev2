@@ -37,7 +37,6 @@ class Accordion extends Component {
         var result;
         input = document.getElementById('searchInput');
         filter = input.value.toUpperCase();
-        var saveIndex = [];
 
         ul = document.getElementById("linkList");
         li = ul.getElementsByTagName('li');
@@ -50,28 +49,34 @@ class Accordion extends Component {
 
                 for (j = 0; j < a.length; j++) {
 
-                    console.log(a[j].innerHTML.toUpperCase().indexOf(filter) > -1);
+
                     if (a[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
                         //- if it finds a result
                         a[j].style.display = "";
+
+                        //-check if sublink or main linked
+
+                        if (a[j].classList.contains('leftnav__child')) {
+                            console.log('parent link');
+                        }
+
+
+                        //-if main-link.... then obscure allothers
                         // li[i].classList.add('leftnav__item--open');
                         // li[i].getElementsByClassName('leftnav__child')[0].style.display = "";
                         // li[i].getElementsByClassName('leftnav__child')[1].style.display = "";
                         // li[i].getElementsByClassName('leftnav__child')[2].style.display = "";
                         // li[i].style.display = "";
                         result = true;
-                        saveIndex.push = i;
 
                     } else {
                         //-  if it doesn't find a result
                         a[j].style.display = "none";
-                        // li[i].classList.remove('leftnav__item--open');
-                        // li[i].style.display = "none";
-                        result = false;
+                        li[i].classList.remove('leftnav__item--open');
+                        li[i].style.display = "none";
+                        // result = false;
                     }
                 }
-
-                console.log(saveIndex);
 
                 if (result) {
                     li[i].classList.add('leftnav__item--open');
@@ -98,6 +103,7 @@ class Accordion extends Component {
 
                     }
                 }
+
                 li[i].classList.remove('leftnav__item--open');
 
             }
