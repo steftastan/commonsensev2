@@ -1,0 +1,71 @@
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+
+/**
+ * Header containing the SIA and common sense logo.
+ */
+
+/* All devices */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  width: 100%;
+  background: $blue-70;
+}
+
+.header__logo {
+  color:  $white;
+}
+
+.header__mainTitle {
+    @include font($font-size-mobile-large, $font-weight-bold, $white);
+}
+
+.header__subTitle {
+    @include font($font-size-mobile-small, $font-weight-regular, $white);
+}
+
+/* Mobile-specific styles */
+@include mobile {
+   .header {
+       height: 50px;
+       padding: 0 15px;
+     }
+
+   .header__logo {
+     width: 50px;
+     font-size: 50px;
+   }
+}
+
+/* Tablet-specific styles */
+@include tablet {
+    .header {
+      height: 65px;
+      left: 200px;
+      width: calc(100% - 200px);
+      padding: 0 15px;
+    }
+
+    .header__logo {
+      width: 65px;
+      font-size: 70px;
+    }
+
+    .header__mainTitle {
+        @include font($font-size-large, $font-weight-bold, $white);
+    }
+
+    .header__subTitle {
+        @include font($font-size-small, $font-weight-regular, $white);
+    }
+
+}
+
+/* Desktop-specific styles */
+@include desktop {
+
+}

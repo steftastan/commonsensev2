@@ -1,0 +1,117 @@
+
+/* ==========================================================================
+   LEFT NAV
+   ========================================================================== */
+
+/**
+ * Navigation located at the left of the browser on desktop and tablet, and
+ * hidden inside a hamburger icon on mobile, contains the main link categories.
+ */
+
+/* All devices */
+
+.leftnav {
+  position: fixed;
+  z-index: 9998;
+  overflow: auto;
+  width: 225px;
+  background: $blue-90;
+  -webkit-overflow-scrolling: touch;
+}
+
+.leftnav__item {
+    border-bottom: 1px solid $blue-70;
+    @include font($font-size-content, $font-weight-regular, $white);
+}
+
+.leftnav__link {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    color: $white;
+    text-decoration: none;
+}
+
+
+.leftnav__arrow {
+    position: absolute;
+    right: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: $font-size-mobile-content;
+    color: $peach-40;
+}
+
+.leftnav__icon {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    background-color: $blue-90;
+    margin: 0 10px 0 0;
+    font-size: 18px;
+}
+
+.leftnav__user {
+    display: block;
+    font-weight: $font-weight-bold;
+}
+
+.leftnav__company {
+    display: block;
+}
+
+/* Scrollbar styles for all devices */
+.leftnav::-webkit-scrollbar-track {
+	background-color: rgba(0,0,0,0);
+}
+
+.leftnav::-webkit-scrollbar {
+	width: 5px;
+	background-color: rgba(0,0,0,0.25);
+}
+
+.leftnav::-webkit-scrollbar-thumb {
+	background-color: $peach-40;
+}
+
+/* Mobile-specific styles */
+@include mobile {
+
+}
+
+/* Tablet-specific styles */
+@include tablet {
+    .leftnav {
+        top: 0;
+        width: 200px;
+        height: 100%;
+    }
+
+    .leftnav__link--dashboard {
+        padding: 5px 0;
+    }
+
+    .leftnav__item {
+        padding: 15px;
+        border-bottom: 1px solid $blue-70;
+        @include font($font-size-content, $font-weight-regular, $white);
+    }
+
+    .leftnav__icon {
+        font-size: 25px;
+    }
+
+    .leftnav__arrow {
+        padding: 8px 0 0 0;
+        right: 15px;
+    }
+
+    .leftnav--desktopHidden {
+        display: none;
+    }
+}
+
+/* Desktop-specific styles */
+@include desktop {
+
+}

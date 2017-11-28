@@ -1,0 +1,72 @@
+/* ==========================================================================
+   FORMS
+   ========================================================================== */
+
+/**
+ * All form items go here
+ */
+
+.form {
+    position: relative;
+    margin: 5px 0;
+    width: 100%;
+
+}
+
+.form__item {
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+    padding: 6px 5px 6px 30px;
+    font-family: 'Montserrat';
+    @include font($font-size-content, $font-weight-regular, $white);
+}
+
+/* All devices */
+.form__selectCompany {
+    width: 100%;
+    outline: 0;
+    border: 0;
+    border-radius: 20px;
+    background-color: $peach-40;
+}
+
+.form__filterLeftNav {
+    outline: 0;
+    width:100%;
+    border: 0;
+    border-radius: 15px;
+    color: $cool-gray-40;
+}
+
+.form__icon {
+    position: absolute;
+    left: 10px;
+    top: 5px;
+    font-size: 16px;
+}
+
+.form__icon--company {
+    left: 12px;
+    top: 6px;
+    color: $white;
+}
+
+.form__icon--search {
+    color: $cool-gray-40;
+}
+
+/* Mobile-specific styles */
+@include mobile {
+
+}
+
+/* Tablet-specific styles */
+@include tablet {
+
+}
+
+/* Desktop-specific styles */
+@include desktop {
+
+}

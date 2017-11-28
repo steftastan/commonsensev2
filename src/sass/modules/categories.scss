@@ -1,0 +1,129 @@
+/* ==========================================================================
+   CATEGORIES
+   ========================================================================== */
+
+/**
+ * The grid or card list of all categories on the main page.
+ */
+
+/* All devices */
+.category {
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+    border-radius: 5px;
+}
+
+.category__icon {
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 40px;
+}
+
+.category__text {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 10px;
+}
+
+.category__name {
+    font-size: $font-size-mobile-small;
+}
+
+.category__link {
+    font-size: $font-size-medium;
+}
+
+/* Mobile-specific styles */
+@include mobile {
+    .category {
+        padding: 20px;
+        color: $white;
+    }
+
+    .category:hover {
+        color: $white;
+    }
+
+    .category__icon--desktop {
+        display: none;
+    }
+
+    .category__item {
+        margin: 0 0 10px 0;
+    }
+}
+
+/* Tablet-specific styles */
+@include tablet {
+    .category {
+        padding: 20px;
+        background-color: $cool-gray-1;
+    }
+
+    .category:hover {
+        background-color: $cool-gray-20;
+    }
+
+    .category__icon {
+        display: none;
+    }
+
+    .category__item {
+        margin: 0 0 15px 0;
+    }
+
+    .category__icon--desktop {
+        vertical-align: middle;
+        display: inline-block;
+        border-radius: 40px;
+        padding: 10px;
+        font-size: $font-size-large;
+        color: $white;
+    }
+
+    .category__icon--desktop:hover {
+        color: $white;
+    }
+
+    .category__name {
+        font-size: $font-size-content;
+        font-weight: $font-weight-medium;
+    }
+
+    .category__link {
+        font-size: $font-size-medium;
+        color: $cool-gray-70;
+    }
+}
+
+/* Desktop-specific styles */
+@include desktop {
+    .category {
+        padding: 30px 20px;
+    }
+
+    .category__item {
+        padding: 0 0 0 15px;
+        margin: 0 0 15px 0;
+    }
+
+    .category__item:nth-child(3n+1) {
+        padding: 0;
+    }
+
+    .category__icon--desktop {
+        padding: 15px;
+        font-size: 40px;
+        color: $white;
+    }
+
+    .category__name {
+        font-size: $font-size-content;
+    }
+
+    .category__link {
+        font-size: $font-size-large;
+    }
+
+}
