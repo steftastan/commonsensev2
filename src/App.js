@@ -262,6 +262,7 @@ class BreadCrumbs extends Component {
           open: false,
           openClassName: '',
           navButtonId: 'navButton',
+          navButton: {},
           navId: 'nav',
           nav: {},
           toggleClass: 'leftnav--toggle',
@@ -273,13 +274,13 @@ class BreadCrumbs extends Component {
         var navButton = document.getElementById(this.state.navButtonId);
         if (navElem && navButton) {
             this.setState({
-                nav: navElem
+                nav: navElem,
+                navButton: navButton
             });
             document.addEventListener('mousedown', this.clickAnywhereToClose, false);
             navButton.addEventListener('mousedown', this.toggleNav, false);
             navElem.addEventListener('mousedown', this.stopPropagation, false);
         }
-
     }
 
     stopPropagation(event) {
@@ -299,11 +300,15 @@ class BreadCrumbs extends Component {
                 open: false
             });
             this.state.nav.classList.remove(this.state.toggleClass);
+            this.state.navButton.classList.add('fa-navicon');
+            this.state.navButton.classList.remove('fa-close');
         } else {
             this.setState({
                 open: true
             });
             this.state.nav.classList.add(this.state.toggleClass);
+            this.state.navButton.classList.add('fa-close');
+            this.state.navButton.classList.remove('fa-navicon');
         }
     }
 
@@ -340,7 +345,6 @@ class Dashboard extends Component {
     render() {
         var dashboardLinks = this.props.dashboardLinks.map(function(item, key) {
             return (
-
                     <a key={key} className="category__item col-xs-12 col-lg-4" href={item.url}>
                         <article className={"category " + item.color}>
                             <span className={"category__icon--desktop " + item.icon + " " + item.color}></span>
@@ -351,7 +355,6 @@ class Dashboard extends Component {
                             </div>
                         </article>
                     </a>
-
             );
         });
 

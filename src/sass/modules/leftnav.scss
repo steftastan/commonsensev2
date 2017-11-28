@@ -27,6 +27,7 @@
     transition: max-height 0.2s ease-in;
     border-bottom: 1px solid $blue-70;
     @include font($font-size-content, $font-weight-regular, $white);
+    cursor: pointer;
 }
 
 .leftnav__fixed {
@@ -124,6 +125,14 @@
 	background-color: $peach-40;
 }
 
+.leftnav__fixed {
+    height: auto;
+}
+
+.leftnav__section--fixed {
+   margin: 15px 10px;
+}
+
 /* Mobile-specific styles */
 @include mobile {
     .leftnav {
@@ -161,10 +170,6 @@
          transition: max-height 0.2s ease-in;
      }
 
-     .leftnav__fixed {
-         height: auto;
-     }
-
      .leftnav__item.leftnav__item--open {
          height: auto;
          max-height: 300px;
@@ -172,10 +177,6 @@
 
      .leftnav__section {
         padding: 15px 10px;
-     }
-
-     .leftnav__section--fixed {
-        margin: 15px 10px;
      }
 
      .leftnav__arrow {
@@ -200,11 +201,20 @@
         padding: 5px 0;
     }
 
+    .leftnav__section {
+       padding: 15px 10px;
+    }
 
     .leftnav__item {
-        padding: 15px;
+        height: 48px;
+        max-height: 48px;
         border-bottom: 1px solid $blue-70;
         @include font($font-size-content, $font-weight-regular, $white);
+    }
+
+    .leftnav__item.leftnav__item--open {
+        height: auto;
+        max-height: 300px;
     }
 
     .leftnav__icon {
@@ -216,14 +226,19 @@
         right: 15px;
     }
 
-    .leftNav__subLinks {
-        margin: 15px -15px -15px;
-    }
-
     .leftnav--desktopHidden {
         display: none;
     }
 
+    .leftnav__item:hover,
+    .leftnav__item:active,
+    .leftnav__item:visited,
+    .leftnav__link:hover,
+    .leftnav__link:active,
+    .leftnav__link:visited {
+        color: #fff;
+        text-decoration: none;
+    }
 
 }
 
