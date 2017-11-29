@@ -975,27 +975,15 @@ body {
     display: none; }
   .rightnav__langSelect {
     display: inline-block;
-    width: 38px;
+    width: auto;
     height: 25px;
     margin: 8px 10px;
     border-radius: 15px;
     padding: 6px 4px;
     background-color: #E2EBEB;
-    color: #B8C1C1;
+    color: #8C9696;
     font-size: 12px;
-    font-weight: 500;
-    -webkit-transition: width 0.2s ease-in;
-    -moz-transition: width 0.2s ease-in;
-    -o-transition: width 0.2s ease-in;
-    -ms-transition: width 0.2s ease-in;
-    transition: width 0.2s ease-in; }
-  .rightnav__langSelect--open {
-    width: 65px;
-    -webkit-transition: width 0.2s ease-in;
-    -moz-transition: width 0.2s ease-in;
-    -o-transition: width 0.2s ease-in;
-    -ms-transition: width 0.2s ease-in;
-    transition: width 0.2s ease-in; }
+    font-weight: 500; }
   .rightnav__lang.rightnav__lang--active {
     color: #2D408F; }
   .rightnav__lang.rightnav__lang--open {

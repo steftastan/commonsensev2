@@ -357,6 +357,7 @@ class BreadCrumbs extends Component {
         }
 
 
+
     }
 
     toggleNav(event) {
@@ -403,7 +404,6 @@ class BreadCrumbs extends Component {
                             <span id="english" className="rightnav__lang rightnav__lang--open rightnav__lang--active">EN</span>
                             <span id="french" className="rightnav__lang">FR</span>
                             </div>
-
                         </div>
                         <a className="rightnav__logout" href="/logout">Logout</a>
                     </div>
