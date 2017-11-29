@@ -55,6 +55,11 @@
     vertical-align: middle;
     font-size: $font-size-mobile-content;
     color: $peach-40;
+    -webkit-transition: transform 0.2s ease-in;
+    -moz-transition: transform 0.2s ease-in;
+    -o-transition: transform 0.2s ease-in;
+    -ms-transition: transform 0.2s ease-in;
+    transition: transform 0.2s ease-in;
 }
 
 .leftnav__arrow:hover {
@@ -65,7 +70,7 @@
 .leftnav__item--open .leftnav__arrow {
     -ms-transform: rotate(90deg); /* IE 9 */
     -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
-    transform: rotate(90deg) translateX(2px);
+    transform: rotate(90deg);
     -webkit-transition: transform 0.2s ease-in;
     -moz-transition: transform 0.2s ease-in;
     -o-transition: transform 0.2s ease-in;
@@ -163,16 +168,21 @@
      .leftnav__item {
          height: 48px;
          max-height: 48px;
-         -webkit-transition: max-height 0.2s ease-in;
-         -moz-transition: max-height 0.2s ease-in;
-         -o-transition: max-height 0.2s ease-in;
-         -ms-transition: max-height 0.2s ease-in;
-         transition: max-height 0.2s ease-in;
+         -webkit-transition: height 0.2s ease-in;
+         -moz-transition: height 0.2s ease-in;
+         -o-transition: height 0.2s ease-in;
+         -ms-transition: height 0.2s ease-in;
+         transition: height 0.2s ease-in;
      }
 
      .leftnav__item.leftnav__item--open {
          height: auto;
          max-height: 300px;
+         -webkit-transition: max-height 0.2s ease-in;
+         -moz-transition: max-height 0.2s ease-in;
+         -o-transition: max-height 0.2s ease-in;
+         -ms-transition: max-height 0.2s ease-in;
+         transition: max-height 0.2s ease-in;
      }
 
      .leftnav__section {

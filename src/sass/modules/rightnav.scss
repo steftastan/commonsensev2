@@ -1,71 +1,3 @@
-// /* ==========================================================================
-//    RIGHT NAV
-//    ========================================================================== */
-//
-// /**
-//  * This navigation behaves differently in that it is visible on the right side
-//  * of the browser on desktop view, but on mobile it becomes accesible inside
-//  * the leftnav menu.
-//  */
-//
-// /* All devices */
-// .rightnav__logout {
-//     @include font($font-size-content, $font-weight-regular, $white);
-//     text-decoration: none;
-// }
-//
-// /* Mobile-specific styles */
-// @include mobile {
-//
-//     .rightnav--mobileHidden {
-//         display: none;
-//     }
-//
-//     .rightnav__langSelect {
-//         display: inline-block;
-//         width: 30px;
-//         height: 30px;
-//         margin: 0 10px 0 0;
-//         border-radius: 15px;
-//         padding: 9px 6px;
-//         background-color: $cool-gray-1;
-//         @include font($font-size-content, $font-weight-regular, $blue-70);
-//     }
-//
-// }
-//
-// /* Tablet-specific styles */
-// @include tablet {
-//     .rightnav {
-//         position: absolute;
-//         right: 0;
-//         width: 111px;
-//         height: 100%;
-//         background-color: $white;
-//     }
-//
-//     .rightnav__langSelect {
-//         display: inline-block;
-//         width: 30px;
-//         height: 30px;
-//         margin: 8px 15px;
-//         border-radius: 15px;
-//         padding: 8px 6px;
-//         background-color: $cool-gray-1;
-//         @include font($font-size-content, $font-weight-regular, $blue-70);
-//     }
-//
-//     .rightnav__logout {
-//         color: $cool-gray-70;
-//         text-decoration: none;
-//     }
-// }
-//
-// /* Desktop-specific styles */
-// @include desktop {
-//
-// }
-
 /* ==========================================================================
    RIGHT NAV
    ========================================================================== */
@@ -112,30 +44,76 @@
         background-color: $white;
     }
 
-    .rightnav__lang {
-        padding: 0 5px;
-        cursor: pointer;
+    .rightnav__langWrapper {
+        width: 200px;
+
     }
+
 
     .rightnav__langSelect {
         display: inline-block;
-        width: auto;
+        overflow: hidden;
+        float: left;
+        width: 38px;
         height: 25px;
         margin: 8px 10px;
         border-radius: 15px;
         padding: 6px 4px;
         background-color: $cool-gray-1;
-        @include font($font-size-content, $font-weight-medium, $blue-40);
+        @include font($font-size-content, $font-weight-medium, $cool-gray-20);
+        -webkit-transition: width 0.2s ease-in;
+        -moz-transition: width 0.2s ease-in;
+        -o-transition: width 0.2s ease-in;
+        -ms-transition: width 0.2s ease-in;
+        transition: width 0.2s ease-in;
+    }
+
+    .rightnav__langSelect--open {
+        width: 65px;
+        -webkit-transition: width 0.2s ease-in;
+        -moz-transition: width 0.2s ease-in;
+        -o-transition: width 0.2s ease-in;
+        -ms-transition: width 0.2s ease-in;
+        transition: width 0.2s ease-in;
+    }
+
+    .rightnav__lang {
+        display: inline-block;
+        width: 0;
+        padding: 0;
+        visibility: hidden;
+        -webkit-transition: all 0.2s ease-in;
+        -moz-transition: all 0.2s ease-in;
+        -o-transition: all 0.2s ease-in;
+        -ms-transition: all 0.2s ease-in;
+        transition: all 0.2s ease-in;
+        cursor: pointer;
     }
 
     .rightnav__lang.rightnav__lang--active {
         color: $blue-70;
     }
 
+    .rightnav__lang.rightnav__lang--open {
+        display: inline-block;
+        visibility: visible;
+        width: auto;
+        padding: 0 5px;
+        -webkit-transition: all 0.2s ease-in;
+        -moz-transition: all 0.2s ease-in;
+        -o-transition: all 0.2s ease-in;
+        -ms-transition: all 0.2s ease-in;
+        transition: all 0.2s ease-in;
+    }
+
     .rightnav__logout {
+        float: left;
         color: $cool-gray-70;
         text-decoration: none;
-        margin-right: 10px;
+        margin: 8px 10px 8px 0;
+        border-radius: 15px;
+        padding: 6px 4px;
+        display: inline-block;
     }
 }
 

@@ -258,6 +258,8 @@ class BreadCrumbs extends Component {
       this.toggleNav = this.toggleNav.bind(this);
       this.clickAnywhereToClose = this.clickAnywhereToClose.bind(this);
       this.stopPropagation = this.stopPropagation.bind(this);
+      this.openLang = this.openLang.bind(this);
+      this.toggleLang = this.toggleLang.bind(this);
       this.state = {
           open: false,
           openClassName: '',
@@ -266,14 +268,21 @@ class BreadCrumbs extends Component {
           navId: 'nav',
           nav: {},
           toggleClass: 'leftnav--toggle',
-          langSelectId: 'langSelect'
+          langSelectId: 'langSelect',
+          langButton: {},
+          englishId: 'english',
+          frenchId: 'french',
+          containerClass: 'rightnav__langSelect',
+          selectedLanguageClass: 'rightnav__lang--active',
+          openLanguageClass: 'rightnav__lang--open',
+          language: 'en'
       };
     }
 
     componentDidMount() {
         var navElem = document.getElementById(this.state.navId);
         var navButton = document.getElementById(this.state.navButtonId);
-        var langButton = document.getElementById(this.langSelectId);
+        var langButton = document.getElementById(this.state.langSelectId);
 
         if (navElem && navButton) {
             this.setState({
@@ -284,6 +293,15 @@ class BreadCrumbs extends Component {
             navButton.addEventListener('mousedown', this.toggleNav, false);
             navElem.addEventListener('mousedown', this.stopPropagation, false);
         }
+
+        if (langButton) {
+            this.setState({
+                langButton: langButton
+            });
+            langButton.addEventListener('mouseover', this.openLang, false);
+            langButton.addEventListener('mouseout', this.openLang, false);
+            langButton.addEventListener('mousedown', this.toggleLang, false);
+        }
     }
 
     stopPropagation(event) {
@@ -292,8 +310,53 @@ class BreadCrumbs extends Component {
 
     getInitialState() {
         return {
-            open: false
+            open: false,
+            language: 'en'
         }
+    }
+
+    openLang(event) {
+        var openLanguage;
+        if (this.state.language === 'en') {
+            openLanguage = document.getElementById(this.state.englishId);
+        } else if (this.state.language === 'fr') {
+            openLanguage = document.getElementById(this.state.frenchId);
+        }
+
+        if (event.type === 'mouseover') {
+            openLanguage.classList.add(this.state.openLanguageClass);
+            document.getElementsByClassName(this.state.containerClass)[0].classList.add('rightnav__langSelect--open');
+        } else if (event.type === 'mouseout') {
+            openLanguage.classList.remove(this.state.openLanguageClass);
+            document.getElementsByClassName(this.state.containerClass)[0].classList.remove('rightnav__langSelect--open');
+        }
+
+    }
+
+    toggleLang(event) {
+        var selected;
+        var notSelected;
+
+        if (event.target.id === 'english') {
+            selected = document.getElementById(this.state.englishId);
+            notSelected = document.getElementById(this.state.frenchId);
+            selected.classList.add(this.state.selectedLanguageClass);
+            notSelected.classList.remove(this.state.selectedLanguageClass);
+            this.setState({
+                language: 'fr'
+            });
+
+        } else if (event.target.id === 'french') {
+            selected = document.getElementById(this.state.frenchId);
+            notSelected = document.getElementById(this.state.englishId);
+            selected.classList.add(this.state.selectedLanguageClass);
+            notSelected.classList.remove(this.state.selectedLanguageClass);
+            this.setState({
+                language: 'en'
+            });
+        }
+
+
     }
 
     toggleNav(event) {
@@ -336,8 +399,10 @@ class BreadCrumbs extends Component {
                     </div>
                     <div className="grid__item rightnav rightnav--mobileHidden">
                         <div id="langSelect" className="wrapper rightnav__langSelect">
-                            <span id="activeLang" class="rightnav__lang">EN</span>
-                            <span class="rightnav__lang rightnav__lang--inactive">FR</span>
+                            <div className="rightnav__langWrapper">
+                                <span id="english" className="rightnav__lang rightnav__lang--open rightnav__lang--active">EN</span>
+                                <span id="french" className="rightnav__lang">FR</span>
+                            </div>
                         </div>
                         <a className="rightnav__logout" href="/logout">Logout</a>
                     </div>
