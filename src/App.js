@@ -266,12 +266,15 @@ class BreadCrumbs extends Component {
           navId: 'nav',
           nav: {},
           toggleClass: 'leftnav--toggle',
+          langSelectId: 'langSelect'
       };
     }
 
     componentDidMount() {
         var navElem = document.getElementById(this.state.navId);
         var navButton = document.getElementById(this.state.navButtonId);
+        var langButton = document.getElementById(this.langSelectId);
+
         if (navElem && navButton) {
             this.setState({
                 nav: navElem,
@@ -332,7 +335,10 @@ class BreadCrumbs extends Component {
                         <span className="breadcrumbs__link">Financials</span>
                     </div>
                     <div className="grid__item rightnav rightnav--mobileHidden">
-                        <div className="wrapper rightnav__langSelect">EN</div>
+                        <div id="langSelect" className="wrapper rightnav__langSelect">
+                            <span id="activeLang" class="rightnav__lang">EN</span>
+                            <span class="rightnav__lang rightnav__lang--inactive">FR</span>
+                        </div>
                         <a className="rightnav__logout" href="/logout">Logout</a>
                     </div>
                 </div>

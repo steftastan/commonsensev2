@@ -107,25 +107,35 @@
     .rightnav {
         position: absolute;
         right: 0;
-        width: 100px;
+        width: auto;
         height: 100%;
         background-color: $white;
     }
 
+    .rightnav__lang {
+        padding: 0 5px;
+        cursor: pointer;
+    }
+
     .rightnav__langSelect {
         display: inline-block;
-        width: 25px;
+        width: auto;
         height: 25px;
         margin: 8px 10px;
         border-radius: 15px;
         padding: 6px 4px;
         background-color: $cool-gray-1;
-        @include font($font-size-content, $font-weight-regular, $blue-70);
+        @include font($font-size-content, $font-weight-medium, $blue-40);
+    }
+
+    .rightnav__lang.rightnav__lang--active {
+        color: $blue-70;
     }
 
     .rightnav__logout {
         color: $cool-gray-70;
         text-decoration: none;
+        margin-right: 10px;
     }
 }
 

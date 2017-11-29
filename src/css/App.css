@@ -966,12 +966,15 @@ body {
   .rightnav {
     position: absolute;
     right: 0;
-    width: 100px;
+    width: auto;
     height: 100%;
     background-color: #FFF; }
+  .rightnav__lang {
+    padding: 0 5px;
+    cursor: pointer; }
   .rightnav__langSelect {
     display: inline-block;
-    width: 25px;
+    width: auto;
     height: 25px;
     margin: 8px 10px;
     border-radius: 15px;
@@ -979,10 +982,13 @@ body {
     background-color: #E2EBEB;
     color: #2D408F;
     font-size: 12px;
-    font-weight: 400; }
+    font-weight: 500; }
+  .rightnav__lang.rightnav__lang--inactive {
+    color: #8C9696; }
   .rightnav__logout {
     color: #434747;
-    text-decoration: none; } }
+    text-decoration: none;
+    margin-right: 10px; } }
 
 /* Desktop-specific styles */
 /* ==========================================================================
