@@ -982,13 +982,25 @@ body {
   .rightnav__langSelect {
     display: inline-block;
     overflow: hidden;
-    width: auto;
+    width: 28px;
     height: 25px;
     border-radius: 15px;
     background-color: #E2EBEB;
     color: #8C9696;
     font-size: 12px;
-    font-weight: 500; }
+    font-weight: 500;
+    -webkit-transition: width 0.2s ease-in;
+    -moz-transition: width 0.2s ease-in;
+    -o-transition: width 0.2s ease-in;
+    -ms-transition: width 0.2s ease-in;
+    transition: width 0.2s ease-in; }
+  .rightnav__langSelect--open {
+    width: 55px;
+    -webkit-transition: width 0.2s ease-in;
+    -moz-transition: width 0.2s ease-in;
+    -o-transition: width 0.2s ease-in;
+    -ms-transition: width 0.2s ease-in;
+    transition: width 0.2s ease-in; }
   .rightnav__lang--active {
     display: inline-block;
     color: #2D408F; }

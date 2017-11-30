@@ -290,6 +290,7 @@ class BreadCrumbs extends Component {
           toggleClass: 'leftnav--toggle',
           langWrapper: {},
           langWrapperId: 'langWrapper',
+          langWrapperOpenClass: 'rightnav__langSelect--open',
           defaultLang: '',
           selectedLang: '',
           langListClass: 'rightnav__lang',
@@ -300,8 +301,8 @@ class BreadCrumbs extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        this.state.langWrapper.addEventListener('mouseover', this.openLang, false);
-        this.state.langWrapper.addEventListener('mouseout', this.openLang, false);
+        this.state.langWrapper.addEventListener('mouseenter', this.openLang, false);
+        this.state.langWrapper.addEventListener('mouseleave', this.openLang, false);
         this.state.langWrapper.addEventListener('mousedown', this.openLang, false);
     }
 
@@ -337,15 +338,18 @@ class BreadCrumbs extends Component {
         var clickedLang;
         var i;
 
-        if (event.type === 'mouseover') {
+        if (event.type === 'mouseenter') {
             for (i = 0; i < languages.length; i++) {
+                this.state.langWrapper.classList.add(this.state.langWrapperOpenClass);
                 this.toggleLang(languages[i], true);
             }
-        } else if (event.type === 'mouseout') {
+        } else if (event.type === 'mouseleave') {
             for (i = 0; i < languages.length; i++) {
+                this.state.langWrapper.classList.remove(this.state.langWrapperOpenClass);
                 this.toggleLang(languages[i], false);
             }
         } else if (event.type === 'mousedown') {
+            this.state.langWrapper.classList.remove(this.state.langWrapperOpenClass);
             for (i = 0; i < languages.length; i++) {
 
                 if (languages[i].id == event.target.id) {
@@ -366,7 +370,6 @@ class BreadCrumbs extends Component {
                     languages[i].classList.remove(this.state.selectedClass);
                     this.toggleLang(languages[i], false);
                 }
-
             }
         }
     }
