@@ -1,62 +1,3 @@
-// /* ==========================================================================
-//    BREADCRUMBS
-//    ========================================================================== */
-//
-// /**
-//  * Breadcrumbs located underneath the header.
-//  */
-//
-// /* All devices */
-// .breadcrumbs {
-//     position:fixed;
-//     z-index: 9997;
-//     width: 100%;
-//     height: 45px;
-//     background-color: $cool-gray-70;
-// }
-//
-// .breadcrumbs__link {
-//     line-height: 40px;
-//     @include font($font-size-content, $font-weight-bold, $white);
-// }
-//
-// .breadcrumbs__arrow {
-//     padding: 5px;
-//     font-size: $font-size-mobile-content;
-//     color: $white;
-// }
-//
-// /* Mobile-specific styles */
-// @include mobile {
-//     .breadcrumbs {
-//         top: 50px;
-//     }
-//
-//     .breadcrumbs__trail {
-//         margin: 0 0 0 10px;
-//     }
-// }
-//
-// /* Tablet-specific styles */
-// @include tablet {
-//     .breadcrumbs {
-//         top: 100px;
-//         left: 225px;
-//         height: 45px;
-//         width: calc(100% - 225px);
-//     }
-//
-//     .breadcrumbs__trail {
-//         margin: 0 0 0 15px;
-//     }
-// }
-//
-// /* Desktop-specific styles */
-// @include desktop {
-//
-// }
-
-
 /* ==========================================================================
    BREADCRUMBS
    ========================================================================== */
@@ -69,6 +10,7 @@
 .breadcrumbs {
     position:fixed;
     z-index: 9997;
+    overflow: hidden;
     width: 100%;
     height: 45px;
     background-color: $cool-gray-70;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
 import './css/App.css';
-
+import $ from 'jquery';
 
 class Header extends Component {
     render() {
@@ -25,10 +24,27 @@ class Accordion extends Component {
       super();
       this.filterLinkList = this.filterLinkList.bind(this);
       this.toggleElem = this.toggleElem.bind(this);
+      this.state = {
+          data: {}
+      };
     }
 
     componentDidMount() {
         document.addEventListener('keyup', this.filterLinkList, false);
+
+        $.ajax({
+            url: '/data.json',
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+                this.setState({data: data});
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.log('ERR ERR ERR ');
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
+
     }
 
     /**
@@ -124,18 +140,22 @@ class Accordion extends Component {
     }
 
     render() {
-        var commonSenseLinkList = this.props.commonSenseLinkList.map(function(item, key) {
-            return (
-                <Section key={key} id={key}>
-                    <div className="leftnav__section">
-                        <span className={"leftnav__child leftnav__icon " + item.icon + " " + item.color}></span>
-                        <a className="leftnav__child leftnav__link" href={item.url}>{item.name}</a>
-                        <a className="leftnav__child leftnav__arrow fa fa-chevron-right" href="#"></a>
-                    </div>
-                    <SubLinkList sublinks={item.sublinks} />
-                </Section>
-            );
-        }, this);
+
+        if (this.state.data.results && this.state.data.results.length) {
+            var commonSenseLinkList = this.state.data.results.map(function(item, key) {
+                return (
+                    <Section key={key} id={key}>
+                        <div className="leftnav__section">
+                            <span className={"leftnav__child leftnav__icon " + item.icon + " " + item.color}></span>
+                            <a className="leftnav__child leftnav__link" href={item.url}>{item.name}</a>
+                            <a className="leftnav__child leftnav__arrow fa fa-chevron-right" href="#"></a>
+                        </div>
+                        <SubLinkList sublinks={item.sublinks} />
+                    </Section>
+                );
+            }, this);
+        }
+
 
         return (
             <div>
@@ -268,21 +288,29 @@ class BreadCrumbs extends Component {
           navId: 'nav',
           nav: {},
           toggleClass: 'leftnav--toggle',
-          langSelectId: 'langSelect',
-          langButton: {},
-          englishId: 'english',
-          frenchId: 'french',
-          containerClass: 'rightnav__langSelect',
-          selectedLanguageClass: 'rightnav__lang--active',
-          openLanguageClass: 'rightnav__lang--open',
-          language: 'en'
+          langWrapper: {},
+          langWrapperId: 'langWrapper',
+          defaultLang: '',
+          langListClass: 'rightnav__lang',
+          activeClass: 'rightnav__lang--active',
+          openClass: 'rightnav__lang--open',
+          selectedClass: 'rightnav__lang--selected'
       };
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        this.state.langWrapper.addEventListener('mouseover', this.openLang, false);
+        this.state.langWrapper.addEventListener('mouseout', this.openLang, false);
+
+        this.state.langWrapper.addEventListener('mousedown', this.openLang, false);
     }
 
     componentDidMount() {
         var navElem = document.getElementById(this.state.navId);
         var navButton = document.getElementById(this.state.navButtonId);
-        var langButton = document.getElementById(this.state.langSelectId);
+        var langWrapper = document.getElementById(this.state.langWrapperId);
+        var defaultLang = this.state.defaultLang ? this.state.defaultLang : 'en';
+        var selectedLang;
 
         if (navElem && navButton) {
             this.setState({
@@ -294,14 +322,75 @@ class BreadCrumbs extends Component {
             navElem.addEventListener('mousedown', this.stopPropagation, false);
         }
 
-        if (langButton) {
+        if (langWrapper) {
+
             this.setState({
-                langButton: langButton
+                langWrapper: langWrapper
             });
-            langButton.addEventListener('mouseover', this.openLang, false);
-            langButton.addEventListener('mouseout', this.openLang, false);
-            langButton.addEventListener('mousedown', this.toggleLang, false);
+
+            selectedLang = document.getElementById(defaultLang);
+            this.toggleLang(selectedLang, true, true);
+
         }
+    }
+
+    openLang(event) {
+        var languages = document.getElementsByClassName(this.state.langListClass);
+        var clickedLang;
+        var i;
+
+        if (event.type === 'mouseover') {
+            for (i = 0; i < languages.length; i++) {
+                this.toggleLang(languages[i], true);
+            }
+        } else if (event.type === 'mouseout') {
+            for (i = 0; i < languages.length; i++) {
+                this.toggleLang(languages[i], false);
+            }
+        } else if (event.type === 'mousedown') {
+            for (i = 0; i < languages.length; i++) {
+
+                if (languages[i].id == event.target.id) {
+                    // act upon the clicked element
+                    clickedLang = document.getElementById(languages[i].id);
+                    if (!clickedLang.classList.contains(this.state.selectedClass)) {
+                        clickedLang.classList.add(this.state.selectedClass, this.state.activeClass, this.state.openClass);
+                        this.toggleLang(languages[i], false);
+                    } else {
+                        this.toggleLang(languages[i], true);
+                    }
+                } else {
+                    // modify non-clicked languages
+                    languages[i].classList.remove(this.state.selectedClass);
+                    this.toggleLang(languages[i], false);
+                }
+
+            }
+        }
+    }
+
+    toggleLang(lang, active, defaultLang) {
+        if (defaultLang) {
+            lang.classList.add(this.state.selectedClass);
+        }
+        if (lang) {
+            if (active) {
+                if (!lang.classList.contains(this.state.selectedClass)) {
+                    lang.classList.add(this.state.openClass);
+                } else {
+                    lang.classList.add(this.state.activeClass, this.state.openClass);
+                }
+            } else {
+                if (!lang.classList.contains(this.state.selectedClass)) {
+                    lang.classList.remove(this.state.activeClass, this.state.openClass);
+                }
+            }
+        } else {
+
+        }
+
+
+
     }
 
     stopPropagation(event) {
@@ -315,50 +404,56 @@ class BreadCrumbs extends Component {
         }
     }
 
-    openLang(event) {
-        var openLanguage;
-        if (this.state.language === 'en') {
-            openLanguage = document.getElementById(this.state.englishId);
-        } else if (this.state.language === 'fr') {
-            openLanguage = document.getElementById(this.state.frenchId);
-        }
+    // openLang(event) {
+    //
+    // }
 
-        if (event.type === 'mouseover') {
-            openLanguage.classList.add(this.state.openLanguageClass);
-            document.getElementsByClassName(this.state.containerClass)[0].classList.add('rightnav__langSelect--open');
-        } else if (event.type === 'mouseout') {
-            openLanguage.classList.remove(this.state.openLanguageClass);
-            document.getElementsByClassName(this.state.containerClass)[0].classList.remove('rightnav__langSelect--open');
-        }
+    // openLang(event) {
+    //     var openLanguage;
+    //     var notSelected;
+    //     if (this.state.language === 'en') {
+    //         openLanguage = document.getElementById(this.state.englishId);
+    //         notSelected = document.getElementById(this.state.frenchId);
+    //     } else if (this.state.language === 'fr') {
+    //         openLanguage = document.getElementById(this.state.frenchId);
+    //         notSelected = document.getElementById(this.state.englishId);
+    //     }
+    //
+    //     if (event.type === 'mouseover') {
+    //         openLanguage.classList.add(this.state.openLanguageClass);
+    //         openLanguage.classList.add(this.state.selectedLanguageClass);
+    //         //document.getElementsByClassName(this.state.containerClass)[0].classList.add('rightnav__langSelect--open');
+    //     } else if (event.type === 'mouseout') {
+    //         openLanguage.classList.remove(this.state.openLanguageClass);
+    //         openLanguage.classList.remove(this.state.selectedLanguageClass);
+    //         //document.getElementsByClassName(this.state.containerClass)[0].classList.remove('rightnav__langSelect--open');
+    //     }
+    //
+    // }
 
-    }
-
-    toggleLang(event) {
-        var selected;
-        var notSelected;
-
-        if (event.target.id === 'english') {
-            selected = document.getElementById(this.state.englishId);
-            notSelected = document.getElementById(this.state.frenchId);
-            selected.classList.add(this.state.selectedLanguageClass);
-            notSelected.classList.remove(this.state.selectedLanguageClass);
-            this.setState({
-                language: 'fr'
-            });
-
-        } else if (event.target.id === 'french') {
-            selected = document.getElementById(this.state.frenchId);
-            notSelected = document.getElementById(this.state.englishId);
-            selected.classList.add(this.state.selectedLanguageClass);
-            notSelected.classList.remove(this.state.selectedLanguageClass);
-            this.setState({
-                language: 'en'
-            });
-        }
-
-
-
-    }
+    // toggleLang(event) {
+    //     var selected;
+    //     var notSelected;
+    //
+    //     if (event.target.id === 'english') {
+    //         selected = document.getElementById(this.state.englishId);
+    //         notSelected = document.getElementById(this.state.frenchId);
+    //         selected.classList.add(this.state.selectedLanguageClass);
+    //         notSelected.classList.remove(this.state.selectedLanguageClass);
+    //         this.setState({
+    //             language: 'fr'
+    //         });
+    //
+    //     } else if (event.target.id === 'french') {
+    //         selected = document.getElementById(this.state.frenchId);
+    //         notSelected = document.getElementById(this.state.englishId);
+    //         selected.classList.add(this.state.selectedLanguageClass);
+    //         notSelected.classList.remove(this.state.selectedLanguageClass);
+    //         this.setState({
+    //             language: 'en'
+    //         });
+    //     }
+    // }
 
     toggleNav(event) {
         event.stopPropagation();
@@ -399,10 +494,10 @@ class BreadCrumbs extends Component {
                         <span className="breadcrumbs__link">Financials</span>
                     </div>
                     <div className="grid__item rightnav rightnav--mobileHidden">
-                        <div id="langSelect" className="wrapper rightnav__langSelect">
+                        <div id="langWrapper" className="wrapper rightnav__langSelect">
                             <div>
-                            <span id="english" className="rightnav__lang rightnav__lang--open rightnav__lang--active">EN</span>
-                            <span id="french" className="rightnav__lang">FR</span>
+                            <span id="en" className="rightnav__lang">EN</span>
+                            <span id="fr" className="rightnav__lang">FR</span>
                             </div>
                         </div>
                         <a className="rightnav__logout" href="/logout">Logout</a>
@@ -452,7 +547,8 @@ class App extends Component {
         return (
           <div className="wrapper wrapper__app App">
             <Header userName={this.props.userData.name} company={this.props.userData.company}/>
-            <Accordion commonSenseLinkList={this.props.commonSenseLinkList} />
+            // <Accordion commonSenseLinkList={this.props.commonSenseLinkList} />
+            <Accordion />
             <BreadCrumbs/>
             <Dashboard dashboardLinks={this.props.userData.dashboardLinks} />
           </div>

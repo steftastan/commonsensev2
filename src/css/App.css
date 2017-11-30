@@ -841,6 +841,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
+  overflow: hidden;
   z-index: 99999;
   width: 100%;
   background: #2D408F; }
@@ -897,6 +898,7 @@ body {
 .breadcrumbs {
   position: fixed;
   z-index: 9997;
+  overflow: hidden;
   width: 100%;
   height: 45px;
   background-color: #434747; }
@@ -984,9 +986,10 @@ body {
     color: #8C9696;
     font-size: 12px;
     font-weight: 500; }
-  .rightnav__lang.rightnav__lang--active {
+  .rightnav__lang--active {
+    display: inline;
     color: #2D408F; }
-  .rightnav__lang.rightnav__lang--open {
+  .rightnav__lang--open {
     display: inline; }
   .rightnav__logout {
     color: #434747;
