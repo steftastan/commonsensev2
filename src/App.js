@@ -30,20 +30,21 @@ class Accordion extends Component {
     }
 
     componentDidMount() {
-        document.addEventListener('keyup', this.filterLinkList, false);
-
         $.ajax({
             url: '/data.json',
             dataType: 'json',
             cache: false,
             success: function(data) {
                 this.setState({data: data});
+                document.addEventListener('keyup', this.filterLinkList, false);
             }.bind(this),
             error: function(xhr, status, err) {
-                console.log('ERR ERR ERR ');
                 console.error(this.props.url, status, err.toString());
             }.bind(this)
         });
+
+
+
 
     }
 
@@ -503,7 +504,6 @@ class App extends Component {
         return (
           <div className="wrapper wrapper__app App">
             <Header userName={this.props.userData.name} company={this.props.userData.company}/>
-            // <Accordion commonSenseLinkList={this.props.commonSenseLinkList} />
             <Accordion />
             <BreadCrumbs/>
             <Dashboard dashboardLinks={this.props.userData.dashboardLinks} />
