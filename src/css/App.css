@@ -965,36 +965,44 @@ body {
 
 /* Tablet-specific styles */
 @media only screen and (min-device-width: 767px) {
+  .rightnav__container {
+    width: 100%;
+    overflow: hidden; }
   .rightnav {
     position: absolute;
     right: 0;
+    padding: 8px 20px;
     width: auto;
     height: 100%;
     background-color: #FFF; }
   .rightnav__lang {
-    padding: 0 5px;
+    padding: 6px 5px;
     cursor: pointer;
     display: none; }
   .rightnav__langSelect {
     display: inline-block;
+    overflow: hidden;
     width: auto;
     height: 25px;
-    margin: 8px 10px;
     border-radius: 15px;
-    padding: 6px 4px;
     background-color: #E2EBEB;
     color: #8C9696;
     font-size: 12px;
     font-weight: 500; }
   .rightnav__lang--active {
-    display: inline;
+    display: inline-block;
     color: #2D408F; }
   .rightnav__lang--open {
-    display: inline; }
+    display: inline-block; }
   .rightnav__logout {
+    display: inline-block;
+    overflow: hidden;
+    width: auto;
+    height: 25px;
+    padding: 6px 5px;
+    margin: 0 0 0 10px;
     color: #434747;
-    text-decoration: none;
-    margin-right: 10px; } }
+    text-decoration: none; } }
 
 /* Desktop-specific styles */
 /* ==========================================================================

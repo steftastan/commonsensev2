@@ -291,6 +291,7 @@ class BreadCrumbs extends Component {
           langWrapper: {},
           langWrapperId: 'langWrapper',
           defaultLang: '',
+          selectedLang: '',
           langListClass: 'rightnav__lang',
           activeClass: 'rightnav__lang--active',
           openClass: 'rightnav__lang--open',
@@ -301,7 +302,6 @@ class BreadCrumbs extends Component {
     componentDidUpdate(prevProps, prevState) {
         this.state.langWrapper.addEventListener('mouseover', this.openLang, false);
         this.state.langWrapper.addEventListener('mouseout', this.openLang, false);
-
         this.state.langWrapper.addEventListener('mousedown', this.openLang, false);
     }
 
@@ -323,14 +323,12 @@ class BreadCrumbs extends Component {
         }
 
         if (langWrapper) {
-
             this.setState({
                 langWrapper: langWrapper
             });
 
             selectedLang = document.getElementById(defaultLang);
             this.toggleLang(selectedLang, true, true);
-
         }
     }
 
@@ -352,6 +350,9 @@ class BreadCrumbs extends Component {
 
                 if (languages[i].id == event.target.id) {
                     // act upon the clicked element
+                    this.setState({
+                        selectedLang: languages[i].id
+                    });
                     clickedLang = document.getElementById(languages[i].id);
                     if (!clickedLang.classList.contains(this.state.selectedClass)) {
                         clickedLang.classList.add(this.state.selectedClass, this.state.activeClass, this.state.openClass);
@@ -359,6 +360,7 @@ class BreadCrumbs extends Component {
                     } else {
                         this.toggleLang(languages[i], true);
                     }
+
                 } else {
                     // modify non-clicked languages
                     languages[i].classList.remove(this.state.selectedClass);
@@ -369,10 +371,17 @@ class BreadCrumbs extends Component {
         }
     }
 
+    /**
+     * Applies the styles to show or hide languages depending on the chosen language
+     * @param lang - the HTML element that represents the language tag
+     * @param active - a boolean flag that specifies this is the currently-selected language.
+     * @param defaultLang - a boolean flag that allows the default language to be highlighted after a page load.
+     */
     toggleLang(lang, active, defaultLang) {
         if (defaultLang) {
             lang.classList.add(this.state.selectedClass);
         }
+
         if (lang) {
             if (active) {
                 if (!lang.classList.contains(this.state.selectedClass)) {
@@ -385,12 +394,7 @@ class BreadCrumbs extends Component {
                     lang.classList.remove(this.state.activeClass, this.state.openClass);
                 }
             }
-        } else {
-
         }
-
-
-
     }
 
     stopPropagation(event) {
@@ -400,60 +404,9 @@ class BreadCrumbs extends Component {
     getInitialState() {
         return {
             open: false,
-            language: 'en'
+            defaultLang : 'en'
         }
     }
-
-    // openLang(event) {
-    //
-    // }
-
-    // openLang(event) {
-    //     var openLanguage;
-    //     var notSelected;
-    //     if (this.state.language === 'en') {
-    //         openLanguage = document.getElementById(this.state.englishId);
-    //         notSelected = document.getElementById(this.state.frenchId);
-    //     } else if (this.state.language === 'fr') {
-    //         openLanguage = document.getElementById(this.state.frenchId);
-    //         notSelected = document.getElementById(this.state.englishId);
-    //     }
-    //
-    //     if (event.type === 'mouseover') {
-    //         openLanguage.classList.add(this.state.openLanguageClass);
-    //         openLanguage.classList.add(this.state.selectedLanguageClass);
-    //         //document.getElementsByClassName(this.state.containerClass)[0].classList.add('rightnav__langSelect--open');
-    //     } else if (event.type === 'mouseout') {
-    //         openLanguage.classList.remove(this.state.openLanguageClass);
-    //         openLanguage.classList.remove(this.state.selectedLanguageClass);
-    //         //document.getElementsByClassName(this.state.containerClass)[0].classList.remove('rightnav__langSelect--open');
-    //     }
-    //
-    // }
-
-    // toggleLang(event) {
-    //     var selected;
-    //     var notSelected;
-    //
-    //     if (event.target.id === 'english') {
-    //         selected = document.getElementById(this.state.englishId);
-    //         notSelected = document.getElementById(this.state.frenchId);
-    //         selected.classList.add(this.state.selectedLanguageClass);
-    //         notSelected.classList.remove(this.state.selectedLanguageClass);
-    //         this.setState({
-    //             language: 'fr'
-    //         });
-    //
-    //     } else if (event.target.id === 'french') {
-    //         selected = document.getElementById(this.state.frenchId);
-    //         notSelected = document.getElementById(this.state.englishId);
-    //         selected.classList.add(this.state.selectedLanguageClass);
-    //         notSelected.classList.remove(this.state.selectedLanguageClass);
-    //         this.setState({
-    //             language: 'en'
-    //         });
-    //     }
-    // }
 
     toggleNav(event) {
         event.stopPropagation();
@@ -495,7 +448,7 @@ class BreadCrumbs extends Component {
                     </div>
                     <div className="grid__item rightnav rightnav--mobileHidden">
                         <div id="langWrapper" className="wrapper rightnav__langSelect">
-                            <div>
+                            <div className="rightnav__container">
                             <span id="en" className="rightnav__lang">EN</span>
                             <span id="fr" className="rightnav__lang">FR</span>
                             </div>

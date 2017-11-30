@@ -35,44 +35,57 @@
 
 /* Tablet-specific styles */
 @include tablet {
+
+    .rightnav__container {
+        width: 100%;
+        overflow: hidden;
+
+    }
+
     .rightnav {
         position: absolute;
         right: 0;
+        padding: 8px 20px;
         width: auto;
         height: 100%;
         background-color: $white;
     }
 
     .rightnav__lang {
-        padding: 0 5px;
+        padding: 6px 5px;
+
         cursor: pointer;
         display: none;
     }
 
     .rightnav__langSelect {
         display: inline-block;
+        overflow: hidden;
         width: auto;
         height: 25px;
-        margin: 8px 10px;
         border-radius: 15px;
-        padding: 6px 4px;
         background-color: $cool-gray-1;
         @include font($font-size-content, $font-weight-medium, $cool-gray-40);
     }
 
     .rightnav__lang--active {
-        display: inline;
+        display: inline-block;
         color: $blue-70;
     }
 
     .rightnav__lang--open {
-        display: inline;
+        display: inline-block;
     }
 
     .rightnav__logout {
+        display: inline-block;
+        overflow: hidden;
+        width: auto;
+        height: 25px;
+        padding: 6px 5px;
+        margin: 0 0 0 10px;
         color: $cool-gray-70;
         text-decoration: none;
-        margin-right: 10px;
     }
 }
 
