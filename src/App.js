@@ -25,27 +25,46 @@ class Accordion extends Component {
       this.filterLinkList = this.filterLinkList.bind(this);
       this.toggleElem = this.toggleElem.bind(this);
       this.state = {
-          data: {}
+          data: {},
+          companies: {},
+          employeeName: ''
       };
     }
 
     componentDidMount() {
+
         $.ajax({
             url: '/data.json',
             dataType: 'json',
             cache: false,
             success: function(data) {
                 this.setState({data: data});
-                document.addEventListener('keyup', this.filterLinkList, false);
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
             }.bind(this)
         });
 
+        $.ajax({
+            url: '/companies.json',
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+                this.setState({companies: data});
+                this.setState({employeeName: data.employeeName});
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
+
+        document.addEventListener('keyup', this.filterLinkList, false);
+
+    }
 
 
-
+    componentWillUnmount() {
+        document.removeEventListener('keyup', this.filterLinkList, false);
     }
 
     /**
@@ -157,6 +176,11 @@ class Accordion extends Component {
             }, this);
         }
 
+        if (this.state.companies.results && this.state.companies.results.length) {
+            var companiesList = this.state.companies.results.map(function(item, key) {
+                return (<option key={key} id={key}>{item.name}</option>);
+            }, this);
+        }
 
         return (
             <div>
@@ -164,16 +188,11 @@ class Accordion extends Component {
                 <ul className="leftnav__list">
                     <li className="leftnav__fixed">
                         <div className="leftnav__section--fixed">
-                            <span className="leftnav__user">Welcome, John Doe</span>
+                            <span className="leftnav__user">Welcome, {this.state.employeeName}</span>
                             <form className="form">
                                 <i className="form__icon form__icon--company  fa fa-building"></i>
                                 <select className="form__item form__selectCompany">
-                                    <option>Switch company</option>
-                                    <option>Company ABC</option>
-                                    <option>Company DEF</option>
-                                    <option>Company HIJ</option>
-                                    <option>Company KLM</option>
-                                    <option>Company NOP</option>
+                                    {companiesList}
                                 </select>
                             </form>
                         </div>
@@ -466,21 +485,46 @@ class BreadCrumbs extends Component {
 }
 
 class Dashboard extends Component {
-    render() {
-        var dashboardLinks = this.props.dashboardLinks.map(function(item, key) {
-            return (
-                    <a key={key} className="category__item col-xs-12 col-lg-4" href={item.url}>
-                        <article className={"category " + item.color}>
-                            <span className={"category__icon--desktop " + item.icon + " " + item.color}></span>
-                            <span className={"category__icon " + item.icon}></span>
-                            <div className="category__text">
-                                <span className="category__name">{item.category}</span>
-                                <h4 className="category__link">{item.linkName}</h4>
-                            </div>
-                        </article>
-                    </a>
-            );
+
+    constructor() {
+      super();
+      this.state = {
+          dashboardLinks: {}
+      };
+    }
+
+    componentDidMount() {
+        $.ajax({
+            url: '/dashboard.json',
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+                this.setState({dashboardLinks: data});
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
         });
+    };
+
+    render() {
+
+        if (this.state.dashboardLinks && this.state.dashboardLinks.result && this.state.dashboardLinks.result.length) {
+            var dashboardLinks = this.state.dashboardLinks.result.map(function(item, key) {
+                return (
+                        <a key={key} className="category__item col-xs-12 col-lg-4" href={item.url}>
+                            <article className={"category " + item.color}>
+                                <span className={"category__icon--desktop " + item.icon + " " + item.color}></span>
+                                <span className={"category__icon " + item.icon}></span>
+                                <div className="category__text">
+                                    <span className="category__name">{item.category}</span>
+                                    <h4 className="category__link">{item.linkName}</h4>
+                                </div>
+                            </article>
+                        </a>
+                );
+            });
+        }
 
         return (
             <section className="wrapper wrapper__content">
@@ -503,10 +547,10 @@ class App extends Component {
     render() {
         return (
           <div className="wrapper wrapper__app App">
-            <Header userName={this.props.userData.name} company={this.props.userData.company}/>
+            <Header />
             <Accordion />
             <BreadCrumbs/>
-            <Dashboard dashboardLinks={this.props.userData.dashboardLinks} />
+            <Dashboard />
           </div>
         );
     }
