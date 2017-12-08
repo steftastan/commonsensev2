@@ -1,12 +1,16 @@
 {
     "employeeName" : "John McPerson",
     "results" : [{
-        "name" : "Company A"
+        "name" : "Company A",
+        "selected" : false
     }, {
-        "name" : "Company B"
+        "name" : "Company B",
+        "selected" : false
     }, {
-        "name" : "Company C"
+        "name" : "Disney",
+        "selected" : true
     }, {
-        "name" : "Company E"
+        "name" : "Company E",
+        "selected" : false
     }]
 }

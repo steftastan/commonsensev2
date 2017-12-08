@@ -20,13 +20,14 @@
 
 .leftnav__item {
     overflow: hidden;
-    -webkit-transition: max-height 0.2s ease-in;
-    -moz-transition: max-height 0.2s ease-in;
-    -o-transition: max-height 0.2s ease-in;
-    -ms-transition: max-height 0.2s ease-in;
-    transition: max-height 0.2s ease-in;
+    -webkit-transition: max-height 0.5s ease-in;
+    -moz-transition: max-height 0.5s ease-in;
+    -o-transition: max-height 0.5s ease-in;
+    -ms-transition: max-height 0.5s ease-in;
+    transition: max-height 0.5s ease-in;
     border-bottom: 1px solid $blue-70;
     @include font($font-size-content, $font-weight-regular, $white);
+    line-height: $font-size-content + 3px;
     cursor: pointer;
 }
 
@@ -55,11 +56,11 @@
     vertical-align: middle;
     font-size: $font-size-mobile-content;
     color: $peach-40;
-    -webkit-transition: transform 0.2s ease-in;
-    -moz-transition: transform 0.2s ease-in;
-    -o-transition: transform 0.2s ease-in;
-    -ms-transition: transform 0.2s ease-in;
-    transition: transform 0.2s ease-in;
+    -webkit-transition: transform 0.5s ease-in;
+    -moz-transition: transform 0.5s ease-in;
+    -o-transition: transform 0.5s ease-in;
+    -ms-transition: transform 0.5s ease-in;
+    transition: transform 0.5s ease-in;
 }
 
 .leftnav__arrow:hover {
@@ -67,15 +68,19 @@
     text-decoration: none;
 }
 
+.leftnav__item.leftnav__item--open  {
+    max-height: 2000px;
+}
+
 .leftnav__item--open .leftnav__arrow {
     -ms-transform: rotate(90deg); /* IE 9 */
     -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
     transform: rotate(90deg);
-    -webkit-transition: transform 0.2s ease-in;
-    -moz-transition: transform 0.2s ease-in;
-    -o-transition: transform 0.2s ease-in;
-    -ms-transition: transform 0.2s ease-in;
-    transition: transform 0.2s ease-in;
+    -webkit-transition: transform 0.5s ease-in;
+    -moz-transition: transform 0.5s ease-in;
+    -o-transition: transform 0.5s ease-in;
+    -ms-transition: transform 0.5s ease-in;
+    transition: transform 0.5s ease-in;
     color: $peach-40;
     text-decoration: none;
 }
@@ -107,6 +112,7 @@
     display: block;
     padding: 15px 10px;
     background-color: $blue-70;
+    line-height: 18px;
     color: $white;
 }
 
@@ -123,7 +129,7 @@
 
 .leftnav::-webkit-scrollbar {
 	width: 5px;
-	background-color: rgba(0,0,0,0.25);
+	background-color: rgba(0,0,0,0.55);
 }
 
 .leftnav::-webkit-scrollbar-thumb {
@@ -145,11 +151,11 @@
         left: -225px;
         height: calc(100% - 50px);
         border-bottom: 1px solid $blue-70;
-        -webkit-transition: left 0.2s ease-in;
-        -moz-transition: left 0.2s ease-in;
-        -o-transition: left 0.2s ease-in;
-        -ms-transition: left 0.2s ease-in;
-        transition: left 0.2s ease-in;
+        -webkit-transition: left 0.5s ease-in;
+        -moz-transition: left 0.5s ease-in;
+        -o-transition: left 0.5s ease-in;
+        -ms-transition: left 0.5s ease-in;
+        transition: left 0.5s ease-in;
      }
 
      .leftnav--toggle {
@@ -168,21 +174,20 @@
      .leftnav__item {
          height: 48px;
          max-height: 48px;
-         -webkit-transition: height 0.2s ease-in;
-         -moz-transition: height 0.2s ease-in;
-         -o-transition: height 0.2s ease-in;
-         -ms-transition: height 0.2s ease-in;
-         transition: height 0.2s ease-in;
+         -webkit-transition: height 0.5s ease-in;
+         -moz-transition: height 0.5s ease-in;
+         -o-transition: height 0.5s ease-in;
+         -ms-transition: height 0.5s ease-in;
+         transition: height 0.5s ease-in;
      }
 
      .leftnav__item.leftnav__item--open {
          height: auto;
-         max-height: 300px;
-         -webkit-transition: max-height 0.2s ease-in;
-         -moz-transition: max-height 0.2s ease-in;
-         -o-transition: max-height 0.2s ease-in;
-         -ms-transition: max-height 0.2s ease-in;
-         transition: max-height 0.2s ease-in;
+         -webkit-transition: max-height 0.5s ease-in;
+         -moz-transition: max-height 0.5s ease-in;
+         -o-transition: max-height 0.5s ease-in;
+         -ms-transition: max-height 0.5s ease-in;
+         transition: max-height 0.5s ease-in;
      }
 
      .leftnav__section {
@@ -224,7 +229,6 @@
 
     .leftnav__item.leftnav__item--open {
         height: auto;
-        max-height: 300px;
     }
 
     .leftnav__icon {

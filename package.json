@@ -2,6 +2,7 @@
   "name": "commonsensev2.0",
   "version": "0.1.0",
   "private": true,
+  "homepage" : "http://locahost:9080/commonsense/react",
   "dependencies": {
     "jquery": "^3.2.1",
     "node-sass-chokidar": "0.0.3",
@@ -9,14 +10,16 @@
     "popper.js": "^1.12.9",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react-scripts": "1.0.14"
+    "react-localize-redux": "^2.13.7",
+    "react-scripts": "1.0.14",
+    "redux": "^3.7.2"
   },
   "scripts": {
     "build-css": "node-sass-chokidar src/sass/App.scss -o src/css/",
     "watch-css": "npm run build-css && node-sass-chokidar src/sass/App.scss -o src/css/ --watch --recursive",
     "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
-    "build": "npm run build-css && react-scripts build",
+    "build": "npm run build-css && react-scripts build && robocopy build \"C:/Users/etastan/IBM/rationalsdp/workspace/commonsense/Web Content/react\" /e",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

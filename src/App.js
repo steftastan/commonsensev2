@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import './css/App.css';
+import { HelloChandu } from './helper.localization.js';
 import $ from 'jquery';
+
+const languages = global.languages;
+
+HelloChandu();
 
 class Header extends Component {
     render() {
@@ -10,7 +14,7 @@ class Header extends Component {
                     <div className="header__logo icon-sialogo"></div>
                 </div>
                 <div className="grid__item grid__item--header">
-                    <h1 className="header__mainTitle">Common Sense</h1>
+                    <h1 className="header__mainTitle">CommonSense Test</h1>
                     <h2 className="header__subTitle">SIA Service Information Access Inc.</h2>
                 </div>
             </header>
@@ -34,7 +38,7 @@ class Accordion extends Component {
     componentDidMount() {
 
         $.ajax({
-            url: '/data.json',
+            url: 'webservices/FullMenu.json',
             dataType: 'json',
             cache: false,
             success: function(data) {
@@ -46,7 +50,7 @@ class Accordion extends Component {
         });
 
         $.ajax({
-            url: '/companies.json',
+            url: 'webservices/Companies.json',
             dataType: 'json',
             cache: false,
             success: function(data) {
@@ -178,7 +182,7 @@ class Accordion extends Component {
 
         if (this.state.companies.results && this.state.companies.results.length) {
             var companiesList = this.state.companies.results.map(function(item, key) {
-                return (<option key={key} id={key}>{item.name}</option>);
+                return (<option key={key} selected={item.selected} id={key}>{item.name}</option>);
             }, this);
         }
 
@@ -277,11 +281,16 @@ class Section extends Component {
 class SubLinkList extends Component {
 
     render() {
-        var subLinks = this.props.sublinks.map(function(item, key) {
-            return (
-                <a key={key} className="leftnav__subItem" href={item.url}>{item.name}</a>
-            );
-        }, this);
+
+        var subLinks;
+
+        if (this.props.sublinks && this.props.sublinks && this.props.sublinks.length) {
+            subLinks = this.props.sublinks.map(function(item, key) {
+                return (
+                    <a key={key} className="leftnav__subItem" href={item.url}>{item.name}</a>
+                );
+            }, this);
+        }
 
         return (
             <div className="leftNav__subLinks">
@@ -495,7 +504,7 @@ class Dashboard extends Component {
 
     componentDidMount() {
         $.ajax({
-            url: '/dashboard.json',
+            url: 'webservices/SubMenu.json',
             dataType: 'json',
             cache: false,
             success: function(data) {
@@ -509,8 +518,9 @@ class Dashboard extends Component {
 
     render() {
 
-        if (this.state.dashboardLinks && this.state.dashboardLinks.result && this.state.dashboardLinks.result.length) {
-            var dashboardLinks = this.state.dashboardLinks.result.map(function(item, key) {
+
+        if (this.state.dashboardLinks && this.state.dashboardLinks.results && this.state.dashboardLinks.results.length) {
+            var dashboardLinks = this.state.dashboardLinks.results.map(function(item, key) {
                 return (
                         <a key={key} className="category__item col-xs-12 col-lg-4" href={item.url}>
                             <article className={"category " + item.color}>
@@ -543,6 +553,7 @@ class Dashboard extends Component {
 }
 
 class App extends Component {
+
 
     render() {
         return (
