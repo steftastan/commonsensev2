@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 // import { Localization } from './helper.localization.js';
 import $ from 'jquery';
-import { Dashboard } from './components/modules/dashboard.js';
 import { Header } from './components/layout/header.js';
 import { BreadCrumbs } from './components/layout/breadcrumbs.js';
-import { Accordion, Section, SubLinkList } from './components/layout/accordion.js';
+import { Accordion } from './components/layout/accordion.js';
+import { DataTable } from './components/modules/datatable.js';
 
 const languages = global.languages;
 
-const App = () => (
+const AccountsPayable = () => (
     <div className="wrapper wrapper__app App">
         <Header />
         <Accordion />
         <BreadCrumbs/>
-        <Dashboard />
+        <DataTable />
+
     </div>
 )
 
@@ -21,4 +22,4 @@ const App = () => (
 
 
 
-export default App;
+export default AccountsPayable;

@@ -21,7 +21,8 @@
  *
  */
 /* Config */
-@import url(../bootstrap/bootstrap.css);
+@import url(../bootstrap/bootstrap.min.css);
+@import url(../bootstrap/bootstrap-grid.min.css);
 @import url(../font-awesome/css/font-awesome.css);
 /** VARIABLES
   * This Sass file contains imports and variable declarations
@@ -307,6 +308,19 @@ body {
       margin: 15px;
       padding: 15px 15px 0;
       background-color: #FFF; } }
+
+.wrapper__filterDataTable {
+  display: inline-block;
+  position: relative;
+  margin-left: 25px;
+  width: 20%; }
+
+.wrapper__showPerPage {
+  display: inline-block;
+  position: relative;
+  float: right;
+  margin-left: 25px;
+  width: 10%; }
 
 @font-face {
   font-family: 'icomoon';
@@ -1372,7 +1386,6 @@ body {
   /* Firefox, other Gecko */
   box-sizing: border-box;
   /* Opera/IE 8+ */
-  padding: 6px 5px 6px 30px;
   font-family: 'Montserrat';
   color: #FFF;
   font-size: 12px;
@@ -1384,6 +1397,7 @@ body {
   outline: 0;
   border: 0;
   border-radius: 20px;
+  padding: 6px 5px 6px 30px;
   background-color: #F26322; }
 
 .form__filterLeftNav {
@@ -1391,6 +1405,26 @@ body {
   width: 100%;
   border: 0;
   border-radius: 15px;
+  padding: 6px 5px 6px 30px;
+  color: #8C9696; }
+
+.form__filterDataTable {
+  outline: 0;
+  width: 100%;
+  border: 0;
+  border-radius: 15px;
+  background-color: #E2EBEB;
+  padding: 6px 5px 6px 30px;
+  color: #8C9696; }
+
+.form__showPerPage {
+  width: 75px;
+  outline: 0;
+  margin-right: 5px;
+  border: 0;
+  border-radius: 20px;
+  padding: 5px;
+  background-color: #E2EBEB;
   color: #8C9696; }
 
 .form__icon {

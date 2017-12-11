@@ -10,14 +10,12 @@
     position: relative;
     margin: 5px 0;
     width: 100%;
-
 }
 
 .form__item {
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */
-    padding: 6px 5px 6px 30px;
     font-family: 'Montserrat';
     @include font($font-size-content, $font-weight-regular, $white);
 }
@@ -28,6 +26,7 @@
     outline: 0;
     border: 0;
     border-radius: 20px;
+    padding: 6px 5px 6px 30px;
     background-color: $peach-40;
 }
 
@@ -36,6 +35,28 @@
     width:100%;
     border: 0;
     border-radius: 15px;
+    padding: 6px 5px 6px 30px;
+    color: $cool-gray-40;
+}
+
+.form__filterDataTable {
+    outline: 0;
+    width:100%;
+    border: 0;
+    border-radius: 15px;
+    background-color: $cool-gray-1;
+    padding: 6px 5px 6px 30px;
+    color: $cool-gray-40;
+}
+
+.form__showPerPage {
+    width: 75px;
+    outline: 0;
+    margin-right: 5px;
+    border: 0;
+    border-radius: 20px;
+    padding: 5px;
+    background-color: $cool-gray-1;
     color: $cool-gray-40;
 }
 
