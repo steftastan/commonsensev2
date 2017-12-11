@@ -1,3 +1,3 @@
-export function HelloChandu() {
-    console.log('bobs');
+export function Localization() {
+    console.log('localization stuff there');
 }
