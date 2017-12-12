@@ -50,15 +50,24 @@
         left: 200px;
         width: calc(100% - 200px);
     }
+}
 
-    @include desktop {
+.wrapper__content--inner {
+
+    @include mobile {
+        width: 100%;
     }
 
+    @include tablet {
+        display: inline-block;
+        width: calc(100% - 250px);
+    }
 }
 
 .wrapper__content--whiteBox {
     border-radius: 5px;
     padding: 10px;
+    overflow: hidden;
     background-color: $white;
 
     @include mobile {
@@ -88,20 +97,79 @@
         padding: 15px 15px 0;
         background-color: $white;
     }
+}
 
+.wrapper__dataTable {
+    display: inline-block;
+    width: 100%;
+
+    @include mobile {
+        height: 200px;
+        overflow: scroll;
+    }
+
+    @include tablet {
+
+    }
 }
 
 .wrapper__filterDataTable {
     display: inline-block;
     position: relative;
-    margin-left: 25px;
-    width: 20%;
+
+    @include mobile {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    @include tablet {
+        width: 20%;
+        margin-left: 25px;
+    }
 }
 
 .wrapper__showPerPage {
     display: inline-block;
     position: relative;
-    float: right;
-    margin-left: 25px;
-    width: 10%;
+
+    @include mobile {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    @include tablet {
+        float: right;
+        margin-left: 25px;
+    }
+}
+
+.wrapper__content--toolBox {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+
+    @include mobile {
+        margin-top: 10px;
+    }
+
+    @include tablet {
+        display: inline-block;
+    }
+}
+
+.wrapper__content--widgetColumn {
+    display: inline-block;
+    position: relative;
+
+    @include mobile {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    @include tablet {
+        display: inline-block;
+        vertical-align: top;
+        width: 235px;
+    }
 }

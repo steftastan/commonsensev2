@@ -21,8 +21,7 @@
  *
  */
 /* Config */
-@import url(../bootstrap/bootstrap.min.css);
-@import url(../bootstrap/bootstrap-grid.min.css);
+@import url(../bootstrap/bootstrap.css);
 @import url(../font-awesome/css/font-awesome.css);
 /** VARIABLES
   * This Sass file contains imports and variable declarations
@@ -280,9 +279,19 @@ body {
       left: 200px;
       width: calc(100% - 200px); } }
 
+@media only screen and (max-device-width: 767px) {
+  .wrapper__content--inner {
+    width: 100%; } }
+
+@media only screen and (min-device-width: 767px) {
+  .wrapper__content--inner {
+    display: inline-block;
+    width: calc(100% - 250px); } }
+
 .wrapper__content--whiteBox {
   border-radius: 5px;
   padding: 10px;
+  overflow: hidden;
   background-color: #FFF; }
   @media only screen and (max-device-width: 767px) {
     .wrapper__content--whiteBox {
@@ -309,18 +318,62 @@ body {
       padding: 15px 15px 0;
       background-color: #FFF; } }
 
+.wrapper__dataTable {
+  display: inline-block;
+  width: 100%; }
+  @media only screen and (max-device-width: 767px) {
+    .wrapper__dataTable {
+      height: 200px;
+      overflow: scroll; } }
+
 .wrapper__filterDataTable {
   display: inline-block;
-  position: relative;
-  margin-left: 25px;
-  width: 20%; }
+  position: relative; }
+  @media only screen and (max-device-width: 767px) {
+    .wrapper__filterDataTable {
+      width: 100%;
+      margin-top: 10px; } }
+  @media only screen and (min-device-width: 767px) {
+    .wrapper__filterDataTable {
+      width: 20%;
+      margin-left: 25px; } }
 
 .wrapper__showPerPage {
   display: inline-block;
+  position: relative; }
+  @media only screen and (max-device-width: 767px) {
+    .wrapper__showPerPage {
+      width: 100%;
+      margin-top: 10px; } }
+  @media only screen and (min-device-width: 767px) {
+    .wrapper__showPerPage {
+      float: right;
+      margin-left: 25px; } }
+
+.wrapper__content--toolBox {
+  display: inline-block;
   position: relative;
-  float: right;
-  margin-left: 25px;
-  width: 10%; }
+  overflow: hidden;
+  width: 100%; }
+  @media only screen and (max-device-width: 767px) {
+    .wrapper__content--toolBox {
+      margin-top: 10px; } }
+  @media only screen and (min-device-width: 767px) {
+    .wrapper__content--toolBox {
+      display: inline-block; } }
+
+.wrapper__content--widgetColumn {
+  display: inline-block;
+  position: relative; }
+  @media only screen and (max-device-width: 767px) {
+    .wrapper__content--widgetColumn {
+      width: 100%;
+      margin-top: 10px; } }
+  @media only screen and (min-device-width: 767px) {
+    .wrapper__content--widgetColumn {
+      display: inline-block;
+      vertical-align: top;
+      width: 235px; } }
 
 @font-face {
   font-family: 'icomoon';
@@ -1440,6 +1493,81 @@ body {
 
 .form__icon--search {
   color: #8C9696; }
+
+/* Mobile-specific styles */
+/* Tablet-specific styles */
+/* Desktop-specific styles */
+/* ==========================================================================
+   DATA TABLE
+   ========================================================================== */
+/**
+ * Navigation located at the left of the browser on desktop and tablet, and
+ * hidden inside a hamburger icon on mobile, contains the main link categories.
+ */
+/* All devices */
+.dataTable {
+  min-width: 960px;
+  width: 100%; }
+
+.dataTable__item {
+  display: block;
+  overflow: hidden; }
+
+.dataTable__row--content {
+  width: 100%;
+  display: inline-flex;
+  border-bottom: 1px solid #E2EBEB;
+  cursor: pointer; }
+
+.dataTable__row--content:hover {
+  background-color: #E2EBEB; }
+
+.dataTable__row--header {
+  width: 100%;
+  display: inline-flex;
+  border-bottom: 1px solid #1F57A4;
+  text-transform: uppercase;
+  color: #1F57A4;
+  font-size: 12px;
+  font-weight: 700; }
+
+/* Mobile-specific styles */
+@media only screen and (max-device-width: 767px) {
+  .dataTable__row--content {
+    padding: 5px 0; }
+  .dataTable__row--header {
+    padding: 0;
+    font-size: 11px; } }
+
+/* Tablet-specific styles */
+@media only screen and (min-device-width: 767px) {
+  .dataTable__row--content {
+    padding: 15px 0; }
+  .dataTable__row--header {
+    padding: 0 0 15px 0;
+    font-size: 11px; } }
+
+/* Desktop-specific styles */
+/* ==========================================================================
+   NAV WIDGET
+   ========================================================================== */
+/**
+ * Navigational Widget available on inner pages such as Accounts Payable,
+ * Accounts Receivable, etc.
+ */
+/* All devices */
+.widget {
+  background-color: #2D408F;
+  margin: 15px 0 0 0; }
+
+.widget--toolItem {
+  border-bottom: 1px solid #1F57A4; }
+
+.widget--toolContent {
+  padding: 15px 10px;
+  color: #FFF;
+  font-size: 12px;
+  font-weight: 400; }
 
 /* Mobile-specific styles */
 /* Tablet-specific styles */

@@ -1,0 +1,40 @@
+
+/* ==========================================================================
+   NAV WIDGET
+   ========================================================================== */
+
+/**
+ * Navigational Widget available on inner pages such as Accounts Payable,
+ * Accounts Receivable, etc.
+ */
+
+/* All devices */
+.widget {
+    background-color: $blue-70;
+    margin: 15px 0 0 0;
+
+}
+
+.widget--toolItem {
+    border-bottom: 1px solid $blue-60;
+}
+
+.widget--toolContent {
+    padding: 15px 10px;
+    @include font($font-size-content, $font-weight-regular, $white);
+}
+
+/* Mobile-specific styles */
+@include mobile {
+
+}
+
+/* Tablet-specific styles */
+@include tablet {
+
+}
+
+/* Desktop-specific styles */
+@include desktop {
+
+}
