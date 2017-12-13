@@ -3,7 +3,7 @@
         "toolBox" : [{
             "linkName" : "Analysis",
             "url" : "http://google.com",
-            "subMenu" : [{
+            "toolBox" : [{
                 "linkName" : "G/L Analysis",
                 "url" : "http://google.com"
                 }, {
@@ -13,21 +13,35 @@
         }, {
             "linkName" : "Reports",
             "url" : "http://google.com",
-            "subMenu" : [{
+            "toolBox" : [{
                 "linkName" : "Suppliers",
                 "url" : "http://google.com",
-                "subMenu" : [{
+                "toolBox" : [{
                         "linkName" : "Numerical Listing",
-                        "url" : "http://google.com"
+                        "url" : "http://google.com",
+                        "toolBox" : [{
+                                "linkName" : "Test Lel",
+                                "url" : "http://google.com"
+                            }]
                     }, {
                         "linkName" : "Alphabetical Listing",
-                        "url" : "http://google.com"
+                        "url" : "http://google.com",
+                        "toolBox" : [{
+                                "linkName" : "OMG",
+                                "url" : "http://google.com"
+                            },
+                            {
+                                    "linkName" : "Infinite",
+                                    "url" : "http://google.com"
+                                }]
                     }, {
                         "linkName" : "Labels - to send",
-                        "url" : "http://google.com"
+                        "url" : "http://google.com",
+                        "toolBox" : []
                     }, {
                         "linkName" : "Labels - for filing",
-                        "url" : "http://google.com"
+                        "url" : "http://google.com",
+                        "toolBox" : []
                     }]
                 },
                 {
@@ -41,10 +55,10 @@
             }, {
                 "linkName" : "Database",
                 "url" : "http://google.com",
-                "subMenu" : [{
+                "toolBox" : [{
                     "linkName" : "Queries",
                     "url" : "http://google.com",
-                    "subMenu" : [{
+                    "toolBox" : [{
                             "linkName" : "AP0.SPL Suppliers",
                             "url" : "http://google.com"
                         }, {
@@ -67,10 +81,10 @@
             }, {
                 "linkName" : "Options",
                 "url" : "http://google.com",
-                "subMenu" : [{
+                "toolBox" : [{
                     "linkName" : "Voucher Modification",
                     "url" : "http://google.com",
-                    "subMenu" : [{
+                    "toolBox" : [{
                             "linkName" : "Apply Cheque #, date to vouchers",
                             "url" : "http://google.com"
                         }, {
@@ -93,7 +107,7 @@
             }, {
                 "linkName" : "Tables",
                 "url" : "http://google.com",
-                "subMenu" : [{
+                "toolBox" : [{
                     "linkName" : "Cross Ref",
                     "url" : "http://google.com"
                     }, {
@@ -102,7 +116,7 @@
                     }, {
                         "linkName" : "Codes",
                         "url" : "http://google.com",
-                        "subMenu" : [{
+                        "toolBox" : [{
                             "linkName" : "Language codes",
                             "url" : "http://google.com"
                         }, {

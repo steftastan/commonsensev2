@@ -1553,21 +1553,45 @@ body {
    ========================================================================== */
 /**
  * Navigational Widget available on inner pages such as Accounts Payable,
- * Accounts Receivable, etc.
+ * Accounts Receivable, etc, these are the boxes of links on the right inside
+ * of these pages.
  */
 /* All devices */
 .widget {
-  background-color: #2D408F;
-  margin: 15px 0 0 0; }
+  margin: 15px 0 0 0;
+  border-radius: 5px;
+  overflow: hidden; }
 
-.widget--toolItem {
-  border-bottom: 1px solid #1F57A4; }
-
-.widget--toolContent {
+.widget__toolContent {
   padding: 15px 10px;
   color: #FFF;
   font-size: 12px;
   font-weight: 400; }
+
+.widget__toolItem {
+  background-color: #2D408F;
+  border-bottom: 1px solid #1F57A4;
+  color: #FFF;
+  font-size: 12px;
+  font-weight: 400; }
+
+.widget__toolItem:last-child {
+  border: none; }
+
+.widget__toolItem .widget__toolItem {
+  background-color: #1F57A4;
+  border: none; }
+
+.widget__toolItem .widget__toolItem .widget__toolItem {
+  background-color: #2D74DA;
+  border: none; }
+
+.widget__toolItem .widget__toolItem .widget__toolItem .widget__toolItem {
+  background-color: #5392FF;
+  border: none; }
+
+.widget__toolSubMenu {
+  padding: 15px 10px; }
 
 /* Mobile-specific styles */
 /* Tablet-specific styles */
