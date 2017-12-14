@@ -22,6 +22,7 @@
  */
 /* Config */
 @import url(../bootstrap/bootstrap.css);
+@import url(../DataTables/DataTables-1.10.16/css/jquery.dataTables.css);
 @import url(../font-awesome/css/font-awesome.css);
 /** VARIABLES
   * This Sass file contains imports and variable declarations
@@ -286,7 +287,7 @@ body {
 @media only screen and (min-device-width: 767px) {
   .wrapper__content--inner {
     display: inline-block;
-    width: calc(100% - 250px); } }
+    width: calc(100% - 450px); } }
 
 .wrapper__content--whiteBox {
   border-radius: 5px;

@@ -2,6 +2,72 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 $.DataTable = require('datatables.net');
 
+const columns = [{
+        title: 'ID',
+        width: 120,
+        data: 'id'
+    }, {
+        title: 'Supplier',
+        width: 180,
+        data: 'supplier'
+    }, {
+        title: 'Address',
+        width: 180,
+        data: 'address'
+    }, {
+        title: 'City',
+        width: 180,
+        data: 'city'
+    }, {
+        title: 'Province',
+        width: 180,
+        data: 'province'
+    }, {
+        title: 'Balance Due',
+        width: 180,
+        data: 'balanceDue'
+    }, {
+        title: 'Last Invoice',
+        width: 180,
+        data: 'lastInvoice'
+    }, {
+        title: 'Last Cheque',
+        width: 180,
+        data: 'lastCheque'
+    }, {
+        title: 'Current Per.',
+        width: 180,
+        data: 'currentPer'
+    }
+];
+
+function reloadTableData(names) {
+    const table = $('.data-table-wrapper').find('table').DataTable();
+    table.clear();
+    table.rows.add(names);
+    table.draw();
+}
+
+function updateTable(names) {
+    const table = $('.data-table-wrapper').find('table').DataTable();
+    let dataChanged = false;
+    table.rows().every(function () {
+        const oldNameData = this.data();
+        const newNameData = names.find((nameData) => {
+            return nameData.name === oldNameData.name;
+        });
+        if (oldNameData.nickname !== newNameData.nickname) {
+            dataChanged = true;
+            this.data(newNameData);
+        }
+       return true;
+    });
+
+    if (dataChanged) {
+        table.draw();
+    }
+}
+
 export class Filter extends Component {
     constructor() {
       super();
@@ -12,9 +78,27 @@ export class Filter extends Component {
       };
     }
 
-    componentDidUpdate() {
-
+    componentDidMount() {
+        var table = $('.data-table-wrapper').DataTable();
+        // #myInput is a <input type="text"> element
+        $('#filterTable').on('keyup', function () {
+            table.search(this.value).draw();
+            console.log(table.search(this.value));
+        });
+        //this.setState({accountData: {}});
     }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log(nextState);
+         if (nextState) {
+             if (nextState.accountData.length !== this.state.accountData.length) {
+                 reloadTableData(nextState.accountData);
+             } else {
+                 updateTable(nextState.accountData);
+             }
+         }
+         return false;
+     }
 
     render() {
 
@@ -29,7 +113,7 @@ export class Filter extends Component {
                         <span className="tag tag--active">All</span>
                         <div className="wrapper__filterDataTable">
                             <i className="form__icon form__icon--search fa fa-search"></i>
-                            <input id="searchInput" className="form__item form__filterDataTable" type="text" placeholder="Filter results" />
+                            <input id="filterTable" className="form__item form__filterDataTable" type="text" placeholder="Filter results" />
                         </div>
 
                         <div className="wrapper__showPerPage">
@@ -63,6 +147,9 @@ export class DataTable extends Component {
     componentDidMount() {
         var accounts = {};
 
+        /*
+         * Obtain DataTable info and store in the component's state.
+         */
         $.ajax({
             url: 'webservices/AccountsPayable.json',
             dataType: 'json',
@@ -77,6 +164,36 @@ export class DataTable extends Component {
             }.bind(this)
         });
 
+        console.log(this.refs);
+
+        $(this.refs.main).DataTable({
+            dom: '<"data-table-wrapper"t>',
+            data: this.state.accountData,
+            columns,
+            ordering: false,
+            paging: true,
+            searching: true,
+            search: "",
+            sPaginationType: "bootstrap"
+        });
+    }
+
+    componentWillUnmount() {
+        $('.data-table-wrapper')
+            .find('table')
+            .DataTable()
+            .destroy(true);
+   }
+
+   shouldComponentUpdate(nextProps, nextState) {
+        if (nextState) {
+            if (nextState.accountData.length !== this.state.accountData.length) {
+                reloadTableData(nextState.accountData);
+            } else {
+                updateTable(nextState.accountData);
+            }
+        }
+        return false;
     }
 
     render() {
@@ -102,28 +219,16 @@ export class DataTable extends Component {
         }
 
         return (
-            <section className="wrapper wrapper__content--inner">
+
+
+            <section className="wrapper wrapper__content wrapper__content--inner">
                 <Filter/>
                 <div className="wrapper wrapper__content--whiteBox">
                     <div className="wrapper__dataTable dataTable">
-                        <div className="dataTable__row dataTable__row--header">
-                            <div className="dataTable__item col-xs-1">ID</div>
-                            <div className="dataTable__item col-xs-2">Supplier</div>
-                            <div className="dataTable__item col-xs-2">Address</div>
-                            <div className="dataTable__item col-xs-1">City</div>
-                            <div className="dataTable__item col-xs-1">Province</div>
-                            <div className="dataTable__item col-xs-1">Telephone</div>
-                            <div className="dataTable__item col-xs-1">Balance Due</div>
-                            <div className="dataTable__item col-xs-1">Last Invoice</div>
-                            <div className="dataTable__item col-xs-1">Last Cheque</div>
-                            <div className="dataTable__item col-xs-1">Current Per.</div>
-                        </div>
-                        {accounts}
+                        <table ref="main" />
                     </div>
                 </div>
             </section>
-
-
         );
     }
 }

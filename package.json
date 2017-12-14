@@ -10,6 +10,7 @@
     "popper.js": "^1.12.9",
     "react": "^16.0.0",
     "react-bootstrap": "^0.31.5",
+    "react-bootstrap-table": "^4.3.0",
     "react-dom": "^16.0.0",
     "react-localize-redux": "^2.13.7",
     "react-scripts": "1.0.14",
