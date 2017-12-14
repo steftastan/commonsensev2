@@ -22,14 +22,15 @@
     @include font($font-size-content, $font-weight-regular, $white);
 }
 
+.widget__toolItem.widget__toolItem--open {
+    display: block;
+}
+
 .widget__toolItem {
+    display: none;
     background-color: $blue-70;
     border-bottom: 1px solid $blue-60;
     @include font($font-size-content, $font-weight-regular, $white);
-}
-
-.widget__toolItem:last-child {
-    border: none;
 }
 
 .widget__toolItem .widget__toolItem {

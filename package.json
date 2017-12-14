@@ -23,5 +23,8 @@
     "build": "npm run build-css && react-scripts build && robocopy build \"C:/Users/etastan/IBM/rationalsdp/workspace/commonsense/Web Content/react\" /e",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "datatables.net": "^1.10.16"
   }
 }

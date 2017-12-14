@@ -1568,15 +1568,16 @@ body {
   font-size: 12px;
   font-weight: 400; }
 
+.widget__toolItem.widget__toolItem--open {
+  display: block; }
+
 .widget__toolItem {
+  display: none;
   background-color: #2D408F;
   border-bottom: 1px solid #1F57A4;
   color: #FFF;
   font-size: 12px;
   font-weight: 400; }
-
-.widget__toolItem:last-child {
-  border: none; }
 
 .widget__toolItem .widget__toolItem {
   background-color: #1F57A4;

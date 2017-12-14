@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+$.DataTable = require('datatables.net');
 
 export class Filter extends Component {
     constructor() {
