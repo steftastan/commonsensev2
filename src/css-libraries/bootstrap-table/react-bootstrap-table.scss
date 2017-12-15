@@ -15,7 +15,7 @@
 
 /*Size per page dropdown filter */
 .dropdown-toggle {
-    background-color: $cool-gray-40;
+    background-color: $peach-40;
     display: inline-block;
     width: 55px;
     margin: 0 5px;
@@ -34,7 +34,7 @@
     border: 0;
     border-radius: 15px;
     padding: 0;
-    background-color: $cool-gray-40;
+    background-color: $peach-40;
 }
 
 /* Contents of the dropdown's pop-up */
@@ -45,7 +45,7 @@
 
 .react-bs-table-sizePerPage-dropdown .dropdown-menu > li > a:hover,
 .react-bs-table-sizePerPage-dropdown .dropdown-menu > li > a:focus {
-    background-color: $cool-gray-20;
+    background-color: $peach-50;
 }
 
 .react-bs-table-container .react-bs-table-search-form {
@@ -72,7 +72,7 @@
 }
 
 .react-bs-table-pagination {
-  margin-top: 10px;
+  margin: 0 0 10px;
 }
 
 .react-bs-table-tool-bar {
@@ -92,7 +92,7 @@
 
 .react-bootstrap-table-page-btns-ul {
   /* override the margin-top defined in .pagination class in bootstrap. */
-  margin: 10px 0;
+  margin: 15px 0 0;
 }
 
 .react-bs-table .table-bordered {

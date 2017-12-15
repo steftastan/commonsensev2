@@ -909,7 +909,7 @@ body {
 /* All devices */
 /*Size per page dropdown filter */
 .dropdown-toggle {
-  background-color: #8C9696;
+  background-color: #F26322;
   display: inline-block;
   width: 55px;
   margin: 0 5px;
@@ -929,7 +929,7 @@ body {
   border: 0;
   border-radius: 15px;
   padding: 0;
-  background-color: #8C9696; }
+  background-color: #F26322; }
 
 /* Contents of the dropdown's pop-up */
 .react-bs-table-sizePerPage-dropdown .dropdown-menu > li > a {
@@ -940,7 +940,7 @@ body {
 
 .react-bs-table-sizePerPage-dropdown .dropdown-menu > li > a:hover,
 .react-bs-table-sizePerPage-dropdown .dropdown-menu > li > a:focus {
-  background-color: #B8C1C1; }
+  background-color: #C45433; }
 
 .react-bs-table-container .react-bs-table-search-form {
   margin-bottom: 0; }
@@ -962,7 +962,7 @@ body {
   text-overflow: ellipsis; }
 
 .react-bs-table-pagination {
-  margin-top: 10px; }
+  margin: 0 0 10px; }
 
 .react-bs-table-tool-bar {
   margin-bottom: 5px; }
@@ -978,7 +978,7 @@ body {
 
 .react-bootstrap-table-page-btns-ul {
   /* override the margin-top defined in .pagination class in bootstrap. */
-  margin: 10px 0; }
+  margin: 15px 0 0; }
 
 .react-bs-table .table-bordered {
   border: 0;
@@ -1817,14 +1817,6 @@ th.react-bs-table-expand-cell > div {
  * hidden inside a hamburger icon on mobile, contains the main link categories.
  */
 /* All devices */
-.dataTable {
-  min-width: 960px;
-  width: 100%; }
-
-.dataTable__item {
-  display: block;
-  overflow: hidden; }
-
 .dataTable__row--content {
   width: 100%;
   border-bottom: 1px solid #E2EBEB;
@@ -1839,6 +1831,9 @@ th.react-bs-table-expand-cell > div {
   color: #F26322;
   font-size: 12px;
   font-weight: 700; }
+
+.dataTable__pagination {
+  text-align: center; }
 
 /* Mobile-specific styles */
 @media only screen and (max-device-width: 767px) {
@@ -1930,7 +1925,7 @@ th.react-bs-table-expand-cell > div {
 .col-md-6.col-xs-6.col-sm-6.col-lg-6 {
   width: 100%; }
 
-.col-md-6.col-xs-6.col-sm-6.col-lg-6:nth-child(2) {
+.col-md-6.col-xs-6.col-sm-6.col-lg-6:nth-of-type(2) {
   text-align: center; }
 
 /* Overriding pagination links in order to match elements to the design */
@@ -1950,9 +1945,10 @@ th.react-bs-table-expand-cell > div {
   font-size: 12px;
   font-weight: 700; }
 
-.pagination > li > a:hover {
-  background-color: #2D408F;
-  color: #F26322; }
+@media only screen and (min-device-width: 1025px) {
+  .pagination > li > a:hover {
+    background-color: #2D408F;
+    color: #F26322; } }
 
 .pagination > .active > a,
 .pagination > .active > a:hover,

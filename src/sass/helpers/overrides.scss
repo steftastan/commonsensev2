@@ -24,12 +24,10 @@
 
 /* Overriding the pagination widget for mobile, making it into two rows instead of two columns */
 .col-md-6.col-xs-6.col-sm-6.col-lg-6 {
-
-        width: 100%;
-
+    width: 100%;
 }
 
-.col-md-6.col-xs-6.col-sm-6.col-lg-6:nth-child(2) {
+.col-md-6.col-xs-6.col-sm-6.col-lg-6:nth-of-type(2) {
         text-align: center;
 }
 
@@ -53,8 +51,12 @@
 }
 
 .pagination > li > a:hover {
-    background-color: $blue-70;
-    color: $peach-40;
+
+    @include desktop {
+        background-color: $blue-70;
+        color: $peach-40;
+    }
+
 }
 
 .pagination > .active > a,
