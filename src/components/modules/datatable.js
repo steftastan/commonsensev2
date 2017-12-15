@@ -1,72 +1,11 @@
+/*
+ * Data table created with React Bootstrap Table by Allen Fang
+ * http://allenfang.github.io/react-bootstrap-table
+ */
+
 import React, { Component } from 'react';
 import $ from 'jquery';
-$.DataTable = require('datatables.net');
-
-const columns = [{
-        title: 'ID',
-        width: 120,
-        data: 'id'
-    }, {
-        title: 'Supplier',
-        width: 180,
-        data: 'supplier'
-    }, {
-        title: 'Address',
-        width: 180,
-        data: 'address'
-    }, {
-        title: 'City',
-        width: 180,
-        data: 'city'
-    }, {
-        title: 'Province',
-        width: 180,
-        data: 'province'
-    }, {
-        title: 'Balance Due',
-        width: 180,
-        data: 'balanceDue'
-    }, {
-        title: 'Last Invoice',
-        width: 180,
-        data: 'lastInvoice'
-    }, {
-        title: 'Last Cheque',
-        width: 180,
-        data: 'lastCheque'
-    }, {
-        title: 'Current Per.',
-        width: 180,
-        data: 'currentPer'
-    }
-];
-
-function reloadTableData(names) {
-    const table = $('.data-table-wrapper').find('table').DataTable();
-    table.clear();
-    table.rows.add(names);
-    table.draw();
-}
-
-function updateTable(names) {
-    const table = $('.data-table-wrapper').find('table').DataTable();
-    let dataChanged = false;
-    table.rows().every(function () {
-        const oldNameData = this.data();
-        const newNameData = names.find((nameData) => {
-            return nameData.name === oldNameData.name;
-        });
-        if (oldNameData.nickname !== newNameData.nickname) {
-            dataChanged = true;
-            this.data(newNameData);
-        }
-       return true;
-    });
-
-    if (dataChanged) {
-        table.draw();
-    }
-}
+import {BootstrapTable, TableHeaderColumn, SizePerPageDropDown} from 'react-bootstrap-table';
 
 export class Filter extends Component {
     constructor() {
@@ -77,28 +16,6 @@ export class Filter extends Component {
           employeeName: ''
       };
     }
-
-    componentDidMount() {
-        var table = $('.data-table-wrapper').DataTable();
-        // #myInput is a <input type="text"> element
-        $('#filterTable').on('keyup', function () {
-            table.search(this.value).draw();
-            console.log(table.search(this.value));
-        });
-        //this.setState({accountData: {}});
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log(nextState);
-         if (nextState) {
-             if (nextState.accountData.length !== this.state.accountData.length) {
-                 reloadTableData(nextState.accountData);
-             } else {
-                 updateTable(nextState.accountData);
-             }
-         }
-         return false;
-     }
 
     render() {
 
@@ -111,22 +28,6 @@ export class Filter extends Component {
                         <span className="tag tag--active">Purchases</span>
                         <span className="tag tag--inactive">Balance</span>
                         <span className="tag tag--active">All</span>
-                        <div className="wrapper__filterDataTable">
-                            <i className="form__icon form__icon--search fa fa-search"></i>
-                            <input id="filterTable" className="form__item form__filterDataTable" type="text" placeholder="Filter results" />
-                        </div>
-
-                        <div className="wrapper__showPerPage">
-                            <span className="tag--text">Show</span>
-                            <select className="form__item form__showPerPage">
-                                <option>10</option>
-                                <option>20</option>
-                                <option>50</option>
-                                <option>All</option>
-                            </select>
-                            <span className="tag--text">per page</span>
-                        </div>
-
                     </form>
                 </div>
         );
@@ -163,71 +64,50 @@ export class DataTable extends Component {
                 console.error(this.props.url, status, err.toString());
             }.bind(this)
         });
-
-        console.log(this.refs);
-
-        $(this.refs.main).DataTable({
-            dom: '<"data-table-wrapper"t>',
-            data: this.state.accountData,
-            columns,
-            ordering: false,
-            paging: true,
-            searching: true,
-            search: "",
-            sPaginationType: "bootstrap"
-        });
-    }
-
-    componentWillUnmount() {
-        $('.data-table-wrapper')
-            .find('table')
-            .DataTable()
-            .destroy(true);
-   }
-
-   shouldComponentUpdate(nextProps, nextState) {
-        if (nextState) {
-            if (nextState.accountData.length !== this.state.accountData.length) {
-                reloadTableData(nextState.accountData);
-            } else {
-                updateTable(nextState.accountData);
-            }
-        }
-        return false;
     }
 
     render() {
-        var accounts;
-        if (this.state.accountData && this.state.accountData.length) {
+        var accounts = this.state.accountData.length ? this.state.accountData : [];
 
-            accounts = this.state.accountData.map(function(item, key) {
-                return (
-                    <div className="dataTable__row--content" key={key}>
-                        <div className="dataTable__item col-xs-1">{item.id}</div>
-                        <div className="dataTable__item col-xs-2">{item.supplier}</div>
-                        <div className="dataTable__item col-xs-2">{item.address}</div>
-                        <div className="dataTable__item col-xs-1">{item.city}</div>
-                        <div className="dataTable__item col-xs-1">{item.province}</div>
-                        <div className="dataTable__item col-xs-1">{item.telephone}</div>
-                        <div className="dataTable__item col-xs-1">{item.balanceDue}</div>
-                        <div className="dataTable__item col-xs-1">{item.lastInvoice}</div>
-                        <div className="dataTable__item col-xs-1">{item.lastCheque}</div>
-                        <div className="dataTable__item col-xs-1">{item.currentPer}</div>
-                    </div>
-                );
-            });
-        }
+        const options = {
+            page: 1,  // which page you want to show as default
+            sizePerPageList: [ {
+            text: '5', value: 5
+            }, {
+            text: '10', value: 10
+            }, {
+            text: 'All', value: accounts.length
+            } ], // you can change the dropdown list for size per page
+            sizePerPage: 10,  // which size per page you want to locate as default
+            pageStartIndex: 1, // where to start counting the pages
+            paginationSize: 5,  // the pagination bar size.
+            prePage: 'Prev', // Previous page button text
+            nextPage: 'Next', // Next page button text
+            firstPage: 'First', // First page button text
+            lastPage: 'Last', // Last page button text
+            paginationShowsTotal: true,  // Accept bool or function
+            paginationPosition: 'top'  // default is bottom, top and both is all available
+        };
 
         return (
-
 
             <section className="wrapper wrapper__content wrapper__content--inner">
                 <Filter/>
                 <div className="wrapper wrapper__content--whiteBox">
-                    <div className="wrapper__dataTable dataTable">
-                        <table ref="main" />
-                    </div>
+                    <BootstrapTable data={accounts} options={options} striped hover pagination tableHeaderClass='dataTable__row--header' trClassName='dataTable__row--content'>
+                         <TableHeaderColumn dataSort={ true } filter={ { type: 'TextFilter' } } isKey dataField='id'>ID</TableHeaderColumn>
+                         <TableHeaderColumn dataSort={ true } filter={ { type: 'TextFilter'} } dataField='supplier'>Supplier</TableHeaderColumn>
+                         <TableHeaderColumn dataSort={ true } filter={ { type: 'TextFilter'} } dataField='address'>Address</TableHeaderColumn>
+                         <TableHeaderColumn dataSort={ true } dataField='city'>City</TableHeaderColumn>
+                         <TableHeaderColumn dataSort={ true } dataField='province'>Province</TableHeaderColumn>
+                         <TableHeaderColumn dataSort={ true } dataField='telephone'>Telephone</TableHeaderColumn>
+                         <TableHeaderColumn dataSort={ true } dataField='balanceDue'>Balance Due</TableHeaderColumn>
+                         <TableHeaderColumn dataSort={ true } dataField='lastInvoice'>Last Invoice</TableHeaderColumn>
+                         <TableHeaderColumn dataSort={ true } dataField='lastCheque'>Last Cheque</TableHeaderColumn>
+                         <TableHeaderColumn dataSort={ true } dataField='currentPer'>Current Per</TableHeaderColumn>
+                     </BootstrapTable>
                 </div>
+
             </section>
         );
     }

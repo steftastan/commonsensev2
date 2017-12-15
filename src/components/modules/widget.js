@@ -164,9 +164,9 @@ export class Widget extends Component {
                 }
             });
         }
-
+        
         return (
-            <div id="widget" className="wrapper__content--widgetColumn">
+            <div id="widget" className="wrapper wrapper__content wrapper__content--widgetColumn">
                 {widget}
             </div>
         );

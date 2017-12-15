@@ -22,7 +22,6 @@
 
 .dataTable__row--content {
     width: 100%;
-    display: inline-flex;
     border-bottom: 1px solid $cool-gray-1;
     cursor: pointer;
 }
@@ -32,11 +31,9 @@
 }
 
 .dataTable__row--header {
-    width: 100%;
-    display: inline-flex;
-    border-bottom: 1px solid $blue-60;
     text-transform: uppercase;
-    @include font($font-size-content, $font-weight-bold, $blue-60);
+    background-color: $blue-90;
+    @include font($font-size-content, $font-weight-bold, $peach-40);
 }
 
 /* Mobile-specific styles */

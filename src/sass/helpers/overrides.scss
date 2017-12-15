@@ -1,0 +1,85 @@
+/* ==========================================================================
+   OVERRIDES
+   ========================================================================== */
+
+/**
+ * Last-resort CSS classes to override existing rules go here.
+ * These are last-resort uses, some may not strictly adhere to BEM standards,
+ * because they may rewrite CSS from external sources.
+ *
+ * If you need to create an override, please include documentation stating its purpose.
+ */
+
+/* All devices */
+
+/* Overriding pagination styles, removing the .row negative margins */
+.react-bs-table-pagination > .row {
+    margin: 0;
+}
+
+/* Overriding bootstrap .show class, the default value block currently breaks our layout */
+.show {
+  display: inline-block !important;
+}
+
+/* Overriding the pagination widget for mobile, making it into two rows instead of two columns */
+.col-md-6.col-xs-6.col-sm-6.col-lg-6 {
+
+        width: 100%;
+
+}
+
+.col-md-6.col-xs-6.col-sm-6.col-lg-6:nth-child(2) {
+        text-align: center;
+}
+
+/* Overriding pagination links in order to match elements to the design */
+
+.pagination > li:first-child > a {
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+}
+
+.pagination > li:last-child > a {
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.pagination > li > a {
+    border: none;
+    padding: 8px 15px;
+    background-color: $cool-gray-1;
+    @include font($font-size-content, $font-weight-bold, $cool-gray-70);
+}
+
+.pagination > li > a:hover {
+    background-color: $blue-70;
+    color: $peach-40;
+}
+
+.pagination > .active > a,
+.pagination > .active > a:hover,
+.pagination > .active > a:focus {
+    border-color: $blue-90;
+    background-color: $blue-90;
+    color: $peach-40;
+}
+
+/* Overriding the data table's borders, original styles on BootStrap*/
+.react-bs-table .table-bordered > thead > tr > th,
+.react-bs-table .table-bordered > tbody > tr > th,
+.react-bs-table .table-bordered > tfoot > tr > th,
+.react-bs-table .table-bordered > thead > tr > td,
+.react-bs-table .table-bordered > tbody > tr > td,
+.react-bs-table .table-bordered > tfoot > tr > td {
+    border: none !important
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: $cool-gray-1;
+}
+
+.table-striped > tbody > tr:hover {
+    background-color: $blue-50;
+    color: $white;
+}
