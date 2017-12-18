@@ -8,46 +8,20 @@
 /**
  * This file is a modified duplicate of the CSS file that comes with the
  * original component. The original CSS file's path is:
- * @import '../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
+ *
+ * ../node_modules/react-bootstrap-table/css/react-bootstrap-table.css;
+ *
+ * We can use the non-minified version because our application already compiles
+ * and minifies all the CSS we use.
+ *
+ * NOTE: If the React BootStrap table needs to be updated, don't forget to update
+ * this file manually by grabbing the file from the above path, and pasting its
+ * contents here.
+ *
+ * Anything that needs to be overwritten is better done over at sass/helpers/overrides.scss
  */
 
 /* All devices */
-
-/*Size per page dropdown filter */
-.dropdown-toggle {
-    background-color: $peach-40;
-    display: inline-block;
-    width: 55px;
-    margin: 0 5px;
-    border: none;
-    border-radius: 15px;
-    padding: 8px;
-    color: #FFF;
-    cursor: pointer;
-    @include font($font-size-content, $font-weight-regular, $white);
-}
-
-/*Size per page dropdown pop-up */
-.react-bs-table-sizePerPage-dropdown .dropdown-menu {
-    margin: 5px;
-    overflow: hidden;
-    border: 0;
-    border-radius: 15px;
-    padding: 0;
-    background-color: $peach-40;
-}
-
-/* Contents of the dropdown's pop-up */
-.react-bs-table-sizePerPage-dropdown .dropdown-menu > li > a {
-    padding: 10px 18px;
-    @include font($font-size-content, $font-weight-regular, $white);
-}
-
-.react-bs-table-sizePerPage-dropdown .dropdown-menu > li > a:hover,
-.react-bs-table-sizePerPage-dropdown .dropdown-menu > li > a:focus {
-    background-color: $peach-50;
-}
-
 .react-bs-table-container .react-bs-table-search-form {
   margin-bottom: 0;
 }
