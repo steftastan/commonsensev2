@@ -139,7 +139,7 @@ export class DataTable extends Component {
 
                 <div className="col-lg-6 col-sm-12">
                     <div className="wrapper wrapper__content--whiteBox">
-
+                    
                     </div>
                 </div>
 

@@ -5,6 +5,7 @@ import { BreadCrumbs } from './components/layout/breadcrumbs.js';
 import { Accordion } from './components/layout/accordion.js';
 import { DataTable } from './components/modules/datatable.js';
 import { Widget } from './components/modules/widget.js';
+import { DataChart } from './components/modules/datachart.js';
 
 const languages = global.languages;
 
@@ -14,6 +15,10 @@ const AccountsPayable = () => (
         <Accordion />
         <BreadCrumbs/>
         <DataTable />
+        <section>
+            <DataChart />
+        </section>
+
         <Widget />
     </div>
 )
