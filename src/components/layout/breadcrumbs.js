@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
 
 export class BreadCrumbs extends Component {
 
@@ -82,7 +81,7 @@ export class BreadCrumbs extends Component {
             this.state.langWrapper.classList.remove(this.state.langWrapperOpenClass);
             for (i = 0; i < languages.length; i++) {
 
-                if (languages[i].id == event.target.id) {
+                if (languages[i].id === event.target.id) {
                     // act upon the clicked element
                     this.setState({
                         selectedLang: languages[i].id

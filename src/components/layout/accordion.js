@@ -61,10 +61,10 @@ export class Accordion extends Component {
     toggleElem(elem, display, requiresOpenClass, action, openClassName) {
         // set default values
         var i = 0;
-        var openClassName = openClassName ? openClassName : 'leftnav__item--open';
-        var display = display ? display : '';
-        var requiresOpenClass = requiresOpenClass ? requiresOpenClass : false;
-        var action = action ? action : 'add';
+        openClassName = openClassName ? openClassName : 'leftnav__item--open';
+        display = display ? display : '';
+        requiresOpenClass = requiresOpenClass ? requiresOpenClass : false;
+        action = action ? action : 'add';
 
         if (elem.length) {
             // element is an array of multiple elements, enclose code in loop
@@ -228,8 +228,6 @@ export class Section extends Component {
     handleClick(event) {
         var sectionHeight;
         var subLinksHeight;
-        var target;
-        var allLinks;
 
         event.preventDefault();
 

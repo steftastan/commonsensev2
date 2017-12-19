@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
 import { Header } from './components/layout/header.js';
 import { BreadCrumbs } from './components/layout/breadcrumbs.js';
 import { Accordion } from './components/layout/accordion.js';
@@ -10,9 +9,9 @@ import { Widget } from './components/modules/widget.js';
 /** ACCOUNTS PAYABLE
  *
  * Options config object
- * dataTables {Array} Contains an array of objects for each Data Table
- * that needs to be displayed.
+ * @param widget {Array} Contains an array of objects for each Data Table that needs to be displayed.
  *
+ * Key/Value options available for the widget variable.
  * @param webService {String} the URL to Web Service where data for that table can be fetched.
  * @param bootStrapClass {String} the bootstrap grid class to allow our table to be responsive.
  * @param tableSize {String} CSS class that determines if the table should span full width or half-width.
@@ -20,6 +19,9 @@ import { Widget } from './components/modules/widget.js';
  * @param tableHeaderClass {String} Part of BootStrap table config, passes a class to the table's header.
  * @param tableOptions {Object} This optional parameter allows to override default options for BootStrap table.
  * More information on what data can be passed via table options is available at src/components/modules/datatable.js
+ * @param tableHeaders {Array} The list of header/rows per table. Every row that needs to be displayed *MUST* appear
+ * here. Additionally, the DataTable widget will transform the camelCase names into Standard Case words by adding
+ * a space after every uppercase letter it finds.
  * @param filterBy {Array} a list of the columns that will have a TextBox to filter results.
  * @param sortBy {Array} a list of the columns that will have a TextBox to filter results.
  *
@@ -29,49 +31,42 @@ import { Widget } from './components/modules/widget.js';
  * TODO: it would be good to make the back-end calls using an async library.
  */
 
-
- // TODO rename dataTables to widgets
-// in loop in line 83 add a switch case or something to tell components apart
-// that way we can store the diffeerent types of possible witches in the same options Array
-
-
 const options = {
     widgets : [{
         name: 'dataTable',
         webService: 'webservices/AccountsPayable.json',
         bootStrapClass : 'col-12',
-        tableSize: 'dataTable--halfWidth',
+        tableSize: 'dataTable--fullWidth',
         trClassName: 'dataTable__row--content',
         tableHeaderClass: 'dataTable__row--header',
-        tableOptions: {
-            page: 3,
+        options: {
             sizePerPageList: [ {
-            text: '5', value: 5
+            text: '25', value: 25
             }, {
             text: '50', value: 50
             }, {
             text: '500', value: 500
-            }],
-            sizePerPage: 10,
-            pageStartIndex: 4,
-            paginationSize: 5,
-            paginationShowsTotal: true
+        }],
+            sizePerPage: 25
         },
+        tableHeaders: ['id', 'supplier', 'address', 'city', 'province', 'telephone', 'balanceDue', 'lastInvoice'],
         filterBy: ['id', 'supplier', 'address'],
         sortBy: ['id', 'supplier', 'address', 'city', 'province', 'telephone', 'balanceDue', 'lastInvoice']
     }, {
         name: 'dataTable',
         webService: 'webservices/AccountsPayableCashDisbursement.json',
         bootStrapClass: 'col-lg-6 col-sm-12',
-        tableSize: 'dataTable--fullWidth',
+        tableSize: 'dataTable--halfWidth',
         trClassName: 'dataTable__row--content',
         tableHeaderClass: 'dataTable__row--header',
-        tableOptions: {},
-        filterBy: ['id', 'supplier', 'address'],
-        sortBy: ['id', 'supplier', 'address', 'city', 'province', 'telephone', 'balanceDue', 'lastInvoice']
+        options: {},
+        tableHeaders: ['supplier', 'loc', 'currentWeek', 'totalDue', 'currency', 'type'],
+        sortBy: ['supplier', 'loc', 'totalDue']
     }, {
         name: 'chart',
-        webService: 'webservices/AccountsPayableChart.json'
+        bootStrapClass: 'col-lg-6 col-sm-12',
+        webService: 'webservices/AccountsPayableChart.json',
+        options: {}
     }]
 };
 
@@ -91,17 +86,19 @@ export class AccountsPayable extends Component {
             for (var i = 0; i < options.widgets.length; i++) {
                 // add logic to tell apart components here
                 if (options.widgets[i].name) {
-                    if (options.widgets[i].name == 'dataTable') {
-                        widgets.push(<DataTable key={i} options={options.widgets[i]}/>);
+                    // if there are widget of datatable type
+                    if (options.widgets[i].name === 'dataTable') {
+                        widgets.push(<DataTable key={i} theKey={i} options={options.widgets[i]}/>);
                     }
 
-                    if (options.widgets[i].name == 'chart') {
-                        widgets.push(<DataChart key={i} />);
+                    // if there are widgets of type chart
+                    if (options.widgets[i].name === 'chart') {
+                        widgets.push(<DataChart key={i} theKey={i} options={options.widgets[i]} />);
                     }
                 }
             }
         }
-        
+
         this.setState({widgetData: widgets});
     }
 
