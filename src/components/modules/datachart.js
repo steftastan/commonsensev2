@@ -66,9 +66,13 @@ export class DataChart extends Component {
 
     render() {
         return (
-            <section>
-                <RC2 data={chartData} type='line' />
-            </section>
+            <div key={this.props.theKey} className={this.props.options.bootStrapClass}>
+                <div className="wrapper wrapper__content--whiteBox">
+                    <RC2 data={chartData} type='line' />
+                    <div className="dataTable__pagination"></div>
+                </div>
+            </div>
+
         );
     }
 }
