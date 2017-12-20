@@ -1256,9 +1256,6 @@ th.react-bs-table-expand-cell > div {
   height: 45px;
   background-color: #434747; }
 
-.breadcrumbs__toolBox {
-  float: right; }
-
 .breadcrumbs__link {
   line-height: 40px;
   color: #FFF;
@@ -1903,6 +1900,61 @@ th.react-bs-table-expand-cell > div {
 /* Mobile-specific styles */
 /* Tablet-specific styles */
 /* Desktop-specific styles */
+/* ==========================================================================
+   BREADCRUMBS
+   ========================================================================== */
+/**
+ * Breadcrumbs located underneath the header.
+ */
+/* All devices */
+.toolBox {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%; }
+
+.toolBox__wrapper {
+  width: 100%;
+  position: absolute;
+  top: 45px;
+  right: 0; }
+
+.toolBox__item:first-child {
+  padding-top: 20px; }
+
+.toolBox__item:last-child {
+  padding-bottom: 20px; }
+
+.toolBox__item {
+  padding: 15px 20px;
+  border-bottom: 1px solid #2D74DA; }
+
+.toolBox__link {
+  color: #FFF;
+  font-size: 12px; }
+
+.toolBox__group {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  background-color: #1F57A4;
+  -webkit-transition: right 1s ease-out;
+  -moz-transition: right 1s ease-out;
+  -o-transition: right 1s ease-out;
+  transition: right 1s ease-out; }
+
+/** These nested CSS class represent the nested navigation levels in the tool box.
+ * A new level of depth has to be added for each sub link group in the navigation,
+ * mainly to keep them off the screen and not break our navigation.
+ */
+.toolBox__group .toolBox__group,
+.toolBox__group .toolBox__group .toolBox__group,
+.toolBox__group .toolBox__group .toolBox__group .toolBox__group
+.toolBox__group .toolBox__group .toolBox__group .toolBox__group .toolBox__group {
+  right: 100%;
+  visibility: hidden; }
+
 /* Helpers */
 /* ==========================================================================
    OVERRIDES

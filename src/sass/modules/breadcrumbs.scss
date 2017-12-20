@@ -15,10 +15,6 @@
     background-color: $cool-gray-70;
 }
 
-.breadcrumbs__toolBox {
-    float: right;
-}
-
 .breadcrumbs__link {
     line-height: 40px;
     @include font($font-size-content, $font-weight-regular, $white);

@@ -1,0 +1,26 @@
+/* ==========================================================================
+   BREADCRUMBS
+   ========================================================================== */
+/**
+ * Breadcrumbs located underneath the header.
+ */
+/* All devices */
+.toolBox {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%; }
+
+.toolBox__group {
+  position: absolute;
+  width: 100%;
+  left: 0; }
+
+.toolBox__group .toolBox__group {
+  left: 50px; }
+
+.toolBox__group .toolBox__group .toolBox__group {
+  left: 75px; }
+
+.toolBox__group .toolBox__group .toolBox__group .toolBox__group {
+  left: 75px; }

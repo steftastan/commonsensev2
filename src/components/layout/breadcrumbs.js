@@ -18,7 +18,6 @@ export class BreadCrumbs extends Component {
       this.stopPropagation = this.stopPropagation.bind(this);
       this.openLang = this.openLang.bind(this);
       this.toggleLang = this.toggleLang.bind(this);
-      this.toolBox;
       this.state = {
           open: false,
           openClassName: '',
@@ -51,7 +50,6 @@ export class BreadCrumbs extends Component {
         var langWrapper = document.getElementById(this.state.langWrapperId);
         var defaultLang = this.state.defaultLang ? this.state.defaultLang : 'en';
         var selectedLang;
-        var toolBox;
 
         /* Add event listeners to the navigation elements */
         if (navElem && navButton) {
@@ -224,6 +222,10 @@ export class ToolBox extends Component {
       };
       this.toolBox = [];
       this.subLinks = [];
+      this.toolBoxId = 'toolBoxWrapper';
+      this.toolBoxClass = 'toolBox__group';
+      this.toolBoxItem = 'toolBox__item';
+      this.animateToolBox = this.animateToolBox.bind(this);
     }
 
     componentDidMount() {
@@ -237,7 +239,6 @@ export class ToolBox extends Component {
                 cache: false,
                 success: function(data) {
                     if (data.results) {
-
                         this.setState({toolBox: data.results});
                     }
                 }.bind(this),
@@ -249,33 +250,67 @@ export class ToolBox extends Component {
     }
 
     componentDidUpdate() {
-        // aadd click events and such
+        /**
+         * Add mouse events here to trigger animation.
+         */
 
+        var toolBoxWrapper = document.getElementById(this.toolBoxId);
+        toolBoxWrapper.addEventListener('click', this.animateToolBox);
 
+    }
+
+    animateToolBox(e) {
+        e.preventDefault();
+        var clickedItem = e.target;
+        var toolBoxGroup;
+        var childItem;
+        var multiplier;
+        var newPercentage = 0;
+
+        /* Ensure we have stored the correct DOM node, we need to move the entire group off the screen */
+        if (!clickedItem.classList.contains(this.toolBoxClass)) {
+            toolBoxGroup = (clickedItem.classList.contains(this.toolBoxItem) ? clickedItem.parentNode : clickedItem.parentNode.parentNode);
+        }
+
+        /* Move the tool box off the screen */
+        toolBoxGroup.style.right = '100%';
+
+        /* Ensure we have stored the correct DOM node, to bring in the new level of nav */
+        childItem = clickedItem.getElementsByClassName(this.toolBoxClass) ? clickedItem.getElementsByClassName(this.toolBoxClass)[0] : [];
+
+        if (childItem) {
+            multiplier = childItem.getAttribute('id');
+            newPercentage = 100 * multiplier;
+            childItem.style.right = '-'+ newPercentage +'%';
+            childItem.style.visibility = 'visible';
+            clickedItem.removeEventListener('click', this.animateToolBox);
+            childItem.addEventListener('click', this.animateToolBox);
+        }
     }
 
     render() {
         if (this.state.toolBox.toolBox) {
             this.toolBox = this.state.toolBox.toolBox.map(function(item, key) {
-                if (item) {
-                    if (item.subLinks && item.subLinks.length) {
-                        this.subLinks = item.subLinks;
-                    }
-                    return (
-                        <li key={key} id={key}>
-                            <a href={item.url}>{item.linkName}</a>
-                            <SubLinks subLinks={this.subLinks}/>
-                        </li>
-
-                    );
+                if (item.subLinks && item.subLinks.length) {
+                    this.subLinks = item.subLinks;
                 }
+                return (
+                    <li className="toolBox__item" key={key} id={key}>
+                        <a className="toolBox__link" href={item.url}>{item.linkName}</a>
+                        <SubLinks subLinks={this.subLinks}/>
+                    </li>
+                );
             }, this);
         }
 
         return (
-            <section className="breadcrumbs__toolBox">
+            <section className="toolBox">
                 <div id="toolButton" className="grid__item leftnav__ellipsis leftnav--desktopHidden fa fa-ellipsis-v"></div>
-                {this.toolBox}
+                <div id="toolBoxWrapper" className="toolBox__wrapper">
+                    <ul className="toolBox__group">
+                        {this.toolBox}
+                    </ul>
+                </div>
             </section>
         );
     }
@@ -289,44 +324,46 @@ export class SubLinks extends Component {
       };
       this.toolBox = [];
       this.subLinks = [];
+      this.multiplier = 0;
     }
 
     render() {
         var tools = [];
-        var buildMenu = [];
         var subMenu = [];
-        var openClass = '';
 
         if (this.props.subLinks) {
             tools = this.props.subLinks.map(function(item, key) {
 
-                if (item) {
+                /**
+                 * The multiplier variable allows us to properly calculate
+                 * the animation transitions between nav objects
+                 */
+                this.multiplier = key -1;
 
-
-                    /* Clear the subMenu array to prepare for each new iteration */
-                    if (subMenu) {
-                        subMenu = [];
-                    }
-
-                    /** Recursively call this function as long
-                     * as the application keeps finding subLink arrays.
-                     */
-                    if (item.subLinks) {
-                        subMenu = <SubLinks subLinks={item.subLinks}/>;
-                    }
-
-                    return (
-                        <li key={key} id={key}>
-                            <a href={item.url}>{item.linkName}</a>
-                            {subMenu}
-                        </li>
-                    );
+                /* Clear the subMenu array to prepare for each new iteration */
+                if (subMenu) {
+                    subMenu = [];
                 }
+
+                /**
+                 * Recursively call this function as long
+                 * as the application keeps finding subLink arrays.
+                 */
+                if (item.subLinks) {
+                    subMenu = <SubLinks subLinks={item.subLinks}/>;
+                }
+
+                return (
+                    <li className="toolBox__item" key={key} id={key}>
+                        <a className="toolBox__link" href={item.url}>{item.linkName}</a>
+                        {subMenu}
+                    </li>
+                );
             }, this);
         }
 
         return (
-            <ul className="subMenu">
+            <ul id={this.multiplier} className="toolBox__group">
                 {tools}
             </ul>
         );
