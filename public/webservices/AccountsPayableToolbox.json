@@ -1,9 +1,9 @@
 {
-    "results" : [{
+    "results" : {
         "toolBox" : [{
             "linkName" : "Analysis",
             "url" : "http://google.com",
-            "toolBox" : [{
+            "subLinks" : [{
                 "linkName" : "G/L Analysis",
                 "url" : "http://google.com"
                 }, {
@@ -13,35 +13,22 @@
         }, {
             "linkName" : "Reports",
             "url" : "http://google.com",
-            "toolBox" : [{
+            "subLinks" : [{
                 "linkName" : "Suppliers",
                 "url" : "http://google.com",
-                "toolBox" : [{
+                "subLinks" : [{
                         "linkName" : "Numerical Listing",
                         "url" : "http://google.com",
-                        "toolBox" : [{
-                                "linkName" : "Test Lel",
-                                "url" : "http://google.com"
-                            }]
+                        "subLinks" : [{"linkName" : "LOLOL"}]
                     }, {
                         "linkName" : "Alphabetical Listing",
-                        "url" : "http://google.com",
-                        "toolBox" : [{
-                                "linkName" : "OMG",
-                                "url" : "http://google.com"
-                            },
-                            {
-                                    "linkName" : "Infinite",
-                                    "url" : "http://google.com"
-                                }]
+                        "url" : "http://google.com"
                     }, {
                         "linkName" : "Labels - to send",
-                        "url" : "http://google.com",
-                        "toolBox" : []
+                        "url" : "http://google.com"
                     }, {
                         "linkName" : "Labels - for filing",
-                        "url" : "http://google.com",
-                        "toolBox" : []
+                        "url" : "http://google.com"
                     }]
                 },
                 {
@@ -55,10 +42,10 @@
             }, {
                 "linkName" : "Database",
                 "url" : "http://google.com",
-                "toolBox" : [{
+                "subLinks" : [{
                     "linkName" : "Queries",
                     "url" : "http://google.com",
-                    "toolBox" : [{
+                    "subLinks" : [{
                             "linkName" : "AP0.SPL Suppliers",
                             "url" : "http://google.com"
                         }, {
@@ -81,10 +68,10 @@
             }, {
                 "linkName" : "Options",
                 "url" : "http://google.com",
-                "toolBox" : [{
+                "subLinks" : [{
                     "linkName" : "Voucher Modification",
                     "url" : "http://google.com",
-                    "toolBox" : [{
+                    "subLinks" : [{
                             "linkName" : "Apply Cheque #, date to vouchers",
                             "url" : "http://google.com"
                         }, {
@@ -107,7 +94,7 @@
             }, {
                 "linkName" : "Tables",
                 "url" : "http://google.com",
-                "toolBox" : [{
+                "subLinks" : [{
                     "linkName" : "Cross Ref",
                     "url" : "http://google.com"
                     }, {
@@ -116,7 +103,7 @@
                     }, {
                         "linkName" : "Codes",
                         "url" : "http://google.com",
-                        "toolBox" : [{
+                        "subLinks" : [{
                             "linkName" : "Language codes",
                             "url" : "http://google.com"
                         }, {
@@ -125,25 +112,5 @@
                         }]
                     }]
             }]
-    }, {
-        "toolBox" : [{
-            "linkName" : "Vouchers",
-            "url" : "http://google.com"
-        }, {
-            "linkName" : "Debit Notes",
-            "url" : "http://google.com"
-        }, {
-            "linkName" : "Cash Notes",
-            "url" : "http://google.com"
-        }, {
-            "linkName" : "Manual Cheques",
-            "url" : "http://google.com"
-        }, {
-            "linkName" : "Future Vouchers",
-            "url" : "http://google.com"
-        }, {
-            "linkName" : "Periodic Vouchers",
-            "url" : "http://google.com"
-        }]
-    }]
+    }
 }

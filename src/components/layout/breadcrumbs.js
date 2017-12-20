@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
 
+/**
+ * BREADCRUMBS LAYOUT COMPONENT
+ *
+ * The breadcrumbs are the horizontal navigation bar that contain the breadcrumb breadcrumb trail
+ * of links, as well as the Language Switch, and can also allow room for the links
+ * toolbox that comes with most inner pages.
+ *
+ */
 export class BreadCrumbs extends Component {
 
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
       this.toggleNav = this.toggleNav.bind(this);
       this.clickAnywhereToClose = this.clickAnywhereToClose.bind(this);
       this.stopPropagation = this.stopPropagation.bind(this);
       this.openLang = this.openLang.bind(this);
       this.toggleLang = this.toggleLang.bind(this);
+      this.toolBox;
       this.state = {
           open: false,
           openClassName: '',
@@ -41,7 +51,9 @@ export class BreadCrumbs extends Component {
         var langWrapper = document.getElementById(this.state.langWrapperId);
         var defaultLang = this.state.defaultLang ? this.state.defaultLang : 'en';
         var selectedLang;
+        var toolBox;
 
+        /* Add event listeners to the navigation elements */
         if (navElem && navButton) {
             this.setState({
                 nav: navElem,
@@ -52,6 +64,7 @@ export class BreadCrumbs extends Component {
             navElem.addEventListener('mousedown', this.stopPropagation, false);
         }
 
+        /* Store the langWrapper DOM element in the state to be used by other functions. */
         if (langWrapper) {
             this.setState({
                 langWrapper: langWrapper
@@ -60,6 +73,12 @@ export class BreadCrumbs extends Component {
             selectedLang = document.getElementById(defaultLang);
             this.toggleLang(selectedLang, true, true);
         }
+
+        /* Build the toolbox element if it was passed down as a prop */
+        if (this.props.toolBox) {
+                this.toolBox = <ToolBox webService={this.props.toolBox.webService} />;
+        }
+
     }
 
     openLang(event) {
@@ -178,6 +197,9 @@ export class BreadCrumbs extends Component {
                         <span className="breadcrumbs__arrow fa fa-chevron-right"></span>
                         <span className="breadcrumbs__link">Financials</span>
                     </div>
+
+                    {this.toolBox}
+
                     <div className="grid__item rightnav rightnav--mobileHidden">
                         <div id="langWrapper" className="wrapper rightnav__langSelect">
                             <div className="rightnav__container">
@@ -189,6 +211,124 @@ export class BreadCrumbs extends Component {
                     </div>
                 </div>
             </section>
+        );
+    }
+}
+
+export class ToolBox extends Component {
+
+    constructor(props) {
+      super(props);
+      this.state = {
+          toolBox: {}
+      };
+      this.toolBox = [];
+      this.subLinks = [];
+    }
+
+    componentDidMount() {
+        /**
+         * Obtain ToolBox data in order to build navigation
+         */
+        if (this.props && this.props.webService) {
+            $.ajax({
+                url: this.props.webService,
+                dataType: 'json',
+                cache: false,
+                success: function(data) {
+                    if (data.results) {
+
+                        this.setState({toolBox: data.results});
+                    }
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }.bind(this)
+            });
+        }
+    }
+
+    componentDidUpdate() {
+        // aadd click events and such
+
+
+    }
+
+    render() {
+        if (this.state.toolBox.toolBox) {
+            this.toolBox = this.state.toolBox.toolBox.map(function(item, key) {
+                if (item) {
+                    if (item.subLinks && item.subLinks.length) {
+                        this.subLinks = item.subLinks;
+                    }
+                    return (
+                        <li key={key} id={key}>
+                            <a href={item.url}>{item.linkName}</a>
+                            <SubLinks subLinks={this.subLinks}/>
+                        </li>
+
+                    );
+                }
+            }, this);
+        }
+
+        return (
+            <section className="breadcrumbs__toolBox">
+                <div id="toolButton" className="grid__item leftnav__ellipsis leftnav--desktopHidden fa fa-ellipsis-v"></div>
+                {this.toolBox}
+            </section>
+        );
+    }
+}
+
+export class SubLinks extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+
+      };
+      this.toolBox = [];
+      this.subLinks = [];
+    }
+
+    render() {
+        var tools = [];
+        var buildMenu = [];
+        var subMenu = [];
+        var openClass = '';
+
+        if (this.props.subLinks) {
+            tools = this.props.subLinks.map(function(item, key) {
+
+                if (item) {
+
+
+                    /* Clear the subMenu array to prepare for each new iteration */
+                    if (subMenu) {
+                        subMenu = [];
+                    }
+
+                    /** Recursively call this function as long
+                     * as the application keeps finding subLink arrays.
+                     */
+                    if (item.subLinks) {
+                        subMenu = <SubLinks subLinks={item.subLinks}/>;
+                    }
+
+                    return (
+                        <li key={key} id={key}>
+                            <a href={item.url}>{item.linkName}</a>
+                            {subMenu}
+                        </li>
+                    );
+                }
+            }, this);
+        }
+
+        return (
+            <ul className="subMenu">
+                {tools}
+            </ul>
         );
     }
 }

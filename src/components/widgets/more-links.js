@@ -8,10 +8,12 @@
  *
  */
 
+
+/* THIS IS NO LONGER CALLED WIDGETS, now every component of the page is a widget, this is one more widget with additional links, a secondary toolbox*/
 import React, { Component } from 'react';
 import $ from 'jquery';
 
-export class ToolBox extends Component {
+export class MoreLinks extends Component {
     constructor(props) {
       super(props);
       this.findToolBox = this.findToolBox.bind(this);
@@ -164,7 +166,7 @@ export class Widget extends Component {
                 }
             });
         }
-        
+
         return (
             <div id="widget" className="wrapper wrapper__content wrapper__content--widgetColumn">
                 {widget}

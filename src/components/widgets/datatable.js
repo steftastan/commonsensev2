@@ -127,6 +127,7 @@ export class DataTable extends Component {
         return (
             <div key={this.props.theKey} className={this.props.options.bootStrapClass}>
                 <div className="wrapper wrapper__content--whiteBox">
+                    <h2 className={this.props.options.titleClass}>{this.props.options.title}</h2>
                     <BootstrapTable data={tableData} options={options} striped hover pagination containerClass={this.props.options.tableSize} tableHeaderClass={this.props.options.tableHeaderClass} trClassName={this.props.options.trClassName}>
                         {tableHeaders}
                     </BootstrapTable>

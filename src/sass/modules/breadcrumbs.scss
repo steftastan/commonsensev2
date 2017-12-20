@@ -10,10 +10,13 @@
 .breadcrumbs {
     position:fixed;
     z-index: 9997;
-    overflow: hidden;
     width: 100%;
     height: 45px;
     background-color: $cool-gray-70;
+}
+
+.breadcrumbs__toolBox {
+    float: right;
 }
 
 .breadcrumbs__link {

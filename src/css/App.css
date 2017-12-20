@@ -1252,10 +1252,12 @@ th.react-bs-table-expand-cell > div {
 .breadcrumbs {
   position: fixed;
   z-index: 9997;
-  overflow: hidden;
   width: 100%;
   height: 45px;
   background-color: #434747; }
+
+.breadcrumbs__toolBox {
+  float: right; }
 
 .breadcrumbs__link {
   line-height: 40px;
@@ -1520,6 +1522,14 @@ th.react-bs-table-expand-cell > div {
     background-color: #18273C;
     font-size: 24px;
     color: #F26322; }
+  .leftnav__ellipsis {
+    width: 45px;
+    height: 45px;
+    padding: 10px 20px;
+    background-color: #1F57A4;
+    font-size: 24px;
+    color: #F26322;
+    float: right; }
   .leftnav__item {
     height: 48px;
     max-height: 48px;
@@ -1810,6 +1820,12 @@ th.react-bs-table-expand-cell > div {
 .dataTable__pagination {
   text-align: center; }
 
+.dataTable__title {
+  color: #1F57A4;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 5px; }
+
 /*
  * .dataTable--fullWidth class is also available for tables that span the entire width of screen
  * in this case we are only modifying the font-size for smaller tables
@@ -1831,7 +1847,11 @@ th.react-bs-table-expand-cell > div {
     padding: 15px 0; }
   .dataTable__row--header {
     padding: 0 0 15px 0;
-    font-size: 11px; } }
+    font-size: 11px; }
+  .dataTable__title {
+    color: #1F57A4;
+    font-size: 18px;
+    font-weight: 700; } }
 
 /* Desktop-specific styles */
 /* ==========================================================================

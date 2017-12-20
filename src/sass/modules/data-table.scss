@@ -30,6 +30,11 @@
     text-align: center;
 }
 
+.dataTable__title {
+    @include font($font-size-small, $font-weight-bold, $blue-60);
+    margin-bottom: 5px;
+}
+
 
 /*
  * .dataTable--fullWidth class is also available for tables that span the entire width of screen
@@ -61,6 +66,11 @@
         padding: 0 0 15px 0;
         font-size: 11px;
     }
+
+    .dataTable__title {
+        @include font($font-size-medium, $font-weight-bold, $blue-60);
+    }
+
 }
 
 /* Desktop-specific styles */

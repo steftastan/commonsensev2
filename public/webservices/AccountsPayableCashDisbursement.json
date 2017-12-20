@@ -26,28 +26,28 @@
         "currentWeek" : "N/A",
         "totalDue" : "12,246.16",
         "currency" : "CAN",
-        "type" : "SP"
+        "type" : "AD"
     }, {
         "supplier" : "Ministere du Revenue",
         "loc": "1",
         "currentWeek" : "N/A",
         "totalDue" : "12,246.16",
         "currency" : "CAN",
-        "type" : "SP"
+        "type" : "AD"
     }, {
         "supplier" : "Ministere du Revenue",
         "loc": "1",
         "currentWeek" : "N/A",
         "totalDue" : "12,246.16",
         "currency" : "CAN",
-        "type" : "SP"
+        "type" : "AD"
     }, {
         "supplier" : "Ministere du Revenue",
         "loc": "1",
         "currentWeek" : "N/A",
         "totalDue" : "12,246.16",
         "currency" : "CAN",
-        "type" : "SP"
+        "type" : "EX"
     }, {
         "supplier" : "Ministere du Revenue",
         "loc": "1",

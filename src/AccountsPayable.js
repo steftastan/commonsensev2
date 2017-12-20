@@ -2,28 +2,27 @@ import React, { Component } from 'react';
 import { Header } from './components/layout/header.js';
 import { BreadCrumbs } from './components/layout/breadcrumbs.js';
 import { Accordion } from './components/layout/accordion.js';
-import { DataTable } from './components/modules/datatable.js';
-import { DataChart } from './components/modules/datachart.js';
-import { Widget } from './components/modules/widget.js';
+import { DataTable } from './components/widgets/datatable.js';
+import { DataChart } from './components/widgets/datachart.js';
 
 /** ACCOUNTS PAYABLE
  *
  * Options config object
- * @param widget {Array} Contains an array of objects for each Data Table that needs to be displayed.
+ * @param widgets {Array} Contains an array of objects for each Data Table that needs to be displayed.
  *
  * Key/Value options available for the widget variable.
- * @param webService {String} the URL to Web Service where data for that table can be fetched.
- * @param bootStrapClass {String} the bootstrap grid class to allow our table to be responsive.
- * @param tableSize {String} CSS class that determines if the table should span full width or half-width.
- * @param trClassName {String} Part of BootStrap table config, passes a class to the table's rows.
- * @param tableHeaderClass {String} Part of BootStrap table config, passes a class to the table's header.
- * @param tableOptions {Object} This optional parameter allows to override default options for BootStrap table.
- * More information on what data can be passed via table options is available at src/components/modules/datatable.js
- * @param tableHeaders {Array} The list of header/rows per table. Every row that needs to be displayed *MUST* appear
- * here. Additionally, the DataTable widget will transform the camelCase names into Standard Case words by adding
- * a space after every uppercase letter it finds.
- * @param filterBy {Array} a list of the columns that will have a TextBox to filter results.
- * @param sortBy {Array} a list of the columns that will have a TextBox to filter results.
+ *** @param webService {String} the URL to Web Service where data for that table can be fetched.
+ *** @param bootStrapClass {String} the bootstrap grid class to allow our table to be responsive.
+ *** @param tableSize {String} CSS class that determines if the table should span full width or half-width.
+ *** @param trClassName {String} Part of BootStrap table config, passes a class to the table's rows.
+ *** @param tableHeaderClass {String} Part of BootStrap table config, passes a class to the table's header.
+ *** @param options {Object} This optional parameter allows to override default options for the widget.
+ *** More information on what data can be passed via table options is available at src/components/modules/datatable.js
+ *** @param tableHeaders {Array} The list of header/rows per table. Every row that needs to be displayed *MUST* appear
+ *** here. Additionally, the DataTable widget will transform the camelCase names into Standard Case words by adding
+ *** a space after every uppercase letter it finds.
+ *** @param filterBy {Array} a list of the columns that will have a TextBox to filter results.
+ *** @param sortBy {Array} a list of the columns that will have a TextBox to filter results.
  *
  * NOTE: Regarding filterBy and sortBy, the values provided MUST MATCH the names of the
  * key/columns received from the WS response, or else the association will fail.
@@ -33,6 +32,9 @@ import { Widget } from './components/modules/widget.js';
 
 const options = {
     widgets : [{
+        name: 'toolBox',
+        webService: 'webservices/AccountsPayableToolbox.json'
+    }, {
         name: 'dataTable',
         webService: 'webservices/AccountsPayable.json',
         bootStrapClass : 'col-12',
@@ -54,6 +56,8 @@ const options = {
         sortBy: ['id', 'supplier', 'address', 'city', 'province', 'telephone', 'balanceDue', 'lastInvoice']
     }, {
         name: 'dataTable',
+        title: 'Cash Disbursement',
+        titleClass: 'dataTable__title',
         webService: 'webservices/AccountsPayableCashDisbursement.json',
         bootStrapClass: 'col-lg-6 col-sm-12',
         tableSize: 'dataTable--halfWidth',
@@ -64,28 +68,38 @@ const options = {
         sortBy: ['supplier', 'loc', 'totalDue']
     }, {
         name: 'chart',
+        title: 'Analysis',
+        titleClass: 'dataTable__title',
+        webService: 'webservices/AccountsPayableCashDisbursement.json',
         bootStrapClass: 'col-lg-6 col-sm-12',
-        webService: 'webservices/AccountsPayableChart.json',
-        options: {}
+        options: {
+            chartType: 'bar',
+            xAxis: 'balance',
+            yAxis: 'type'
+        }
     }]
 };
 
 export class AccountsPayable extends Component {
     constructor() {
       super();
-      this.state = {
-          widgetData: []
-      };
     }
 
-    componentDidMount() {
+    render() {
         var widgets = [];
+        var toolBox = {};
 
         /** Extract the data table information from the options array */
         if (options && options.widgets) {
             for (var i = 0; i < options.widgets.length; i++) {
                 // add logic to tell apart components here
                 if (options.widgets[i].name) {
+
+                    // if there are widgets of toolbox (top navigation) type
+                    if (options.widgets[i].name === 'toolBox') {
+                        toolBox = options.widgets[i];
+                    }
+
                     // if there are widget of datatable type
                     if (options.widgets[i].name === 'dataTable') {
                         widgets.push(<DataTable key={i} theKey={i} options={options.widgets[i]}/>);
@@ -99,19 +113,14 @@ export class AccountsPayable extends Component {
             }
         }
 
-        this.setState({widgetData: widgets});
-    }
-
-    render() {
         return (
             <div className="wrapper wrapper__app App">
                 <Header />
                 <Accordion />
-                <BreadCrumbs/>
+                <BreadCrumbs toolBox={toolBox} />
                 <section className="wrapper wrapper__content wrapper__content--inner">
-                    {this.state.widgetData}
+                    {widgets}
                 </section>
-                <Widget />
             </div>
         );
     }

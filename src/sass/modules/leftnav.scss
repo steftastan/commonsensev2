@@ -171,6 +171,16 @@
          color: $peach-40;
      }
 
+     .leftnav__ellipsis {
+         width: 45px;
+         height: 45px;
+         padding: 10px 20px;
+         background-color: $blue-60;
+         font-size: $font-size-large;
+         color: $peach-40;
+         float:right;
+     }
+
      .leftnav__item {
          height: 48px;
          max-height: 48px;
