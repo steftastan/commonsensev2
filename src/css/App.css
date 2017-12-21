@@ -1920,8 +1920,16 @@ th.react-bs-table-expand-cell > div {
   left: 0;
   width: 100%;
   height: 100%;
-  overflow: visible;
+  overflow: visible; }
+
+.toolBox__item {
+  padding: 15px 20px;
+  border-bottom: 1px solid #2D74DA;
   background-color: #1F57A4; }
+
+.toolBox__link {
+  color: #FFF;
+  font-size: 12px; }
 
 .toolBox__group {
   display: block;
@@ -1930,8 +1938,6 @@ th.react-bs-table-expand-cell > div {
   left: 0;
   width: 100%;
   overflow: visible;
-  visibility: hidden;
-  background-color: #1F57A4;
   -webkit-transition: left 1s ease-out;
   -moz-transition: left 1s ease-out;
   -o-transition: left 1s ease-out;
@@ -1944,29 +1950,36 @@ th.react-bs-table-expand-cell > div {
 .toolBox__group .toolBox__group,
 .toolBox__group .toolBox__group .toolBox__group,
 .toolBox__group .toolBox__group .toolBox__group .toolBox__group {
-  left: 100%; }
+  left: 100%;
+  visibility: hidden; }
 
-.toolBox__item {
-  position: relative;
-  padding: 15px 20px;
-  border-bottom: 1px solid #2D74DA; }
-
-.toolBox__link {
-  color: #FFF;
-  font-size: 12px; }
-
+/** Inactive items slide out of the window
+ * This is currently set to support 5 levels of depth of navigation, if more levels
+ * of depth need to be added, just add another line with another nested
+ * .toolBox__group in it.
+ */
 .toolBox__group.active {
-  left: 0;
-  visibility: visible; }
-
-.toolBox__group .toolBox__group.active {
   left: 0; }
 
-.toolBox__group .toolBox__group .toolBox__group.active {
+.toolBox__group .toolBox__group.active,
+.toolBox__group .toolBox__group .toolBox__group.active,
+.toolBox__group .toolBox__group .toolBox__group .toolBox__group.active {
+  left: 100%;
+  visibility: visible; }
+
+/**
+ * Active items slide into the window
+ * This is currently set to support 5 levels of depth of navigation, if more levels
+ * of depth need to be added, just add another line with another nested
+ * .toolBox__group in it.
+ */
+.toolBox__group.inactive {
   left: -100%; }
 
-.toolBox__group .toolBox__group .toolBox__group .toolBox__group.active {
-  left: -200%; }
+.toolBox__group .toolBox__group.inactive,
+.toolBox__group .toolBox__group .toolBox__group.inactive,
+.toolBox__group .toolBox__group .toolBox__group .toolBox__group.inactive {
+  left: 0; }
 
 /* Helpers */
 /* ==========================================================================

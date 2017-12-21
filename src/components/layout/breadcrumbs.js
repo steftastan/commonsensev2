@@ -271,7 +271,7 @@ export class ToolBox extends Component {
         }
 
         /* Move the tool box off the screen */
-        toolBoxGroup.classList.remove('active');
+        toolBoxGroup.classList.add('inactive');
 
         /* Ensure we have stored the correct DOM node, to bring in the new level of nav */
         childItem = clickedItem.getElementsByClassName(this.toolBoxClass) ? clickedItem.getElementsByClassName(this.toolBoxClass)[0] : [];
