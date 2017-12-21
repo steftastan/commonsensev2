@@ -1914,35 +1914,28 @@ th.react-bs-table-expand-cell > div {
   width: 100%; }
 
 .toolBox__wrapper {
-  width: 100%;
+  display: inline-block;
   position: absolute;
   top: 45px;
-  right: 0; }
-
-.toolBox__item:first-child {
-  padding-top: 20px; }
-
-.toolBox__item:last-child {
-  padding-bottom: 20px; }
-
-.toolBox__item {
-  padding: 15px 20px;
-  border-bottom: 1px solid #2D74DA; }
-
-.toolBox__link {
-  color: #FFF;
-  font-size: 12px; }
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  background-color: #1F57A4; }
 
 .toolBox__group {
+  display: block;
   position: absolute;
   top: 0;
-  right: 0;
+  left: 0;
   width: 100%;
+  overflow: visible;
+  visibility: hidden;
   background-color: #1F57A4;
-  -webkit-transition: right 1s ease-out;
-  -moz-transition: right 1s ease-out;
-  -o-transition: right 1s ease-out;
-  transition: right 1s ease-out; }
+  -webkit-transition: left 1s ease-out;
+  -moz-transition: left 1s ease-out;
+  -o-transition: left 1s ease-out;
+  transition: left 1s ease-out; }
 
 /** These nested CSS class represent the nested navigation levels in the tool box.
  * A new level of depth has to be added for each sub link group in the navigation,
@@ -1950,10 +1943,30 @@ th.react-bs-table-expand-cell > div {
  */
 .toolBox__group .toolBox__group,
 .toolBox__group .toolBox__group .toolBox__group,
-.toolBox__group .toolBox__group .toolBox__group .toolBox__group
-.toolBox__group .toolBox__group .toolBox__group .toolBox__group .toolBox__group {
-  right: 100%;
-  visibility: hidden; }
+.toolBox__group .toolBox__group .toolBox__group .toolBox__group {
+  left: 100%; }
+
+.toolBox__item {
+  position: relative;
+  padding: 15px 20px;
+  border-bottom: 1px solid #2D74DA; }
+
+.toolBox__link {
+  color: #FFF;
+  font-size: 12px; }
+
+.toolBox__group.active {
+  left: 0;
+  visibility: visible; }
+
+.toolBox__group .toolBox__group.active {
+  left: 0; }
+
+.toolBox__group .toolBox__group .toolBox__group.active {
+  left: -100%; }
+
+.toolBox__group .toolBox__group .toolBox__group .toolBox__group.active {
+  left: -200%; }
 
 /* Helpers */
 /* ==========================================================================

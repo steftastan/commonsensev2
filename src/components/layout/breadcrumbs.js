@@ -264,8 +264,6 @@ export class ToolBox extends Component {
         var clickedItem = e.target;
         var toolBoxGroup;
         var childItem;
-        var multiplier;
-        var newPercentage = 0;
 
         /* Ensure we have stored the correct DOM node, we need to move the entire group off the screen */
         if (!clickedItem.classList.contains(this.toolBoxClass)) {
@@ -273,16 +271,13 @@ export class ToolBox extends Component {
         }
 
         /* Move the tool box off the screen */
-        toolBoxGroup.style.right = '100%';
+        toolBoxGroup.classList.remove('active');
 
         /* Ensure we have stored the correct DOM node, to bring in the new level of nav */
         childItem = clickedItem.getElementsByClassName(this.toolBoxClass) ? clickedItem.getElementsByClassName(this.toolBoxClass)[0] : [];
 
         if (childItem) {
-            multiplier = childItem.getAttribute('id');
-            newPercentage = 100 * multiplier;
-            childItem.style.right = '-'+ newPercentage +'%';
-            childItem.style.visibility = 'visible';
+            childItem.classList.add('active');
             clickedItem.removeEventListener('click', this.animateToolBox);
             childItem.addEventListener('click', this.animateToolBox);
         }
@@ -307,7 +302,7 @@ export class ToolBox extends Component {
             <section className="toolBox">
                 <div id="toolButton" className="grid__item leftnav__ellipsis leftnav--desktopHidden fa fa-ellipsis-v"></div>
                 <div id="toolBoxWrapper" className="toolBox__wrapper">
-                    <ul className="toolBox__group">
+                    <ul className="toolBox__group active">
                         {this.toolBox}
                     </ul>
                 </div>
@@ -324,7 +319,6 @@ export class SubLinks extends Component {
       };
       this.toolBox = [];
       this.subLinks = [];
-      this.multiplier = 0;
     }
 
     render() {
@@ -333,12 +327,6 @@ export class SubLinks extends Component {
 
         if (this.props.subLinks) {
             tools = this.props.subLinks.map(function(item, key) {
-
-                /**
-                 * The multiplier variable allows us to properly calculate
-                 * the animation transitions between nav objects
-                 */
-                this.multiplier = key -1;
 
                 /* Clear the subMenu array to prepare for each new iteration */
                 if (subMenu) {
