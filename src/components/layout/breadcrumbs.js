@@ -195,9 +195,7 @@ export class BreadCrumbs extends Component {
                         <span className="breadcrumbs__arrow fa fa-chevron-right"></span>
                         <span className="breadcrumbs__link">Financials</span>
                     </div>
-
                     {this.toolBox}
-
                     <div className="grid__item rightnav rightnav--mobileHidden">
                         <div id="langWrapper" className="wrapper rightnav__langSelect">
                             <div className="rightnav__container">
@@ -251,6 +249,7 @@ export class ToolBox extends Component {
             this.toolNav.classList.remove(this.state.toggleClass);
             this.toolButton.classList.add('fa-ellipsis-v');
             this.toolButton.classList.remove('fa-close');
+            this.resetNav();
 
         } else {
             this.setState({
@@ -263,8 +262,15 @@ export class ToolBox extends Component {
     }
 
     /* Reset the toolbox elements inside our navigation if the user closes out of it */
-    resetNav(e) {
-
+    resetNav() {
+        var toolBoxGroups;
+        toolBoxGroups = this.toolNav.getElementsByClassName(this.toolBoxClass);
+        if (toolBoxGroups.length) {
+            for (var i = 0; i < toolBoxGroups.length; i++) {
+                if (i !== 0) toolBoxGroups[i].classList.remove(this.active);
+                toolBoxGroups[i].classList.remove(this.inactive);
+            }
+        }
     }
 
     /* Allow the navigation to close if the user clicks anywhere on the window but the navigation */

@@ -1941,6 +1941,9 @@ th.react-bs-table-expand-cell > div {
   -o-transition: left 0.5s ease-out;
   transition: left 0.5 ease-out; }
 
+.toolBox__item.toolBox__back {
+  padding: 10px 20px 11px; }
+
 .toolBox__item {
   padding: 15px 20px;
   border-bottom: 1px solid #2D74DA;

@@ -44,6 +44,10 @@
     transition: left 0.5 ease-out;
 }
 
+.toolBox__item.toolBox__back {
+    padding: 10px 20px 11px;
+}
+
 .toolBox__item {
     padding: 15px 20px;
     border-bottom: 1px solid $blue-50;
