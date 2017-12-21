@@ -225,6 +225,7 @@ export class ToolBox extends Component {
       this.toolBoxId = 'toolBoxWrapper';
       this.toolBoxClass = 'toolBox__group';
       this.toolBoxItem = 'toolBox__item';
+      this.toolBoxLink = 'toolBox__link';
       this.animateToolBox = this.animateToolBox.bind(this);
     }
 
@@ -253,10 +254,8 @@ export class ToolBox extends Component {
         /**
          * Add mouse events here to trigger animation.
          */
-
         var toolBoxWrapper = document.getElementById(this.toolBoxId);
         toolBoxWrapper.addEventListener('click', this.animateToolBox);
-
     }
 
     animateToolBox(e) {
@@ -264,22 +263,32 @@ export class ToolBox extends Component {
         var clickedItem = e.target;
         var toolBoxGroup;
         var childItem;
+        var url;
 
         /* Ensure we have stored the correct DOM node, we need to move the entire group off the screen */
         if (!clickedItem.classList.contains(this.toolBoxClass)) {
             toolBoxGroup = (clickedItem.classList.contains(this.toolBoxItem) ? clickedItem.parentNode : clickedItem.parentNode.parentNode);
         }
 
-        /* Move the tool box off the screen */
-        toolBoxGroup.classList.add('inactive');
-
         /* Ensure we have stored the correct DOM node, to bring in the new level of nav */
         childItem = clickedItem.getElementsByClassName(this.toolBoxClass) ? clickedItem.getElementsByClassName(this.toolBoxClass)[0] : [];
 
+        /* There children tool box still */
         if (childItem) {
+
+            /* Move the tool box off the screen */
+            toolBoxGroup.classList.add('inactive');
+
+            /* Move the new set of options into position*/
             childItem.classList.add('active');
             clickedItem.removeEventListener('click', this.animateToolBox);
             childItem.addEventListener('click', this.animateToolBox);
+        }
+
+        /* We reached the end of the list, allow the user to click on the option */
+        if (!childItem) {
+            url = (clickedItem.classList.contains(this.toolBoxLink) ? clickedItem.getAttribute('href') : clickedItem.childNodes[0].getAttribute('href'));
+            window.location.href = url;
         }
     }
 
