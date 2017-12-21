@@ -14,14 +14,34 @@
     width: 100%;
 }
 
+.toolBox__caret {
+    color: $peach-40;
+    padding-right: 10px;
+    font-size: 25px;
+}
+
+.toolBox__caret,
+.toolBox__backLink {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.toolBox__wrapper.toolBox__wrapper--toggle {
+    left: 0;
+}
+
 .toolBox__wrapper {
     display: inline-block;
     position: absolute;
     top: 45px;
-    left: 0;
+    left: 100%;
     width: 100%;
     height: 100%;
-    overflow: visible;
+    overflow: hidden;
+    -webkit-transition: left 0.5s ease-out;
+    -moz-transition: left 0.5s ease-out;
+    -o-transition: left 0.5s ease-out;
+    transition: left 0.5 ease-out;
 }
 
 .toolBox__item {
@@ -41,11 +61,12 @@
     top: 0;
     left: 0;
     width: 100%;
+    height: auto;
     overflow: visible;
-    -webkit-transition: left 1s ease-out;
-    -moz-transition: left 1s ease-out;
-    -o-transition: left 1s ease-out;
-    transition: left 1s ease-out;
+    -webkit-transition: left 0.5s ease-out;
+    -moz-transition: left 0.5s ease-out;
+    -o-transition: left 0.5s ease-out;
+    transition: left 0.5s ease-out;
 }
 
 /** These nested CSS class represent the nested navigation levels in the tool box.

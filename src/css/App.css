@@ -1515,6 +1515,7 @@ th.react-bs-table-expand-cell > div {
   .leftnav__hamburger {
     width: 45px;
     height: 45px;
+    z-index: 9999;
     padding: 10px 12px;
     background-color: #18273C;
     font-size: 24px;
@@ -1522,11 +1523,12 @@ th.react-bs-table-expand-cell > div {
   .leftnav__ellipsis {
     width: 45px;
     height: 45px;
-    padding: 10px 20px;
+    padding: 10px;
+    float: right;
     background-color: #1F57A4;
+    text-align: center;
     font-size: 24px;
-    color: #F26322;
-    float: right; }
+    color: #F26322; }
   .leftnav__item {
     height: 48px;
     max-height: 48px;
@@ -1913,14 +1915,31 @@ th.react-bs-table-expand-cell > div {
   right: 0;
   width: 100%; }
 
+.toolBox__caret {
+  color: #F26322;
+  padding-right: 10px;
+  font-size: 25px; }
+
+.toolBox__caret,
+.toolBox__backLink {
+  display: inline-block;
+  vertical-align: middle; }
+
+.toolBox__wrapper.toolBox__wrapper--toggle {
+  left: 0; }
+
 .toolBox__wrapper {
   display: inline-block;
   position: absolute;
   top: 45px;
-  left: 0;
+  left: 100%;
   width: 100%;
   height: 100%;
-  overflow: visible; }
+  overflow: hidden;
+  -webkit-transition: left 0.5s ease-out;
+  -moz-transition: left 0.5s ease-out;
+  -o-transition: left 0.5s ease-out;
+  transition: left 0.5 ease-out; }
 
 .toolBox__item {
   padding: 15px 20px;
@@ -1937,11 +1956,12 @@ th.react-bs-table-expand-cell > div {
   top: 0;
   left: 0;
   width: 100%;
+  height: auto;
   overflow: visible;
-  -webkit-transition: left 1s ease-out;
-  -moz-transition: left 1s ease-out;
-  -o-transition: left 1s ease-out;
-  transition: left 1s ease-out; }
+  -webkit-transition: left 0.5s ease-out;
+  -moz-transition: left 0.5s ease-out;
+  -o-transition: left 0.5s ease-out;
+  transition: left 0.5s ease-out; }
 
 /** These nested CSS class represent the nested navigation levels in the tool box.
  * A new level of depth has to be added for each sub link group in the navigation,

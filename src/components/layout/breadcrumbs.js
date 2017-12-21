@@ -218,18 +218,69 @@ export class ToolBox extends Component {
     constructor(props) {
       super(props);
       this.state = {
-          toolBox: {}
+          toolBox: {},
+          open: false,
+          toggleClass: 'toolBox__wrapper--toggle'
       };
       this.toolBox = [];
       this.subLinks = [];
+      this.toolButtonId = 'toolButton';
       this.toolBoxId = 'toolBoxWrapper';
       this.toolBoxClass = 'toolBox__group';
       this.toolBoxItem = 'toolBox__item';
       this.toolBoxLink = 'toolBox__link';
+      this.toolBoxBack = 'toolBox__back';
+      this.active = 'active';
+      this.inactive = 'inactive';
+      this.toolNav = [];
       this.animateToolBox = this.animateToolBox.bind(this);
+      this.toggleNav = this.toggleNav.bind(this);
+      this.resetNav = this.resetNav.bind(this);
+    }
+
+    /* Handle open/close button available on mobile */
+    toggleNav(e) {
+        e.stopPropagation();
+        this.toolNav = document.getElementById(this.toolBoxId);
+        this.toolButton = document.getElementById(this.toolButtonId);
+
+        if(this.state.open) {
+            this.setState({
+                open: false
+            });
+            this.toolNav.classList.remove(this.state.toggleClass);
+            this.toolButton.classList.add('fa-ellipsis-v');
+            this.toolButton.classList.remove('fa-close');
+
+        } else {
+            this.setState({
+                open: true
+            });
+            this.toolNav.classList.add(this.state.toggleClass);
+            this.toolButton.classList.add('fa-close');
+            this.toolButton.classList.remove('fa-ellipsis-v');
+        }
+    }
+
+    /* Reset the toolbox elements inside our navigation if the user closes out of it */
+    resetNav(e) {
+
+    }
+
+    /* Allow the navigation to close if the user clicks anywhere on the window but the navigation */
+    clickAnywhereToClose(event) {
+        if(this.state.open) {
+            this.setState({
+                open: false
+            });
+            this.toolNav.classList.remove(this.state.toggleClass);
+        }
     }
 
     componentDidMount() {
+        var navButton = document.getElementById(this.toolButtonId);
+        var toolBoxWrapper = document.getElementById(this.toolBoxId);
+
         /**
          * Obtain ToolBox data in order to build navigation
          */
@@ -247,7 +298,16 @@ export class ToolBox extends Component {
                     console.error(this.props.url, status, err.toString());
                 }.bind(this)
             });
+
+            /* Small fix to get the toolbox to work with the sliding feature,
+             * we define its height post-mount. This is because the tool box
+             * relies on multiple uses of absolute positioning which makes
+             * calculating dimensions difficult. */
+            toolBoxWrapper.style.height = $(window).height()+'px';
         }
+
+        /* Add click event to the tool box button on mobile */
+        navButton.addEventListener('mousedown', this.toggleNav, false);
     }
 
     componentDidUpdate() {
@@ -258,12 +318,19 @@ export class ToolBox extends Component {
         toolBoxWrapper.addEventListener('click', this.animateToolBox);
     }
 
+    /**
+     *
+     */
     animateToolBox(e) {
         e.preventDefault();
         var clickedItem = e.target;
         var toolBoxGroup;
         var childItem;
         var url;
+        var activeButton;
+        var backButton = null;
+        var oldGroup;
+        var newGroup;
 
         /* Ensure we have stored the correct DOM node, we need to move the entire group off the screen */
         if (!clickedItem.classList.contains(this.toolBoxClass)) {
@@ -273,23 +340,58 @@ export class ToolBox extends Component {
         /* Ensure we have stored the correct DOM node, to bring in the new level of nav */
         childItem = clickedItem.getElementsByClassName(this.toolBoxClass) ? clickedItem.getElementsByClassName(this.toolBoxClass)[0] : [];
 
+        if (clickedItem.getElementsByClassName(this.toolBoxClass).length) {
+            childItem = clickedItem.getElementsByClassName(this.toolBoxClass)[0];
+        } else if (clickedItem.getElementsByClassName(this.toolBoxLink)) {
+            childItem = clickedItem.parentNode.getElementsByClassName(this.toolBoxClass)[0];
+        } else {
+            childItem = [];
+        }
+
+        if (clickedItem.classList.contains(this.toolBoxBack)) {
+            //get parent and remove inactive class it should sylide back?
+            backButton = (clickedItem.classList.contains(this.toolBoxBack) ? clickedItem : clickedItem.parentNode);
+        }
+
         /* There children tool box still */
         if (childItem) {
-
             /* Move the tool box off the screen */
-            toolBoxGroup.classList.add('inactive');
+            toolBoxGroup.classList.add(this.inactive);
 
             /* Move the new set of options into position*/
-            childItem.classList.add('active');
+            childItem.classList.add(this.active);
             clickedItem.removeEventListener('click', this.animateToolBox);
             childItem.addEventListener('click', this.animateToolBox);
         }
-
+        
         /* We reached the end of the list, allow the user to click on the option */
         if (!childItem) {
-            url = (clickedItem.classList.contains(this.toolBoxLink) ? clickedItem.getAttribute('href') : clickedItem.childNodes[0].getAttribute('href'));
+            activeButton = (clickedItem.classList.contains(this.toolBoxLink) ? clickedItem : clickedItem.childNodes[0]);
+            url = activeButton.getAttribute('href');
             window.location.href = url;
+
         }
+
+        /**
+         * Logic to control the back button
+         */
+         if (clickedItem.classList.contains(this.toolBoxBack)) {
+             //get parent and remove inactive class it should sylide back?
+             backButton = (clickedItem.classList.contains(this.toolBoxBack) ? clickedItem : clickedItem.parentNode);
+             //toolBoxGroup.classList.remove(this.active);
+             // console.log(clickedItem);
+             // console.log(toolBoxGroup);
+             // console.log('this should only exc w back but');
+             // if (groupToReturn) {
+             //     console.log(groupToReturn);
+             //     /* Get the immediate child with the tooolBox__group class  */
+             //     oldGroup = groupToReturn.getElementsByClassName(this.toolBoxClass)[0];
+             //     if (oldGroup.classList.contains(this.active)) oldGroup.classList.remove(this.active);
+             // }
+         }
+
+
+
     }
 
     render() {
@@ -320,6 +422,9 @@ export class ToolBox extends Component {
     }
 }
 
+/**
+ * Recursively generates the list of links for the tool box widget.
+ */
 export class SubLinks extends Component {
     constructor(props) {
       super(props);
@@ -361,6 +466,10 @@ export class SubLinks extends Component {
 
         return (
             <ul id={this.multiplier} className="toolBox__group">
+                <li className="toolBox__item toolBox__back">
+                    <span className="toolBox__caret fa fa-angle-left"></span>
+                    <a href="#" className="toolBox__link toolBox__backLink">Back</a>
+                </li>
                 {tools}
             </ul>
         );
