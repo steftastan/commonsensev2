@@ -4,6 +4,7 @@ import { BreadCrumbs } from './components/layout/breadcrumbs.js';
 import { Accordion } from './components/layout/accordion.js';
 import { DataTable } from './components/widgets/datatable.js';
 import { DataChart } from './components/widgets/datachart.js';
+import { SlidingToolBox } from './components/widgets/sliding-toolbox.js';
 
 /** ACCOUNTS PAYABLE
  *
@@ -51,12 +52,24 @@ const options = {
         }],
             sizePerPage: 25
         },
-        tableHeaders: ['id', 'supplier', 'address', 'city', 'province', 'telephone', 'balanceDue', 'lastInvoice'],
-        filterBy: ['id', 'supplier', 'address'],
+        tableHeaders: ['hi test', 'id', 'supplier', 'address', 'city', 'province', 'telephone', 'balanceDue', 'lastInvoice'],
+        filterBy: ['hi test', 'id', 'supplier', 'address'],
         sortBy: ['id', 'supplier', 'address', 'city', 'province', 'telephone', 'balanceDue', 'lastInvoice']
     }, {
         name: 'dataTable',
         title: 'Cash Disbursement',
+        titleClass: 'dataTable__title',
+        webService: 'webservices/AccountsPayableCashDisbursement',
+        bootStrapClass: 'col-lg-6 col-sm-12',
+        tableSize: 'dataTable--halfWidth',
+        trClassName: 'dataTable__row--content',
+        tableHeaderClass: 'dataTable__row--header',
+        options: {},
+        tableHeaders: ['supplier', 'loc', 'currentWeek', 'totalDue', 'currency', 'type'],
+        sortBy: ['supplier', 'loc', 'totalDue']
+    },  {
+        name: 'dataTable',
+        title: 'Testing Table',
         titleClass: 'dataTable__title',
         webService: 'webservices/AccountsPayableCashDisbursement.json',
         bootStrapClass: 'col-lg-6 col-sm-12',
@@ -66,7 +79,19 @@ const options = {
         options: {},
         tableHeaders: ['supplier', 'loc', 'currentWeek', 'totalDue', 'currency', 'type'],
         sortBy: ['supplier', 'loc', 'totalDue']
-    }, {
+    },  {
+        name: 'chart',
+        title: 'Analysis',
+        titleClass: 'dataTable__title',
+        webService: 'webservices/AccountsPayableCashDisbursement.json',
+        bootStrapClass: 'col-lg-6 col-sm-12',
+        options: {
+            chartType: 'pie',
+            xAxis: 'balance',
+            yAxis: 'type'
+        }
+    },
+    {
         name: 'chart',
         title: 'Analysis',
         titleClass: 'dataTable__title',
@@ -77,6 +102,10 @@ const options = {
             xAxis: 'balance',
             yAxis: 'type'
         }
+    }, {
+        name: 'slidingToolbox',
+        webService: 'webservices/AccountsPayableSlidingToolBox.json',
+        bootStrapClass: 'col-lg-6 col-sm-12'
     }]
 };
 
@@ -108,6 +137,11 @@ export class AccountsPayable extends Component {
                     // if there are widgets of type chart
                     if (options.widgets[i].name === 'chart') {
                         widgets.push(<DataChart key={i} theKey={i} options={options.widgets[i]} />);
+                    }
+
+                    // if there are widgets of type sliding tool box
+                    if (options.widgets[i].name === 'slidingToolbox') {
+                        widgets.push(<SlidingToolBox key={i} theKey={i} options={options.widgets[i]} />);
                     }
                 }
             }

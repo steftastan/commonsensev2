@@ -7,103 +7,172 @@
  */
 
 /* All devices */
-.toolBox {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-}
-
-.toolBox__caret {
-    color: $peach-40;
-    padding-right: 10px;
-    font-size: 25px;
-}
-
-.toolBox__caret,
-.toolBox__backLink {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.toolBox__wrapper.toolBox__wrapper--toggle {
-    left: 0;
-}
-
-.toolBox__wrapper {
-    display: inline-block;
-    position: absolute;
-    top: 45px;
-    left: 100%;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    -webkit-transition: left 0.5s ease-out;
-    -moz-transition: left 0.5s ease-out;
-    -o-transition: left 0.5s ease-out;
-    transition: left 0.5 ease-out;
-}
-
-.toolBox__item.toolBox__back {
-    padding: 10px 20px 11px;
-}
-
-.toolBox__item {
-    padding: 15px 20px;
-    border-bottom: 1px solid $blue-50;
-    background-color: $blue-60;
-}
-
 .toolBox__link {
     color: $white;
     font-size: $font-size-content;
 }
 
-.toolBox__group {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: auto;
-    overflow: visible;
-    -webkit-transition: left 0.5s ease-out;
-    -moz-transition: left 0.5s ease-out;
-    -o-transition: left 0.5s ease-out;
-    transition: left 0.5s ease-out;
+/* Mobile */
+@include mobile {
+    .toolBox {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+    }
+
+    .toolBox__caret {
+        color: $peach-40;
+        padding-right: 10px;
+        font-size: 25px;
+    }
+
+    .toolBox__caret,
+    .toolBox__backLink {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .toolBox__wrapper.toolBox__wrapper--toggle {
+        left: 0;
+    }
+
+    .toolBox__wrapper {
+        display: inline-block;
+        position: absolute;
+        top: 45px;
+        left: 100%;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        -webkit-transition: left 0.5s ease-out;
+        -moz-transition: left 0.5s ease-out;
+        -o-transition: left 0.5s ease-out;
+        transition: left 0.5 ease-out;
+    }
+
+    .toolBox__item.toolBox__back {
+        padding: 10px 20px 11px;
+    }
+
+    .toolBox__item {
+        padding: 15px 20px;
+        border-bottom: 1px solid $blue-50;
+        background-color: $blue-60;
+    }
+
+    .toolBox__group {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+        -webkit-transition: left 0.5s ease-out;
+        -moz-transition: left 0.5s ease-out;
+        -o-transition: left 0.5s ease-out;
+        transition: left 0.5s ease-out;
+    }
+
+    /** These nested CSS class represent the nested navigation levels in the tool box.
+     * A new level of depth has to be added for each sub link group in the navigation,
+     * mainly to keep them off the screen and not break our navigation.
+     */
+     .toolBox__group .toolBox__group,
+     .toolBox__group .toolBox__group .toolBox__group,
+     .toolBox__group .toolBox__group .toolBox__group .toolBox__group {
+         left: 100%;
+         visibility: hidden;
+     }
+
+    /** Inactive items slide out of the window
+     * This is currently set to support 5 levels of depth of navigation, if more levels
+     * of depth need to be added, just add another line with another nested
+     * .toolBox__group in it.
+     */
+    .toolBox__group.active { left: 0; }
+    .toolBox__group .toolBox__group.active,
+    .toolBox__group .toolBox__group .toolBox__group.active,
+    .toolBox__group .toolBox__group .toolBox__group .toolBox__group.active {
+        left: 100%;
+        visibility: visible;
+    }
+
+    /**
+     * Active items slide into the window
+     * This is currently set to support 5 levels of depth of navigation, if more levels
+     * of depth need to be added, just add another line with another nested
+     * .toolBox__group in it.
+     */
+    .toolBox__group.inactive { left: -100%; }
+    .toolBox__group .toolBox__group.inactive,
+    .toolBox__group .toolBox__group .toolBox__group.inactive,
+    .toolBox__group .toolBox__group .toolBox__group .toolBox__group.inactive { left: 0; }
 }
 
-/** These nested CSS class represent the nested navigation levels in the tool box.
- * A new level of depth has to be added for each sub link group in the navigation,
- * mainly to keep them off the screen and not break our navigation.
- */
- .toolBox__group .toolBox__group,
- .toolBox__group .toolBox__group .toolBox__group,
- .toolBox__group .toolBox__group .toolBox__group .toolBox__group {
-     left: 100%;
-     visibility: hidden;
- }
+@include tablet {
+    .toolBox {
+        display: inline-block;
+        position: absolute;
+        right: 131px;
+    }
 
-/** Inactive items slide out of the window
- * This is currently set to support 5 levels of depth of navigation, if more levels
- * of depth need to be added, just add another line with another nested
- * .toolBox__group in it.
- */
-.toolBox__group.active { left: 0; }
-.toolBox__group .toolBox__group.active,
-.toolBox__group .toolBox__group .toolBox__group.active,
-.toolBox__group .toolBox__group .toolBox__group .toolBox__group.active {
-    left: 100%;
-    visibility: visible;
+    .toolBox__item {
+        width: auto;
+        display: inline-block;
+        padding: 0;
+        background-color: $blue-60;
+        position: relative;
+    }
+
+    .toolBox__item.toolBox__back {
+        display: none !important;
+    }
+
+    .toolBox__group.active {
+        width: auto;
+        position: relative;
+        right: 0;
+        height: 42px;
+        overflow: visible;
+    }
+
+    .toolBox__link {
+        display: block;
+        padding: 14px 50px 15px;
+        color: $white;
+
+    }
+
+    .toolBox__link:hover {
+        background-color: $blue-50;
+        text-decoration: none;
+        color: $white;
+
+    }
+
+    .toolBox__group .toolBox__group .toolBox__item {
+        display: block;
+    }
+
+    .toolBox__group.active .toolBox__group {
+        display: none;
+        // overflow: visible;
+        // position: absolute;
+        // width: 200px;
+        // top: 40px;
+        // left: 0px;
+    }
+
+    .toolBox__group.active .toolBox__group .toolBox__group {
+        display: none;
+        // overflow: visible;
+        // position: absolute;
+        // width: 200px;
+        // top: 40px;
+        // left: 200px;
+    }
+
+
 }
-
-/**
- * Active items slide into the window
- * This is currently set to support 5 levels of depth of navigation, if more levels
- * of depth need to be added, just add another line with another nested
- * .toolBox__group in it.
- */
-.toolBox__group.inactive { left: -100%; }
-.toolBox__group .toolBox__group.inactive,
-.toolBox__group .toolBox__group .toolBox__group.inactive,
-.toolBox__group .toolBox__group .toolBox__group .toolBox__group.inactive { left: 0; }

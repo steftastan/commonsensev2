@@ -395,6 +395,8 @@ export class ToolBox extends Component {
     }
 
     render() {
+
+        //* render it defferently depending on the devices
         if (this.state.toolBox.toolBox) {
             this.toolBox = this.state.toolBox.toolBox.map(function(item, key) {
                 if (item.subLinks && item.subLinks.length) {
