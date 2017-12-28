@@ -100,7 +100,7 @@ export class AccountsPayable extends Component {
 
     /**
       * Allows to build an AJAX call object depending on the parameters passed.
-      * @param url [String] The Web Service URL.
+      * @param widget [Object] The widget's config as it appears in the options constant.
       * @param ComponentName [Component] The name of the reactJS component for the widget.
       * @param index [Integer] index used as key internally by react.
       * @param widgetList [Array] We build this array component by component each time we call this function.
