@@ -1,9 +1,8 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
-import { Header } from './components/layout/header.js';
+import { Layout } from './components/layout/layout.js';
 import { BreadCrumbs } from './components/layout/breadcrumbs.js';
-import { CompanyList } from './components/layout/company-list.js';
-import { Accordion } from './components/layout/accordion.js';
+import { ToolBox } from './components/widgets/toolbox.js';
 import { DataTable } from './components/widgets/datatable.js';
 import { DataChart } from './components/widgets/datachart.js';
 import { SlidingToolBox } from './components/widgets/sliding-toolbox.js';
@@ -34,10 +33,6 @@ import { SlidingToolBox } from './components/widgets/sliding-toolbox.js';
  */
 
 const options = {
-    companies: {
-        webService: 'webservices/Companies.json' },
-    accordion: {
-        webService: 'webservices/FullMenu.json' },
     widgets : [{
         name: 'toolBox',
         webService: 'webservices/AccountsPayableToolbox.json'
@@ -85,90 +80,40 @@ const options = {
         options: {},
         tableHeaders: ['supplier', 'loc', 'currentWeek', 'totalDue', 'currency', 'type'],
         sortBy: ['supplier', 'loc', 'totalDue']
-    },  {
-        name: 'chart',
-        title: 'Analysis',
-        titleClass: 'dataTable__title',
-        webService: 'webservices/AccountsPayableCashDisbursement.json',
-        bootStrapClass: 'col-lg-6 col-sm-12',
-        options: {
-            chartType: 'pie',
-            xAxis: 'balance',
-            yAxis: 'type'
-        }
-    },
-    {
-        name: 'chart',
-        title: 'Analysis',
-        titleClass: 'dataTable__title',
-        webService: 'webservices/AccountsPayableCashDisbursement.json',
-        bootStrapClass: 'col-lg-6 col-sm-12',
-        options: {
-            chartType: 'bar',
-            xAxis: 'balance',
-            yAxis: 'type'
-        }
     }, {
         name: 'slidingToolbox',
         webService: 'webservices/AccountsPayableSlidingToolBox.json'
     }]
 };
 
+export class AccountsPayable extends Component {
 
-/* REUSABLE component to load all repeating content, to avoid having
-to make multiple WS calls */
-export class Layout extends Component {
-
-    constructor() {
-      super();
-      this.companies = options.companies.webService ? options.companies.webService : {};
-      this.accordion = options.accordion.webService ? options.accordion.webService : {};
+    constructor(props) {
+      super(props);
+      this.requestComponent = this.requestComponent.bind(this);
+      this.toolBox = [];
+      this.widgets = [];
       this.state = {
-          data: {},
-          companies: {},
-          defaultCompany: {},
-          accordion: {},
-          employeeName: ''
+          widgets: []
       };
     }
 
-    componentWillMount() {
-        var employeeName = '';
-        var defaultCompany = {};
-
-        /**
-          * Return WS info
-          */
+    /**
+      * Allows to build an AJAX call object depending on the parameters passed.
+      * @param url [String] The Web Service URL.
+      * @param ComponentName [Component] The name of the reactJS component for the widget.
+      * @param index [Integer] index used as key internally by react.
+      * @param widgetList [Array] We build this array component by component each time we call this function.
+      */
+    requestComponent(widget, ComponentName, index, widgetList) {
+        var results;
         $.ajax({
-            url: this.accordion,
+            url: widget.webService,
             dataType: 'json',
             cache: false,
             success: function(data) {
-                this.setState({accordion: data});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
-
-        $.ajax({
-            url: this.companies,
-            dataType: 'json',
-            cache: false,
-            success: function(data) {
-                this.setState({companies: data});
-                /**
-                  * Obtain default company data, necessary to display icon and to highlight
-                  * the correct company name on the top left drop down list.
-                  */
-                this.setState({employeeName: this.state.companies.employeeName});
-                employeeName = this.state.companies.employeeName;
-                for (var i = 0; i < data.results.length; i++) {
-                    if (data.results[i].default === true) {
-                        this.setState({defaultCompany: data.results[i]});
-                    }
-                }
-
+                results = (data.results ? data.results : data);
+                widgetList.push(<ComponentName key={index} index={index} options={widget} results={results} />);
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -176,29 +121,8 @@ export class Layout extends Component {
         });
     }
 
-    render() {
-
-        return (
-            <div className="wrapper wrapper__app App">
-                <Header companies={this.state.companies} />
-                <Accordion links={this.state.accordion} defaultCompany={this.state.defaultCompany} employeeName={this.state.employeeName}>
-                    <CompanyList defaultCompany={this.state.defaultCompany} companies={this.state.companies}/>
-                </Accordion>
-                <AccountsPayable/>
-            </div>
-        );
-    }
-}
-
-export class AccountsPayable extends Component {
-    constructor() {
-      super();
-    }
-
-    render() {
-        var widgets = [];
-        var toolBox = {};
-
+    componentDidMount() {
+        var requestsArray = [];
 
         /** Extract the data table information from the options array */
         if (options && options.widgets) {
@@ -208,35 +132,60 @@ export class AccountsPayable extends Component {
 
                     // if there are widgets of toolbox (top navigation) type
                     if (options.widgets[i].name === 'toolBox') {
-                        toolBox = options.widgets[i];
+                        this.toolBox = <ToolBox settings={options.widgets[i]}/>
                     }
 
                     // if there are widget of datatable type
                     if (options.widgets[i].name === 'dataTable') {
-                        widgets.push(<DataTable key={i} theKey={i} options={options.widgets[i]}/>);
+                        requestsArray.push(this.requestComponent(options.widgets[i], DataTable, i, this.widgets));
                     }
 
                     // if there are widgets of type chart
                     if (options.widgets[i].name === 'chart') {
-                        widgets.push(<DataChart key={i} theKey={i} options={options.widgets[i]} />);
+                        requestsArray.push(this.requestComponent(options.widgets[i], DataChart, i, this.widgets));
                     }
 
                     // if there are widgets of type sliding tool box
                     if (options.widgets[i].name === 'slidingToolbox') {
-                        widgets.push(<SlidingToolBox key={i} theKey={i} options={options.widgets[i]} />);
+                        requestsArray.push(this.requestComponent(options.widgets[i], SlidingToolBox, i, this.widgets));
                     }
                 }
             }
         }
 
-        return (
+        /** https://css-tricks.com/multiple-simultaneous-ajax-requests-one-callback-jquery/
+          * Although the guide referenced above says these AJAX queries will
+          * run in parallel, they actually run in waterfall format, so if the first one fails,
+          * the rest will NOT be excecuted.
+          *
+          * We structured our code like this because we have to avoid at all costs calling the
+          * setState() function too many times in the application, because doing so will trigger
+          * a re-render of the page.
+          *
+          * We fetch all our data from our Web Services and pass them to the global state of the
+          * page we are on at the time.
+          *
+          * TODO: Look for less risky ways to perform this same task.
+          */
+        $.when(requestsArray).then(function() {
+            /* Set the state variables for all the information obtained in the waterfall of AJAX calls */
+            this.setState({
+                widgets: this.widgets
+            });
+        }.bind(this));
+    }
 
-                <section className="wrapper wrapper__content wrapper__content--inner">
-                    <BreadCrumbs toolBox={toolBox} />
-                    {widgets}
-                </section>
+    render() {
+
+        return (
+                <Layout>
+                    <BreadCrumbs>
+                        {this.toolBox}
+                    </BreadCrumbs>
+                    {this.state.widgets}
+                </Layout>
         );
     }
 };
 
-export default Layout;
+export default AccountsPayable;

@@ -24,7 +24,6 @@ export class SlidingToolBox extends Component {
       this.close = 'fa-close';
       this.state = {
           open: false,
-          links: {},
           openClass: 'slidingToolBox__links--active'
       };
     }
@@ -32,22 +31,6 @@ export class SlidingToolBox extends Component {
     /*
      * Add click listening feature to open and close the accordion.
      */
-     componentWillMount() {
-
-         $.ajax({
-             url: this.props.options.webService,
-             dataType: 'json',
-             cache: false,
-             success: function(data) {
-                 if (data.results && data.results.length) {
-                     this.setState({links: data.results});
-                 }
-             }.bind(this),
-             error: function(xhr, status, err) {
-                 console.error(this.props.url, status, err.toString());
-             }.bind(this)
-         });
-     }
 
      componentDidMount() {
          var button = document.getElementById(this.button);
@@ -79,11 +62,11 @@ export class SlidingToolBox extends Component {
     render() {
         var links;
 
-        if (this.state.links && this.state.links.length) {
-            links = this.state.links.map(function(item, key) {
+        if (this.props.results && this.props.results.length) {
+            links = this.props.results.map(function(item, key) {
                 if (item.isPopUp) {
                     return (
-                        <a key={key} id={key} className="slidingToolBox__item" target="popup" onclick={"window.open("+item.url+",'popup','width=600,height=600'); return false;"}>{item.title}</a>
+                        <a key={key} id={key} className="slidingToolBox__item" target="popup" onClick={function(){window.open(item.url,'popup','width=600,height=600'); return false;}}>{item.title}</a>
                     );
                 } else {
                     return (

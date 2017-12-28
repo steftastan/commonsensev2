@@ -14,46 +14,22 @@ export class DataTable extends Component {
 
     constructor(props) {
       super(props);
-      this.state = {
-          tableData: {},
-          cashDisbursement: {},
-          employeeName: '',
-          pagination: 'pagination',
-          newPaginationClass: 'dataTable__pagination'
-      };
+      this.pagination = 'pagination';
+      this.newPaginationClass = 'dataTable__pagination'
     }
 
-    componentWillMount() {
-        /**
-         * Obtain DataTable info and store in the component's state.
-         */
-        if (this.props && this.props.options && this.props.options.webService) {
-            $.ajax({
-                url: this.props.options.webService,
-                dataType: 'json',
-                cache: false,
-                success: function(data) {
-                    if (data.results) {
-                        this.setState({tableData: data.results});
-                    }
-                }.bind(this),
-                error: function(xhr, status, err) {
-                    console.error(this.props.url, status, err.toString());
-                }.bind(this)
-            });
-        }
-    }
-
-    componentDidUpdate() {
-        var pagination = document.getElementsByClassName(this.state.pagination);
+    componentDidMount() {
+        var pagination = document.getElementsByClassName(this.pagination);
         var tableContainer;
+
         /**
          * We must adjust the positioning of our pagination element post-mount, unfortunately
          * this cannot be customized with the current version of React BootStrap Table (version 4.0)
          */
+
          for (var i = 0; i < pagination.length; i++) {
              if (pagination[i].nodeName === 'UL') {
-                 $(pagination[i].parentNode).addClass(this.state.newPaginationClass);
+                 $(pagination[i].parentNode).addClass(this.newPaginationClass);
                  tableContainer = $(pagination[i].parentNode).closest('.react-bs-table-container');
                  $(pagination[i].parentNode).detach().appendTo(tableContainer.first('.dataTable__pagination'));
              }
@@ -61,7 +37,7 @@ export class DataTable extends Component {
     }
 
     render() {
-        var tableData = this.state.tableData.length ? this.state.tableData : [];
+        var tableData = this.props.results;
         var tableHeaders;
 
         if (tableData && tableData.length) {
@@ -89,7 +65,7 @@ export class DataTable extends Component {
              * Replace the default values in the options variable if custom
              * data was sent from the page.
              */
-            if (this.props && this.props.options && this.props.options.options) {
+            if (this.props.options && this.props.options.options) {
 
                 for (var key in options) {
 
@@ -125,7 +101,7 @@ export class DataTable extends Component {
         }
 
         return (
-            <div key={this.props.theKey} className={this.props.options.bootStrapClass}>
+            <div key={this.props.index} className={this.props.options.bootStrapClass}>
                 <div className="wrapper wrapper__content--whiteBox">
                     <h2 className={this.props.options.titleClass}>{this.props.options.title}</h2>
                     <BootstrapTable data={tableData} options={options} striped hover pagination containerClass={this.props.options.tableSize} tableHeaderClass={this.props.options.tableHeaderClass} trClassName={this.props.options.trClassName}>
