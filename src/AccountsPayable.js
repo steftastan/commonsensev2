@@ -1,6 +1,8 @@
+import $ from 'jquery';
 import React, { Component } from 'react';
 import { Header } from './components/layout/header.js';
 import { BreadCrumbs } from './components/layout/breadcrumbs.js';
+import { CompanyList } from './components/layout/company-list.js';
 import { Accordion } from './components/layout/accordion.js';
 import { DataTable } from './components/widgets/datatable.js';
 import { DataChart } from './components/widgets/datachart.js';
@@ -32,6 +34,10 @@ import { SlidingToolBox } from './components/widgets/sliding-toolbox.js';
  */
 
 const options = {
+    companies: {
+        webService: 'webservices/Companies.json' },
+    accordion: {
+        webService: 'webservices/FullMenu.json' },
     widgets : [{
         name: 'toolBox',
         webService: 'webservices/AccountsPayableToolbox.json'
@@ -59,7 +65,7 @@ const options = {
         name: 'dataTable',
         title: 'Cash Disbursement',
         titleClass: 'dataTable__title',
-        webService: 'webservices/AccountsPayableCashDisbursement',
+        webService: 'webservices/AccountsPayableCashDisbursement.json',
         bootStrapClass: 'col-lg-6 col-sm-12',
         tableSize: 'dataTable--halfWidth',
         trClassName: 'dataTable__row--content',
@@ -104,10 +110,85 @@ const options = {
         }
     }, {
         name: 'slidingToolbox',
-        webService: 'webservices/AccountsPayableSlidingToolBox.json',
-        bootStrapClass: 'col-lg-6 col-sm-12'
+        webService: 'webservices/AccountsPayableSlidingToolBox.json'
     }]
 };
+
+
+/* REUSABLE component to load all repeating content, to avoid having
+to make multiple WS calls */
+export class Layout extends Component {
+
+    constructor() {
+      super();
+      this.companies = options.companies.webService ? options.companies.webService : {};
+      this.accordion = options.accordion.webService ? options.accordion.webService : {};
+      this.state = {
+          data: {},
+          companies: {},
+          defaultCompany: {},
+          accordion: {},
+          employeeName: ''
+      };
+    }
+
+    componentWillMount() {
+        var employeeName = '';
+        var defaultCompany = {};
+
+        /**
+          * Return WS info
+          */
+        $.ajax({
+            url: this.accordion,
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+                this.setState({accordion: data});
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
+
+        $.ajax({
+            url: this.companies,
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+                this.setState({companies: data});
+                /**
+                  * Obtain default company data, necessary to display icon and to highlight
+                  * the correct company name on the top left drop down list.
+                  */
+                this.setState({employeeName: this.state.companies.employeeName});
+                employeeName = this.state.companies.employeeName;
+                for (var i = 0; i < data.results.length; i++) {
+                    if (data.results[i].default === true) {
+                        this.setState({defaultCompany: data.results[i]});
+                    }
+                }
+
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    render() {
+
+        return (
+            <div className="wrapper wrapper__app App">
+                <Header companies={this.state.companies} />
+                <Accordion links={this.state.accordion} defaultCompany={this.state.defaultCompany} employeeName={this.state.employeeName}>
+                    <CompanyList defaultCompany={this.state.defaultCompany} companies={this.state.companies}/>
+                </Accordion>
+                <AccountsPayable/>
+            </div>
+        );
+    }
+}
 
 export class AccountsPayable extends Component {
     constructor() {
@@ -117,6 +198,7 @@ export class AccountsPayable extends Component {
     render() {
         var widgets = [];
         var toolBox = {};
+
 
         /** Extract the data table information from the options array */
         if (options && options.widgets) {
@@ -148,16 +230,13 @@ export class AccountsPayable extends Component {
         }
 
         return (
-            <div className="wrapper wrapper__app App">
-                <Header />
-                <Accordion />
-                <BreadCrumbs toolBox={toolBox} />
+
                 <section className="wrapper wrapper__content wrapper__content--inner">
+                    <BreadCrumbs toolBox={toolBox} />
                     {widgets}
                 </section>
-            </div>
         );
     }
 };
 
-export default AccountsPayable;
+export default Layout;

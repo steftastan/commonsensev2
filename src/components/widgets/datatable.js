@@ -23,7 +23,7 @@ export class DataTable extends Component {
       };
     }
 
-    componentDidMount() {
+    componentWillMount() {
         /**
          * Obtain DataTable info and store in the component's state.
          */

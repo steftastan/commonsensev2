@@ -309,7 +309,8 @@ export class ToolBox extends Component {
              * we define its height post-mount. This is because the tool box
              * relies on multiple uses of absolute positioning which makes
              * calculating dimensions difficult. */
-            toolBoxWrapper.style.height = $(window).height()+'px';
+             //TODO: improve this
+            //toolBoxWrapper.style.height = $(window).height()+'px';
         }
 
         /* Add click event to the tool box button on mobile */
@@ -396,7 +397,6 @@ export class ToolBox extends Component {
 
     render() {
 
-        //* render it defferently depending on the devices
         if (this.state.toolBox.toolBox) {
             this.toolBox = this.state.toolBox.toolBox.map(function(item, key) {
                 if (item.subLinks && item.subLinks.length) {
@@ -415,9 +415,10 @@ export class ToolBox extends Component {
             <section className="toolBox">
                 <div id="toolButton" className="grid__item leftnav__ellipsis leftnav--desktopHidden fa fa-ellipsis-v"></div>
                 <div id="toolBoxWrapper" className="toolBox__wrapper">
-                    <ul className="toolBox__group active">
+                    <ul className="toolBox__group toolBox__barDesktop active">
                         {this.toolBox}
                     </ul>
+                    <div id="toolBoxColumns" className="toolBox--mobileHidden toolBox__columns"></div>
                 </div>
             </section>
         );
@@ -458,8 +459,8 @@ export class SubLinks extends Component {
                 }
 
                 return (
-                    <li className="toolBox__item" key={key} id={key}>
-                        <a className="toolBox__link" href={item.url}>{item.linkName}</a>
+                    <li className="toolBox__item toolBox__item--child" key={key} id={key}>
+                        <a className="toolBox__link toolBox__link--child" href={item.url}>{item.linkName}</a>
                         {subMenu}
                     </li>
                 );
@@ -467,7 +468,7 @@ export class SubLinks extends Component {
         }
 
         return (
-            <ul id={this.multiplier} className="toolBox__group">
+            <ul className="toolBox__group toolBox__group--child">
                 <li className="toolBox__item toolBox__back">
                     <a href="#" className="toolBox__link toolBox__back"><span className="toolBox__back toolBox__caret fa fa-angle-left"></span>Back</a>
                 </li>

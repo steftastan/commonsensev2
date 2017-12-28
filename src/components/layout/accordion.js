@@ -3,46 +3,14 @@ import $ from 'jquery';
 
 export class Accordion extends Component {
 
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
       this.filterLinkList = this.filterLinkList.bind(this);
       this.toggleElem = this.toggleElem.bind(this);
-      this.state = {
-          data: {},
-          companies: {},
-          employeeName: ''
-      };
     }
 
-    componentDidMount() {
-
-        $.ajax({
-            url: 'webservices/FullMenu.json',
-            dataType: 'json',
-            cache: false,
-            success: function(data) {
-                this.setState({data: data});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
-
-        $.ajax({
-            url: 'webservices/Companies.json',
-            dataType: 'json',
-            cache: false,
-            success: function(data) {
-                this.setState({companies: data});
-                this.setState({employeeName: data.employeeName});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
-
+    componentWillMount() {
         document.addEventListener('keyup', this.filterLinkList, false);
-
     }
 
 
@@ -143,9 +111,8 @@ export class Accordion extends Component {
     }
 
     render() {
-
-        if (this.state.data.results && this.state.data.results.length) {
-            var commonSenseLinkList = this.state.data.results.map(function(item, key) {
+        if (this.props.links.results && this.props.links.results.length) {
+            var commonSenseLinkList = this.props.links.results.map(function(item, key) {
                 return (
                     <Section key={key} id={key}>
                         <div className="leftnav__section">
@@ -159,24 +126,16 @@ export class Accordion extends Component {
             }, this);
         }
 
-        if (this.state.companies.results && this.state.companies.results.length) {
-            var companiesList = this.state.companies.results.map(function(item, key) {
-                return (<option key={key} selected={item.selected} id={key}>{item.name}</option>);
-            }, this);
-        }
-
         return (
             <div>
             <nav id="nav" className="wrapper leftnav">
                 <ul className="leftnav__list">
                     <li className="leftnav__fixed">
                         <div className="leftnav__section--fixed">
-                            <span className="leftnav__user">Welcome, {this.state.employeeName}</span>
+                            <span className="leftnav__user">Welcome, {this.props.employeeName}</span>
                             <form className="form">
                                 <i className="form__icon form__icon--company  fa fa-building"></i>
-                                <select className="form__item form__selectCompany">
-                                    {companiesList}
-                                </select>
+                                {this.props.children}
                             </form>
                         </div>
                     </li>

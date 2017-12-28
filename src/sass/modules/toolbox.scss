@@ -14,6 +14,10 @@
 
 /* Mobile */
 @include mobile {
+    .toolBox--mobileHidden {
+        display: none;
+    }
+
     .toolBox {
         position: absolute;
         top: 0;
@@ -112,66 +116,123 @@
 }
 
 @include tablet {
+    .toolBox--desktopHidden,
+    .toolBox__item.toolBox__back {
+        display: none;
+    }
+
     .toolBox {
         display: inline-block;
         position: absolute;
-        right: 131px;
+        right: 129px;
     }
 
-    .toolBox__item {
-        width: auto;
-        display: inline-block;
-        padding: 0;
-        background-color: $blue-60;
-        position: relative;
+    .toolBox__group.toolBox__barDesktop {
+        width: 100%;
+        left: 0;
     }
 
-    .toolBox__item.toolBox__back {
-        display: none !important;
-    }
-
-    .toolBox__group.active {
-        width: auto;
+    .toolBox__group {
+        display: block;
         position: relative;
         right: 0;
+        width: auto;
         height: 42px;
         overflow: visible;
     }
 
+    .toolBox__item {
+        display: inline-block;
+        position: relative;
+        width: 150px;
+        float: left;
+        background-color: $blue-60;
+        padding: 0;
+    }
+
+
+
     .toolBox__link {
-        display: block;
+        display: inline-block;
         padding: 14px 50px 15px;
         color: $white;
-
     }
 
     .toolBox__link:hover {
         background-color: $blue-50;
         text-decoration: none;
         color: $white;
-
     }
 
-    .toolBox__group .toolBox__group .toolBox__item {
-        display: block;
-    }
-
-    .toolBox__group.active .toolBox__group {
+    /* First child level */
+    .toolBox__group--child {
         display: none;
-        // overflow: visible;
-        // position: absolute;
-        // width: 200px;
-        // top: 40px;
-        // left: 0px;
+        position: relative;
+        left: 0;
+        width: 200px;
+        // background-color: $blue-60;
+        height: auto;
+        overflow: visible;
     }
 
-    .toolBox__group.active .toolBox__group .toolBox__group {
-        display: none;
-        // overflow: visible;
-        // position: absolute;
-        // width: 200px;
-        // top: 40px;
-        // left: 200px;
+    .toolBox__item--child {
+        position: relative;
+        width: 200px;
+        border-right: 1px solid $peach-40;
+
+    }
+
+    .toolBox__link--child {
+        display: inline-block;
+        width: 100%;
+        padding: 20px 30px;
+        line-height: $font-size-medium;
+        color: $white;
+    }
+
+
+
+    .toolBox__group--child {
+        background-color: red;
+        height: 300px;
+        position: absolute;
+    }
+
+    .toolBox__item--child {
+        background-color: red; /* OOK */
+    }
+
+
+    .toolBox__group--child .toolBox__group--child {
+        background-color: green;
+        position: absolute;
+        left: 200px;
+        height: 300px;
+    }
+
+    .toolBox__item--child .toolBox__item--child {
+        background-color: green;
+    }
+
+
+    .toolBox__group--child .toolBox__group--child .toolBox__group--child {
+        background-color: blue;
+        position: absolute;
+        left: 200px;
+        height: 300px;
+    }
+
+    // .toolBox__item--child .toolBox__item--child .toolBox__item--child {
+    //     background-color: blue;
+    // }
+    .toolBox__group--child .toolBox__group--child,
+    .toolBox__group--child .toolBox__group--child .toolBox__group--child {
+        position: absolute;
+        top: 0;
+    }
+
+    .toolBox__item:nth-child(2) .toolBox__group--child {
+        left: 0px;
     }
 
 
