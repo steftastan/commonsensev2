@@ -14,6 +14,7 @@ export class BreadCrumbs extends Component {
     constructor(props) {
       super(props);
       this.toggleNav = this.toggleNav.bind(this);
+      this.toggleLayout = this.toggleLayout.bind(this);
       this.clickAnywhereToClose = this.clickAnywhereToClose.bind(this);
       this.stopPropagation = this.stopPropagation.bind(this);
       this.openLang = this.openLang.bind(this);
@@ -37,6 +38,11 @@ export class BreadCrumbs extends Component {
       this.openClass = 'rightnav__lang--open';
       this.selectedClass = 'rightnav__lang--selected';
       this.toolBox;
+      this.elemsToToggle = {
+          header: 'header',
+          breadcrumbs: 'breadcrumbs',
+          contentWrapper: 'contentWrapper'
+      };
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -160,6 +166,31 @@ export class BreadCrumbs extends Component {
             this.navButton.classList.add('fa-close');
             this.navButton.classList.remove('fa-navicon');
         }
+
+        this.toggleLayout();
+    }
+
+    /**
+     * Handle open/close menu button and apply the classes to resize the
+     * main content view accordingly.
+     */
+    toggleLayout() {
+        var header = document.getElementById(this.elemsToToggle.header);
+        var breadcrumbs = document.getElementById(this.elemsToToggle.breadcrumbs);
+        var contentWrapper = document.getElementById(this.elemsToToggle.contentWrapper);
+        var openFlag = '--open';
+
+        if(this.state.open) {
+            header.classList.add(this.elemsToToggle.header+openFlag);
+            breadcrumbs.classList.add(this.elemsToToggle.breadcrumbs+openFlag);
+            contentWrapper.classList.add(this.elemsToToggle.contentWrapper+openFlag);
+
+        } else {
+            header.classList.remove(this.elemsToToggle.header+openFlag);
+            breadcrumbs.classList.remove(this.elemsToToggle.breadcrumbs+openFlag);
+            contentWrapper.classList.remove(this.elemsToToggle.contentWrapper+openFlag);
+        }
+
     }
 
     clickAnywhereToClose(event) {
@@ -173,9 +204,9 @@ export class BreadCrumbs extends Component {
 
     render() {
         return (
-            <section className="breadcrumbs">
+            <section id="breadcrumbs" className="breadcrumbs">
                 <div className="wrapper wrapper__breadcrumbs">
-                    <div id="navButton" className="grid__item leftnav__hamburger leftnav--desktopHidden fa fa-navicon"></div>
+                    <div id="navButton" className="grid__item leftnav__hamburger fa fa-navicon"></div>
                     <div className="grid__item breadcrumbs__trail">
                         <span className="breadcrumbs__link">Dashboard</span>
                         <span className="breadcrumbs__arrow fa fa-chevron-right"></span>

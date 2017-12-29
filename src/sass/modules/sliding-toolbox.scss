@@ -86,6 +86,7 @@
         top: 150px;
         right: 0;
     }
+
     .slidingToolBox__button {
         display: block;
         position: absolute;
@@ -96,7 +97,6 @@
         border-top-left-radius: 30px;
         border-top-right-radius: 0;
         border-bottom-left-radius: 30px;
-        cursor: pointer;
     }
 
     .slidingToolBox__icon {
@@ -105,44 +105,6 @@
         color: $white;
     }
 
-    .slidingToolBox__links {
-        position: relative;
-        right: -250px;
-        z-index: 999;
-        overflow: hidden;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 0;
-        border-bottom-left-radius: 10px;
-        background-color: $blue-50;
-        -webkit-transition: right 0.3s ease-in;
-        -moz-transition: right  0.3s ease-in;
-        -o-transition: right  0.3s ease-in;
-        transition: right  0.3 ease-in;
-    }
-
-    .slidingToolBox__item {
-        display: block;
-        width: 250px;
-        padding: 17px 20px;
-        font-size: $font-size-content;
-        color: $white;
-        border-bottom: 1px solid $blue-40;
-        -webkit-transition: right 0.3s ease-in;
-        -moz-transition: right  0.3s ease-in;
-        -o-transition: right  0.3s ease-in;
-        transition: right  0.3 ease-in;
-        cursor: pointer;
-    }
-
-    .slidingToolBox__item:hover {
-        background-color: $blue-40;
-        color: $white;
-        text-decoration: none;
-    }
-
-    .slidingToolBox__links--active {
-        right: 0;
-    }
 }
 
 /* Desktop-specific styles */

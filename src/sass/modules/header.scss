@@ -54,9 +54,12 @@
 @include tablet {
     .header {
       height: 65px;
-      left: 200px;
-      width: calc(100% - 200px);
-      padding: 0 15px;
+      left: 0;
+      -webkit-transition: left 0.3s ease-in;
+      -moz-transition: left 0.3s ease-in;
+      -o-transition: left 0.3s ease-in;
+      -ms-transition: left 0.3s ease-in;
+      transition: left 0.3s ease-in;
     }
 
     .header__logo {

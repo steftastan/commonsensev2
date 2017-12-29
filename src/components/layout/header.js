@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export class Header extends Component {
     render() {
         return (
-            <header className="wrapper header">
+            <header id="header" className="wrapper header">
                 <div className="grid__item grid__item--header header__logo">
                     <img className="header__logo--img" src={this.props.defaultCompanyIcon}/>
                 </div>

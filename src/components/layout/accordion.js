@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 
+/**
+ * ACCORDION/LEFT NAV COMPONENT
+ *
+ * The le
+ *
+ */
 export class Accordion extends Component {
 
     constructor(props) {
@@ -127,38 +133,38 @@ export class Accordion extends Component {
 
         return (
             <div>
-            <nav id="nav" className="wrapper leftnav">
-                <ul className="leftnav__list">
-                    <li className="leftnav__fixed">
-                        <div className="leftnav__section--fixed">
-                            <span className="leftnav__user">Welcome, {this.props.employeeName}</span>
-                            <form className="form">
-                                <i className="form__icon form__icon--company  fa fa-building"></i>
-                                {this.props.children}
-                            </form>
-                        </div>
-                    </li>
-                    <li className="leftnav__fixed">
-                        <div className="leftnav__section--fixed">
-                            <span className="leftnav__search"></span>
-                            <form className="form">
-                                <i className="form__icon form__icon--search fa fa-search"></i>
-                                <input id="searchInput" className="form__item form__filterLeftNav" type="text" placeholder="Filter navigation list" />
-                            </form>
-                        </div>
+                <nav id="nav" className="wrapper leftnav">
+                    <ul className="leftnav__list">
+                        <li className="leftnav__fixed">
+                            <div className="leftnav__section--fixed">
+                                <span className="leftnav__user">Welcome, {this.props.employeeName}</span>
+                                <form className="form">
+                                    <i className="form__icon form__icon--company  fa fa-building"></i>
+                                    {this.props.children}
+                                </form>
+                            </div>
+                        </li>
+                        <li className="leftnav__fixed">
+                            <div className="leftnav__section--fixed">
+                                <span className="leftnav__search"></span>
+                                <form className="form">
+                                    <i className="form__icon form__icon--search fa fa-search"></i>
+                                    <input id="searchInput" className="form__item form__filterLeftNav" type="text" placeholder="Filter navigation list" />
+                                </form>
+                            </div>
 
-                    </li>
-                    <li className="leftnav__item">
-                        <div className="leftnav__section">
-                            <a className="leftnav__link leftnav__link--dashboard" href="#">Dashboard</a>
-                        </div>
-                    </li>
-                </ul>
-                <ul id="linkList" className="leftnav__list">
-                    {commonSenseLinkList}
-                </ul>
+                        </li>
+                        <li className="leftnav__item">
+                            <div className="leftnav__section">
+                                <a className="leftnav__link leftnav__link--dashboard" href="#">Dashboard</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul id="linkList" className="leftnav__list">
+                        {commonSenseLinkList}
+                    </ul>
 
-            </nav>
+                </nav>
             </div>
         );
     }

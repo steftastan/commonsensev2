@@ -280,8 +280,13 @@ body {
   @media only screen and (min-device-width: 767px) {
     .wrapper__content {
       top: 105px;
-      left: 200px;
-      width: calc(100% - 200px); } }
+      left: 0;
+      width: 100%;
+      -webkit-transition: all 0.3s ease-in;
+      -moz-transition: all 0.3s ease-in;
+      -o-transition: all 0.3s ease-in;
+      -ms-transition: all 0.3s ease-in;
+      transition: all 0.3s ease-in; } }
 
 @media only screen and (max-device-width: 767px) {
   .wrapper__content--inner {
@@ -289,8 +294,7 @@ body {
 
 @media only screen and (min-device-width: 767px) {
   .wrapper__content--inner {
-    display: inline-block;
-    width: calc(100% - 200px); } }
+    display: inline-block; } }
 
 .wrapper__content--whiteBox {
   border-radius: 5px;
@@ -1236,9 +1240,12 @@ th.react-bs-table-expand-cell > div {
 @media only screen and (min-device-width: 767px) {
   .header {
     height: 65px;
-    left: 200px;
-    width: calc(100% - 200px);
-    padding: 0 15px; }
+    left: 0;
+    -webkit-transition: left 0.3s ease-in;
+    -moz-transition: left 0.3s ease-in;
+    -o-transition: left 0.3s ease-in;
+    -ms-transition: left 0.3s ease-in;
+    transition: left 0.3s ease-in; }
   .header__logo {
     width: 65px;
     height: 100%;
@@ -1292,9 +1299,14 @@ th.react-bs-table-expand-cell > div {
 @media only screen and (min-device-width: 767px) {
   .breadcrumbs {
     top: 65px;
-    left: 200px;
+    left: 0;
     height: 40px;
-    width: calc(100% - 200px); }
+    width: 100%;
+    -webkit-transition: all 0.3s ease-in;
+    -moz-transition: all 0.3s ease-in;
+    -o-transition: all 0.3s ease-in;
+    -ms-transition: all 0.3s ease-in;
+    transition: all 0.3s ease-in; }
   .breadcrumbs__trail {
     margin: 0 0 0 15px; } }
 
@@ -1398,15 +1410,24 @@ th.react-bs-table-expand-cell > div {
   overflow: auto;
   width: 225px;
   background: #18273C;
-  -webkit-overflow-scrolling: touch; }
+  -webkit-overflow-scrolling: touch;
+  -webkit-transition: left 0.3s ease-in;
+  -moz-transition: left 0.3s ease-in;
+  -o-transition: left 0.3s ease-in;
+  -ms-transition: left 0.3s ease-in;
+  transition: left 0.3s ease-in;
+  border-bottom: 1px solid #2D408F; }
+
+.leftnav.leftnav--toggle {
+  left: 0; }
 
 .leftnav__item {
   overflow: hidden;
-  -webkit-transition: max-height 0.5s ease-in;
-  -moz-transition: max-height 0.5s ease-in;
-  -o-transition: max-height 0.5s ease-in;
-  -ms-transition: max-height 0.5s ease-in;
-  transition: max-height 0.5s ease-in;
+  -webkit-transition: max-height 0.3s ease-in;
+  -moz-transition: max-height 0.3s ease-in;
+  -o-transition: max-height 0.3s ease-in;
+  -ms-transition: max-height 0.3s ease-in;
+  transition: max-height 0.3s ease-in;
   border-bottom: 1px solid #2D408F;
   color: #FFF;
   font-size: 12px;
@@ -1438,11 +1459,11 @@ th.react-bs-table-expand-cell > div {
   vertical-align: middle;
   font-size: 9px;
   color: #F26322;
-  -webkit-transition: transform 0.5s ease-in;
-  -moz-transition: transform 0.5s ease-in;
-  -o-transition: transform 0.5s ease-in;
-  -ms-transition: transform 0.5s ease-in;
-  transition: transform 0.5s ease-in; }
+  -webkit-transition: transform 0.3s ease-in;
+  -moz-transition: transform 0.3s ease-in;
+  -o-transition: transform 0.3s ease-in;
+  -ms-transition: transform 0.3s ease-in;
+  transition: transform 0.3s ease-in; }
 
 .leftnav__arrow:hover {
   color: #F26322;
@@ -1457,11 +1478,11 @@ th.react-bs-table-expand-cell > div {
   -webkit-transform: rotate(90deg);
   /* Chrome, Safari, Opera */
   transform: rotate(90deg);
-  -webkit-transition: transform 0.5s ease-in;
-  -moz-transition: transform 0.5s ease-in;
-  -o-transition: transform 0.5s ease-in;
-  -ms-transition: transform 0.5s ease-in;
-  transition: transform 0.5s ease-in;
+  -webkit-transition: transform 0.3s ease-in;
+  -moz-transition: transform 0.3s ease-in;
+  -o-transition: transform 0.3s ease-in;
+  -ms-transition: transform 0.3s ease-in;
+  transition: transform 0.3s ease-in;
   color: #F26322;
   text-decoration: none; }
 
@@ -1501,7 +1522,7 @@ th.react-bs-table-expand-cell > div {
 
 .leftnav::-webkit-scrollbar {
   width: 5px;
-  background-color: rgba(0, 0, 0, 0.55); }
+  background-color: rgba(0, 0, 0, 0.35); }
 
 .leftnav::-webkit-scrollbar-thumb {
   background-color: #F26322; }
@@ -1512,28 +1533,22 @@ th.react-bs-table-expand-cell > div {
 .leftnav__section--fixed {
   margin: 15px 10px; }
 
+/* Hamburger button */
+.leftnav__hamburger {
+  width: 45px;
+  height: 45px;
+  z-index: 9999;
+  padding: 10px 12px;
+  background-color: #18273C;
+  font-size: 24px;
+  color: #F26322; }
+
 /* Mobile-specific styles */
 @media only screen and (max-device-width: 767px) {
   .leftnav {
     top: 95px;
     left: -225px;
-    height: calc(100% - 50px);
-    border-bottom: 1px solid #2D408F;
-    -webkit-transition: left 0.5s ease-in;
-    -moz-transition: left 0.5s ease-in;
-    -o-transition: left 0.5s ease-in;
-    -ms-transition: left 0.5s ease-in;
-    transition: left 0.5s ease-in; }
-  .leftnav--toggle {
-    left: 0; }
-  .leftnav__hamburger {
-    width: 45px;
-    height: 45px;
-    z-index: 9999;
-    padding: 10px 12px;
-    background-color: #18273C;
-    font-size: 24px;
-    color: #F26322; }
+    height: calc(100% - 50px); }
   .leftnav__ellipsis {
     width: 45px;
     height: 45px;
@@ -1546,18 +1561,18 @@ th.react-bs-table-expand-cell > div {
   .leftnav__item {
     height: 48px;
     max-height: 48px;
-    -webkit-transition: height 0.5s ease-in;
-    -moz-transition: height 0.5s ease-in;
-    -o-transition: height 0.5s ease-in;
-    -ms-transition: height 0.5s ease-in;
-    transition: height 0.5s ease-in; }
+    -webkit-transition: height 0.3s ease-in;
+    -moz-transition: height 0.3s ease-in;
+    -o-transition: height 0.3s ease-in;
+    -ms-transition: height 0.3s ease-in;
+    transition: height 0.3s ease-in; }
   .leftnav__item.leftnav__item--open {
     height: auto;
-    -webkit-transition: max-height 0.5s ease-in;
-    -moz-transition: max-height 0.5s ease-in;
-    -o-transition: max-height 0.5s ease-in;
-    -ms-transition: max-height 0.5s ease-in;
-    transition: max-height 0.5s ease-in; }
+    -webkit-transition: max-height 0.3s ease-in;
+    -moz-transition: max-height 0.3s ease-in;
+    -o-transition: max-height 0.3s ease-in;
+    -ms-transition: max-height 0.3s ease-in;
+    transition: max-height 0.3s ease-in; }
   .leftnav__section {
     padding: 15px 10px; }
   .leftnav__arrow {
@@ -1569,8 +1584,23 @@ th.react-bs-table-expand-cell > div {
 @media only screen and (min-device-width: 767px) {
   .leftnav {
     top: 0;
-    width: 200px;
+    left: -14%;
+    width: 14%;
+    min-width: 200px;
     height: 100%; }
+  /* Hamburger button */
+  .leftnav__hamburger {
+    top: 75px;
+    width: 45px;
+    height: 45px;
+    z-index: 999999;
+    padding: 10px 12px;
+    background-color: #F26322;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 30px;
+    font-size: 24px;
+    color: #FFF; }
   .leftnav__link--dashboard {
     padding: 5px 0; }
   .leftnav__section {
@@ -2170,43 +2200,11 @@ th.react-bs-table-expand-cell > div {
     height: 44px;
     border-top-left-radius: 30px;
     border-top-right-radius: 0;
-    border-bottom-left-radius: 30px;
-    cursor: pointer; }
+    border-bottom-left-radius: 30px; }
   .slidingToolBox__icon {
     padding: 7px 0 0 15px;
     font-size: 30px;
-    color: #FFF; }
-  .slidingToolBox__links {
-    position: relative;
-    right: -250px;
-    z-index: 999;
-    overflow: hidden;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 0;
-    border-bottom-left-radius: 10px;
-    background-color: #2D74DA;
-    -webkit-transition: right 0.3s ease-in;
-    -moz-transition: right  0.3s ease-in;
-    -o-transition: right  0.3s ease-in;
-    transition: right  0.3 ease-in; }
-  .slidingToolBox__item {
-    display: block;
-    width: 250px;
-    padding: 17px 20px;
-    font-size: 12px;
-    color: #FFF;
-    border-bottom: 1px solid #5392FF;
-    -webkit-transition: right 0.3s ease-in;
-    -moz-transition: right  0.3s ease-in;
-    -o-transition: right  0.3s ease-in;
-    transition: right  0.3 ease-in;
-    cursor: pointer; }
-  .slidingToolBox__item:hover {
-    background-color: #5392FF;
-    color: #FFF;
-    text-decoration: none; }
-  .slidingToolBox__links--active {
-    right: 0; } }
+    color: #FFF; } }
 
 /* Desktop-specific styles */
 @media only screen and (min-device-width: 1025px) {
@@ -2335,3 +2333,41 @@ th.react-bs-table-expand-cell > div {
 .dataTable--halfWidth .react-bs-table .react-bs-container-header > table > thead > tr > th,
 .dataTable--halfWidth .react-bs-table .react-bs-container-footer > table > thead > tr > th {
   vertical-align: middle; }
+
+/* ==========================================================================
+   OVERRIDES
+   ========================================================================== */
+/**
+ * Last-resort CSS classes to override existing rules go here.
+ * These are last-resort uses, some may not strictly adhere to BEM standards,
+ * because they may rewrite CSS from external sources.
+ *
+ * Since opening and closing the dashboard affects many elements in our DOM,
+ * this file was created to better manage the classes that cause the change.
+ */
+/* All devices */
+@media only screen and (min-device-width: 767px) {
+  .header.header--open {
+    left: 14%;
+    -webkit-transition: left 0.3s ease-in;
+    -moz-transition: left 0.3s ease-in;
+    -o-transition: left 0.3s ease-in;
+    -ms-transition: left 0.3s ease-in;
+    transition: left 0.3s ease-in; }
+  .breadcrumbs.breadcrumbs--open {
+    left: 14%;
+    width: 86%;
+    -webkit-transition: all 0.3s ease-in;
+    -moz-transition: all 0.3s ease-in;
+    -o-transition: all 0.3s ease-in;
+    -ms-transition: all 0.3s ease-in;
+    transition: all 0.3s ease-in; }
+  .wrapper__content.contentWrapper--open {
+    width: 86%;
+    min-width: 86%;
+    left: 14%;
+    -webkit-transition: all 0.3s ease-in;
+    -moz-transition: all 0.3s ease-in;
+    -o-transition: all 0.3s ease-in;
+    -ms-transition: all 0.3s ease-in;
+    transition: all 0.3s ease-in; } }

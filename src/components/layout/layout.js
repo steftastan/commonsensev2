@@ -118,11 +118,11 @@ export class Layout extends Component {
 
         return (
             <div className="wrapper wrapper__app App">
-                <Header companies={this.state.companies} defaultCompanyName={this.state.defaultCompany.name} defaultCompanyIcon={this.state.defaultCompany.icon} />
                 <Accordion links={this.state.accordion} employeeName={this.state.employeeName}>
                     <CompanyList defaultCompanyName={this.state.defaultCompany.name} defaultCompanyIcon={this.state.defaultCompany.icon} companies={this.state.companies}/>
                 </Accordion>
-                <section className="wrapper wrapper__content wrapper__content--inner">
+                <section id="contentWrapper" className="wrapper wrapper__content wrapper__content--inner">
+                    <Header companies={this.state.companies} defaultCompanyName={this.state.defaultCompany.name} defaultCompanyIcon={this.state.defaultCompany.icon} />
                     {this.props.children}
                 </section>
             </div>
