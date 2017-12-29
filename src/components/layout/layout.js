@@ -18,15 +18,38 @@ export class Layout extends Component {
       this.companies = {};
       this.accordion = {};
       this.defaultCompany = {};
+      this.updateCompany = this.updateCompany.bind(this);
+      this.companyDropDown = 'companyList';
       this.state = {
-          employeeName: 'default',
+          employeeName: '',
           accordion: {},
           companies: {},
           defaultCompany: {}
       }
     }
 
+    /**
+     * Updates the company logo and name per the selection made.
+     * TODO: This should also store company info in the session (global var for now)
+     * and refresh the page.
+     */
+    updateCompany(e) {
+
+        this.setState({
+            defaultCompany: {
+                name: e.target.value,
+                default: true,
+                icon: $('#companyList option:selected').attr('icon')
+            }
+        });
+    }
+
     componentDidMount() {
+
+        /* Listen for the company switch */
+        this.companyDropDown = document.getElementById(this.companyDropDown);
+        this.companyDropDown.addEventListener('change', this.updateCompany);
+
 
         /** https://css-tricks.com/multiple-simultaneous-ajax-requests-one-callback-jquery/
           * Although the guide referenced above says these AJAX queries will
@@ -95,9 +118,9 @@ export class Layout extends Component {
 
         return (
             <div className="wrapper wrapper__app App">
-                <Header companies={this.state.companies} />
+                <Header companies={this.state.companies} defaultCompanyName={this.state.defaultCompany.name} defaultCompanyIcon={this.state.defaultCompany.icon} />
                 <Accordion links={this.state.accordion} employeeName={this.state.employeeName}>
-                    <CompanyList defaultCompany={this.state.defaultCompany} companies={this.state.companies}/>
+                    <CompanyList defaultCompanyName={this.state.defaultCompany.name} defaultCompanyIcon={this.state.defaultCompany.icon} companies={this.state.companies}/>
                 </Accordion>
                 <section className="wrapper wrapper__content wrapper__content--inner">
                     {this.props.children}

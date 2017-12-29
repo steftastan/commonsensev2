@@ -227,8 +227,12 @@ body {
 
 @media only screen and (min-device-width: 767px) {
   .grid__item--header + .grid__item--header {
-    margin: 0 0 0 15px;
-    top: -2px; } }
+    top: -2px;
+    margin: 0 0 0 15px; } }
+
+@media only screen and (min-device-width: 767px) {
+  .grid__item--header {
+    margin: 0 0 0 15px; } }
 
 /* ==========================================================================
    WRAPPERS
@@ -1201,7 +1205,13 @@ th.react-bs-table-expand-cell > div {
   background: #2D408F; }
 
 .header__logo {
-  color: #FFF; }
+  color: #FFF;
+  height: 100%; }
+
+.header__logo--img {
+  width: 100%;
+  height: auto;
+  font-size: 70px; }
 
 .header__mainTitle {
   color: #FFF;
@@ -1231,6 +1241,7 @@ th.react-bs-table-expand-cell > div {
     padding: 0 15px; }
   .header__logo {
     width: 65px;
+    height: 100%;
     font-size: 70px; }
   .header__mainTitle {
     color: #FFF;
@@ -1239,7 +1250,10 @@ th.react-bs-table-expand-cell > div {
   .header__subTitle {
     color: #FFF;
     font-size: 14px;
-    font-weight: 400; } }
+    font-weight: 400; }
+  .header__companyName {
+    margin-top: 15px;
+    vertical-align: middle; } }
 
 /* Desktop-specific styles */
 /* ==========================================================================

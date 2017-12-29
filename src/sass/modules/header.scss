@@ -19,7 +19,15 @@
 
 .header__logo {
   color:  $white;
+  height: 100%;
 }
+
+.header__logo--img {
+    width: 100%;
+    height: auto;
+    font-size: 70px;
+}
+
 
 .header__mainTitle {
     @include font($font-size-mobile-large, $font-weight-bold, $white);
@@ -53,6 +61,7 @@
 
     .header__logo {
       width: 65px;
+      height: 100%;
       font-size: 70px;
     }
 
@@ -62,6 +71,11 @@
 
     .header__subTitle {
         @include font($font-size-small, $font-weight-regular, $white);
+    }
+
+    .header__companyName {
+        margin-top: 15px;
+        vertical-align: middle;
     }
 
 }

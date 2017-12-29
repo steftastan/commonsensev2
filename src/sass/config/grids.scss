@@ -22,11 +22,17 @@
     }
 
     @include tablet {
-        margin: 0 0 0 15px;
         top: -2px;
+        margin: 0 0 0 15px;
     }
 
     @include desktop {
 
+    }
+}
+
+.grid__item--header {
+    @include tablet {
+        margin: 0 0 0 15px;
     }
 }
