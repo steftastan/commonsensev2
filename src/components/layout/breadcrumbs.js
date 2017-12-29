@@ -198,7 +198,8 @@ export class BreadCrumbs extends Component {
             this.setState({
                 open: false
             });
-            this.nav.classList.remove(this.toggleClass);
+
+            this.toggleNav(event);
         }
     }
 

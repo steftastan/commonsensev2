@@ -231,16 +231,27 @@
     /* Hamburger button */
     .leftnav__hamburger {
         top: 75px;
-        width: 45px;
-        height: 45px;
+        left: -20px;
+        width: 60px;
+        height: 44px;
         z-index: 999999;
-        padding: 10px 12px;
+        padding: 10px 0 0 25px;
         background-color: $peach-40;
         border-top-right-radius: 30px;
         border-top-left-radius: 0;
         border-bottom-right-radius: 30px;
         font-size: 24px;
         color: $white;
+        -webkit-transition: left 0.3s ease-in;
+        -moz-transition: left 0.3s ease-in;
+        -o-transition: left 0.3s ease-in;
+        -ms-transition: left 0.3s ease-in;
+        transition: left 0.3s ease-in;
+     }
+
+     .leftnav__hamburger:hover {
+         left: 0;
+         background-color: $peach-50;
      }
 
     .leftnav__link--dashboard {

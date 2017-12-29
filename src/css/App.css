@@ -1308,7 +1308,8 @@ th.react-bs-table-expand-cell > div {
     -ms-transition: all 0.3s ease-in;
     transition: all 0.3s ease-in; }
   .breadcrumbs__trail {
-    margin: 0 0 0 15px; } }
+    left: -45px;
+    margin: 0; } }
 
 /* Desktop-specific styles */
 /* ==========================================================================
@@ -1591,16 +1592,25 @@ th.react-bs-table-expand-cell > div {
   /* Hamburger button */
   .leftnav__hamburger {
     top: 75px;
-    width: 45px;
-    height: 45px;
+    left: -20px;
+    width: 60px;
+    height: 44px;
     z-index: 999999;
-    padding: 10px 12px;
+    padding: 10px 0 0 25px;
     background-color: #F26322;
     border-top-right-radius: 30px;
     border-top-left-radius: 0;
     border-bottom-right-radius: 30px;
     font-size: 24px;
-    color: #FFF; }
+    color: #FFF;
+    -webkit-transition: left 0.3s ease-in;
+    -moz-transition: left 0.3s ease-in;
+    -o-transition: left 0.3s ease-in;
+    -ms-transition: left 0.3s ease-in;
+    transition: left 0.3s ease-in; }
+  .leftnav__hamburger:hover {
+    left: 0;
+    background-color: #C45433; }
   .leftnav__link--dashboard {
     padding: 5px 0; }
   .leftnav__section {
