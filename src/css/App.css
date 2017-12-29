@@ -2089,43 +2089,36 @@ th.react-bs-table-expand-cell > div {
     position: relative;
     left: 0;
     width: 200px;
-    height: auto;
+    min-height: 250px;
+    height: 300px;
+    background-color: #1F57A4;
+    border-right: 1px solid #F26322;
     overflow: visible; }
   .toolBox__item--child {
     position: relative;
-    width: 200px;
-    border-right: 1px solid #F26322; }
+    width: 200px; }
   .toolBox__link--child {
     display: inline-block;
     width: 100%;
     padding: 20px 30px;
     line-height: 18px;
     color: #FFF; }
-  .toolBox__group--child {
-    background-color: red;
-    height: 300px;
-    position: absolute; }
-  .toolBox__item--child {
-    background-color: red;
-    /* OOK */ }
+  .toolBox__group--child.active {
+    /* interesting */
+    left: -200px;
+    display: block; }
+  .toolBox__group--child .toolBox__group--child.active {
+    left: 200px;
+    display: block; }
   .toolBox__group--child .toolBox__group--child {
-    background-color: green;
     position: absolute;
-    left: 200px;
-    height: 300px; }
-  .toolBox__item--child .toolBox__item--child {
-    background-color: green; }
-  .toolBox__group--child .toolBox__group--child .toolBox__group--child {
-    background-color: blue;
-    position: absolute;
-    left: 200px;
-    height: 300px; }
-  .toolBox__group--child .toolBox__group--child,
+    left: 200px; }
   .toolBox__group--child .toolBox__group--child .toolBox__group--child {
     position: absolute;
-    top: 0; }
-  .toolBox__item:nth-child(2) .toolBox__group--child {
-    left: 0px; } }
+    left: 200px; }
+  .toolBox__group--child .toolBox__group--child {
+    position: absolute;
+    top: 0; } }
 
 /* ==========================================================================
    SLIDING TOOLBOX

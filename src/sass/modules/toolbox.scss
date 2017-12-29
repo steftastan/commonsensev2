@@ -170,15 +170,17 @@
         position: relative;
         left: 0;
         width: 200px;
-        // background-color: $blue-60;
-        height: auto;
+        min-height: 250px;
+        height: 300px;
+        background-color: $blue-60;
+        border-right: 1px solid $peach-40;
         overflow: visible;
     }
 
     .toolBox__item--child {
         position: relative;
         width: 200px;
-        border-right: 1px solid $peach-40;
+        // border-right: 1px solid $peach-40;
 
     }
 
@@ -191,49 +193,35 @@
     }
 
 
+    //
+    // .toolBox__group--child {
+    //     position: absolute;
+    // }
 
-    .toolBox__group--child {
-        background-color: red;
-        height: 300px;
-        position: absolute;
+    .toolBox__group--child.active { /* interesting */
+        left: -200px;
+        display: block;
     }
 
-    .toolBox__item--child {
-        background-color: red; /* OOK */
+    .toolBox__group--child .toolBox__group--child.active {
+        left: 200px;
+        display: block;
     }
 
 
     .toolBox__group--child .toolBox__group--child {
-        background-color: green;
         position: absolute;
         left: 200px;
-        height: 300px;
     }
-
-    .toolBox__item--child .toolBox__item--child {
-        background-color: green;
-    }
-
 
     .toolBox__group--child .toolBox__group--child .toolBox__group--child {
-        background-color: blue;
         position: absolute;
         left: 200px;
-        height: 300px;
     }
 
-    // .toolBox__item--child .toolBox__item--child .toolBox__item--child {
-    //     background-color: blue;
-    // }
-    .toolBox__group--child .toolBox__group--child,
-    .toolBox__group--child .toolBox__group--child .toolBox__group--child {
+    .toolBox__group--child .toolBox__group--child {
         position: absolute;
         top: 0;
     }
-
-    .toolBox__item:nth-child(2) .toolBox__group--child {
-        left: 0px;
-    }
-
 
 }
