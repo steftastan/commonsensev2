@@ -1957,10 +1957,10 @@ th.react-bs-table-expand-cell > div {
 /* Tablet-specific styles */
 /* Desktop-specific styles */
 /* ==========================================================================
-   BREADCRUMBS
+   TOOLBOX
    ========================================================================== */
 /**
- * Breadcrumbs located underneath the header.
+ * The multi-level dropdown toolbox
  */
 /* All devices */
 .toolBox__link {

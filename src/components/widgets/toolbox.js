@@ -23,6 +23,8 @@ export class ToolBox extends Component {
       this.animateToolBox = this.animateToolBox.bind(this);
       this.toggleNav = this.toggleNav.bind(this);
       this.resetNav = this.resetNav.bind(this);
+      this.toolBoxWrapper;
+      this.toolBoxHeight;
     }
 
     /* Handle open/close button available on mobile */
@@ -30,6 +32,7 @@ export class ToolBox extends Component {
         e.stopPropagation();
         this.toolNav = document.getElementById(this.toolBoxId);
         this.toolButton = document.getElementById(this.toolButtonId);
+        var firstToolBox;
 
         if(this.state.open) {
             this.setState({
@@ -47,6 +50,12 @@ export class ToolBox extends Component {
             this.toolNav.classList.add(this.toggleClass);
             this.toolButton.classList.add('fa-close');
             this.toolButton.classList.remove('fa-ellipsis-v');
+            var firstToolBox = document.getElementById('firstToolBox');
+
+            /* Get the child's computed height so we can adjust the wrapper accordingly. */
+            this.toolBoxHeight = window.getComputedStyle(firstToolBox);
+            this.toolBoxHeight = this.toolBoxHeight.getPropertyValue('height');
+            this.toolBoxWrapper.style.height = this.toolBoxHeight;
         }
     }
 
@@ -95,27 +104,19 @@ export class ToolBox extends Component {
     }
 
     componentDidMount() {
-
         var navButton = document.getElementById(this.toolButtonId);
         var toolBoxWrapper = document.getElementById(this.toolBoxId);
 
         /* Add click event to the tool box button on mobile */
         navButton.addEventListener('mousedown', this.toggleNav, false);
-
-        /* Small fix to get the toolbox to work with the sliding feature,
-         * we define its height post-mount. This is because the tool box
-         * relies on multiple uses of absolute positioning which makes
-         * calculating dimensions difficult. */
-         //TODO: improve this
-        //toolBoxWrapper.style.height = $(window).height()+'px';
     }
 
     componentDidUpdate() {
         /**
          * Add mouse events here to trigger animation.
          */
-        var toolBoxWrapper = document.getElementById(this.toolBoxId);
-        toolBoxWrapper.addEventListener('click', this.animateToolBox);
+        this.toolBoxWrapper = document.getElementById(this.toolBoxId);
+        this.toolBoxWrapper.addEventListener('click', this.animateToolBox);
     }
 
     /**
@@ -130,7 +131,6 @@ export class ToolBox extends Component {
         var activeButton;
         var backButton = null;
         var oldGroup;
-        var newGroup;
 
         /* Ensure we have stored the correct DOM node, we need to move the entire group off the screen */
         if (!clickedItem.classList.contains(this.toolBoxClass)) {
@@ -162,6 +162,12 @@ export class ToolBox extends Component {
 
                 /* Move the new set of options into position*/
                 childItem.classList.add(this.active);
+
+                /* Get the child's computed height so we can adjust the wrapper accordingly. */
+                this.toolBoxHeight = window.getComputedStyle(childItem);
+                this.toolBoxHeight = this.toolBoxHeight.getPropertyValue('height');
+                this.toolBoxWrapper.style.height = this.toolBoxHeight;
+
                 clickedItem.removeEventListener('click', this.animateToolBox);
                 childItem.addEventListener('click', this.animateToolBox);
             }
@@ -189,7 +195,6 @@ export class ToolBox extends Component {
     }
 
     render() {
-        console.log('render mee');
         var renderToolBox;
         if (this.state.toolBox.toolBox) {
             renderToolBox = this.state.toolBox.toolBox.map(function(item, key) {
@@ -209,7 +214,7 @@ export class ToolBox extends Component {
             <section className="toolBox">
                 <div id="toolButton" className="grid__item leftnav__ellipsis leftnav--desktopHidden fa fa-ellipsis-v"></div>
                 <div id="toolBoxWrapper" className="toolBox__wrapper">
-                    <ul className="toolBox__group toolBox__barDesktop active">
+                    <ul id="firstToolBox" className="toolBox__group toolBox__barDesktop active">
                         {renderToolBox}
                     </ul>
                     <div id="toolBoxColumns" className="toolBox--mobileHidden toolBox__columns"></div>
