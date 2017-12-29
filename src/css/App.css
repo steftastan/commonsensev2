@@ -2137,7 +2137,8 @@ th.react-bs-table-expand-cell > div {
 .slidingToolBox {
   position: fixed;
   bottom: 0;
-  right: 0; }
+  right: 0;
+  z-index: 9999; }
 
 .slidingToolBox__button {
   display: block;
@@ -2145,10 +2146,10 @@ th.react-bs-table-expand-cell > div {
   z-index: 99999;
   bottom: 0;
   right: 10px;
-  width: 65px;
+  width: 40px;
   height: 55px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
   background-color: #2D74DA;
   -webkit-transition: all 0.3s ease-in;
   -moz-transition: all  0.3s ease-in;
@@ -2156,8 +2157,12 @@ th.react-bs-table-expand-cell > div {
   transition: all  0.3 ease-in;
   cursor: pointer; }
 
+.slidingToolBox__button:active,
+.slidingToolBox__button:hover {
+  background-color: #5392FF; }
+
 .slidingToolBox__icon {
-  padding: 10px 0 0 20px;
+  padding: 10px 0 0 9px;
   font-size: 24px;
   color: #FFF; }
 
