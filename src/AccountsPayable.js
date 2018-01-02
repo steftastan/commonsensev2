@@ -6,6 +6,7 @@ import { ToolBox } from './components/widgets/toolbox.js';
 import { DataTable } from './components/widgets/datatable.js';
 import { DataChart } from './components/widgets/datachart.js';
 import { SlidingToolBox } from './components/widgets/sliding-toolbox.js';
+import './global.variables.js';
 
 /** ACCOUNTS PAYABLE
  *
@@ -32,15 +33,16 @@ import { SlidingToolBox } from './components/widgets/sliding-toolbox.js';
  * TODO: it would be good to make the back-end calls using an async library.
  */
 
+
 const options = {
     breadcrumbs: [{
-        name:'Dashboard',
+        name:'dashboard',
         path:'http://google.com'
     }, {
-        name:'Financials',
+        name:'financials',
         path:'http://google.com'
     },{
-        name:'Accounts Payable', 
+        name:'accountsPayable',
         path:'http://google.com' }],
     widgets : [{
         name: 'toolBox',
@@ -62,12 +64,12 @@ const options = {
         }],
             sizePerPage: 25
         },
-        tableHeaders: ['hi test', 'id', 'supplier', 'address', 'city', 'province', 'telephone', 'balanceDue', 'lastInvoice'],
-        filterBy: ['hi test', 'id', 'supplier', 'address'],
+        tableHeaders: ['id', 'supplier', 'address', 'city', 'province', 'telephone', 'balanceDue', 'lastInvoice'],
+        filterBy: ['id', 'supplier', 'address'],
         sortBy: ['id', 'supplier', 'address', 'city', 'province', 'telephone', 'balanceDue', 'lastInvoice']
     }, {
         name: 'dataTable',
-        title: 'Cash Disbursement',
+        title: 'cashDisbursement',
         titleClass: 'dataTable__title',
         webService: 'webservices/AccountsPayableCashDisbursement.json',
         bootStrapClass: 'col-lg-6 col-sm-12',

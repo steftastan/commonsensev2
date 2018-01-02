@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
+import './../../global.languages.js';
+import './../../global.variables.js';
+import { Localization } from './../../helper.localization.js';
 
 /**
  * ACCORDION/LEFT NAV COMPONENT
  *
- * The le
+ * The left navigation.
  *
  */
 export class Accordion extends Component {
 
     constructor(props) {
       super(props);
+      this.Localization = Localization;
       this.filterLinkList = this.filterLinkList.bind(this);
       this.toggleElem = this.toggleElem.bind(this);
     }
@@ -116,13 +120,15 @@ export class Accordion extends Component {
     }
 
     render() {
+        var link__text;
         if (this.props.links.results && this.props.links.results.length) {
             var commonSenseLinkList = this.props.links.results.map(function(item, key) {
+                link__text = this.Localization(item.name);
                 return (
                     <Section key={key} id={key}>
                         <div className="leftnav__section">
                             <span className={"leftnav__child leftnav__icon " + item.icon + " " + item.color}></span>
-                            <a className="leftnav__child leftnav__link" href={item.url}>{item.name}</a>
+                            <a className="leftnav__child leftnav__link" href={item.url}>{link__text}</a>
                             <a className="leftnav__child leftnav__arrow fa fa-chevron-right" href="#"></a>
                         </div>
                         <SubLinkList sublinks={item.sublinks} />

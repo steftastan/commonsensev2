@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import './../../global.languages.js';
+import './../../global.variables.js';
+import { Localization } from './../../helper.localization.js';
 
 /**
  * BREADCRUMBS LAYOUT COMPONENT
@@ -13,6 +16,7 @@ export class BreadCrumbs extends Component {
 
     constructor(props) {
       super(props);
+      this.Localization = Localization;
       this.toggleNav = this.toggleNav.bind(this);
       this.toggleLayout = this.toggleLayout.bind(this);
       this.clickAnywhereToClose = this.clickAnywhereToClose.bind(this);
@@ -22,7 +26,7 @@ export class BreadCrumbs extends Component {
       this.buildCrumbs = this.buildCrumbs.bind(this);
       this.state = {
           open: false,
-          selectedLang: ''
+          selectedLang: global.defaultLang
       };
       this.defaultLang = 'en';
       this.openClassName = '';
@@ -45,6 +49,11 @@ export class BreadCrumbs extends Component {
           breadcrumbs: 'breadcrumbs',
           contentWrapper: 'contentWrapper'
       };
+    }
+
+    componentWillMount() {
+        // this.selectedLang = document.getElementById(this.defaultLang);
+        // global.defaultLang = this.selectedLang;
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -100,6 +109,11 @@ export class BreadCrumbs extends Component {
                     this.setState({
                         selectedLang: languages[i].id
                     });
+
+                    // Store the language switch data
+                    // TODO: Further test this is working.
+                    global.defaultLang = this.state.selectedLang;
+
                     clickedLang = document.getElementById(languages[i].id);
                     if (!clickedLang.classList.contains(this.selectedClass)) {
                         clickedLang.classList.add(this.selectedClass, this.activeClass, this.openClass);
@@ -119,8 +133,10 @@ export class BreadCrumbs extends Component {
 
     buildCrumbs() {
             var caret;
+            var link__text;
             var trail = this.props.breadcrumbs.map(function(item, key) {
-                console.log(item);
+                console.log(item.name);
+                link__text = this.Localization(item.name);
                 if (key > 0 && key < this.props.breadcrumbs.length) {
                     caret = 'fa fa-caret-right';
                 } else {
@@ -129,13 +145,10 @@ export class BreadCrumbs extends Component {
                 return (
                     <a href={item.path} key={key} className={"breadcrumbs__link"}>
                         <span className={"breadcrumbs__caret " + caret}></span>
-                        {item.name}
+                        {link__text}
                     </a>
                 );
             }, this);
-
-            console.log(this.trail);
-            console.log(this.props.breadcrumbs);
 
             this.trail = (
                 <div className="grid__item breadcrumbs__trail">
@@ -235,6 +248,7 @@ export class BreadCrumbs extends Component {
     }
 
     render() {
+        var logout__text =  this.Localization('logout');
         return (
             <section id="breadcrumbs" className="breadcrumbs">
                 <div className="wrapper wrapper__breadcrumbs">
@@ -248,7 +262,7 @@ export class BreadCrumbs extends Component {
                             <span id="fr" className="rightnav__lang">FR</span>
                             </div>
                         </div>
-                        <a className="rightnav__logout" href="/logout">Logout</a>
+                        <a className="rightnav__logout" href="/logout">{logout__text}</a>
                     </div>
                 </div>
             </section>
