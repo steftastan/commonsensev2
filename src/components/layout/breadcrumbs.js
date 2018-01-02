@@ -19,6 +19,7 @@ export class BreadCrumbs extends Component {
       this.stopPropagation = this.stopPropagation.bind(this);
       this.openLang = this.openLang.bind(this);
       this.toggleLang = this.toggleLang.bind(this);
+      this.buildCrumbs = this.buildCrumbs.bind(this);
       this.state = {
           open: false,
           selectedLang: ''
@@ -38,6 +39,7 @@ export class BreadCrumbs extends Component {
       this.openClass = 'rightnav__lang--open';
       this.selectedClass = 'rightnav__lang--selected';
       this.toolBox;
+      this.trail = '';
       this.elemsToToggle = {
           header: 'header',
           breadcrumbs: 'breadcrumbs',
@@ -70,6 +72,8 @@ export class BreadCrumbs extends Component {
             selectedLang = document.getElementById(this.defaultLang);
             this.toggleLang(selectedLang, true, true);
         }
+
+        this.buildCrumbs();
     }
 
     openLang(event) {
@@ -111,6 +115,33 @@ export class BreadCrumbs extends Component {
                 }
             }
         }
+    }
+
+    buildCrumbs() {
+            var caret;
+            var trail = this.props.breadcrumbs.map(function(item, key) {
+                console.log(item);
+                if (key > 0 && key < this.props.breadcrumbs.length) {
+                    caret = 'fa fa-caret-right';
+                } else {
+                    caret = '';
+                }
+                return (
+                    <a href={item.path} key={key} className={"breadcrumbs__link"}>
+                        <span className={"breadcrumbs__caret " + caret}></span>
+                        {item.name}
+                    </a>
+                );
+            }, this);
+
+            console.log(this.trail);
+            console.log(this.props.breadcrumbs);
+
+            this.trail = (
+                <div className="grid__item breadcrumbs__trail">
+                    {trail}
+                </div>
+            );
     }
 
     /**
@@ -208,11 +239,7 @@ export class BreadCrumbs extends Component {
             <section id="breadcrumbs" className="breadcrumbs">
                 <div className="wrapper wrapper__breadcrumbs">
                     <div id="navButton" className="grid__item leftnav__hamburger fa fa-navicon"></div>
-                    <div className="grid__item breadcrumbs__trail">
-                        <span className="breadcrumbs__link">Dashboard</span>
-                        <span className="breadcrumbs__arrow fa fa-chevron-right"></span>
-                        <span className="breadcrumbs__link">Financials</span>
-                    </div>
+                    {this.trail}
                     {this.props.children}
                     <div className="grid__item rightnav rightnav--mobileHidden">
                         <div id="langWrapper" className="wrapper rightnav__langSelect">

@@ -132,6 +132,8 @@
         left: 0;
     }
 
+    toolBox__barDesktop
+
     .toolBox__group {
         display: block;
         position: relative;
@@ -146,15 +148,20 @@
         position: relative;
         width: 150px;
         float: left;
-        background-color: $blue-60;
         padding: 0;
     }
 
-
+    .toolBox__group--child.inactive {
+        background-color: red;
+    }
+    // .toolBox__group--child.inactive>.toolBox__item {
+    //     background-color: red;
+    // }
 
     .toolBox__link {
         display: inline-block;
-        padding: 14px 50px 15px;
+        padding: 14px 52px 15px;
+        // background-color: $blue-60;
         color: $white;
     }
 
@@ -173,7 +180,6 @@
         min-height: 250px;
         height: 300px;
         background-color: $blue-60;
-        border-right: 1px solid $peach-40;
         overflow: visible;
     }
 
@@ -192,12 +198,6 @@
         color: $white;
     }
 
-
-    //
-    // .toolBox__group--child {
-    //     position: absolute;
-    // }
-
     .toolBox__group--child.active { /* interesting */
         left: -200px;
         display: block;
@@ -208,16 +208,15 @@
         display: block;
     }
 
-
     .toolBox__group--child .toolBox__group--child {
         position: absolute;
         left: 200px;
     }
 
-    .toolBox__group--child .toolBox__group--child .toolBox__group--child {
-        position: absolute;
-        left: 200px;
-    }
+    // .toolBox__group--child .toolBox__group--child .toolBox__group--child {
+    //     position: absolute;
+    //     left: 200px;
+    // }
 
     .toolBox__group--child .toolBox__group--child {
         position: absolute;

@@ -1279,9 +1279,17 @@ th.react-bs-table-expand-cell > div {
 
 .breadcrumbs__link {
   line-height: 40px;
+  margin-right: 10px;
   color: #FFF;
   font-size: 12px;
   font-weight: 400; }
+
+.breadcrumbs__link:hover {
+  color: #FFF;
+  text-decoration: none; }
+
+.breadcrumbs__caret {
+  margin-right: 10px; }
 
 .breadcrumbs__arrow {
   padding: 5px;
@@ -2061,7 +2069,8 @@ th.react-bs-table-expand-cell > div {
   .toolBox__group.toolBox__barDesktop {
     width: 100%;
     left: 0; }
-  .toolBox__group {
+  toolBox__barDesktop
+.toolBox__group {
     display: block;
     position: relative;
     right: 0;
@@ -2073,11 +2082,12 @@ th.react-bs-table-expand-cell > div {
     position: relative;
     width: 150px;
     float: left;
-    background-color: #1F57A4;
     padding: 0; }
+  .toolBox__group--child.inactive {
+    background-color: red; }
   .toolBox__link {
     display: inline-block;
-    padding: 14px 50px 15px;
+    padding: 14px 52px 15px;
     color: #FFF; }
   .toolBox__link:hover {
     background-color: #2D74DA;
@@ -2092,7 +2102,6 @@ th.react-bs-table-expand-cell > div {
     min-height: 250px;
     height: 300px;
     background-color: #1F57A4;
-    border-right: 1px solid #F26322;
     overflow: visible; }
   .toolBox__item--child {
     position: relative;
@@ -2111,9 +2120,6 @@ th.react-bs-table-expand-cell > div {
     left: 200px;
     display: block; }
   .toolBox__group--child .toolBox__group--child {
-    position: absolute;
-    left: 200px; }
-  .toolBox__group--child .toolBox__group--child .toolBox__group--child {
     position: absolute;
     left: 200px; }
   .toolBox__group--child .toolBox__group--child {

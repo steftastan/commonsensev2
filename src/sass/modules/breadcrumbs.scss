@@ -17,7 +17,17 @@
 
 .breadcrumbs__link {
     line-height: 40px;
+    margin-right: 10px;
     @include font($font-size-content, $font-weight-regular, $white);
+}
+
+.breadcrumbs__link:hover {
+    color: $white;
+    text-decoration: none;
+}
+
+.breadcrumbs__caret {
+    margin-right: 10px;
 }
 
 .breadcrumbs__arrow {

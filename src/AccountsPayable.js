@@ -33,6 +33,15 @@ import { SlidingToolBox } from './components/widgets/sliding-toolbox.js';
  */
 
 const options = {
+    breadcrumbs: [{
+        name:'Dashboard',
+        path:'http://google.com'
+    }, {
+        name:'Financials',
+        path:'http://google.com'
+    },{
+        name:'Accounts Payable', 
+        path:'http://google.com' }],
     widgets : [{
         name: 'toolBox',
         webService: 'webservices/AccountsPayableToolbox.json'
@@ -179,7 +188,7 @@ export class AccountsPayable extends Component {
 
         return (
                 <Layout>
-                    <BreadCrumbs>
+                    <BreadCrumbs breadcrumbs={options.breadcrumbs}>
                         {this.toolBox}
                     </BreadCrumbs>
                     {this.state.widgets}
