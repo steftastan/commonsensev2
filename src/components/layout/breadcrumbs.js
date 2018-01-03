@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
-import './../../global.languages.js';
 import './../../global.variables.js';
 import { Localization } from './../../helper.localization.js';
 

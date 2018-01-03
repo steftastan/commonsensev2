@@ -6,7 +6,6 @@ import { ToolBox } from './components/widgets/toolbox.js';
 import { DataTable } from './components/widgets/datatable.js';
 import { DataChart } from './components/widgets/datachart.js';
 import { SlidingToolBox } from './components/widgets/sliding-toolbox.js';
-import './global.variables.js';
 
 /** ACCOUNTS PAYABLE
  *
@@ -42,7 +41,7 @@ const options = {
         name:'financials',
         path:'http://google.com'
     },{
-        name:'accountsPayable',
+        name:'Accounts Payable',
         path:'http://google.com' }],
     widgets : [{
         name: 'toolBox',

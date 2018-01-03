@@ -1,17 +1,14 @@
-/**
- * Generic navigation widget for the inside pages.
- * This function allows to recursively generate complex dropdownlists, by
- * receiving an appropriately formatted JSON document.
- *
- * The class ToolBox will generate a new <ul> with a list of links for every
- * toolBox property it finds.
- *
- */
-
-
-/* THIS IS NO LONGER CALLED WIDGETS, now every component of the page is a widget, this is one more widget with additional links, a secondary toolbox*/
 import React, { Component } from 'react';
 import $ from 'jquery';
+import './../../global.variables.js';
+import { Localization } from './../../helper.localization.js';
+
+/**
+* SLIDING TOOLBOX COMPONENT.
+* Provides an additional navigation box that is collapsible to the right side
+* of the screen.
+*
+*/
 
 export class SlidingToolBox extends Component {
     constructor(props) {
@@ -63,14 +60,16 @@ export class SlidingToolBox extends Component {
         var links;
 
         if (this.props.results && this.props.results.length) {
+            var title__text;
             links = this.props.results.map(function(item, key) {
+                title__text = Localization(item.title);
                 if (item.isPopUp) {
                     return (
-                        <a key={key} id={key} className="slidingToolBox__item" target="popup" onClick={function(){window.open(item.url,'popup','width=600,height=600'); return false;}}>{item.title}</a>
+                        <a key={key} id={key} className="slidingToolBox__item" target="popup" onClick={function(){window.open(item.url,'popup','width=600,height=600'); return false;}}>{title__text}</a>
                     );
                 } else {
                     return (
-                        <a key={key} id={key} className="slidingToolBox__item" href={item.url}>{item.title}</a>
+                        <a key={key} id={key} className="slidingToolBox__item" href={item.url}>{title__text}</a>
                     );
                 }
 
