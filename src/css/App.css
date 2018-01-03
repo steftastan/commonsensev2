@@ -2065,7 +2065,6 @@ th.react-bs-table-expand-cell > div {
     left: 0; } }
 
 @media only screen and (min-device-width: 767px) {
-  .toolBox--desktopHidden,
   .toolBox__item.toolBox__back {
     display: none; }
   .toolBox {
@@ -2085,15 +2084,17 @@ th.react-bs-table-expand-cell > div {
   .toolBox__item {
     display: inline-block;
     position: relative;
-    width: 150px;
+    width: 200px;
     float: left;
     padding: 0; }
   .toolBox__group--child.inactive {
     background-color: #1F57A4; }
   .toolBox__link {
     display: inline-block;
+    width: 200px;
     padding: 14px 52px 15px;
     background-color: #1F57A4;
+    text-align: center;
     color: #FFF; }
   .toolBox__link:hover {
     background-color: #2D74DA;
@@ -2113,27 +2114,23 @@ th.react-bs-table-expand-cell > div {
     background-color: #1F57A4;
     overflow: visible; }
   .toolBox__item--child {
-    position: relative;
-    width: 200px; }
+    position: static;
+    width: 100%; }
   .toolBox__link--child {
     display: inline-block;
     width: 100%;
     padding: 20px 30px;
     line-height: 18px;
+    text-align: left;
     color: #FFF; }
   .toolBox__group--child.active {
     /* interesting */
-    left: -200px;
     display: block; }
-  .toolBox__group--child .toolBox__group--child.active {
-    left: 200px;
-    display: block; }
+  /* Each subsequent child group spawns 200px from the left of one another. */
   .toolBox__group--child .toolBox__group--child {
     position: absolute;
-    left: 200px; }
-  .toolBox__group--child .toolBox__group--child {
-    position: absolute;
-    top: 0; } }
+    top: 0;
+    left: 200px; } }
 
 /* ==========================================================================
    SLIDING TOOLBOX
@@ -2220,13 +2217,13 @@ th.react-bs-table-expand-cell > div {
     top: 0px;
     right: 0;
     width: 60px;
-    height: 44px;
+    height: 41px;
     border-top-left-radius: 30px;
     border-top-right-radius: 0;
     border-bottom-left-radius: 30px; }
   .slidingToolBox__icon {
     padding: 7px 0 0 15px;
-    font-size: 30px;
+    font-size: 28px;
     color: #FFF; } }
 
 /* Desktop-specific styles */

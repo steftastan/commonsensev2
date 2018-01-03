@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './../../global.variables.js';
-import { Localization } from './../../helper.localization.js';
+import { Localization, SetCompany } from './../../helper.functions.js';
 
 /**
  * ACCORDION/LEFT NAV COMPONENT
@@ -120,6 +120,8 @@ export class Accordion extends Component {
 
     render() {
         var link__text;
+        var welcome__text = this.Localization('welcome');
+        var filterNavigation__text = this.Localization('filterNavigation');
         if (this.props.links.results && this.props.links.results.length) {
             var commonSenseLinkList = this.props.links.results.map(function(item, key) {
                 link__text = this.Localization(item.name);
@@ -142,7 +144,7 @@ export class Accordion extends Component {
                     <ul className="leftnav__list">
                         <li className="leftnav__fixed">
                             <div className="leftnav__section--fixed">
-                                <span className="leftnav__user">Welcome, {this.props.employeeName}</span>
+                                <span className="leftnav__user">{welcome__text + this.props.employeeName}</span>
                                 <form className="form">
                                     <i className="form__icon form__icon--company  fa fa-building"></i>
                                     {this.props.children}
@@ -154,16 +156,12 @@ export class Accordion extends Component {
                                 <span className="leftnav__search"></span>
                                 <form className="form">
                                     <i className="form__icon form__icon--search fa fa-search"></i>
-                                    <input id="searchInput" className="form__item form__filterLeftNav" type="text" placeholder="Filter navigation list" />
+                                    <input id="searchInput" className="form__item form__filterLeftNav" type="text" placeholder={filterNavigation__text} />
                                 </form>
                             </div>
 
                         </li>
-                        <li className="leftnav__item">
-                            <div className="leftnav__section">
-                                <a className="leftnav__link leftnav__link--dashboard" href="#">Dashboard</a>
-                            </div>
-                        </li>
+
                     </ul>
                     <ul id="linkList" className="leftnav__list">
                         {commonSenseLinkList}

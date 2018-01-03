@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import './../../global.variables.js';
-import { Localization } from './../../helper.localization.js';
+import { Localization } from './../../helper.functions.js';
 
 /**
 * SLIDING TOOLBOX COMPONENT.

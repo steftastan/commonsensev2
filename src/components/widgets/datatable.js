@@ -11,7 +11,7 @@ import $ from 'jquery';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import './../../global.languages.js';
 import './../../global.variables.js';
-import { Localization } from './../../helper.localization.js';
+import { Localization } from './../../helper.functions.js';
 
 export class DataTable extends Component {
 

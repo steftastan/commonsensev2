@@ -1,5 +1,7 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
+import './../../global.variables.js';
+import { SetCompany } from './../../helper.functions.js';
 import { Header } from './../../components/layout/header.js';
 import { CompanyList } from './../../components/layout/company-list.js';
 import { Accordion } from './../../components/layout/accordion.js';;
@@ -15,6 +17,7 @@ export class Layout extends Component {
 
     constructor(props) {
       super(props);
+      this.SetCompany = SetCompany;
       this.companies = {};
       this.accordion = {};
       this.defaultCompany = {};
@@ -34,7 +37,7 @@ export class Layout extends Component {
      * and refresh the page.
      */
     updateCompany(e) {
-
+        
         this.setState({
             defaultCompany: {
                 name: e.target.value,
@@ -42,6 +45,9 @@ export class Layout extends Component {
                 icon: $('#companyList option:selected').attr('icon')
             }
         });
+
+        global.company = e.target.value;
+
     }
 
     componentDidMount() {
@@ -111,6 +117,9 @@ export class Layout extends Component {
                 employeeName: this.employeeName,
                 defaultCompany: this.defaultCompany
             });
+
+            global.company = this.defaultCompany.name;
+
         }.bind(this));
     }
 

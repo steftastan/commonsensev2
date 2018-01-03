@@ -5,7 +5,7 @@ import { Header } from './components/layout/header.js';
 import { BreadCrumbs } from './components/layout/breadcrumbs.js';
 import { Accordion, Section, SubLinkList } from './components/layout/accordion.js';
 
-import { Localization } from './helper.localization.js';
+import { Localization } from './helper.functions.js';
 
 const languages = global.languages;
 

@@ -1,7 +1,8 @@
 global.languages  = {
-  "greeting": ["Welcome, ", "Bienvenue "],
+  "welcome": ["Welcome, ", "Bienvenue, "],
   "farewell": ["Goodbye", "Au revoir"],
   "dashboard" : ["Dashboard", "Tableau de Bord"],
+  "filterNavigation" : ["Filter navigation list", "Filtrer la liste de navigation"],
   "personalPreferences" : ["Personal Preferences", "Preferences Personnels"],
   "financials" : ["Financials", "Comptabilité"],
   "marketing&Sales" : ["Marketing & Sales", "Mise en marché/Vente"],

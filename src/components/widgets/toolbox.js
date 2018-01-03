@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import { IsMobile } from './../../helper.functions.js';
 
 export class ToolBox extends Component {
 
     constructor(props) {
       super(props);
+      this.IsMobile = IsMobile;
       this.state = {
           open: false,
           toolBox: []
@@ -50,7 +52,7 @@ export class ToolBox extends Component {
             this.toolNav.classList.add(this.toggleClass);
             this.toolButton.classList.add('fa-close');
             this.toolButton.classList.remove('fa-ellipsis-v');
-            var firstToolBox = document.getElementById('firstToolBox');
+            firstToolBox = document.getElementById('firstToolBox');
 
             /* Get the child's computed height so we can adjust the wrapper accordingly. */
             this.toolBoxHeight = window.getComputedStyle(firstToolBox);
@@ -116,11 +118,24 @@ export class ToolBox extends Component {
          * Add mouse events here to trigger animation.
          */
         this.toolBoxWrapper = document.getElementById(this.toolBoxId);
-        this.toolBoxWrapper.addEventListener('click', this.animateToolBox);
+
+        if (this.IsMobile()) {
+            console.log('thsi mobile');
+            this.toolBoxWrapper.addEventListener('click', this.animateToolBox);
+        } else {
+            console.log('dis desktop');
+            $('.toolBox__group .toolBox__link').on("click", function(e) {
+                $(this).next('ul.toolBox__group--child').toggle();
+                e.stopPropagation();
+                e.preventDefault();
+            });
+        }
+
     }
 
     /**
-     *
+     * Function to animate the toolbox, recursively allows children to call this
+     * function back to keep exploring children elements, regardless of depth.
      */
     animateToolBox(e) {
         e.preventDefault();

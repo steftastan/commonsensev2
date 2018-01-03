@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import './../../global.variables.js';
-import { Localization } from './../../helper.localization.js';
+import { Localization } from './../../helper.functions.js';
 
 /**
  * BREADCRUMBS LAYOUT COMPONENT
@@ -75,9 +75,9 @@ export class BreadCrumbs extends Component {
             this.navButton.addEventListener('mousedown', this.toggleNav, false);
         }
 
-        /* Store the langWrapper DOM element in the state to be used by other functions. */
+        /* Grab the default language from the global variable and set it.  */
         if (this.langWrapper) {
-            selectedLang = document.getElementById(this.defaultLang);
+            selectedLang = document.getElementById(global.defaultLang);
             this.toggleLang(selectedLang, true, true);
         }
 
@@ -134,7 +134,6 @@ export class BreadCrumbs extends Component {
             var caret;
             var link__text;
             var trail = this.props.breadcrumbs.map(function(item, key) {
-                console.log(item.name);
                 link__text = this.Localization(item.name);
                 if (key > 0 && key < this.props.breadcrumbs.length) {
                     caret = 'fa fa-caret-right';
