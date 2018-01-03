@@ -124,15 +124,13 @@
     .toolBox {
         display: inline-block;
         position: absolute;
-        right: 129px;
+        right: 220px;
     }
 
     .toolBox__group.toolBox__barDesktop {
         width: 100%;
         left: 0;
     }
-
-    toolBox__barDesktop
 
     .toolBox__group {
         display: block;
@@ -152,21 +150,23 @@
     }
 
     .toolBox__group--child.inactive {
-        background-color: red;
+        background-color: $blue-60;
     }
-    // .toolBox__group--child.inactive>.toolBox__item {
-    //     background-color: red;
-    // }
 
     .toolBox__link {
         display: inline-block;
         padding: 14px 52px 15px;
-        // background-color: $blue-60;
+        background-color: $blue-60;
         color: $white;
     }
 
     .toolBox__link:hover {
         background-color: $blue-50;
+        text-decoration: none;
+        color: $white;
+    }
+
+    .toolBox__link:visited {
         text-decoration: none;
         color: $white;
     }

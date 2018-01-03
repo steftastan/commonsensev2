@@ -1301,7 +1301,10 @@ th.react-bs-table-expand-cell > div {
   .breadcrumbs {
     top: 50px; }
   .breadcrumbs__trail {
-    margin: 0 0 0 10px; } }
+    margin: 0 0 0 10px;
+    width: 75%;
+    height: 45px;
+    overflow: hidden; } }
 
 /* Tablet-specific styles */
 @media only screen and (min-device-width: 767px) {
@@ -1360,7 +1363,10 @@ th.react-bs-table-expand-cell > div {
     position: absolute;
     right: 0;
     padding: 8px 20px;
-    width: auto;
+    width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     height: 100%;
     background-color: #FFF; }
   .rightnav__lang {
@@ -2065,12 +2071,11 @@ th.react-bs-table-expand-cell > div {
   .toolBox {
     display: inline-block;
     position: absolute;
-    right: 129px; }
+    right: 220px; }
   .toolBox__group.toolBox__barDesktop {
     width: 100%;
     left: 0; }
-  toolBox__barDesktop
-.toolBox__group {
+  .toolBox__group {
     display: block;
     position: relative;
     right: 0;
@@ -2084,13 +2089,17 @@ th.react-bs-table-expand-cell > div {
     float: left;
     padding: 0; }
   .toolBox__group--child.inactive {
-    background-color: red; }
+    background-color: #1F57A4; }
   .toolBox__link {
     display: inline-block;
     padding: 14px 52px 15px;
+    background-color: #1F57A4;
     color: #FFF; }
   .toolBox__link:hover {
     background-color: #2D74DA;
+    text-decoration: none;
+    color: #FFF; }
+  .toolBox__link:visited {
     text-decoration: none;
     color: #FFF; }
   /* First child level */

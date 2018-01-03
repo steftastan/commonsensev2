@@ -24,22 +24,16 @@ var defaultLang = global.defaultLang;
  * function. This variable *MUST* have the suffix __text (two underscores), this is so we
  * can easily find what is getting translated.
  * 3) Print the variable__text as you normally would.
- * 
+ *
  */
 export function Localization(dictionary_entry) {
-
     var translation;
     var phrase;
 
-    ///TODO make everything camelcase and changeampersands to and
     if (dictionary_entry && dictionary_entry.length) {
-        console.log(dictionary_entry);
 
         dictionary_entry = Camelize(dictionary_entry.trim());
         phrase = global.languages[dictionary_entry];
-
-        console.log(dictionary_entry);
-
 
         if (phrase) {
             if (defaultLang === 'en') {
