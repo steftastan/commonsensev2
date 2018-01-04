@@ -15,6 +15,7 @@ global.languages  = {
   "security" : ["Security", "Sécurité"],
   "rF" : ["RF", "RF"],
   "accountsPayable" : ["Accounts Payable", "Comptes Payables"],
+  "accountsPayableChart" : ["Accounts Payable Chart", "Comptes Payables"],
   "logout" : ["Log out", "Fermer la session"],
   "cashDisbursement" : ["Cash Disbursement", "Dépenses en Espèces"],
   "id" : ["ID", "ID"],

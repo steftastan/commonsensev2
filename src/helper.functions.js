@@ -94,3 +94,13 @@ export function IsMobile() {
 export function SetCompany(company) {
     global.company = company;
 }
+
+/**
+ * Transform an RGB code to RGBA and apply the specified opacity
+ * @param color [String] the color to be converted.
+ * @param opacity [Number] The desired opacity to be aplied, must be a decimal from 0 to 1.
+ */
+export function ConvertRgbToRgba(color, opacity) {    
+    color = color.replace("rgb", "rgba").replace(')', ', '+opacity+')');
+    return color;
+}

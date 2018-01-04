@@ -4,7 +4,7 @@ import { Layout } from './components/layout/layout.js';
 import { BreadCrumbs } from './components/layout/breadcrumbs.js';
 import { ToolBox } from './components/widgets/toolbox.js';
 import { DataTable } from './components/widgets/datatable.js';
-import { DataChart } from './components/widgets/datachart.js';
+import { DataChart } from './components/widgets/data-chart.js';
 import { SlidingToolBox } from './components/widgets/sliding-toolbox.js';
 
 /** ACCOUNTS PAYABLE
@@ -47,6 +47,14 @@ const options = {
         name: 'toolBox',
         webService: 'webservices/AccountsPayableToolbox.json'
     }, {
+        name: 'dataChart',
+        title: 'accountsPayableChart',
+        titleClass: 'dataTable__title',
+        webService: 'webservices/AccountsPayableCashDisbursement.json',
+        bootStrapClass: 'col-lg-6 col-sm-12',
+        type: 'pie',
+        label: 'accountsPayableChart'
+    }, {
         name: 'dataTable',
         webService: 'webservices/AccountsPayable.json',
         bootStrapClass : 'col-12',
@@ -78,7 +86,7 @@ const options = {
         options: {},
         tableHeaders: ['supplier', 'loc', 'currentWeek', 'totalDue', 'currency', 'type'],
         sortBy: ['supplier', 'loc', 'totalDue']
-    },  {
+    }, {
         name: 'dataTable',
         title: 'Testing Table',
         titleClass: 'dataTable__title',
@@ -151,7 +159,7 @@ export class AccountsPayable extends Component {
                     }
 
                     // if there are widgets of type chart
-                    if (options.widgets[i].name === 'chart') {
+                    if (options.widgets[i].name === 'dataChart') {
                         requestsArray.push(this.requestComponent(options.widgets[i], DataChart, i, this.widgets));
                     }
 
