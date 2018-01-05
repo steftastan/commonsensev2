@@ -1865,8 +1865,7 @@ th.react-bs-table-expand-cell > div {
    DATA TABLE
    ========================================================================== */
 /**
- * Navigation located at the left of the browser on desktop and tablet, and
- * hidden inside a hamburger icon on mobile, contains the main link categories.
+ * Large tables that contain all the datasets returned per section.
  */
 /* All devices */
 .dataTable__row--content {
@@ -2232,6 +2231,45 @@ th.react-bs-table-expand-cell > div {
     width: 75px;
     background-color: #5392FF; } }
 
+/* ==========================================================================
+   DATA CHART
+   ========================================================================== */
+/**
+ * The chart widget and its contents (data tables are optional).
+ */
+/* All devices */
+.dataChart__table {
+  width: 100%;
+  border-radius: 15px;
+  overflow: hidden; }
+
+.dataChart__heading {
+  background-color: #18273C;
+  text-transform: uppercase;
+  color: #F26322;
+  font-size: 12px;
+  font-weight: 700; }
+
+.dataChart__cell {
+  width: 30%; }
+
+.dataChart__cell--heading {
+  padding: 15px; }
+
+.dataChart__cell {
+  padding: 10px; }
+
+.dataChart__row {
+  background-color: #E2EBEB; }
+
+.dataChart__row:hover {
+  background-color: #2D74DA;
+  color: #FFF;
+  cursor: pointer; }
+
+/* Mobile-specific styles */
+/* Tablet-specific styles */
+/* Desktop-specific styles */
 /* Helpers */
 /* ==========================================================================
    OVERRIDES

@@ -47,14 +47,6 @@ const options = {
         name: 'toolBox',
         webService: 'webservices/AccountsPayableToolbox.json'
     }, {
-        name: 'dataChart',
-        title: 'accountsPayableChart',
-        titleClass: 'dataTable__title',
-        webService: 'webservices/AccountsPayableCashDisbursement.json',
-        bootStrapClass: 'col-lg-6 col-sm-12',
-        type: 'pie',
-        label: 'accountsPayableChart'
-    }, {
         name: 'dataTable',
         webService: 'webservices/AccountsPayable.json',
         bootStrapClass : 'col-12',
@@ -86,6 +78,17 @@ const options = {
         options: {},
         tableHeaders: ['supplier', 'loc', 'currentWeek', 'totalDue', 'currency', 'type'],
         sortBy: ['supplier', 'loc', 'totalDue']
+    }, {
+        name: 'dataChart',
+        title: 'accountsPayableChart',
+        titleClass: 'dataTable__title',
+        webService: 'webservices/AccountsPayableCashDisbursement.json',
+        bootStrapClass: 'col-lg-6 col-sm-12',
+        type: 'pie',
+        aggregateBy: 'type',
+        calculateBy: 'totalDue',
+        label: 'accountsPayableChart',
+        buildTable: true
     }, {
         name: 'dataTable',
         title: 'Testing Table',
@@ -184,6 +187,7 @@ export class AccountsPayable extends Component {
           * page we are on at the time.
           *
           * TODO: Look for less risky ways to perform this same task.
+          * TODO: Consider moving this to the global helper function library.
           */
         $.when(requestsArray).then(function() {
             /* Set the state variables for all the information obtained in the waterfall of AJAX calls */
