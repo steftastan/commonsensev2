@@ -46,7 +46,9 @@
 
 /* Mobile-specific styles */
 @include mobile {
-
+    .dataChart__table {
+        margin-top: 10px;
+    }
 }
 
 /* Tablet-specific styles */

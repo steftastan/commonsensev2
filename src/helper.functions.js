@@ -67,8 +67,6 @@ export function Async(that, requestsArray) {
 }
 
 
-
-
  /**
   * Localization function, takes in key and returns its matching test in the current active language.
   * @param dictionary_entry [String], a string of code that represents the key in our translation object.
@@ -122,7 +120,7 @@ export function Async(that, requestsArray) {
  export function Camelize(str) {
      if (str.indexOf(' ') !== -1) str = str.toLowerCase();
      return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
-     return index == 0 ? letter.toLowerCase() : letter.toUpperCase();
+     return index === 0 ? letter.toLowerCase() : letter.toUpperCase();
    }).replace(/\s+/g, '');
  }
 

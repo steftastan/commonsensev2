@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
 
 export class CompanyList extends Component {
 
@@ -10,9 +9,7 @@ export class CompanyList extends Component {
     }
 
     render() {
-        var companyList;
-        var selected;
-
+        
         if (this.props.companies.results && this.props.companies.results.length) {
             this.companyList = this.props.companies.results.map(function(item, key) {
                 return (<option key={key} value={item.name} icon={item.icon} id={key}>{item.name}</option>);

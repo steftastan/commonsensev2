@@ -1,12 +1,11 @@
-import $ from 'jquery';
+
 import React, { Component } from 'react';
-import { RequestWidget, Async } from './helper.functions.js';
-import { Layout } from './components/layout/layout.js';
-import { BreadCrumbs } from './components/layout/breadcrumbs.js';
-import { ToolBox } from './components/widgets/toolbox.js';
-import { DataTable } from './components/widgets/datatable.js';
-import { DataChart } from './components/widgets/data-chart.js';
-import { SlidingToolBox } from './components/widgets/sliding-toolbox.js';
+import { RequestWidget, Async } from './../helper.functions.js';
+import { BreadCrumbs } from './../components/layout/breadcrumbs.js';
+import { ToolBox } from './../components/widgets/toolbox.js';
+import { DataTable } from './../components/widgets/datatable.js';
+import { DataChart } from './../components/widgets/data-chart.js';
+import { SlidingToolBox } from './../components/widgets/sliding-toolbox.js';
 
 /** ACCOUNTS PAYABLE
  *
@@ -31,7 +30,6 @@ import { SlidingToolBox } from './components/widgets/sliding-toolbox.js';
  * key/columns received from the WS response, or else the association will fail.
  *
  */
-
 
 const options = {
     breadcrumbs: [{
@@ -157,12 +155,12 @@ export class AccountsPayable extends Component {
 
     render() {
         return (
-                <div>
-                    <BreadCrumbs breadcrumbs={options.breadcrumbs}>
-                        {this.toolBox}
-                    </BreadCrumbs>
-                    {this.state.widgets}
-                </div>
+            <div>
+                <BreadCrumbs breadcrumbs={options.breadcrumbs}>
+                    {this.toolBox}
+                </BreadCrumbs>
+                {this.state.widgets}
+            </div>
         );
     }
 };

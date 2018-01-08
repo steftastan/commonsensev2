@@ -25,8 +25,8 @@ export class ToolBox extends Component {
       this.animateToolBox = this.animateToolBox.bind(this);
       this.toggleNav = this.toggleNav.bind(this);
       this.resetNav = this.resetNav.bind(this);
-      this.toolBoxWrapper;
-      this.toolBoxHeight;
+      this.toolBoxWrapper = {};
+      this.toolBoxHeight = 0;
     }
 
     /* Handle open/close button available on mobile */
@@ -107,7 +107,6 @@ export class ToolBox extends Component {
 
     componentDidMount() {
         var navButton = document.getElementById(this.toolButtonId);
-        var toolBoxWrapper = document.getElementById(this.toolBoxId);
 
         /* Add click event to the tool box button on mobile */
         navButton.addEventListener('mousedown', this.toggleNav, false);

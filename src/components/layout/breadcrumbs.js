@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
 import './../../global.variables.js';
+import { Link } from 'react-router-dom';
 import { Localization } from './../../helper.functions.js';
 
 /**
@@ -138,10 +138,10 @@ export class BreadCrumbs extends Component {
                     caret = '';
                 }
                 return (
-                    <a href={item.path} key={key} className={"breadcrumbs__link"}>
+                    <Link key={key} className={"breadcrumbs__link"} to={item.path}>
                         <span className={"breadcrumbs__caret " + caret}></span>
                         {link__text}
-                    </a>
+                    </Link>
                 );
             }, this);
 
@@ -234,10 +234,6 @@ export class BreadCrumbs extends Component {
 
     clickAnywhereToClose(event) {
         if(this.state.open) {
-            this.setState({
-                open: false
-            });
-
             this.toggleNav(event);
         }
     }
@@ -257,7 +253,7 @@ export class BreadCrumbs extends Component {
                             <span id="fr" className="rightnav__lang">FR</span>
                             </div>
                         </div>
-                        <a className="rightnav__logout" href="/logout">{logout__text}</a>
+                        <Link className="rightnav__logout" to="/logout">{logout__text}</Link>
                     </div>
                 </div>
             </section>

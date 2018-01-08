@@ -1278,7 +1278,7 @@ th.react-bs-table-expand-cell > div {
   background-color: #434747; }
 
 .breadcrumbs__link {
-  line-height: 40px;
+  line-height: 45px;
   margin-right: 10px;
   color: #FFF;
   font-size: 12px;
@@ -2267,6 +2267,10 @@ th.react-bs-table-expand-cell > div {
   cursor: pointer; }
 
 /* Mobile-specific styles */
+@media only screen and (max-device-width: 767px) {
+  .dataChart__table {
+    margin-top: 10px; } }
+
 /* Tablet-specific styles */
 /* Desktop-specific styles */
 /* Helpers */

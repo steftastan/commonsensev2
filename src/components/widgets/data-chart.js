@@ -4,7 +4,6 @@
  */
 
 import React, { Component } from 'react';
-import Chart from 'chart.js';
 import $ from 'jquery';
 import './../../global.variables.js';
 import { Localization, ConvertRgbToRgba } from './../../helper.functions.js';

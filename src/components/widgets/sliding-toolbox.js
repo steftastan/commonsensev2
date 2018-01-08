@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
 import './../../global.variables.js';
 import { Localization } from './../../helper.functions.js';
 
@@ -14,6 +13,7 @@ export class SlidingToolBox extends Component {
     constructor(props) {
       super(props);
       this.openToolBox = this.openToolBox.bind(this);
+      this.clickAnywhereToClose = this.clickAnywhereToClose.bind(this);
       this.button = 'slidingToolBoxButton';
       this.icon = 'slidingToolBoxIcon';
       this.toolBox = 'slidingToolBoxLinks';
@@ -32,6 +32,7 @@ export class SlidingToolBox extends Component {
      componentDidMount() {
          var button = document.getElementById(this.button);
          button.addEventListener('mousedown', this.openToolBox, false);
+         document.addEventListener('mousedown', this.clickAnywhereToClose, false);
      }
 
     openToolBox(e) {
@@ -53,6 +54,12 @@ export class SlidingToolBox extends Component {
             toolBox.classList.add(this.state.openClass);
             icon.classList.add(this.close);
             icon.classList.remove(this.wrench);
+        }
+    }
+
+    clickAnywhereToClose(event) {
+        if(this.state.open) {
+            this.openToolBox(event);
         }
     }
 

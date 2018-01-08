@@ -34,7 +34,7 @@ global.languages  = {
   "currency" : ["Currency", "Devise"],
   "type" : ["Type", "Type"],
   "prev" : ["Previous", "Précédent"],
-  "next" : ["Next", "Prochain"],
+  "next" : ["Next", "Suivant"],
   "first" : ["First", "Premier"],
   "last" : ["Last", "Dernier"],
   "all" : ["All", "Tout"],

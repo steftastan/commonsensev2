@@ -37,7 +37,7 @@ export class Layout extends Component {
      * and refresh the page.
      */
     updateCompany(e) {
-        
+
         this.setState({
             defaultCompany: {
                 name: e.target.value,
@@ -69,7 +69,6 @@ export class Layout extends Component {
           * We fetch all our data from our Web Services and pass them to the global state of the
           * page we are on at the time.
           *
-          * TODO: Look for less risky ways to perform this same task.
           */
         $.when(
             $.ajax({
