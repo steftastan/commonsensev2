@@ -1,5 +1,13 @@
-import React, { Component } from 'react';
 import $ from 'jquery';
+import React, { Component } from 'react';
+import { BreadCrumbs } from './components/layout/breadcrumbs.js';
+
+const options = {
+    breadcrumbs: [{
+        name:'dashboard',
+        path:'/'
+    }]
+};
 
 export class Dashboard extends Component {
 
@@ -25,8 +33,6 @@ export class Dashboard extends Component {
     };
 
     render() {
-
-
         if (this.state.dashboardLinks && this.state.dashboardLinks.results && this.state.dashboardLinks.results.length) {
             var dashboardLinks = this.state.dashboardLinks.results.map(function(item, key) {
                 return (
@@ -45,7 +51,10 @@ export class Dashboard extends Component {
         }
 
         return (
-            <section className="wrapper wrapper__content">
+
+            <div>
+            <BreadCrumbs breadcrumbs={options.breadcrumbs}/>
+            <section className="wrapper">
                 <div className="wrapper wrapper__content--whiteBox">
                     <span className="tag--text">Sort by</span>
                     <span className="tag tag--inactive">Newest</span>
@@ -56,6 +65,8 @@ export class Dashboard extends Component {
                     {dashboardLinks}
                 </div>
             </section>
+            </div>
+
         );
     }
 }

@@ -51,8 +51,7 @@ export class BreadCrumbs extends Component {
     }
 
     componentWillMount() {
-        // this.selectedLang = document.getElementById(this.defaultLang);
-        // global.defaultLang = this.selectedLang;
+        this.buildCrumbs();
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -80,8 +79,6 @@ export class BreadCrumbs extends Component {
             selectedLang = document.getElementById(global.defaultLang);
             this.toggleLang(selectedLang, true, true);
         }
-
-        this.buildCrumbs();
     }
 
     openLang(event) {

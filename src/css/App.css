@@ -2148,12 +2148,11 @@ th.react-bs-table-expand-cell > div {
   display: block;
   position: absolute;
   z-index: 99999;
-  bottom: 0;
+  bottom: 10px;
   right: 10px;
-  width: 40px;
-  height: 55px;
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50px;
   background-color: #2D74DA;
   -webkit-transition: all 0.3s ease-in;
   -moz-transition: all  0.3s ease-in;
@@ -2166,7 +2165,7 @@ th.react-bs-table-expand-cell > div {
   background-color: #5392FF; }
 
 .slidingToolBox__icon {
-  padding: 10px 0 0 9px;
+  padding: 10px 0 0 12px;
   font-size: 24px;
   color: #FFF; }
 

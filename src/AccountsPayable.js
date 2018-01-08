@@ -156,14 +156,13 @@ export class AccountsPayable extends Component {
     }
 
     render() {
-
         return (
-                <Layout>
+                <div>
                     <BreadCrumbs breadcrumbs={options.breadcrumbs}>
                         {this.toolBox}
                     </BreadCrumbs>
                     {this.state.widgets}
-                </Layout>
+                </div>
         );
     }
 };
