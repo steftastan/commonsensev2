@@ -8,7 +8,6 @@
  */
 
 /* All devices */
-
 .dataTable__row--content {
     width: 100%;
     border-bottom: 1px solid $cool-gray-1;
@@ -33,7 +32,6 @@
     @include font($font-size-small, $font-weight-bold, $blue-60);
     margin-bottom: 5px;
 }
-
 
 /*
  * .dataTable--fullWidth class is also available for tables that span the entire width of screen
