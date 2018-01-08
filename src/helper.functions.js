@@ -1,6 +1,7 @@
+import React from 'react';
+import $ from 'jquery';
 import './global.languages.js';
 import './global.variables.js';
-
 var defaultLang = global.defaultLang;
 
 /**
@@ -8,7 +9,65 @@ var defaultLang = global.defaultLang;
  * A library of globally-available functions that each perform very specific tasks.
  * Please thoroughly document every function that is added here, and keep
  * this use strictly for global helper functions only.
+ *
+ * What can be considered a global helper, ask yourself the following questions.
+ *
+ * 1) Does my code need to be used in two or more components of my application?
+ * 2) Did I have to copy and paste a block of code onto another component?
+ *
+ * If your answer to those 2 questions is yes, then put your code here, and bind it
+ * to your components as a function, now it'll be available everywhere!
+ *
  */
+
+
+ /**
+   * Allows to build an AJAX call object depending on the parameters passed.
+   * @param widget [Object] The widget's config as it appears in the options constant.
+   * @param ComponentName [React Component] The name of the reactJS component for the widget.
+   * @param index [Integer] index used as key internally by react.
+   * @param widgetList [Array] We build this array component by component each time we call this function.
+   */
+ export function RequestWidget(widget, ComponentName, index, widgetList) {
+     var results;
+     $.ajax({
+         url: widget.webService,
+         dataType: 'json',
+         cache: false,
+         success: function(data) {
+             results = (data.results ? data.results : data);
+             widgetList.push(<ComponentName key={index} index={index} options={widget} results={results} />);
+         }.bind(this),
+         error: function(xhr, status, err) {
+             console.error(this.props.url, status, err.toString());
+         }.bind(this)
+     });
+ }
+
+ /** https://css-tricks.com/multiple-simultaneous-ajax-requests-one-callback-jquery/
+   * Although the guide referenced above says these AJAX queries will
+   * run in parallel, they actually run in waterfall format, so if the first one fails,
+   * the rest will NOT be excecuted.
+   *
+   * We structured our code like this because we have to avoid at all costs calling the
+   * setState() function too many times in the application, because doing so will trigger
+   * a re-render of the page.
+   *
+   * We fetch all our data from our Web Services and pass them to the global state of the
+   * page we are on at the time.
+   *
+   */
+export function Async(that, requestsArray) {
+    $.when(requestsArray).then(function() {
+        /* Set the state variables for all the information obtained in the waterfall of AJAX calls */
+        that.setState({
+            widgets: that.widgets
+        });
+    }.bind(that));
+}
+
+
+
 
  /**
   * Localization function, takes in key and returns its matching test in the current active language.

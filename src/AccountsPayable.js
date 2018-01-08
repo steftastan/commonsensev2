@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
+import { RequestWidget, Async } from './helper.functions.js';
 import { Layout } from './components/layout/layout.js';
 import { BreadCrumbs } from './components/layout/breadcrumbs.js';
 import { ToolBox } from './components/widgets/toolbox.js';
@@ -29,7 +30,6 @@ import { SlidingToolBox } from './components/widgets/sliding-toolbox.js';
  * NOTE: Regarding filterBy and sortBy, the values provided MUST MATCH the names of the
  * key/columns received from the WS response, or else the association will fail.
  *
- * TODO: it would be good to make the back-end calls using an async library.
  */
 
 
@@ -111,35 +111,13 @@ export class AccountsPayable extends Component {
 
     constructor(props) {
       super(props);
-      this.requestComponent = this.requestComponent.bind(this);
+      this.requestComponent = RequestWidget;
+      this.async = Async;
       this.toolBox = [];
       this.widgets = [];
       this.state = {
           widgets: []
       };
-    }
-
-    /**
-      * Allows to build an AJAX call object depending on the parameters passed.
-      * @param widget [Object] The widget's config as it appears in the options constant.
-      * @param ComponentName [Component] The name of the reactJS component for the widget.
-      * @param index [Integer] index used as key internally by react.
-      * @param widgetList [Array] We build this array component by component each time we call this function.
-      */
-    requestComponent(widget, ComponentName, index, widgetList) {
-        var results;
-        $.ajax({
-            url: widget.webService,
-            dataType: 'json',
-            cache: false,
-            success: function(data) {
-                results = (data.results ? data.results : data);
-                widgetList.push(<ComponentName key={index} index={index} options={widget} results={results} />);
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
     }
 
     componentDidMount() {
@@ -174,27 +152,7 @@ export class AccountsPayable extends Component {
             }
         }
 
-        /** https://css-tricks.com/multiple-simultaneous-ajax-requests-one-callback-jquery/
-          * Although the guide referenced above says these AJAX queries will
-          * run in parallel, they actually run in waterfall format, so if the first one fails,
-          * the rest will NOT be excecuted.
-          *
-          * We structured our code like this because we have to avoid at all costs calling the
-          * setState() function too many times in the application, because doing so will trigger
-          * a re-render of the page.
-          *
-          * We fetch all our data from our Web Services and pass them to the global state of the
-          * page we are on at the time.
-          *
-          * TODO: Look for less risky ways to perform this same task.
-          * TODO: Consider moving this to the global helper function library.
-          */
-        $.when(requestsArray).then(function() {
-            /* Set the state variables for all the information obtained in the waterfall of AJAX calls */
-            this.setState({
-                widgets: this.widgets
-            });
-        }.bind(this));
+        this.async(this, requestsArray);
     }
 
     render() {
