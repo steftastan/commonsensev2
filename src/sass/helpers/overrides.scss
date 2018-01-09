@@ -135,9 +135,10 @@
     vertical-align: middle;
 }
 
-/* Original file: widgets/toolbox.js and bootstrap default CSS */
+/* Original file: widgets/toolbox.js, toolbox.scss and bootstrap default CSS */
 /* Overriding drop down menu default styles that are bootstrapped to the class */
 .toolBox__group.dropdown-menu {
+    position: absolute;
     padding: 0;
     margin: 0;
     border: none;

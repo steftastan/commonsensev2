@@ -2020,7 +2020,8 @@ th.react-bs-table-expand-cell > div {
   .toolBox__group {
     display: block;
     position: absolute;
-    top: 45px;
+    top: 0;
+    left: 0;
     width: 100%;
     height: auto;
     overflow: visible;
@@ -2061,6 +2062,72 @@ th.react-bs-table-expand-cell > div {
   .toolBox__group .toolBox__group .toolBox__group.inactive,
   .toolBox__group .toolBox__group .toolBox__group .toolBox__group.inactive {
     left: 0; } }
+
+@media only screen and (min-device-width: 767px) {
+  .toolBox__item.toolBox__back {
+    display: none; }
+  .toolBox {
+    display: inline-block;
+    position: absolute;
+    right: 220px; }
+  .toolBox__group.toolBox__barDesktop {
+    width: 100%;
+    left: 0; }
+  .toolBox__group {
+    position: relative;
+    right: 0;
+    width: auto;
+    height: 42px;
+    overflow: visible; }
+  .toolBox__item {
+    display: inline-block;
+    position: relative;
+    width: 200px;
+    float: left;
+    padding: 0; }
+  .toolBox__group--child.inactive {
+    background-color: #1F57A4; }
+  .toolBox__link {
+    display: inline-block;
+    width: 200px;
+    padding: 14px 52px 15px;
+    background-color: #1F57A4;
+    text-align: center;
+    color: #FFF; }
+  .toolBox__link:hover {
+    background-color: #2D74DA;
+    text-decoration: none;
+    color: #FFF; }
+  .toolBox__link:visited {
+    text-decoration: none;
+    color: #FFF; }
+  /* First child level */
+  .toolBox__group--child {
+    display: none;
+    position: relative;
+    left: 0;
+    width: 200px;
+    min-height: 250px;
+    height: 300px;
+    background-color: #1F57A4;
+    overflow: visible; }
+  .toolBox__item--child {
+    position: static;
+    width: 100%; }
+  .toolBox__link--child {
+    display: inline-block;
+    width: 100%;
+    padding: 20px 30px;
+    line-height: 18px;
+    text-align: left;
+    color: #FFF; }
+  .toolBox__group--child.active {
+    display: block; }
+  /* Each subsequent child group spawns 200px from the left of one another. */
+  .toolBox__group--child .toolBox__group--child {
+    position: absolute;
+    top: 0;
+    left: 200px; } }
 
 @media only screen and (min-device-width: 767px) {
   .toolBox {
@@ -2112,22 +2179,22 @@ th.react-bs-table-expand-cell > div {
     position: relative;
     width: 200px;
     padding: 0; }
-  .toolBox__toggle,
   .toolBox__link {
     display: block;
+    padding: 0;
     background-color: #1F57A4;
     line-height: 40px;
     text-align: center;
     color: #FFF;
     font-size: 12px;
     font-weight: 400; }
-  .toolBox__toggle:hover {
+  .toolBox__link:hover {
     background-color: #2D74DA;
     text-decoration: none;
     color: #FFF;
     font-size: 12px;
     font-weight: 400; }
-  .toolBox__toggle:visited {
+  .toolBox__link:visited {
     text-decoration: none;
     color: #FFF;
     font-size: 12px;
@@ -2397,9 +2464,10 @@ th.react-bs-table-expand-cell > div {
 .dataTable--halfWidth .react-bs-table .react-bs-container-footer > table > thead > tr > th {
   vertical-align: middle; }
 
-/* Original file: widgets/toolbox.js and bootstrap default CSS */
+/* Original file: widgets/toolbox.js, toolbox.scss and bootstrap default CSS */
 /* Overriding drop down menu default styles that are bootstrapped to the class */
 .toolBox__group.dropdown-menu {
+  position: absolute;
   padding: 0;
   margin: 0;
   border: none;

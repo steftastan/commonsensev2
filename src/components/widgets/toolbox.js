@@ -27,7 +27,7 @@ export class ToolBox extends Component {
       this.resetNav = this.resetNav.bind(this);
       this.toolBoxWrapper = {};
       this.toolBoxHeight = 0;
-      this.device;
+      this.device = '';
     }
 
     /* Handle open/close button available on mobile */
@@ -103,7 +103,6 @@ export class ToolBox extends Component {
                 }.bind(this)
             });
         }
-
     }
 
     componentDidMount() {
@@ -111,29 +110,19 @@ export class ToolBox extends Component {
 
         /* Add click event to the tool box button on mobile */
         navButton.addEventListener('mousedown', this.toggleNav, false);
-
-        /**
-         * Add mouse events here to trigger animation.
-         */
         this.toolBoxWrapper = document.getElementById(this.toolBoxId);
 
         if (this.IsMobile()) {
             this.device = 'mobile';
             this.toolBoxWrapper.addEventListener('click', this.animateToolBox);
-            console.log('aaa');
-
         } else {
             this.device = 'desktop';
             $(document).ready(function() {
                 $('.navbar a.toolBox__toggle').on('click', function(e) {
                     var $el = $(this);
-
-                    console.log($el);
                     var $parent = $(this).offsetParent();
+
                     $(this).parent("li").toggleClass('open');
-
-                    console.log($parent);
-
                     if(!$parent.parent().hasClass('nav')) {
                         $el.next().css({"top": $el[0].offsetTop, "left": $parent.outerWidth() - 4});
                     }
@@ -144,17 +133,18 @@ export class ToolBox extends Component {
                 });
             });
         }
-
     }
 
     componentDidUpdate() {
+        /**
+         * Add mouse events here to trigger animation.
+         */
         this.toolBoxWrapper = document.getElementById(this.toolBoxId);
-        if (this.IsMobile()) {
-            this.device = 'mobile';
-            this.toolBoxWrapper.addEventListener('click', this.animateToolBox);
-            console.log('aaa');
 
+        if (this.IsMobile()) {
+            this.toolBoxWrapper.addEventListener('click', this.animateToolBox);
         }
+
     }
 
     /**
@@ -170,8 +160,6 @@ export class ToolBox extends Component {
         var activeButton;
         var backButton = null;
         var oldGroup;
-
-        console.log('bbbbb');
 
         /* Ensure we have stored the correct DOM node, we need to move the entire group off the screen */
         if (!clickedItem.classList.contains(this.toolBoxClass)) {
@@ -240,6 +228,8 @@ export class ToolBox extends Component {
         var menuClass = (this.device === 'desktop' ? 'dropdown-submenu' : '');
         var wrapperClass = (this.device === 'desktop' ? 'navbar navbar-default navbar-fixed-top' : '');
         var navClass = (this.device === 'desktop' ? 'nav navbar-nav' : '');
+        var tbClass = (this.device === 'desktop' ? 'dropdown-menu multi-level' : '');
+
         if (this.state.toolBox.toolBox) {
             renderToolBox = this.state.toolBox.toolBox.map(function(item, key) {
                 if (item.subLinks && item.subLinks.length) {
@@ -247,8 +237,8 @@ export class ToolBox extends Component {
                 }
                 return (
                     <li className="toolBox__item" key={key} id={key}>
-                        <a className="toolBox__link toolBox__toggle" href={item.url}>{item.linkName}</a>
-                        <SubLinks menuClass={menuClass} subLinks={this.subLinks}/>
+                        <a className="toolBox__link toolBox__toggle" data-toggle="dropdown" href={item.url}>{item.linkName}</a>
+                        <SubLinks tbClass={tbClass} menuClass={menuClass} subLinks={this.subLinks}/>
                     </li>
                 );
             }, this);
@@ -257,8 +247,8 @@ export class ToolBox extends Component {
         return (
             <section className="toolBox">
                 <div id="toolButton" className="grid__item leftnav__ellipsis leftnav--desktopHidden fa fa-ellipsis-v"></div>
-                <div id="toolBoxWrapper" className={"toolBox__wrapper toolBox__group " + wrapperClass}>
-                    <ul id="firstToolBox" className={navClass} role="navigation">
+                <div id="toolBoxWrapper" className={"toolBox__wrapper " + wrapperClass}>
+                    <ul id="firstToolBox" className={navClass + " toolBox__group"}  role="navigation">
                         {renderToolBox}
                     </ul>
                 </div>
@@ -277,11 +267,12 @@ export class SubLinks extends Component {
       this.subLinks = [];
     }
 
+
     render() {
         var tools = [];
         var subMenu = [];
-        var menuClass = (this.device === 'desktop' ? 'dropdown-submenu' : '');
-        var toolBoxClass = (this.device === 'desktop' ? 'dropdown-menu multi-level' : '');
+        var menuClass = this.props.menuClass;
+        var tbClass = this.props.tbClass;
 
         if (this.props.subLinks) {
             tools = this.props.subLinks.map(function(item, key) {
@@ -296,11 +287,11 @@ export class SubLinks extends Component {
                  * as the application keeps finding subLink arrays.
                  */
                 if (item.subLinks) {
-                    subMenu = <SubLinks menuClass={menuClass} subLinks={item.subLinks}/>;
+                    subMenu = <SubLinks tbClass={tbClass} menuClass={menuClass} subLinks={item.subLinks}/>;
                 }
 
                 return (
-                    <li className={this.props.menuClass +" toolBox__item toolBox__item--child"} key={key} id={key}>
+                    <li className={menuClass +" toolBox__item"} key={key} id={key}>
                         <a className="toolBox__link toolBox__link--child" href={item.url}>{item.linkName}</a>
                         {subMenu}
                     </li>
@@ -309,7 +300,7 @@ export class SubLinks extends Component {
         }
 
         return (
-            <ul className={"toolBox__group toolBox__group--child "+toolBoxClass}>
+            <ul className={"toolBox__group "+tbClass}>
                 <li className="toolBox__item toolBox__back">
                     <a href="#" className="toolBox__link toolBox__back"><span className="toolBox__back toolBox__caret fa fa-angle-left"></span>Back</a>
                 </li>
