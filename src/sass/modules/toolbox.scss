@@ -68,8 +68,8 @@
     .toolBox__group {
         display: block;
         position: absolute;
-        top: 0;
-        left: 0;
+        top: 45px;
+        // left: 0;
         width: 100%;
         height: auto;
         overflow: visible;
@@ -116,99 +116,94 @@
 }
 
 @include tablet {
+    .toolBox {
+        position: absolute;
+        right: 220px;
+        display: inline-block;
+        vertical-align: middle;
+        width: auto;
+    }
+
+    .toolBox__wrapper {
+        width: 100%;
+    }
+
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu>.dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -6px;
+        margin-left: -1px;
+        -webkit-border-radius: 0 6px 6px 6px;
+        -moz-border-radius: 0 6px 6px;
+        border-radius: 0 6px 6px 6px;
+    }
+
+    .dropdown-submenu:hover>.dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-submenu>a:after {
+        display: block;
+        content: " ";
+        float: right;
+        width: 0;
+        height: 0;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 5px 0 5px 5px;
+        border-left-color: #ccc;
+        margin-top: 5px;
+        margin-right: -10px;
+    }
+
+    .dropdown-submenu:hover>a:after {
+        border-left-color: #fff;
+    }
+
+    .dropdown-submenu.pull-left {
+        float: none;
+    }
+
+    .dropdown-submenu.pull-left>.dropdown-menu {
+        left: -100%;
+        margin-left: 10px;
+        -webkit-border-radius: 6px 0 6px 6px;
+        -moz-border-radius: 6px 0 6px 6px;
+        border-radius: 6px 0 6px 6px;
+    }
 
     .toolBox__item.toolBox__back {
         display: none;
-    }
-
-    .toolBox {
-        display: inline-block;
-        position: absolute;
-        right: 220px;
-    }
-
-    .toolBox__group.toolBox__barDesktop {
-        width: 100%;
-        left: 0;
-    }
-
-    .toolBox__group {
-        display: block;
-        position: relative;
-        right: 0;
-        width: auto;
-        height: 42px;
-        overflow: visible;
     }
 
     .toolBox__item {
         display: inline-block;
         position: relative;
         width: 200px;
-        float: left;
         padding: 0;
     }
 
-    .toolBox__group--child.inactive {
-        background-color: $blue-60;
-    }
-
+    .toolBox__toggle,
     .toolBox__link {
-        display: inline-block;
-        width: 200px;
-        padding: 14px 52px 15px;
+        display: block;
         background-color: $blue-60;
+        line-height: 40px;
         text-align: center;
-        color: $white;
+        @include font($font-size-content, $font-weight-regular, $white);
     }
 
-    .toolBox__link:hover {
+    .toolBox__toggle:hover {
         background-color: $blue-50;
         text-decoration: none;
-        color: $white;
+        @include font($font-size-content, $font-weight-regular, $white);
     }
 
-    .toolBox__link:visited {
+    .toolBox__toggle:visited {
         text-decoration: none;
-        color: $white;
-    }
-
-    /* First child level */
-    .toolBox__group--child {
-        display: none;
-        position: relative;
-        left: 0;
-        width: 200px;
-        min-height: 250px;
-        height: 300px;
-        background-color: $blue-60;
-        overflow: visible;
-    }
-
-    .toolBox__item--child {
-        position: static;
-        width: 100%;
-    }
-
-    .toolBox__link--child {
-        display: inline-block;
-        width: 100%;
-        padding: 20px 30px;
-        line-height: $font-size-medium;
-        text-align: left;
-        color: $white;
-    }
-
-
-
-    .toolBox__group--child.active { /* interesting */
-        display: block;
-    }
-
-    /* Each subsequent child group spawns 200px from the left of one another. */
-    .toolBox__group--child .toolBox__group--child {
-        position: absolute;
-        top: 0;
-        left: 200px;
+        @include font($font-size-content, $font-weight-regular, $white);
     }
 }

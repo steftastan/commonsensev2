@@ -27,6 +27,7 @@ export class ToolBox extends Component {
       this.resetNav = this.resetNav.bind(this);
       this.toolBoxWrapper = {};
       this.toolBoxHeight = 0;
+      this.device;
     }
 
     /* Handle open/close button available on mobile */
@@ -110,26 +111,50 @@ export class ToolBox extends Component {
 
         /* Add click event to the tool box button on mobile */
         navButton.addEventListener('mousedown', this.toggleNav, false);
-    }
 
-    componentDidUpdate() {
         /**
          * Add mouse events here to trigger animation.
          */
         this.toolBoxWrapper = document.getElementById(this.toolBoxId);
 
         if (this.IsMobile()) {
-            console.log('thsi mobile');
+            this.device = 'mobile';
             this.toolBoxWrapper.addEventListener('click', this.animateToolBox);
+            console.log('aaa');
+
         } else {
-            console.log('dis desktop');
-            $('.toolBox__group .toolBox__link').on("click", function(e) {
-                $(this).next('ul.toolBox__group--child').toggle();
-                e.stopPropagation();
-                e.preventDefault();
+            this.device = 'desktop';
+            $(document).ready(function() {
+                $('.navbar a.toolBox__toggle').on('click', function(e) {
+                    var $el = $(this);
+
+                    console.log($el);
+                    var $parent = $(this).offsetParent();
+                    $(this).parent("li").toggleClass('open');
+
+                    console.log($parent);
+
+                    if(!$parent.parent().hasClass('nav')) {
+                        $el.next().css({"top": $el[0].offsetTop, "left": $parent.outerWidth() - 4});
+                    }
+
+                    $('.nav li.open').not($(this).parents("li")).removeClass("open");
+
+                    return false;
+                });
             });
         }
 
+    }
+
+    componentDidUpdate() {
+        this.toolBoxWrapper = document.getElementById(this.toolBoxId);
+        if (this.IsMobile()) {
+            this.device = 'mobile';
+            this.toolBoxWrapper.addEventListener('click', this.animateToolBox);
+            console.log('aaa');
+
+        }
     }
 
     /**
@@ -145,6 +170,8 @@ export class ToolBox extends Component {
         var activeButton;
         var backButton = null;
         var oldGroup;
+
+        console.log('bbbbb');
 
         /* Ensure we have stored the correct DOM node, we need to move the entire group off the screen */
         if (!clickedItem.classList.contains(this.toolBoxClass)) {
@@ -210,6 +237,9 @@ export class ToolBox extends Component {
 
     render() {
         var renderToolBox;
+        var menuClass = (this.device === 'desktop' ? 'dropdown-submenu' : '');
+        var wrapperClass = (this.device === 'desktop' ? 'navbar navbar-default navbar-fixed-top' : '');
+        var navClass = (this.device === 'desktop' ? 'nav navbar-nav' : '');
         if (this.state.toolBox.toolBox) {
             renderToolBox = this.state.toolBox.toolBox.map(function(item, key) {
                 if (item.subLinks && item.subLinks.length) {
@@ -217,8 +247,8 @@ export class ToolBox extends Component {
                 }
                 return (
                     <li className="toolBox__item" key={key} id={key}>
-                        <a className="toolBox__link" href={item.url}>{item.linkName}</a>
-                        <SubLinks subLinks={this.subLinks}/>
+                        <a className="toolBox__link toolBox__toggle" href={item.url}>{item.linkName}</a>
+                        <SubLinks menuClass={menuClass} subLinks={this.subLinks}/>
                     </li>
                 );
             }, this);
@@ -227,11 +257,10 @@ export class ToolBox extends Component {
         return (
             <section className="toolBox">
                 <div id="toolButton" className="grid__item leftnav__ellipsis leftnav--desktopHidden fa fa-ellipsis-v"></div>
-                <div id="toolBoxWrapper" className="toolBox__wrapper">
-                    <ul id="firstToolBox" className="toolBox__group toolBox__barDesktop active">
+                <div id="toolBoxWrapper" className={"toolBox__wrapper toolBox__group " + wrapperClass}>
+                    <ul id="firstToolBox" className={navClass} role="navigation">
                         {renderToolBox}
                     </ul>
-                    <div id="toolBoxColumns" className="toolBox--mobileHidden toolBox__columns"></div>
                 </div>
             </section>
         );
@@ -251,6 +280,8 @@ export class SubLinks extends Component {
     render() {
         var tools = [];
         var subMenu = [];
+        var menuClass = (this.device === 'desktop' ? 'dropdown-submenu' : '');
+        var toolBoxClass = (this.device === 'desktop' ? 'dropdown-menu multi-level' : '');
 
         if (this.props.subLinks) {
             tools = this.props.subLinks.map(function(item, key) {
@@ -265,11 +296,11 @@ export class SubLinks extends Component {
                  * as the application keeps finding subLink arrays.
                  */
                 if (item.subLinks) {
-                    subMenu = <SubLinks subLinks={item.subLinks}/>;
+                    subMenu = <SubLinks menuClass={menuClass} subLinks={item.subLinks}/>;
                 }
 
                 return (
-                    <li className="toolBox__item toolBox__item--child" key={key} id={key}>
+                    <li className={this.props.menuClass +" toolBox__item toolBox__item--child"} key={key} id={key}>
                         <a className="toolBox__link toolBox__link--child" href={item.url}>{item.linkName}</a>
                         {subMenu}
                     </li>
@@ -278,7 +309,7 @@ export class SubLinks extends Component {
         }
 
         return (
-            <ul className="toolBox__group toolBox__group--child">
+            <ul className={"toolBox__group toolBox__group--child "+toolBoxClass}>
                 <li className="toolBox__item toolBox__back">
                     <a href="#" className="toolBox__link toolBox__back"><span className="toolBox__back toolBox__caret fa fa-angle-left"></span>Back</a>
                 </li>

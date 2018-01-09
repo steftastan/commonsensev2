@@ -134,3 +134,22 @@
 .dataTable--halfWidth .react-bs-table .react-bs-container-footer > table > thead > tr > th {
     vertical-align: middle;
 }
+
+/* Original file: widgets/toolbox.js and bootstrap default CSS */
+/* Overriding drop down menu default styles that are bootstrapped to the class */
+.toolBox__group.dropdown-menu {
+    padding: 0;
+    margin: 0;
+    border: none;
+    background-color: $blue-60;
+}
+
+.dropdown-menu > li > a.toolBox__link:hover {
+    background-color: $blue-50;
+}
+
+.dropdown-menu > li > a.toolBox__link {
+    padding: 15px 20px;
+    text-align: left;
+    color: $white;
+}
