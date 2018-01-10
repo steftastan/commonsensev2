@@ -4,25 +4,12 @@
    ========================================================================== */
 
 /**
- * Navigation located at the left of the browser on desktop and tablet, and
- * hidden inside a hamburger icon on mobile, contains the main link categories.
+ * Large tables that contain all the datasets returned per section.
  */
 
 /* All devices */
-
-.dataTable {
-    min-width: 960px;
-    width: 100%;
-}
-
-.dataTable__item {
-    display: block;
-    overflow: hidden;
-}
-
 .dataTable__row--content {
     width: 100%;
-    display: inline-flex;
     border-bottom: 1px solid $cool-gray-1;
     cursor: pointer;
 }
@@ -32,11 +19,26 @@
 }
 
 .dataTable__row--header {
-    width: 100%;
-    display: inline-flex;
-    border-bottom: 1px solid $blue-60;
     text-transform: uppercase;
-    @include font($font-size-content, $font-weight-bold, $blue-60);
+    background-color: $blue-90;
+    @include font($font-size-content, $font-weight-bold, $peach-40);
+}
+
+.dataTable__pagination {
+    text-align: center;
+}
+
+.dataTable__title {
+    @include font($font-size-small, $font-weight-bold, $blue-60);
+    margin-bottom: 5px;
+}
+
+/*
+ * .dataTable--fullWidth class is also available for tables that span the entire width of screen
+ * in this case we are only modifying the font-size for smaller tables
+ */
+.dataTable--halfWidth {
+    font-size: $font-size-mobile-small;
 }
 
 /* Mobile-specific styles */
@@ -61,6 +63,11 @@
         padding: 0 0 15px 0;
         font-size: 11px;
     }
+
+    .dataTable__title {
+        @include font($font-size-medium, $font-weight-bold, $blue-60);
+    }
+
 }
 
 /* Desktop-specific styles */

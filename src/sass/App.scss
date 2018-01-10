@@ -22,8 +22,8 @@
  */
 
 /* Config */
-@import '../bootstrap/bootstrap.css';
-@import '../font-awesome/css/font-awesome.css';
+@import '../css-libraries/bootstrap/bootstrap.css';
+@import '../css-libraries/font-awesome/css/font-awesome.css';
 @import 'config/variables.scss';
 @import 'config/reset.scss';
 @import 'config/fonts.scss';
@@ -31,6 +31,7 @@
 @import 'config/grids.scss';
 @import 'config/wrappers.scss';
 @import 'config/icons.scss';
+@import '../css-libraries/bootstrap-table/react-bootstrap-table.scss';
 
 /* Modules */
 @import 'modules/header.scss';
@@ -43,3 +44,10 @@
 @import 'modules/forms.scss';
 @import 'modules/data-table.scss';
 @import 'modules/widget.scss';
+@import 'modules/toolbox.scss';
+@import 'modules/sliding-toolbox.scss';
+@import 'modules/data-chart.scss';
+
+/* Helpers */
+@import 'helpers/overrides.scss';
+@import 'helpers/sliding-leftnav.scss';

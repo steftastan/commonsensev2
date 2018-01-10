@@ -1,24 +1,27 @@
+import './global.variables.js';
 import React, { Component } from 'react';
-// import { Localization } from './helper.localization.js';
-import $ from 'jquery';
-import { Dashboard } from './components/modules/dashboard.js';
-import { Header } from './components/layout/header.js';
-import { BreadCrumbs } from './components/layout/breadcrumbs.js';
-import { Accordion, Section, SubLinkList } from './components/layout/accordion.js';
+import { Route } from 'react-router-dom';
+import { Dashboard } from './pages/Dashboard.js';
+import { AccountsPayable } from './pages/AccountsPayable';
+import { Layout } from './components/layout/layout.js';
 
-const languages = global.languages;
+/** APP.JS
+ * Provides the scaffolding for our application.
+ * Create routes to new pages here.
+ *
+ * Link to React Router 4 documentation:
+ * https://reacttraining.com/react-router/web/guides/philosophy
+ */
 
-const App = () => (
-    <div className="wrapper wrapper__app App">
-        <Header />
-        <Accordion />
-        <BreadCrumbs/>
-        <Dashboard />
-    </div>
-)
-
-
-
-
+export class App extends Component {
+    render() {
+        return (
+                <Layout>
+                    <Route exact path="/" component={Dashboard}/>
+                    <Route path="/accountsPayable" component={AccountsPayable}/>
+                </Layout>
+        );
+    }
+};
 
 export default App;

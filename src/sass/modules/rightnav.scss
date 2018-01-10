@@ -45,7 +45,10 @@
         position: absolute;
         right: 0;
         padding: 8px 20px;
-        width: auto;
+        width: 220px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         height: 100%;
         background-color: $white;
     }

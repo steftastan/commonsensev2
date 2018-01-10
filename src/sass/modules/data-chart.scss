@@ -1,0 +1,62 @@
+
+/* ==========================================================================
+   DATA CHART
+   ========================================================================== */
+
+/**
+ * The chart widget and its contents (data tables are optional).
+ */
+
+/* All devices */
+
+.dataChart__table {
+    width: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.dataChart__heading {
+    background-color: $blue-90;
+    text-transform: uppercase;
+    @include font($font-size-content, $font-weight-bold, $peach-40);
+
+}
+
+.dataChart__cell {
+    width: 30%;
+}
+
+.dataChart__cell--heading {
+    padding: 15px;
+}
+
+.dataChart__cell {
+    padding: 10px;
+}
+
+.dataChart__row {
+    background-color: $cool-gray-1;
+}
+
+.dataChart__row:hover {
+    background-color: $blue-50;
+    color: $white;
+    cursor: pointer;
+}
+
+/* Mobile-specific styles */
+@include mobile {
+    .dataChart__table {
+        margin-top: 10px;
+    }
+}
+
+/* Tablet-specific styles */
+@include tablet {
+
+}
+
+/* Desktop-specific styles */
+@include desktop {
+
+}

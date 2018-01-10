@@ -1,48 +1,24 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
+import './../../global.variables.js';
+import { Localization, SetCompany } from './../../helper.functions.js';
 
+/**
+ * ACCORDION/LEFT NAV COMPONENT
+ *
+ * The left navigation.
+ *
+ */
 export class Accordion extends Component {
 
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
+      this.Localization = Localization;
       this.filterLinkList = this.filterLinkList.bind(this);
       this.toggleElem = this.toggleElem.bind(this);
-      this.state = {
-          data: {},
-          companies: {},
-          employeeName: ''
-      };
     }
 
-    componentDidMount() {
-
-        $.ajax({
-            url: 'webservices/FullMenu.json',
-            dataType: 'json',
-            cache: false,
-            success: function(data) {
-                this.setState({data: data});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
-
-        $.ajax({
-            url: 'webservices/Companies.json',
-            dataType: 'json',
-            cache: false,
-            success: function(data) {
-                this.setState({companies: data});
-                this.setState({employeeName: data.employeeName});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
-
+    componentWillMount() {
         document.addEventListener('keyup', this.filterLinkList, false);
-
     }
 
 
@@ -61,10 +37,10 @@ export class Accordion extends Component {
     toggleElem(elem, display, requiresOpenClass, action, openClassName) {
         // set default values
         var i = 0;
-        var openClassName = openClassName ? openClassName : 'leftnav__item--open';
-        var display = display ? display : '';
-        var requiresOpenClass = requiresOpenClass ? requiresOpenClass : false;
-        var action = action ? action : 'add';
+        openClassName = openClassName ? openClassName : 'leftnav__item--open';
+        display = display ? display : '';
+        requiresOpenClass = requiresOpenClass ? requiresOpenClass : false;
+        action = action ? action : 'add';
 
         if (elem.length) {
             // element is an array of multiple elements, enclose code in loop
@@ -143,14 +119,17 @@ export class Accordion extends Component {
     }
 
     render() {
-
-        if (this.state.data.results && this.state.data.results.length) {
-            var commonSenseLinkList = this.state.data.results.map(function(item, key) {
+        var link__text;
+        var welcome__text = this.Localization('welcome');
+        var filterNavigation__text = this.Localization('filterNavigation');
+        if (this.props.links.results && this.props.links.results.length) {
+            var commonSenseLinkList = this.props.links.results.map(function(item, key) {
+                link__text = this.Localization(item.name);
                 return (
                     <Section key={key} id={key}>
                         <div className="leftnav__section">
                             <span className={"leftnav__child leftnav__icon " + item.icon + " " + item.color}></span>
-                            <a className="leftnav__child leftnav__link" href={item.url}>{item.name}</a>
+                            <a className="leftnav__child leftnav__link" href={item.url}>{link__text}</a>
                             <a className="leftnav__child leftnav__arrow fa fa-chevron-right" href="#"></a>
                         </div>
                         <SubLinkList sublinks={item.sublinks} />
@@ -159,48 +138,36 @@ export class Accordion extends Component {
             }, this);
         }
 
-        if (this.state.companies.results && this.state.companies.results.length) {
-            var companiesList = this.state.companies.results.map(function(item, key) {
-                return (<option key={key} selected={item.selected} id={key}>{item.name}</option>);
-            }, this);
-        }
-
         return (
             <div>
-            <nav id="nav" className="wrapper leftnav">
-                <ul className="leftnav__list">
-                    <li className="leftnav__fixed">
-                        <div className="leftnav__section--fixed">
-                            <span className="leftnav__user">Welcome, {this.state.employeeName}</span>
-                            <form className="form">
-                                <i className="form__icon form__icon--company  fa fa-building"></i>
-                                <select className="form__item form__selectCompany">
-                                    {companiesList}
-                                </select>
-                            </form>
-                        </div>
-                    </li>
-                    <li className="leftnav__fixed">
-                        <div className="leftnav__section--fixed">
-                            <span className="leftnav__search"></span>
-                            <form className="form">
-                                <i className="form__icon form__icon--search fa fa-search"></i>
-                                <input id="searchInput" className="form__item form__filterLeftNav" type="text" placeholder="Filter navigation list" />
-                            </form>
-                        </div>
+                <nav id="nav" className="wrapper leftnav">
+                    <ul className="leftnav__list">
+                        <li className="leftnav__fixed">
+                            <div className="leftnav__section--fixed">
+                                <span className="leftnav__user">{welcome__text + this.props.employeeName}</span>
+                                <form className="form">
+                                    <i className="form__icon form__icon--company  fa fa-building"></i>
+                                    {this.props.children}
+                                </form>
+                            </div>
+                        </li>
+                        <li className="leftnav__fixed">
+                            <div className="leftnav__section--fixed">
+                                <span className="leftnav__search"></span>
+                                <form className="form">
+                                    <i className="form__icon form__icon--search fa fa-search"></i>
+                                    <input id="searchInput" className="form__item form__filterLeftNav" type="text" placeholder={filterNavigation__text} />
+                                </form>
+                            </div>
 
-                    </li>
-                    <li className="leftnav__item">
-                        <div className="leftnav__section">
-                            <a className="leftnav__link leftnav__link--dashboard" href="#">Dashboard</a>
-                        </div>
-                    </li>
-                </ul>
-                <ul id="linkList" className="leftnav__list">
-                    {commonSenseLinkList}
-                </ul>
+                        </li>
 
-            </nav>
+                    </ul>
+                    <ul id="linkList" className="leftnav__list">
+                        {commonSenseLinkList}
+                    </ul>
+
+                </nav>
             </div>
         );
     }
@@ -228,8 +195,6 @@ export class Section extends Component {
     handleClick(event) {
         var sectionHeight;
         var subLinksHeight;
-        var target;
-        var allLinks;
 
         event.preventDefault();
 
