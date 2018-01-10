@@ -36,8 +36,6 @@ export class Dashboard extends Component {
     };
 
     render() {
-
-        console.log(this.props.leftNavOpen);
         if (this.state.dashboardLinks && this.state.dashboardLinks.results && this.state.dashboardLinks.results.length) {
             var dashboardLinks = this.state.dashboardLinks.results.map(function(item, key) {
                 return (

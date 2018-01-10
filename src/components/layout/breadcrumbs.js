@@ -24,7 +24,7 @@ export class BreadCrumbs extends Component {
       this.toggleLang = this.toggleLang.bind(this);
       this.buildCrumbs = this.buildCrumbs.bind(this);
       this.state = {
-          open: false,
+          open: true,
           selectedLang: global.defaultLang
       };
       this.defaultLang = 'en';
@@ -66,6 +66,7 @@ export class BreadCrumbs extends Component {
         this.nav =  document.getElementById(this.navId);
         this.navButton =  document.getElementById(this.navButtonId);
         this.langWrapper = document.getElementById(this.langWrapperId);
+        this.toggleNav();
 
         /* Add event listeners to the navigation elements */
         if (this.nav && this.navButton) {
@@ -189,24 +190,22 @@ export class BreadCrumbs extends Component {
     }
 
     toggleNav(event) {
-        event.stopPropagation();
+        if (event) event.stopPropagation();
+
+        this.toggleLayout();
+
         if(this.state.open) {
             this.setState({
                 open: false
             });
-            this.nav.classList.remove(this.toggleClass);
-            this.navButton.classList.add('fa-navicon');
-            this.navButton.classList.remove('fa-close');
+
         } else {
             this.setState({
                 open: true
             });
-            this.nav.classList.add(this.toggleClass);
-            this.navButton.classList.add('fa-close');
-            this.navButton.classList.remove('fa-navicon');
+
         }
 
-        this.toggleLayout();
     }
 
     /**
@@ -220,11 +219,17 @@ export class BreadCrumbs extends Component {
         var openFlag = '--open';
 
         if(this.state.open) {
+            this.nav.classList.add(this.toggleClass);
+            this.navButton.classList.remove('fa-navicon');
+            this.navButton.classList.add('fa-close');
             header.classList.add(this.elemsToToggle.header+openFlag);
             breadcrumbs.classList.add(this.elemsToToggle.breadcrumbs+openFlag);
             contentWrapper.classList.add(this.elemsToToggle.contentWrapper+openFlag);
 
         } else {
+            this.nav.classList.remove(this.toggleClass);
+            this.navButton.classList.remove('fa-close');
+            this.navButton.classList.add('fa-navicon');
             header.classList.remove(this.elemsToToggle.header+openFlag);
             breadcrumbs.classList.remove(this.elemsToToggle.breadcrumbs+openFlag);
             contentWrapper.classList.remove(this.elemsToToggle.contentWrapper+openFlag);

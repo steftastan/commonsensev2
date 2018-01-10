@@ -2466,15 +2466,15 @@ th.react-bs-table-expand-cell > div {
     transition: left 0.3s ease-in; }
   .breadcrumbs.breadcrumbs--open {
     left: 225px;
-    width: calc(100% - 200px);
+    width: calc(100% - 225px);
     -webkit-transition: all 0.3s ease-in;
     -moz-transition: all 0.3s ease-in;
     -o-transition: all 0.3s ease-in;
     -ms-transition: all 0.3s ease-in;
     transition: all 0.3s ease-in; }
   .wrapper__content.contentWrapper--open {
-    width: calc(100% - 200px);
-    min-width: calc(100% - 200px);
+    width: calc(100% - 225px);
+    min-width: calc(100% - 225px);
     left: 225px;
     -webkit-transition: all 0.3s ease-in;
     -moz-transition: all 0.3s ease-in;

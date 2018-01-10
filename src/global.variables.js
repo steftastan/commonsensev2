@@ -4,7 +4,7 @@
  * For language switching, company switch management, etc.
  */
 
-global.defaultLang = 'fr';
+global.defaultLang = 'en';
 global.company = '';
 
 global.colors =  [
