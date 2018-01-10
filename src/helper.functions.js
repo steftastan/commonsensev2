@@ -133,13 +133,13 @@ export function Async(that, requestsArray) {
  * false - the website is being viewed from either desktop or iPad.
  */
 export function IsMobile() {
-    var isMobile;
+    var isMobile = false;
     var ua = navigator.userAgent;
 
     if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua)) {
-        isMobile = true;
-    } else {
-        isMobile = false;
+        if (window.matchMedia("((max-device-width: 768px) and (orientation: portrait)) or ((max-device-width: 1024px) and (orientation: landscape))").matches) {
+            isMobile = true;
+        }
     }
 
     return isMobile;

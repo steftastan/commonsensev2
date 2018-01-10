@@ -113,7 +113,6 @@ export class ToolBox extends Component {
         this.toolBoxWrapper = document.getElementById(this.toolBoxId);
 
         if (this.IsMobile()) {
-            this.device = 'mobile';
             this.toolBoxWrapper.addEventListener('click', this.animateToolBox);
         } else {
             this.device = 'desktop';
@@ -265,8 +264,8 @@ export class SubLinks extends Component {
       super(props);
       this.toolBox = [];
       this.subLinks = [];
+      this.noSubLinks = 'dropdown';
     }
-
 
     render() {
         var tools = [];
@@ -285,7 +284,13 @@ export class SubLinks extends Component {
                 /**
                  * Recursively call this function as long
                  * as the application keeps finding subLink arrays.
+                 * print an option without an arrow once we run out of children.
                  */
+
+                if (!item.subLinks) {
+                    menuClass = this.noSubLinks;
+                }
+
                 if (item.subLinks) {
                     subMenu = <SubLinks tbClass={tbClass} menuClass={menuClass} subLinks={item.subLinks}/>;
                 }

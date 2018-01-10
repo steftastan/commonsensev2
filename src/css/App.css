@@ -1599,9 +1599,9 @@ th.react-bs-table-expand-cell > div {
 @media only screen and (min-device-width: 767px) {
   .leftnav {
     top: 0;
-    left: -14%;
-    width: 14%;
-    min-width: 200px;
+    left: -225px;
+    width: 225px;
+    min-width: 225px;
     height: 100%; }
   /* Hamburger button */
   .leftnav__hamburger {
@@ -2064,12 +2064,16 @@ th.react-bs-table-expand-cell > div {
     left: 0; } }
 
 @media only screen and (min-device-width: 767px) {
+  .toolBox__wrapper {
+    width: 100%; }
+  .toolBox {
+    position: absolute;
+    right: 220px;
+    display: inline-block;
+    vertical-align: middle;
+    width: auto; }
   .toolBox__item.toolBox__back {
     display: none; }
-  .toolBox {
-    display: inline-block;
-    position: absolute;
-    right: 220px; }
   .toolBox__group.toolBox__barDesktop {
     width: 100%;
     left: 0; }
@@ -2082,18 +2086,21 @@ th.react-bs-table-expand-cell > div {
   .toolBox__item {
     display: inline-block;
     position: relative;
-    width: 200px;
-    float: left;
+    width: 90px;
     padding: 0; }
-  .toolBox__group--child.inactive {
-    background-color: #1F57A4; }
+  .toolBox__item.dropdown-submenu,
+  .toolBox__item.dropdown {
+    width: 200px; }
   .toolBox__link {
-    display: inline-block;
-    width: 200px;
-    padding: 14px 52px 15px;
+    display: block;
+    width: 90px;
+    padding: 0;
     background-color: #1F57A4;
+    line-height: 40px;
     text-align: center;
-    color: #FFF; }
+    color: #FFF;
+    font-size: 10px;
+    font-weight: 400; }
   .toolBox__link:hover {
     background-color: #2D74DA;
     text-decoration: none;
@@ -2101,43 +2108,13 @@ th.react-bs-table-expand-cell > div {
   .toolBox__link:visited {
     text-decoration: none;
     color: #FFF; }
-  /* First child level */
-  .toolBox__group--child {
-    display: none;
-    position: relative;
-    left: 0;
-    width: 200px;
-    min-height: 250px;
-    height: 300px;
-    background-color: #1F57A4;
-    overflow: visible; }
-  .toolBox__item--child {
-    position: static;
-    width: 100%; }
   .toolBox__link--child {
     display: inline-block;
     width: 100%;
-    padding: 20px 30px;
+    padding: 10px;
     line-height: 18px;
     text-align: left;
     color: #FFF; }
-  .toolBox__group--child.active {
-    display: block; }
-  /* Each subsequent child group spawns 200px from the left of one another. */
-  .toolBox__group--child .toolBox__group--child {
-    position: absolute;
-    top: 0;
-    left: 200px; } }
-
-@media only screen and (min-device-width: 767px) {
-  .toolBox {
-    position: absolute;
-    right: 220px;
-    display: inline-block;
-    vertical-align: middle;
-    width: auto; }
-  .toolBox__wrapper {
-    width: 100%; }
   .dropdown-submenu {
     position: relative; }
   .dropdown-submenu > .dropdown-menu {
@@ -2171,34 +2148,19 @@ th.react-bs-table-expand-cell > div {
     margin-left: 10px;
     -webkit-border-radius: 6px 0 6px 6px;
     -moz-border-radius: 6px 0 6px 6px;
-    border-radius: 6px 0 6px 6px; }
-  .toolBox__item.toolBox__back {
-    display: none; }
-  .toolBox__item {
-    display: inline-block;
-    position: relative;
-    width: 200px;
-    padding: 0; }
+    border-radius: 6px 0 6px 6px; } }
+
+@media only screen and (min-device-width: 1025px) {
   .toolBox__link {
-    display: block;
-    padding: 0;
-    background-color: #1F57A4;
-    line-height: 40px;
-    text-align: center;
     color: #FFF;
     font-size: 12px;
     font-weight: 400; }
-  .toolBox__link:hover {
-    background-color: #2D74DA;
-    text-decoration: none;
-    color: #FFF;
-    font-size: 12px;
-    font-weight: 400; }
-  .toolBox__link:visited {
-    text-decoration: none;
-    color: #FFF;
-    font-size: 12px;
-    font-weight: 400; } }
+  .toolBox__link--child {
+    padding: 20px 30px; }
+  .toolBox__link {
+    width: 200px; }
+  .toolBox__item {
+    width: 200px; } }
 
 /* ==========================================================================
    SLIDING TOOLBOX
@@ -2284,10 +2246,11 @@ th.react-bs-table-expand-cell > div {
     top: 0px;
     right: 0;
     width: 60px;
-    height: 41px;
+    height: 45px;
     border-top-left-radius: 30px;
     border-top-right-radius: 0;
-    border-bottom-left-radius: 30px; }
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 0; }
   .slidingToolBox__icon {
     padding: 7px 0 0 15px;
     font-size: 28px;
@@ -2495,24 +2458,24 @@ th.react-bs-table-expand-cell > div {
 /* All devices */
 @media only screen and (min-device-width: 767px) {
   .header.header--open {
-    left: 14%;
+    left: 225px;
     -webkit-transition: left 0.3s ease-in;
     -moz-transition: left 0.3s ease-in;
     -o-transition: left 0.3s ease-in;
     -ms-transition: left 0.3s ease-in;
     transition: left 0.3s ease-in; }
   .breadcrumbs.breadcrumbs--open {
-    left: 14%;
-    width: 86%;
+    left: 225px;
+    width: calc(100% - 200px);
     -webkit-transition: all 0.3s ease-in;
     -moz-transition: all 0.3s ease-in;
     -o-transition: all 0.3s ease-in;
     -ms-transition: all 0.3s ease-in;
     transition: all 0.3s ease-in; }
   .wrapper__content.contentWrapper--open {
-    width: 86%;
-    min-width: 86%;
-    left: 14%;
+    width: calc(100% - 200px);
+    min-width: calc(100% - 200px);
+    left: 225px;
     -webkit-transition: all 0.3s ease-in;
     -moz-transition: all 0.3s ease-in;
     -o-transition: all 0.3s ease-in;
