@@ -123,7 +123,7 @@
 
     .toolBox {
         position: absolute;
-        right: 220px;
+        right: 155px;
         display: inline-block;
         vertical-align: middle;
         width: auto;
@@ -239,6 +239,11 @@
 }
 
 @include desktop {
+
+    .toolBox {
+        right: 220px;
+    }
+
     .toolBox__link {
         @include font($font-size-content, $font-weight-regular, $white);
     }
@@ -248,10 +253,10 @@
     }
 
     .toolBox__link {
-        width: 200px;
+        width: 170px;
     }
 
     .toolBox__item {
-        width: 200px;
+        width: 170px;
     }
 }

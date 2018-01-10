@@ -44,8 +44,8 @@
     .rightnav {
         position: absolute;
         right: 0;
-        padding: 8px 20px;
-        width: 220px;
+        padding: 8px 10px;
+        width: 155px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -66,7 +66,7 @@
         height: 25px;
         border-radius: 15px;
         background-color: $cool-gray-1;
-        @include font($font-size-content, $font-weight-medium, $cool-gray-40);
+        @include font($font-size-mobile-small, $font-weight-regular, $cool-gray-40);
         -webkit-transition: width 0.2s ease-in;
         -moz-transition: width 0.2s ease-in;
         -o-transition: width 0.2s ease-in;
@@ -100,11 +100,20 @@
         padding: 6px 5px;
         margin: 0 0 0 10px;
         color: $cool-gray-70;
+        font-size: $font-size-mobile-small;
         text-decoration: none;
     }
 }
 
 /* Desktop-specific styles */
 @include desktop {
+    .rightnav__logout,
+    .rightnav__langSelect {
+        font-size: $font-size-content;
+    }
 
+    .rightnav {
+        width: 220px;
+        padding: 8px 20px;
+    }
 }
