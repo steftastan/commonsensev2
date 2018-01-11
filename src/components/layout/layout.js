@@ -8,9 +8,9 @@ import { Accordion } from './../../components/layout/accordion.js';;
 
 const options = {
     companies: {
-        webService: 'webservices/Companies.json' },
+        endpoint: 'webservices/Companies.json' },
     accordion: {
-        webService: 'webservices/FullMenu.json' },
+        endpoint: 'webservices/FullMenu.json' },
 };
 
 export class Layout extends Component {
@@ -72,7 +72,7 @@ export class Layout extends Component {
           */
         $.when(
             $.ajax({
-                url: options.accordion.webService,
+                url: options.accordion.endpoint,
                 dataType: 'json',
                 cache: false,
                 success: function(data) {
@@ -84,7 +84,7 @@ export class Layout extends Component {
             }),
 
             $.ajax({
-                url: options.companies.webService,
+                url: options.companies.endpoint,
                 dataType: 'json',
                 cache: false,
                 success: function(data) {

@@ -27,17 +27,16 @@ var defaultLang = global.defaultLang;
  export function RequestWidget(widget) {
      var request = {
          request: $.ajax({
-             url: widget.webService,
+             url: widget.endpoint,
              dataType: 'json',
              cache: false,
              error: function(xhr, status, err) {
-                 console.error(this.props.url, status, err.toString());
+                 console.error(status, err.toString());
              }}),
          widget: widget
 
     };
-
-     return request;
+    return request;
  }
 
 

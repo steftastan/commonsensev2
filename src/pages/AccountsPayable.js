@@ -43,10 +43,10 @@ const options = {
         path:'http://google.com' }],
     widgets : [{
         name: 'toolBox',
-        webService: 'webservices/AccountsPayableToolbox.json'
+        endpoint: 'webservices/AccountsPayableToolbox.json'
     }, {
         name: 'dataTable',
-        webService: 'webservices/AccountsPayable.json',
+        endpoint: 'webservices/AccountsPayable.json',
         bootStrapClass : 'col-12',
         tableSize: 'dataTable--fullWidth',
         trClassName: 'dataTable__row--content',
@@ -68,7 +68,7 @@ const options = {
         name: 'dataTable',
         title: 'cashDisbursement',
         titleClass: 'dataTable__title',
-        webService: 'webservices/AccountsPayableCashDisbursement.json',
+        endpoint: 'webservices/AccountsPayableCashDisbursement.json',
         bootStrapClass: 'col-lg-6 col-sm-12',
         tableSize: 'dataTable--halfWidth',
         trClassName: 'dataTable__row--content',
@@ -80,7 +80,7 @@ const options = {
         name: 'dataChart',
         title: 'accountsPayableChart',
         titleClass: 'dataTable__title',
-        webService: 'webservices/AccountsPayableCashDisbursement.json',
+        endpoint: 'webservices/AccountsPayableCashDisbursement.json',
         bootStrapClass: 'col-lg-6 col-sm-12',
         type: 'pie',
         aggregateBy: 'type',
@@ -91,7 +91,7 @@ const options = {
         name: 'dataTable',
         title: 'Testing Table',
         titleClass: 'dataTable__title',
-        webService: 'webservices/AccountsPayableCashDisbursement.json',
+        endpoint: 'webservices/AccountsPayableCashDisbursement.json',
         bootStrapClass: 'col-lg-6 col-sm-12',
         tableSize: 'dataTable--halfWidth',
         trClassName: 'dataTable__row--content',
@@ -101,7 +101,7 @@ const options = {
         sortBy: ['supplier', 'loc', 'totalDue']
     }, {
         name: 'slidingToolbox',
-        webService: 'webservices/AccountsPayableSlidingToolBox.json'
+        endpoint: 'webservices/AccountsPayableSlidingToolBox.json'
     }]
 };
 
@@ -128,12 +128,18 @@ export class AccountsPayable extends Component {
             for (var i = 0; i < options.widgets.length; i++) {
                 // add logic to tell apart components here
                 if (options.widgets[i].name) {
-
                     requestsArray.push(this.requestComponent(options.widgets[i]));
                 }
             }
         }
 
+        /**
+         * Build the page here with all the widgets provided in the config.
+         * @param this {Object} emcompasses the entire scope of this component.
+         * @param requestsArray {Array} An array of AJAX requests to be executed on the when()
+         * clause of the async function
+         * @param function {Function} Anonymous function The callback function to execute when the JavaScript promise returns a positive result. 
+         **/
         this.async(this, requestsArray, function() {
 
                 /* Set the state variables for all the information obtained in the waterfall of AJAX calls */
