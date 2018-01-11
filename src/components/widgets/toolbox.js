@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
-import { IsMobile } from './../../helper.functions.js';
+import { WhichDevice } from './../../helper.functions.js';
 
 export class ToolBox extends Component {
 
     constructor(props) {
       super(props);
-      this.IsMobile = IsMobile;
+      this.WhichDevice = WhichDevice;
       this.state = {
           open: false,
           toolBox: []
@@ -112,7 +112,7 @@ export class ToolBox extends Component {
         navButton.addEventListener('mousedown', this.toggleNav, false);
         this.toolBoxWrapper = document.getElementById(this.toolBoxId);
 
-        if (this.IsMobile()) {
+        if (this.WhichDevice() === 'mobile') {
             this.toolBoxWrapper.addEventListener('click', this.animateToolBox);
         } else {
             this.device = 'desktop';
@@ -140,7 +140,7 @@ export class ToolBox extends Component {
          */
         this.toolBoxWrapper = document.getElementById(this.toolBoxId);
 
-        if (this.IsMobile()) {
+        if (this.WhichDevice() === 'mobile') {
             this.toolBoxWrapper.addEventListener('click', this.animateToolBox);
         }
 

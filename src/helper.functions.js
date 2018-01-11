@@ -132,17 +132,21 @@ export function Async(that, requestsArray) {
  * true - the website is being viewed from a mobile device.
  * false - the website is being viewed from either desktop or iPad.
  */
-export function IsMobile() {
-    var isMobile = false;
+export function WhichDevice() {
+    var device = '';
     var ua = navigator.userAgent;
 
     if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua)) {
-        if (window.matchMedia("((max-device-width: 768px) and (orientation: portrait)) or ((max-device-width: 1024px) and (orientation: landscape))").matches) {
-            isMobile = true;
+        if (window.matchMedia("only screen and (min-device-width : 768px) and (max-device-width : 1024px)").matches) {
+            device = 'tablet';
+        } else {
+            device = 'mobile';
         }
+    } else {
+        device = 'desktop';
     }
 
-    return isMobile;
+    return device;
 }
 
 

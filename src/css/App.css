@@ -1331,46 +1331,83 @@ th.react-bs-table-expand-cell > div {
  * of the browser on desktop view, but on mobile it becomes accesible inside
  * the leftnav menu.
  */
-/* All devices */
+.rightnav {
+  position: absolute;
+  right: 0;
+  width: 155px;
+  padding: 9px 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 100%;
+  background-color: #FFF; }
+
 .rightnav__logout {
-  color: #FFF;
+  display: inline-block;
+  overflow: hidden;
+  width: auto;
+  height: 25px;
+  padding: 6px 5px;
+  margin: 0 0 0 10px;
+  color: #434747;
+  font-size: 12px;
+  text-decoration: none; }
+
+.rightnav__lang--active {
+  display: inline-block;
+  color: #2D408F; }
+
+.rightnav__lang {
+  padding: 6px 5px; }
+
+.rightnav__langSelect {
+  display: inline-block;
+  overflow: hidden;
+  width: 55px;
+  height: 25px;
+  margin: 0 10px 10px;
+  border-radius: 15px;
+  background-color: #E2EBEB;
+  color: #8C9696;
   font-size: 12px;
   font-weight: 400;
-  text-decoration: none; }
+  -webkit-transition: width 0.2s ease-in;
+  -moz-transition: width 0.2s ease-in;
+  -o-transition: width 0.2s ease-in;
+  -ms-transition: width 0.2s ease-in;
+  transition: width 0.2s ease-in; }
 
 /* Mobile-specific styles */
 @media only screen and (max-device-width: 767px) {
   .rightnav--mobileHidden {
     display: none; }
-  .rightnav__langSelect {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    margin: 0 10px 0 0;
-    border-radius: 15px;
-    padding: 9px 6px;
-    background-color: #E2EBEB;
-    color: #2D408F;
-    font-size: 12px;
-    font-weight: 400; } }
+  .rightnav__lang {
+    display: inline-block; } }
 
-/* Tablet-specific styles */
+/* Desktop-specific styles */
 @media only screen and (min-device-width: 767px) {
+  .rightnav {
+    padding: 8px 5px; }
+  .rightnav__logout {
+    margin-left: 0;
+    height: 28px;
+    padding: 0; }
+  .rightnav__lang {
+    display: inline-block; }
+  .rightnav__langSelect {
+    width: 55px; } }
+
+/* Desktop-specific styles */
+@media only screen and (min-device-width: 1025px) {
+  .rightnav__logout {
+    color: #8C9696;
+    font-size: 12px;
+    font-weight: 400;
+    text-decoration: none; }
   .rightnav__container {
     width: 100%;
     overflow: hidden; }
-  .rightnav {
-    position: absolute;
-    right: 0;
-    padding: 8px 10px;
-    width: 155px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    height: 100%;
-    background-color: #FFF; }
   .rightnav__lang {
-    padding: 6px 5px;
     cursor: pointer;
     display: none; }
   .rightnav__langSelect {
@@ -1380,8 +1417,8 @@ th.react-bs-table-expand-cell > div {
     height: 25px;
     border-radius: 15px;
     background-color: #E2EBEB;
-    color: #8C9696;
-    font-size: 10px;
+    color: #B8C1C1;
+    font-size: 12px;
     font-weight: 400;
     -webkit-transition: width 0.2s ease-in;
     -moz-transition: width 0.2s ease-in;
@@ -1395,30 +1432,11 @@ th.react-bs-table-expand-cell > div {
     -o-transition: width 0.2s ease-in;
     -ms-transition: width 0.2s ease-in;
     transition: width 0.2s ease-in; }
-  .rightnav__lang--active {
-    display: inline-block;
-    color: #2D408F; }
   .rightnav__lang--open {
     display: inline-block; }
-  .rightnav__logout {
-    display: inline-block;
-    overflow: hidden;
-    width: auto;
-    height: 25px;
-    padding: 6px 5px;
-    margin: 0 0 0 10px;
-    color: #434747;
-    font-size: 10px;
-    text-decoration: none; } }
-
-/* Desktop-specific styles */
-@media only screen and (min-device-width: 1025px) {
-  .rightnav__logout,
-  .rightnav__langSelect {
-    font-size: 12px; }
   .rightnav {
     width: 220px;
-    padding: 8px 20px; } }
+    padding: 8px 5px; } }
 
 /* ==========================================================================
    LEFT NAV
@@ -2109,14 +2127,15 @@ th.react-bs-table-expand-cell > div {
   .toolBox__item {
     display: inline-block;
     position: relative;
-    width: 90px;
     padding: 0; }
+  .toolBox__item,
+  .toolBox__link {
+    width: 125px; }
   .toolBox__item.dropdown-submenu,
   .toolBox__item.dropdown {
     width: 200px; }
   .toolBox__link {
     display: block;
-    width: 90px;
     padding: 0;
     background-color: #1F57A4;
     line-height: 40px;
@@ -2181,11 +2200,7 @@ th.react-bs-table-expand-cell > div {
     font-size: 12px;
     font-weight: 400; }
   .toolBox__link--child {
-    padding: 20px 30px; }
-  .toolBox__link {
-    width: 170px; }
-  .toolBox__item {
-    width: 170px; } }
+    padding: 20px 30px; } }
 
 /* ==========================================================================
    SLIDING TOOLBOX
@@ -2323,13 +2338,16 @@ th.react-bs-table-expand-cell > div {
   color: #FFF;
   cursor: pointer; }
 
-/* Mobile-specific styles */
-@media only screen and (max-device-width: 767px) {
-  .dataChart__table {
-    margin-top: 10px; } }
+.dataChart__table {
+  margin-top: 10px; }
 
+/* Mobile-specific styles */
 /* Tablet-specific styles */
 /* Desktop-specific styles */
+@media only screen and (min-device-width: 1025px) {
+  .dataChart__table {
+    margin-top: 0; } }
+
 /* Helpers */
 /* ==========================================================================
    OVERRIDES

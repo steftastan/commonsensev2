@@ -149,8 +149,12 @@
     .toolBox__item {
         display: inline-block;
         position: relative;
-        width: 90px;
         padding: 0;
+    }
+
+    .toolBox__item,
+    .toolBox__link {
+        width: 125px;
     }
 
      .toolBox__item.dropdown-submenu,
@@ -160,7 +164,6 @@
 
     .toolBox__link {
         display: block;
-        width: 90px;
         padding: 0;
         background-color: $blue-60;
         line-height: 40px;
@@ -252,11 +255,5 @@
         padding: 20px 30px;
     }
 
-    .toolBox__link {
-        width: 170px;
-    }
 
-    .toolBox__item {
-        width: 170px;
-    }
 }

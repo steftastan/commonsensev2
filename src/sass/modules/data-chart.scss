@@ -44,11 +44,13 @@
     cursor: pointer;
 }
 
+.dataChart__table {
+    margin-top: 10px;
+}
+
 /* Mobile-specific styles */
 @include mobile {
-    .dataChart__table {
-        margin-top: 10px;
-    }
+
 }
 
 /* Tablet-specific styles */
@@ -58,5 +60,7 @@
 
 /* Desktop-specific styles */
 @include desktop {
-
+    .dataChart__table {
+        margin-top: 0;
+    }
 }

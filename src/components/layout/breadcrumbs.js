@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './../../global.variables.js';
+import $ from 'jquery';
 import { Link } from 'react-router-dom';
-import { Localization } from './../../helper.functions.js';
+import { Localization, WhichDevice } from './../../helper.functions.js';
 
 /**
  * BREADCRUMBS LAYOUT COMPONENT
@@ -16,6 +17,7 @@ export class BreadCrumbs extends Component {
     constructor(props) {
       super(props);
       this.Localization = Localization;
+      this.WhichDevice = WhichDevice;
       this.toggleNav = this.toggleNav.bind(this);
       this.toggleLayout = this.toggleLayout.bind(this);
       this.clickAnywhereToClose = this.clickAnywhereToClose.bind(this);
@@ -68,6 +70,10 @@ export class BreadCrumbs extends Component {
         this.langWrapper = document.getElementById(this.langWrapperId);
         this.toggleNav();
 
+        if (this.WhichDevice() === 'mobile') {
+            $("#"+this.langWrapperId).appendTo("#langWrapper--mobile");
+        }
+
         /* Add event listeners to the navigation elements */
         if (this.nav && this.navButton) {
             document.addEventListener('mousedown', this.clickAnywhereToClose, false);
@@ -102,13 +108,10 @@ export class BreadCrumbs extends Component {
             for (i = 0; i < languages.length; i++) {
 
                 if (languages[i].id === event.target.id) {
-                    // act upon the clicked element
                     this.setState({
                         selectedLang: languages[i].id
                     });
 
-                    // Store the language switch data
-                    // TODO: Further test this is working.
                     global.defaultLang = this.state.selectedLang;
 
                     clickedLang = document.getElementById(languages[i].id);

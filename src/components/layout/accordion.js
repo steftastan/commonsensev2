@@ -150,6 +150,7 @@ export class Accordion extends Component {
                                     {this.props.children}
                                 </form>
                             </div>
+                            <div id="langWrapper--mobile"></div>
                         </li>
                         <li className="leftnav__fixed">
                             <div className="leftnav__section--fixed">
