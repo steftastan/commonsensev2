@@ -9,7 +9,8 @@ export class ToolBox extends Component {
       this.WhichDevice = WhichDevice;
       this.state = {
           open: false,
-          toolBox: []
+          toolBox: [],
+          device: ''
       };
       this.toggleClass = 'toolBox__wrapper--toggle';
       this.subLinks = [];
@@ -27,7 +28,10 @@ export class ToolBox extends Component {
       this.resetNav = this.resetNav.bind(this);
       this.toolBoxWrapper = {};
       this.toolBoxHeight = 0;
-      this.device = '';
+      this.menuClass = '';
+      this.wrapperClass = '';
+      this.navClass = '';
+      this.tbClass = '';
     }
 
     /* Handle open/close button available on mobile */
@@ -88,21 +92,16 @@ export class ToolBox extends Component {
         /**
          * Obtain ToolBox data in order to build navigation
          */
-        if (this.props.settings && this.props.settings.webService) {
-            $.ajax({
-                url: this.props.settings.webService,
-                dataType: 'json',
-                cache: false,
-                success: function(data) {
-                    if (data.results) {
-                        this.setState({toolBox: data.results});
-                    }
-                }.bind(this),
-                error: function(xhr, status, err) {
-                    console.error(this.props.url, status, err.toString());
-                }.bind(this)
-            });
+        var device = this.WhichDevice();
+
+        if (device !== 'mobile') {
+            this.menuClass = 'dropdown-submenu';
+            this.wrapperClass = 'navbar navbar-default navbar-fixed-top';
+            this.navClass = 'nav navbar-nav';
+            this.tbClass = 'dropdown-menu multi-level';
         }
+
+        this.setState({toolBox: this.props.results, device: device});
     }
 
     componentDidMount() {
@@ -112,10 +111,10 @@ export class ToolBox extends Component {
         navButton.addEventListener('mousedown', this.toggleNav, false);
         this.toolBoxWrapper = document.getElementById(this.toolBoxId);
 
-        if (this.WhichDevice() === 'mobile') {
+        if (this.state.device === 'mobile') {
             this.toolBoxWrapper.addEventListener('click', this.animateToolBox);
         } else {
-            this.device = 'desktop';
+
             $(document).ready(function() {
                 $('.navbar a.toolBox__toggle').on('click', function(e) {
                     var $el = $(this);
@@ -224,11 +223,8 @@ export class ToolBox extends Component {
 
     render() {
         var renderToolBox;
-        var menuClass = (this.device === 'desktop' ? 'dropdown-submenu' : '');
-        var wrapperClass = (this.device === 'desktop' ? 'navbar navbar-default navbar-fixed-top' : '');
-        var navClass = (this.device === 'desktop' ? 'nav navbar-nav' : '');
-        var tbClass = (this.device === 'desktop' ? 'dropdown-menu multi-level' : '');
 
+        console.log(this.device);
         if (this.state.toolBox.toolBox) {
             renderToolBox = this.state.toolBox.toolBox.map(function(item, key) {
                 if (item.subLinks && item.subLinks.length) {
@@ -237,7 +233,7 @@ export class ToolBox extends Component {
                 return (
                     <li className="toolBox__item" key={key} id={key}>
                         <a className="toolBox__link toolBox__toggle" data-toggle="dropdown" href={item.url}>{item.linkName}</a>
-                        <SubLinks tbClass={tbClass} menuClass={menuClass} subLinks={this.subLinks}/>
+                        <SubLinks tbClass={this.tbClass} menuClass={this.menuClass} subLinks={this.subLinks}/>
                     </li>
                 );
             }, this);
@@ -246,8 +242,8 @@ export class ToolBox extends Component {
         return (
             <section className="toolBox">
                 <div id="toolButton" className="grid__item leftnav__ellipsis leftnav--desktopHidden fa fa-ellipsis-v"></div>
-                <div id="toolBoxWrapper" className={"toolBox__wrapper " + wrapperClass}>
-                    <ul id="firstToolBox" className={navClass + " toolBox__group"}  role="navigation">
+                <div id="toolBoxWrapper" className={"toolBox__wrapper " + this.wrapperClass}>
+                    <ul id="firstToolBox" className={this.navClass + " toolBox__group"}  role="navigation">
                         {renderToolBox}
                     </ul>
                 </div>

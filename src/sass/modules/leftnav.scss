@@ -255,7 +255,7 @@
 
      .leftnav__hamburger:hover {
          left: 0;
-         background-color: $peach-50;
+         background-color: $peach-40;
      }
 
     .leftnav__link--dashboard {
@@ -300,6 +300,11 @@
         text-decoration: none;
     }
 
+    .leftnav__hamburger.fa-close {
+        left: -20px;
+        background-color: $peach-40;
+    }
+
 }
 
 /* Desktop-specific styles */
@@ -312,6 +317,10 @@
     .leftnav {
         left: -225px;
         width: 225px;
+    }
+
+    .leftnav__hamburger.fa-close:hover {
+        left: 0;
     }
 
 }

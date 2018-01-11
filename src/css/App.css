@@ -1655,7 +1655,7 @@ th.react-bs-table-expand-cell > div {
     transition: left 0.3s ease-in; }
   .leftnav__hamburger:hover {
     left: 0;
-    background-color: #C45433; }
+    background-color: #F26322; }
   .leftnav__link--dashboard {
     padding: 5px 0; }
   .leftnav__section {
@@ -1683,7 +1683,10 @@ th.react-bs-table-expand-cell > div {
   .leftnav__link:active,
   .leftnav__link:visited {
     color: #fff;
-    text-decoration: none; } }
+    text-decoration: none; }
+  .leftnav__hamburger.fa-close {
+    left: -20px;
+    background-color: #F26322; } }
 
 /* Desktop-specific styles */
 @media only screen and (min-device-width: 1025px) {
@@ -1694,7 +1697,9 @@ th.react-bs-table-expand-cell > div {
     font-weight: 400; }
   .leftnav {
     left: -225px;
-    width: 225px; } }
+    width: 225px; }
+  .leftnav__hamburger.fa-close:hover {
+    left: 0; } }
 
 /* ==========================================================================
    CATEGORIES

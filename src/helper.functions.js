@@ -20,29 +20,26 @@ var defaultLang = global.defaultLang;
  *
  */
 
-
  /**
    * Allows to build an AJAX call object depending on the parameters passed.
    * @param widget [Object] The widget's config as it appears in the options constant.
-   * @param ComponentName [React Component] The name of the reactJS component for the widget.
-   * @param index [Integer] index used as key internally by react.
-   * @param widgetList [Array] We build this array component by component each time we call this function.
    */
- export function RequestWidget(widget, ComponentName, index, widgetList) {
-     var results;
-     $.ajax({
-         url: widget.webService,
-         dataType: 'json',
-         cache: false,
-         success: function(data) {
-             results = (data.results ? data.results : data);
-             widgetList.push(<ComponentName key={index} index={index} options={widget} results={results} />);
-         }.bind(this),
-         error: function(xhr, status, err) {
-             console.error(this.props.url, status, err.toString());
-         }.bind(this)
-     });
+ export function RequestWidget(widget) {
+     var request = {
+         request: $.ajax({
+             url: widget.webService,
+             dataType: 'json',
+             cache: false,
+             error: function(xhr, status, err) {
+                 console.error(this.props.url, status, err.toString());
+             }}),
+         widget: widget
+
+    };
+
+     return request;
  }
+
 
  /** https://css-tricks.com/multiple-simultaneous-ajax-requests-one-callback-jquery/
    * Although the guide referenced above says these AJAX queries will
@@ -53,19 +50,13 @@ var defaultLang = global.defaultLang;
    * setState() function too many times in the application, because doing so will trigger
    * a re-render of the page.
    *
-   * We fetch all our data from our Web Services and pass them to the global state of the
-   * page we are on at the time.
+   * We fetch all our data from our Endpoint. We return a callback function to allow
+   * each page to render their corresponding components.
    *
    */
-export function Async(that, requestsArray) {
-    $.when(requestsArray).then(function() {
-        /* Set the state variables for all the information obtained in the waterfall of AJAX calls */
-        that.setState({
-            widgets: that.widgets
-        });
-    }.bind(that));
+export function Async(that, requestsArray, cb) {
+    $.when(requestsArray).then(cb.bind(that));
 }
-
 
  /**
   * Localization function, takes in key and returns its matching test in the current active language.

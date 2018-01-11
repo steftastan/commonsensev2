@@ -120,6 +120,8 @@ export class AccountsPayable extends Component {
 
     componentDidMount() {
         var requestsArray = [];
+        var componentArray = [];
+        var widgets = [];
 
         /** Extract the data table information from the options array */
         if (options && options.widgets) {
@@ -127,38 +129,50 @@ export class AccountsPayable extends Component {
                 // add logic to tell apart components here
                 if (options.widgets[i].name) {
 
-                    // if there are widgets of toolbox (top navigation) type
-                    if (options.widgets[i].name === 'toolBox') {
-                        this.toolBox = <ToolBox settings={options.widgets[i]}/>
-                    }
-
-                    // if there are widget of datatable type
-                    if (options.widgets[i].name === 'dataTable') {
-                        requestsArray.push(this.requestComponent(options.widgets[i], DataTable, i, this.widgets));
-                    }
-
-                    // if there are widgets of type chart
-                    if (options.widgets[i].name === 'dataChart') {
-                        requestsArray.push(this.requestComponent(options.widgets[i], DataChart, i, this.widgets));
-                    }
-
-                    // if there are widgets of type sliding tool box
-                    if (options.widgets[i].name === 'slidingToolbox') {
-                        requestsArray.push(this.requestComponent(options.widgets[i], SlidingToolBox, i, this.widgets));
-                    }
+                    requestsArray.push(this.requestComponent(options.widgets[i]));
                 }
             }
         }
 
-        this.async(this, requestsArray);
+        this.async(this, requestsArray, function() {
+
+                /* Set the state variables for all the information obtained in the waterfall of AJAX calls */
+                for (var i = 0; i < requestsArray.length; i++) {
+
+                    if (requestsArray[i].widget.name === 'toolBox') {
+                        widgets.push(<BreadCrumbs key={i} breadcrumbs={options.breadcrumbs}><ToolBox key={i} options={requestsArray[i].widget} results={requestsArray[i].request.responseJSON.results} /></BreadCrumbs>);
+                    }
+
+                    // if there are widget of datatable type
+                    if (requestsArray[i].widget.name === 'dataTable') {
+                        if (requestsArray[i].request.responseJSON) {
+                            widgets.push(<DataTable key={i} options={requestsArray[i].widget} results={requestsArray[i].request.responseJSON.results} />);
+                        }
+                    }
+
+                    // if there are widgets of type chart
+                    if (requestsArray[i].widget.name === 'dataChart') {
+                        if (requestsArray[i].request.responseJSON) {
+                            widgets.push(<DataChart key={i} options={requestsArray[i].widget} results={requestsArray[i].request.responseJSON.results} />);
+                        }
+                    }
+
+                    // if there are widgets of type sliding tool box
+                    if (requestsArray[i].widget.name === 'slidingToolbox') {
+                        if (requestsArray[i].request.responseJSON) {
+                            widgets.push(<SlidingToolBox key={i} options={requestsArray[i].widget} results={requestsArray[i].request.responseJSON.results} />);
+                        }
+                    }
+                }
+
+                this.setState({widgets: widgets});
+        });
+
     }
 
     render() {
         return (
             <div>
-                <BreadCrumbs breadcrumbs={options.breadcrumbs}>
-                    {this.toolBox}
-                </BreadCrumbs>
                 {this.state.widgets}
             </div>
         );
