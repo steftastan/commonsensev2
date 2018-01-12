@@ -77,6 +77,7 @@ export class Layout extends Component {
                 cache: false,
                 success: function(data) {
                     this.accordion = data;
+                    console.log(this.accordion);
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(this.props.url, status, err.toString());
@@ -116,14 +117,12 @@ export class Layout extends Component {
                 employeeName: this.employeeName,
                 defaultCompany: this.defaultCompany
             });
-
             global.company = this.defaultCompany.name;
 
         }.bind(this));
     }
 
     render() {
-
         return (
             <div className="wrapper wrapper__app App">
                 <Accordion links={this.state.accordion} employeeName={this.state.employeeName}>

@@ -1626,9 +1626,11 @@ th.react-bs-table-expand-cell > div {
 @media only screen and (min-device-width: 767px) {
   .leftnav {
     top: 0;
-    left: -200px;
+    left: 0;
     width: 200px;
     height: 100%; }
+  .leftnav.leftnav--toggle {
+    left: -200px; }
   .leftnav__link,
   .leftnav__subItem {
     color: #FFF;
@@ -1696,8 +1698,10 @@ th.react-bs-table-expand-cell > div {
     font-size: 12px;
     font-weight: 400; }
   .leftnav {
-    left: -225px;
+    left: 0;
     width: 225px; }
+  .leftnav.leftnav--toggle {
+    left: -225px; }
   .leftnav__hamburger.fa-close:hover {
     left: 0; } }
 

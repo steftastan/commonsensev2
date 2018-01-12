@@ -57,12 +57,6 @@ export class Dashboard extends Component {
             <div>
                 <BreadCrumbs breadcrumbs={options.breadcrumbs}/>
                 <section className="wrapper">
-                    <div className="wrapper wrapper__content--whiteBox">
-                        <span className="tag--text">Sort by</span>
-                        <span className="tag tag--inactive">Newest</span>
-                        <span className="tag tag--active">Category</span>
-                        <span className="tag tag--inactive">Alphabetical</span>
-                    </div>
                     <div className="container-fluid wrapper__content--categoryGrid">
                         {dashboardLinks}
                     </div>

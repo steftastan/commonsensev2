@@ -222,9 +222,13 @@
 @include tablet {
     .leftnav {
         top: 0;
-        left: -200px;
+        left: 0;
         width: 200px;
         height: 100%;
+    }
+
+    .leftnav.leftnav--toggle {
+        left: -200px;
     }
 
     .leftnav__link,
@@ -315,12 +319,15 @@
     }
 
     .leftnav {
-        left: -225px;
+        left: 0;
         width: 225px;
+    }
+
+    .leftnav.leftnav--toggle {
+        left: -225px;
     }
 
     .leftnav__hamburger.fa-close:hover {
         left: 0;
     }
-
 }

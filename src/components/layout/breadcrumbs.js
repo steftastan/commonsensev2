@@ -68,10 +68,13 @@ export class BreadCrumbs extends Component {
         this.nav =  document.getElementById(this.navId);
         this.navButton =  document.getElementById(this.navButtonId);
         this.langWrapper = document.getElementById(this.langWrapperId);
-        this.toggleNav();
+
+        if (this.state.open) {
+            this.toggleNav();
+        }
 
         if (this.WhichDevice() === 'mobile') {
-            $("#"+this.langWrapperId).appendTo("#langWrapper--mobile");
+            $("#"+this.langWrapperId).appendTo("#langWrapper--mobile")
         }
 
         /* Add event listeners to the navigation elements */
@@ -186,29 +189,14 @@ export class BreadCrumbs extends Component {
         event.stopPropagation();
     }
 
-    getInitialState() {
-        return {
-            open: false
-        }
-    }
-
     toggleNav(event) {
         if (event) event.stopPropagation();
 
         this.toggleLayout();
 
-        if(this.state.open) {
-            this.setState({
-                open: false
-            });
-
-        } else {
-            this.setState({
-                open: true
-            });
-
-        }
-
+        this.setState({
+            open: !this.state.open
+        });
     }
 
     /**
@@ -222,17 +210,19 @@ export class BreadCrumbs extends Component {
         var openFlag = '--open';
 
         if(this.state.open) {
-            this.nav.classList.add(this.toggleClass);
-            this.navButton.classList.remove('fa-navicon');
-            this.navButton.classList.add('fa-close');
+            this.nav.classList.remove(this.toggleClass);
+            this.navButton.classList.remove('fa-close');
+            this.navButton.classList.add('fa-navicon');
+
             header.classList.add(this.elemsToToggle.header+openFlag);
             breadcrumbs.classList.add(this.elemsToToggle.breadcrumbs+openFlag);
             contentWrapper.classList.add(this.elemsToToggle.contentWrapper+openFlag);
 
         } else {
-            this.nav.classList.remove(this.toggleClass);
-            this.navButton.classList.remove('fa-close');
-            this.navButton.classList.add('fa-navicon');
+            this.nav.classList.add(this.toggleClass);
+            this.navButton.classList.remove('fa-navicon');
+            this.navButton.classList.add('fa-close');
+
             header.classList.remove(this.elemsToToggle.header+openFlag);
             breadcrumbs.classList.remove(this.elemsToToggle.breadcrumbs+openFlag);
             contentWrapper.classList.remove(this.elemsToToggle.contentWrapper+openFlag);
@@ -251,7 +241,7 @@ export class BreadCrumbs extends Component {
         return (
             <section id="breadcrumbs" className="breadcrumbs">
                 <div className="wrapper wrapper__breadcrumbs">
-                    <div id="navButton" className="grid__item leftnav__hamburger fa fa-navicon"></div>
+                    <div id="navButton" className="grid__item leftnav__hamburger fa fa-close"></div>
                     {this.trail}
                     {this.props.children}
                     <div className="grid__item rightnav rightnav--mobileHidden">

@@ -87,6 +87,17 @@ const options = {
         calculateBy: 'totalDue',
         label: 'accountsPayableChart',
         buildTable: true
+    },  {
+        name: 'dataChart',
+        title: 'accountsPayableChart',
+        titleClass: 'dataTable__title',
+        endpoint: 'webservices/AccountsPayableCashDisbursement.json',
+        bootStrapClass: 'col-lg-6 col-sm-12',
+        type: 'bar',
+        aggregateBy: 'type',
+        calculateBy: 'totalDue',
+        label: 'accountsPayableChart',
+        buildTable: true
     }, {
         name: 'dataTable',
         title: 'Testing Table',
@@ -138,7 +149,7 @@ export class AccountsPayable extends Component {
          * @param this {Object} emcompasses the entire scope of this component.
          * @param requestsArray {Array} An array of AJAX requests to be executed on the when()
          * clause of the async function
-         * @param function {Function} Anonymous function The callback function to execute when the JavaScript promise returns a positive result. 
+         * @param function {Function} Anonymous function The callback function to execute when the JavaScript promise returns a positive result.
          **/
         this.async(this, requestsArray, function() {
 

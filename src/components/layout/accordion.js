@@ -21,7 +21,6 @@ export class Accordion extends Component {
         document.addEventListener('keyup', this.filterLinkList, false);
     }
 
-
     componentWillUnmount() {
         document.removeEventListener('keyup', this.filterLinkList, false);
     }
@@ -125,9 +124,10 @@ export class Accordion extends Component {
         if (this.props.links.results && this.props.links.results.length) {
             var commonSenseLinkList = this.props.links.results.map(function(item, key) {
                 link__text = this.Localization(item.name);
+                console.log(item);
                 return (
-                    <Section key={key} id={key}>
-                        <div className="leftnav__section">
+                    <Section key={key}>
+                        <div id={item.code} className="leftnav__section">
                             <span className={"leftnav__child leftnav__icon " + item.icon + " " + item.color}></span>
                             <a className="leftnav__child leftnav__link" href={item.url}>{link__text}</a>
                             <a className="leftnav__child leftnav__arrow fa fa-chevron-right" href="#"></a>
@@ -140,7 +140,7 @@ export class Accordion extends Component {
 
         return (
             <div>
-                <nav id="nav" className="wrapper leftnav">
+                <nav id="nav" className="wrapper leftnav leftnav--toggle">
                     <ul className="leftnav__list">
                         <li className="leftnav__fixed">
                             <div className="leftnav__section--fixed">
@@ -215,6 +215,8 @@ export class Section extends Component {
     };
 
     render() {
+        // console.log('aaaarrggh');
+        // console.log(this.props);
         return (
             <li id={this.props.id}  className={this.state.className} onClick={this.handleClick}>
                 {this.props.children}
