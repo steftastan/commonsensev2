@@ -383,6 +383,20 @@ body {
       vertical-align: top;
       width: 235px; } }
 
+.wrapper__content--login {
+  display: block;
+  margin: 0 10px;
+  border-radius: 5px;
+  padding: 10px;
+  overflow: hidden;
+  background-color: #FFF; }
+  @media only screen and (min-device-width: 767px) {
+    .wrapper__content--login {
+      width: 50%;
+      max-width: 650px;
+      margin: 0 auto;
+      padding: 30px 75px; } }
+
 @font-face {
   font-family: 'icomoon';
   src: url("./../sass/config/icons/icomoon.eot?ddlwcq");
@@ -2356,6 +2370,106 @@ th.react-bs-table-expand-cell > div {
 @media only screen and (min-device-width: 1025px) {
   .dataChart__table {
     margin-top: 0; } }
+
+/* ==========================================================================
+   DATA TABLE
+   ========================================================================== */
+/**
+ * Large tables that contain all the datasets returned per section.
+ */
+/* All devices */
+.login__title {
+  color: #1F57A4;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 25px; }
+
+.login__input {
+  outline: 0;
+  width: 100%;
+  margin: 5px 0;
+  border: 0;
+  border-radius: 15px;
+  padding: 10px;
+  background-color: #E2EBEB;
+  color: #2D74DA;
+  color: #1F57A4;
+  font-size: 12px;
+  font-weight: 400; }
+
+.login__submit {
+  width: 100%;
+  margin: 30px 0 0;
+  border: none;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: #F26322;
+  text-transform: uppercase;
+  color: #FFF;
+  font-size: 14px;
+  font-weight: 700; }
+
+.login__submit--pw {
+  margin: 30px 0; }
+
+.login__input[value=''],
+.login__input::-webkit-input-placeholder,
+.login__input::-webkit-input-placeholder {
+  color: #2D74DA;
+  font-style: italic; }
+
+.login__remember--checkbox {
+  margin: 5px 5px 0 0; }
+
+.login__rememberMe {
+  display: block;
+  margin: 15px 0;
+  text-transform: uppercase;
+  color: #8C9696;
+  font-size: 12px;
+  font-weight: 700; }
+
+.login__pwChange {
+  display: block;
+  font-style: italic;
+  text-align: right;
+  color: #8C9696;
+  font-size: 12px;
+  font-weight: 400; }
+
+.login__pwChange--margin {
+  margin: 15px 0; }
+
+/* Mobile-specific styles */
+/* Tablet-specific styles */
+@media only screen and (min-device-width: 1025px) {
+  .login__title {
+    color: #1F57A4;
+    font-size: 24px;
+    font-weight: 700; }
+  .login__input {
+    outline: 0;
+    width: 100%;
+    margin: 5px 0;
+    border: 0;
+    border-radius: 40px;
+    padding: 20px;
+    background-color: #E2EBEB;
+    color: #2D74DA;
+    color: #1F57A4;
+    font-size: 18px;
+    font-weight: 400; }
+  .login__submit {
+    width: 100%;
+    margin: 20px 0 0;
+    border: none;
+    border-radius: 5px;
+    padding: 30px;
+    background-color: #F26322;
+    text-transform: uppercase;
+    color: #FFF;
+    font-size: 24px;
+    font-weight: 400; } }
 
 /* Helpers */
 /* ==========================================================================

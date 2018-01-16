@@ -224,7 +224,6 @@ export class ToolBox extends Component {
     render() {
         var renderToolBox;
 
-        console.log(this.device);
         if (this.state.toolBox.toolBox) {
             renderToolBox = this.state.toolBox.toolBox.map(function(item, key) {
                 if (item.subLinks && item.subLinks.length) {

@@ -50,6 +50,7 @@ export class BreadCrumbs extends Component {
           breadcrumbs: 'breadcrumbs',
           contentWrapper: 'contentWrapper'
       };
+
     }
 
     componentWillMount() {
@@ -192,7 +193,7 @@ export class BreadCrumbs extends Component {
     toggleNav(event) {
         if (event) event.stopPropagation();
 
-        this.toggleLayout();
+        if (this.nav) this.toggleLayout();
 
         this.setState({
             open: !this.state.open
@@ -211,8 +212,14 @@ export class BreadCrumbs extends Component {
 
         if(this.state.open) {
             this.nav.classList.remove(this.toggleClass);
-            this.navButton.classList.remove('fa-close');
-            this.navButton.classList.add('fa-navicon');
+
+            if (this.WhichDevice() === 'mobile') {
+                this.navButton.classList.remove('fa-close');
+                this.navButton.classList.add('fa-navicon');
+            } else {
+                this.navButton.classList.remove('fa-navicon');
+                this.navButton.classList.add('fa-close');
+            }
 
             header.classList.add(this.elemsToToggle.header+openFlag);
             breadcrumbs.classList.add(this.elemsToToggle.breadcrumbs+openFlag);
@@ -220,8 +227,16 @@ export class BreadCrumbs extends Component {
 
         } else {
             this.nav.classList.add(this.toggleClass);
-            this.navButton.classList.remove('fa-navicon');
-            this.navButton.classList.add('fa-close');
+
+            if (this.WhichDevice() === 'mobile') {
+                this.navButton.classList.remove('fa-navicon');
+                this.navButton.classList.add('fa-close');
+            } else {
+                this.navButton.classList.remove('fa-close');
+                this.navButton.classList.add('fa-navicon');
+            }
+
+
 
             header.classList.remove(this.elemsToToggle.header+openFlag);
             breadcrumbs.classList.remove(this.elemsToToggle.breadcrumbs+openFlag);
@@ -231,8 +246,10 @@ export class BreadCrumbs extends Component {
     }
 
     clickAnywhereToClose(event) {
-        if(this.state.open) {
-            this.toggleNav(event);
+        if (this.WhichDevice() === 'mobile') {
+            if (this.state.open) {
+                this.toggleNav(event);
+            }
         }
     }
 

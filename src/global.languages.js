@@ -5,7 +5,7 @@ global.languages  = {
   "filterNavigation" : ["Filter navigation list", "Filtrer la liste de navigation"],
   "personalPreferences" : ["Personal Preferences", "Preferences Personnels"],
   "financials" : ["Financials", "Comptabilité"],
-  "marketing&Sales" : ["Marketing & Sales", "Mise en marché/Vente"],
+  "marketingAndSales" : ["Marketing & Sales", "Mise en marché/Vente"],
   "customerService" : ["Customer Service", "Service à la client."],
   "businessPlanning" : ["Business Planning", "Planification"],
   "distribution" : ["Distribution", "Distribution"],

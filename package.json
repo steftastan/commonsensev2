@@ -29,6 +29,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "bootstrap-toggle": "^2.2.2",
     "datatables.net": "^1.10.16"
   }
 }

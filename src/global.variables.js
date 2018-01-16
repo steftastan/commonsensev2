@@ -4,6 +4,7 @@
  * For language switching, company switch management, etc.
  */
 
+global.loggedIn = false;
 global.defaultLang = 'fr';
 global.company = '';
 

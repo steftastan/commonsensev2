@@ -87,6 +87,7 @@ export function Async(that, requestsArray, cb) {
      if (dictionary_entry && dictionary_entry.length) {
 
          dictionary_entry = Camelize(dictionary_entry.trim());
+
          phrase = global.languages[dictionary_entry];
 
          if (phrase) {
@@ -106,12 +107,18 @@ export function Async(that, requestsArray, cb) {
  /**
   * Converts any given string to camelCase, in order to match tke
   * key values in the languages dictionary.
+  * It also changes any ampersands to the literal word 'and'
   */
  export function Camelize(str) {
      if (str.indexOf(' ') !== -1) str = str.toLowerCase();
-     return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
+     return str.replace(/&/g, "and").replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
      return index === 0 ? letter.toLowerCase() : letter.toUpperCase();
    }).replace(/\s+/g, '');
+ }
+
+ export function Hyphenize(myStr) {
+    myStr = myStr.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`);
+    if(myStr.charAt(0) === '-') return myStr.replace('-','/');
  }
 
 

@@ -177,3 +177,26 @@
         width: 235px;
     }
 }
+
+.wrapper__content--login {
+    display: block;
+    margin: 0 10px;
+    border-radius: 5px;
+    padding: 10px;
+    overflow: hidden;
+    background-color: $white;
+
+    @include mobile {
+
+    }
+
+    @include tablet {
+        width: 50%;
+        max-width: 650px;
+        margin: 0 auto;
+        padding: 30px 75px;
+    }
+
+    @include desktop {
+    }
+}

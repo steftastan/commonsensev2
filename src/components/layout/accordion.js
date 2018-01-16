@@ -65,54 +65,58 @@ export class Accordion extends Component {
 
     filterLinkList() {
         // Declare variables
-        var input, filter, ul, li, a, i, j;
+        var inputBox, filter, ul, li, a, i, j;
         var result;
         var mainLinkClass = 'leftnav__child';
         var filteredMainLinks = [];
-        input = document.getElementById('searchInput');
-        filter = input.value.toUpperCase();
 
-        ul = document.getElementById("linkList");
-        li = ul.getElementsByTagName('li');
+        inputBox = document.getElementById('searchInput');
 
-        // loop through all list items, and hide those who don't match the search query
-        for (i = 0; i < li.length; i++) {
-            a = li[i].getElementsByTagName("a");
+        if (inputBox) {
+            filter = inputBox.value.toUpperCase();
 
-            if (filter.length) {
-                for (j = 0; j < a.length; j++) {
-                    if (a[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+            ul = document.getElementById("linkList");
+            li = ul.getElementsByTagName('li');
 
-                        // if it finds a result, toggle ON all matching child links
-                        this.toggleElem(a[j]);
-                        filteredMainLinks.push(li[i]);
-                        result = true;
+            // loop through all list items, and hide those who don't match the search query
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a");
 
-                    } else {
-                        // if it doesn't find a result
-                        this.toggleElem(a[j], 'none');
-                        this.toggleElem(li[i], 'none', true, 'remove');
+                if (filter) {
+                    for (j = 0; j < a.length; j++) {
+                        if (a[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+
+                            // if it finds a result, toggle ON all matching child links
+                            this.toggleElem(a[j]);
+                            filteredMainLinks.push(li[i]);
+                            result = true;
+
+                        } else {
+                            // if it doesn't find a result
+                            this.toggleElem(a[j], 'none');
+                            this.toggleElem(li[i], 'none', true, 'remove');
+                        }
                     }
-                }
 
-                if (result) {
+                    if (result) {
 
-                    /* we need to toggle ON the main link groups for every child
-                       link that matches the search criteria, regardless of whether
-                       these links themselves match the search.
+                        /* we need to toggle ON the main link groups for every child
+                           link that matches the search criteria, regardless of whether
+                           these links themselves match the search.
+                         */
+                        this.toggleElem(filteredMainLinks, '', true, 'add');
+                        this.toggleElem(li[i].getElementsByClassName(mainLinkClass), '');
+                    }
+
+                } else {
+
+                    /* if the text box is empty, or the user clears up the text they
+                       input, return the navigation to its default state.
                      */
-                    this.toggleElem(filteredMainLinks, '', true, 'add');
+                    this.toggleElem(a, '');
+                    this.toggleElem(li[i], '', true, 'remove');
                     this.toggleElem(li[i].getElementsByClassName(mainLinkClass), '');
                 }
-
-            } else {
-
-                /* if the text box is empty, or the user clears up the text they
-                   input, return the navigation to its default state.
-                 */
-                this.toggleElem(a, '');
-                this.toggleElem(li[i], '', true, 'remove');
-                this.toggleElem(li[i].getElementsByClassName(mainLinkClass), '');
             }
         }
     }
@@ -121,10 +125,11 @@ export class Accordion extends Component {
         var link__text;
         var welcome__text = this.Localization('welcome');
         var filterNavigation__text = this.Localization('filterNavigation');
+
         if (this.props.links.results && this.props.links.results.length) {
             var commonSenseLinkList = this.props.links.results.map(function(item, key) {
                 link__text = this.Localization(item.name);
-                console.log(item);
+
                 return (
                     <Section key={key}>
                         <div id={item.code} className="leftnav__section">
@@ -138,8 +143,9 @@ export class Accordion extends Component {
             }, this);
         }
 
-        return (
-            <div>
+        /** TODO: using flag loggedIn = false to simulate session and hide this accordion. remove later. */
+        if (global.loggedIn === true) {
+            var accordion = (
                 <nav id="nav" className="wrapper leftnav leftnav--toggle">
                     <ul className="leftnav__list">
                         <li className="leftnav__fixed">
@@ -167,8 +173,14 @@ export class Accordion extends Component {
                     <ul id="linkList" className="leftnav__list">
                         {commonSenseLinkList}
                     </ul>
-
                 </nav>
+            );
+        }
+
+
+        return (
+            <div>
+                {accordion}
             </div>
         );
     }
