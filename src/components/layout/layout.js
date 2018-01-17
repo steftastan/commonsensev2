@@ -6,11 +6,15 @@ import { Header } from './../../components/layout/header.js';
 import { CompanyList } from './../../components/layout/company-list.js';
 import { Accordion } from './../../components/layout/accordion.js';;
 
-const options = {
-    companies: {
-        endpoint: 'webservices/Companies.json' },
+const endpoints = {
+    companies:  {
+        prod: global.paths.prod+'/services/user/portal/companies',
+        dev: '/webservices/Companies.json'
+    },
     accordion: {
-        endpoint: 'webservices/FullMenu.json' },
+        prod: global.paths.prod+'/services/user/portal/menu',
+        dev: '/webservices/FullMenu.json'
+    }
 };
 
 export class Layout extends Component {
@@ -74,7 +78,7 @@ export class Layout extends Component {
               */
             $.when(
                 $.ajax({
-                    url: options.accordion.endpoint,
+                    url: endpoints.accordion.dev,
                     dataType: 'json',
                     cache: false,
                     success: function(data) {
@@ -86,7 +90,7 @@ export class Layout extends Component {
                 }),
 
                 $.ajax({
-                    url: options.companies.endpoint,
+                    url: endpoints.companies.dev,
                     dataType: 'json',
                     cache: false,
                     success: function(data) {
@@ -129,13 +133,13 @@ export class Layout extends Component {
         if (global.loggedIn) {
             return (
                 <div className="wrapper wrapper__app App">
-                <Accordion links={this.state.accordion} employeeName={this.state.employeeName}>
-                <CompanyList defaultCompanyName={this.state.defaultCompany.name} defaultCompanyIcon={this.state.defaultCompany.icon} companies={this.state.companies}/>
-                </Accordion>
-                <section id="contentWrapper" className="wrapper wrapper__content wrapper__content--inner">
-                <Header companies={this.state.companies} defaultCompanyName={this.state.defaultCompany.name} defaultCompanyIcon={this.state.defaultCompany.icon} />
-                {this.props.children}
-                </section>
+                    <Accordion links={this.state.accordion} employeeName={this.state.employeeName}>
+                        <CompanyList defaultCompanyName={this.state.defaultCompany.name} defaultCompanyIcon={this.state.defaultCompany.icon} companies={this.state.companies}/>
+                    </Accordion>
+                    <section id="contentWrapper" className="wrapper wrapper__content wrapper__content--inner">
+                        <Header companies={this.state.companies} defaultCompanyName={this.state.defaultCompany.name} defaultCompanyIcon={this.state.defaultCompany.icon} />
+                        {this.props.children}
+                    </section>
                 </div>
             );
         } else {

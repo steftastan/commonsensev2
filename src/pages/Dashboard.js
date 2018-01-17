@@ -12,6 +12,13 @@ const options = {
     }]
 };
 
+const endpoints = {
+    submenu:  {
+        prod: global.paths.prod+'/services/user/portal/submenu',
+        dev: '/webservices/SubMenu.json'
+    }
+};
+
 export class Dashboard extends Component {
 
     constructor(props) {
@@ -23,7 +30,7 @@ export class Dashboard extends Component {
 
     componentDidMount() {
         $.ajax({
-            url: 'webservices/SubMenu.json',
+            url: endpoints.submenu.dev,
             dataType: 'json',
             cache: false,
             success: function(data) {

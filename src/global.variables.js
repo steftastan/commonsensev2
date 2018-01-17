@@ -4,9 +4,13 @@
  * For language switching, company switch management, etc.
  */
 
-global.loggedIn = false;
+global.loggedIn = true;
 global.defaultLang = 'fr';
 global.company = '';
+global.paths = {
+    prod: '/commonsense/react',
+    dev: ''
+};
 
 global.colors =  [
     'rgb(45, 116, 218)',

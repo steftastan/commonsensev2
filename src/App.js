@@ -1,9 +1,9 @@
 import './global.variables.js';
 import { Hyphenize } from './helper.functions.js';
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { Dashboard } from './pages/Dashboard.js';
-import { AccountsPayable } from './pages/AccountsPayable';
+import { AccountsPayable } from './pages/AccountsPayable.js';
 import { Login } from './pages/Login';
 import { ChangePassword } from './pages/ChangePassword';
 import { Layout } from './components/layout/layout.js';
@@ -16,15 +16,6 @@ import { Layout } from './components/layout/layout.js';
  * https://reacttraining.com/react-router/web/guides/philosophy
  */
 
- /**
-  * List of components/pages we can navigate to in our application.
-  */
-export const data = [
-    Login,
-    ChangePassword,
-    Dashboard,
-    AccountsPayable
-];
 
 export class App extends Component {
     constructor(props) {
@@ -33,21 +24,30 @@ export class App extends Component {
     }
 
     render() {
+        var path ='';
+        var data = [
+            {component: Login, path: 'Login'},
+            {component: ChangePassword, path: 'ChangePassword'},
+            {component: Dashboard, path: 'Dashboard'},
+            {component: AccountsPayable, path: 'AccountsPayable'}
+        ];
 
         /**
          * Loop through data array and print the routes for each page of the application.
          */
-        var path = '';
+
         var components = data.map(function(item, key) {
-            path = Hyphenize(item.name);
+            path = global.paths.dev+Hyphenize(item.path);
             return (
-                <Route path={path} key={key} component={item}/>
+                <Route path={path} key={key} component={item.component}/>
             );
         });
 
         return (
                 <Layout>
-                    {components}
+                    <Switch>
+                        {components}
+                    </Switch>
                 </Layout>
         );
     }

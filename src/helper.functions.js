@@ -25,20 +25,19 @@ var defaultLang = global.defaultLang;
    * @param widget [Object] The widget's config as it appears in the options constant.
    */
  export function RequestWidget(widget) {
+
      var request = {
          request: $.ajax({
              url: widget.endpoint,
              dataType: 'json',
              cache: false,
              error: function(xhr, status, err) {
-                 console.error(status, err.toString());
+                 console.error(xhr, err.toString());
              }}),
          widget: widget
-
     };
     return request;
  }
-
 
  /** https://css-tricks.com/multiple-simultaneous-ajax-requests-one-callback-jquery/
    * Although the guide referenced above says these AJAX queries will
@@ -55,6 +54,13 @@ var defaultLang = global.defaultLang;
    */
 export function Async(that, requestsArray, cb) {
     $.when(requestsArray).then(cb.bind(that));
+}
+
+/** Transforms a object to array format
+@param obj a JSON format object where the results are not listed as an array 
+*/
+export function ObjectToArray(obj) {
+
 }
 
  /**
@@ -118,7 +124,10 @@ export function Async(that, requestsArray, cb) {
 
  export function Hyphenize(myStr) {
     myStr = myStr.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`);
-    if(myStr.charAt(0) === '-') return myStr.replace('-','/');
+    if(myStr.charAt(0) === '-') {
+        myStr = myStr.replace('-','/');
+    }
+    return myStr;
  }
 
 

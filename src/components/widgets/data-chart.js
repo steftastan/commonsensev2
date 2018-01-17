@@ -33,13 +33,17 @@ export class DataChart extends Component {
         var aggregateBy = this.props.options.aggregateBy;
         var calculateBy = this.props.options.calculateBy;
         var output = {};
+        var parseNumber = 0;
 
         if (rawData && aggregateBy && calculateBy) {
             output = rawData.reduce(function(out, curr) {
+
+                parseNumber = (!isNaN(curr.totalDue) ? curr.totalDue : (parseInt(curr.totalDue.replace(/\s/g, "").replace(",", ""))));
+
                 out.dataset[curr[aggregateBy]] = out.dataset[curr[aggregateBy]] || {};
                 out.dataset[curr[aggregateBy]]['dataName'] = curr[aggregateBy] || {};
-                out.dataset[curr[aggregateBy]][calculateBy] = (out.dataset[curr[aggregateBy]][calculateBy] || 0) + (parseInt(curr.totalDue.replace(/\s/g, "").replace(",", "")));
-                out.total['total'] = (out.total['total'] || 0) + (parseInt(curr.totalDue.replace(/\s/g, "").replace(",", "")));
+                out.dataset[curr[aggregateBy]][calculateBy] = (out.dataset[curr[aggregateBy]][calculateBy] || 0) + parseNumber;
+                out.total['total'] = (out.total['total'] || 0) + parseNumber;
                 return out;
             }, {'dataset' : {}, 'total':{}});
         }

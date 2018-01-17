@@ -1,6 +1,6 @@
-
+import './../global.variables.js';
 import React, { Component } from 'react';
-import { RequestWidget, Async } from './../helper.functions.js';
+import { RequestWidget, Async, ObjectToArray } from './../helper.functions.js';
 import { BreadCrumbs } from './../components/layout/breadcrumbs.js';
 import { ToolBox } from './../components/widgets/toolbox.js';
 import { DataTable } from './../components/widgets/datatable.js';
@@ -31,6 +31,29 @@ import { SlidingToolBox } from './../components/widgets/sliding-toolbox.js';
  *
  */
 
+const endpoints = {
+    accountsPayable:  {
+        prod: global.paths.prod+'/services/finance/accounts-payable',
+        dev: '/webservices/AccountsPayable.json'
+    },
+    cashDisbursement: {
+        prod: global.paths.prod+'/services/finance/accounts-payable/cash-disbursement',
+        dev: '/webservices/AccountsPayableCashDisbursement.json'
+    },
+    summary: {
+        prod: global.paths.prod+'/services/finance/accounts-payable/summary',
+        dev: '/webservices/AccountsPayableSummary.json'
+    },
+    toolBox: {
+        prod: null, /* TODO: */
+        dev: '/webservices/AccountsPayableToolbox.json'
+    },
+    sliding: {
+        prod: null, /* TODO: */
+        dev: '/webservices/AccountsPayableSlidingToolBox.json'
+    }
+};
+
 const options = {
     breadcrumbs: [{
         name:'dashboard',
@@ -43,10 +66,10 @@ const options = {
         path:'http://google.com' }],
     widgets : [{
         name: 'toolBox',
-        endpoint: 'webservices/AccountsPayableToolbox.json'
+        endpoint: endpoints.toolBox.dev
     }, {
         name: 'dataTable',
-        endpoint: 'webservices/AccountsPayable.json',
+        endpoint: endpoints.accountsPayable.dev,
         bootStrapClass : 'col-12',
         tableSize: 'dataTable--fullWidth',
         trClassName: 'dataTable__row--content',
@@ -68,7 +91,7 @@ const options = {
         name: 'dataTable',
         title: 'cashDisbursement',
         titleClass: 'dataTable__title',
-        endpoint: 'webservices/AccountsPayableCashDisbursement.json',
+        endpoint: endpoints.accountsPayable.dev,
         bootStrapClass: 'col-lg-6 col-sm-12',
         tableSize: 'dataTable--halfWidth',
         trClassName: 'dataTable__row--content',
@@ -80,20 +103,9 @@ const options = {
         name: 'dataChart',
         title: 'accountsPayableChart',
         titleClass: 'dataTable__title',
-        endpoint: 'webservices/AccountsPayableCashDisbursement.json',
+        endpoint: endpoints.cashDisbursement.dev,
         bootStrapClass: 'col-lg-6 col-sm-12',
         type: 'pie',
-        aggregateBy: 'type',
-        calculateBy: 'totalDue',
-        label: 'accountsPayableChart',
-        buildTable: true
-    },  {
-        name: 'dataChart',
-        title: 'accountsPayableChart',
-        titleClass: 'dataTable__title',
-        endpoint: 'webservices/AccountsPayableCashDisbursement.json',
-        bootStrapClass: 'col-lg-6 col-sm-12',
-        type: 'bar',
         aggregateBy: 'type',
         calculateBy: 'totalDue',
         label: 'accountsPayableChart',
@@ -102,18 +114,19 @@ const options = {
         name: 'dataTable',
         title: 'Testing Table',
         titleClass: 'dataTable__title',
-        endpoint: 'webservices/AccountsPayableCashDisbursement.json',
+        endpoint: endpoints.summary.dev,
         bootStrapClass: 'col-lg-6 col-sm-12',
         tableSize: 'dataTable--halfWidth',
         trClassName: 'dataTable__row--content',
         tableHeaderClass: 'dataTable__row--header',
         options: {},
-        tableHeaders: ['supplier', 'loc', 'currentWeek', 'totalDue', 'currency', 'type'],
-        sortBy: ['supplier', 'loc', 'totalDue']
+        tableHeaders: ['name', 'balance',  'checkPaid', 'address', 'city', 'province', 'currentPeriodAMT', 'lastCheckDate', 'lastInvoiceDate', 'supNum', 'telephone', 'ytdamount'],
+        sortBy: ['name', 'balance', 'city']
     }, {
         name: 'slidingToolbox',
-        endpoint: 'webservices/AccountsPayableSlidingToolBox.json'
-    }]
+        endpoint: endpoints.sliding.dev
+    }
+]
 };
 
 export class AccountsPayable extends Component {
@@ -132,13 +145,14 @@ export class AccountsPayable extends Component {
     componentDidMount() {
         var requestsArray = [];
         var componentArray = [];
+        var arr = [];
         var widgets = [];
 
         /** Extract the data table information from the options array */
         if (options && options.widgets) {
             for (var i = 0; i < options.widgets.length; i++) {
                 // add logic to tell apart components here
-                if (options.widgets[i].name) {
+                if (options.widgets[i].name && options.widgets[i].endpoint) {
                     requestsArray.push(this.requestComponent(options.widgets[i]));
                 }
             }
@@ -156,29 +170,31 @@ export class AccountsPayable extends Component {
                 /* Set the state variables for all the information obtained in the waterfall of AJAX calls */
                 for (var i = 0; i < requestsArray.length; i++) {
 
-                    if (requestsArray[i].widget.name === 'toolBox') {
-                        widgets.push(<BreadCrumbs key={i} breadcrumbs={options.breadcrumbs}><ToolBox key={i} options={requestsArray[i].widget} results={requestsArray[i].request.responseJSON.results} /></BreadCrumbs>);
+                    if (requestsArray[i].request.responseJSON.results instanceof Array) {
+                        arr = requestsArray[i].request.responseJSON.results;
+                    } else {
+                        arr = Object.values(requestsArray[i].request.responseJSON.results);
+
                     }
 
+                    if (requestsArray[i].widget.name === 'toolBox' && requestsArray[i].widget.endpoint) {
+                        widgets.push(<BreadCrumbs key={i} breadcrumbs={options.breadcrumbs}><ToolBox key={i} options={requestsArray[i].widget} results={arr} /></BreadCrumbs>);
+                    }
+
+
                     // if there are widget of datatable type
-                    if (requestsArray[i].widget.name === 'dataTable') {
-                        if (requestsArray[i].request.responseJSON) {
-                            widgets.push(<DataTable key={i} options={requestsArray[i].widget} results={requestsArray[i].request.responseJSON.results} />);
-                        }
+                    if (requestsArray[i].widget.name === 'dataTable' && arr.length) {
+                        widgets.push(<DataTable key={i} options={requestsArray[i].widget} results={arr} />);
                     }
 
                     // if there are widgets of type chart
-                    if (requestsArray[i].widget.name === 'dataChart') {
-                        if (requestsArray[i].request.responseJSON) {
-                            widgets.push(<DataChart key={i} options={requestsArray[i].widget} results={requestsArray[i].request.responseJSON.results} />);
-                        }
+                    if (requestsArray[i].widget.name === 'dataChart' && arr.length) {
+                        widgets.push(<DataChart key={i} options={requestsArray[i].widget} results={arr} />);
                     }
 
                     // if there are widgets of type sliding tool box
-                    if (requestsArray[i].widget.name === 'slidingToolbox') {
-                        if (requestsArray[i].request.responseJSON) {
-                            widgets.push(<SlidingToolBox key={i} options={requestsArray[i].widget} results={requestsArray[i].request.responseJSON.results} />);
-                        }
+                    if (requestsArray[i].widget.name === 'slidingToolbox' && arr.length) {
+                        widgets.push(<SlidingToolBox key={i} options={requestsArray[i].widget} results={arr} />);
                     }
                 }
 
@@ -189,7 +205,7 @@ export class AccountsPayable extends Component {
 
     render() {
         return (
-            <div>
+            <div className="teeeest">
                 {this.state.widgets}
             </div>
         );
