@@ -133,7 +133,7 @@ export class Accordion extends Component {
                 return (
                     <Section key={key}>
                         <div id={item.code} className="leftnav__section">
-                            <span className={"leftnav__child leftnav__icon " + item.icon + " " + item.color}></span>
+                            <span className={"leftnav__child leftnav__icon icon-" + item.icon + "_32 " + item.color}></span>
                             <a className="leftnav__child leftnav__link" href={item.url}>{link__text}</a>
                             <a className="leftnav__child leftnav__arrow fa fa-chevron-right" href="#"></a>
                         </div>

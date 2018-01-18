@@ -48,7 +48,7 @@ export class Dashboard extends Component {
                 return (
                     <a key={key} className="category__item col-xs-12 col-lg-4" href={item.url}>
                         <article className={"category " + item.color}>
-                            <span className={"category__icon--desktop " + item.icon + " " + item.color}></span>
+                            <span className={"category__icon--desktop icon-" + item.icon + "_32 " + item.color}></span>
                             <span className={"category__icon " + item.icon}></span>
                             <div className="category__text">
                                 <span className="category__name">{item.category}</span>

@@ -120,7 +120,7 @@ const options = {
         trClassName: 'dataTable__row--content',
         tableHeaderClass: 'dataTable__row--header',
         options: {},
-        tableHeaders: ['name', 'balance',  'checkPaid', 'address', 'city', 'province', 'currentPeriodAMT', 'lastCheckDate', 'lastInvoiceDate', 'supNum', 'telephone', 'ytdamount'],
+        tableHeaders: ['name', 'type', 'balance',  'checkPaid', 'address', 'city', 'province', 'currentPeriodAMT', 'lastCheckDate', 'lastInvoiceDate', 'supNum', 'telephone', 'ytdamount'],
         sortBy: ['name', 'balance', 'city']
     }, {
         name: 'slidingToolbox',
@@ -174,7 +174,6 @@ export class AccountsPayable extends Component {
                         arr = requestsArray[i].request.responseJSON.results;
                     } else {
                         arr = Object.values(requestsArray[i].request.responseJSON.results);
-
                     }
 
                     if (requestsArray[i].widget.name === 'toolBox' && requestsArray[i].widget.endpoint) {
@@ -200,12 +199,11 @@ export class AccountsPayable extends Component {
 
                 this.setState({widgets: widgets});
         });
-
     }
 
     render() {
         return (
-            <div className="teeeest">
+            <div>
                 {this.state.widgets}
             </div>
         );
