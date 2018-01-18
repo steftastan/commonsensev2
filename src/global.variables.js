@@ -8,7 +8,8 @@ global.loggedIn = true;
 global.defaultLang = 'en_CA';
 global.company = '';
 global.paths = {
-    prod: '/commonsense/react',
+    routing: '/commonsense/react',
+    prod: '/commonsense',
     dev: ''
 };
 
@@ -39,11 +40,11 @@ global.endpoints = {
     },
     toolBox: {
         prod: null, /* TODO: */
-        dev: '/webservices/AccountsPayableToolbox.json'
+        dev: global.paths.routing+'/webservices/AccountsPayableToolbox.json'
     },
     sliding: {
         prod: null, /* TODO: */
-        dev: '/webservices/AccountsPayableSlidingToolBox.json'
+        dev: global.paths.routing+'/webservices/AccountsPayableSlidingToolBox.json'
     },
     language: {
         prod: global.paths.prod+'/services/user/session',

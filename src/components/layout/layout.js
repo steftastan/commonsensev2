@@ -67,7 +67,7 @@ export class Layout extends Component {
               */
             $.when(
                 $.ajax({
-                    url: global.endpoints.accordion.dev,
+                    url: global.endpoints.accordion.prod,
                     dataType: 'json',
                     cache: false,
                     success: function(data) {
@@ -79,7 +79,7 @@ export class Layout extends Component {
                 }),
 
                 $.ajax({
-                    url: global.endpoints.companies.dev,
+                    url: global.endpoints.companies.prod,
                     dataType: 'json',
                     cache: false,
                     success: function(data) {
@@ -121,7 +121,7 @@ export class Layout extends Component {
     renderIfLogged() {
         if (global.loggedIn) {
             return (
-                <div className="wrapper wrapper__app App">
+                <div className="wrapper wrapper__app App logged">
                     <Accordion links={this.state.accordion} employeeName={this.state.employeeName}>
                         <CompanyList defaultCompanyName={this.state.defaultCompany.name} defaultCompanyIcon={this.state.defaultCompany.icon} companies={this.state.companies}/>
                     </Accordion>
@@ -133,7 +133,7 @@ export class Layout extends Component {
             );
         } else {
             return (
-                <div className="wrapper wrapper__app App">
+                <div className="wrapper wrapper__app App not-logged">
                     <section id="contentWrapper" className="wrapper wrapper__content wrapper__content--inner">
                         <Header companies={this.state.companies} defaultCompanyName={this.state.defaultCompany.name} defaultCompanyIcon={this.state.defaultCompany.icon} />
                         {this.props.children}

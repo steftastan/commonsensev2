@@ -24,7 +24,7 @@ export class Dashboard extends Component {
 
     componentDidMount() {
         $.ajax({
-            url: global.endpoints.submenu.dev,
+            url: global.endpoints.submenu.prod,
             dataType: 'json',
             cache: false,
             success: function(data) {
