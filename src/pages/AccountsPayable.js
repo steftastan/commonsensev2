@@ -91,7 +91,7 @@ const options = {
         name: 'dataTable',
         title: 'cashDisbursement',
         titleClass: 'dataTable__title',
-        endpoint: endpoints.accountsPayable.dev,
+        endpoint: endpoints.cashDisbursement.dev,
         bootStrapClass: 'col-lg-6 col-sm-12',
         tableSize: 'dataTable--halfWidth',
         trClassName: 'dataTable__row--content',
@@ -133,7 +133,7 @@ export class AccountsPayable extends Component {
 
     constructor(props) {
       super(props);
-      this.requestComponent = RequestWidget;
+      this.requestWidget = RequestWidget;
       this.async = Async;
       this.toolBox = [];
       this.widgets = [];
@@ -146,14 +146,14 @@ export class AccountsPayable extends Component {
         var requestsArray = [];
         var componentArray = [];
         var arr = [];
-        var widgets = [];
+
 
         /** Extract the data table information from the options array */
         if (options && options.widgets) {
             for (var i = 0; i < options.widgets.length; i++) {
                 // add logic to tell apart components here
                 if (options.widgets[i].name && options.widgets[i].endpoint) {
-                    requestsArray.push(this.requestComponent(options.widgets[i]));
+                    requestsArray.push(this.requestWidget(options.widgets[i]));
                 }
             }
         }
@@ -165,40 +165,39 @@ export class AccountsPayable extends Component {
          * clause of the async function
          * @param function {Function} Anonymous function The callback function to execute when the JavaScript promise returns a positive result.
          **/
-        this.async(this, requestsArray, function() {
 
+        this.async(this, requestsArray, function(data) {
+            var widgets = [];
+
+            if (data) {
                 /* Set the state variables for all the information obtained in the waterfall of AJAX calls */
-                for (var i = 0; i < requestsArray.length; i++) {
+                for (var i = 0; i < data.widgets.length; i++) {
 
-                    if (requestsArray[i].request.responseJSON.results instanceof Array) {
-                        arr = requestsArray[i].request.responseJSON.results;
-                    } else {
-                        arr = Object.values(requestsArray[i].request.responseJSON.results);
+                    if (data.widgets[i].widget.name === 'toolBox' && data.widgets[i].arr.length) {
+                        widgets.push(<BreadCrumbs index={i} key={i} breadcrumbs={options.breadcrumbs}><ToolBox key={i} options={data.widgets[i].widget} results={data.widgets[i].arr} /></BreadCrumbs>);
                     }
-
-                    if (requestsArray[i].widget.name === 'toolBox' && requestsArray[i].widget.endpoint) {
-                        widgets.push(<BreadCrumbs key={i} breadcrumbs={options.breadcrumbs}><ToolBox key={i} options={requestsArray[i].widget} results={arr} /></BreadCrumbs>);
-                    }
-
 
                     // if there are widget of datatable type
-                    if (requestsArray[i].widget.name === 'dataTable' && arr.length) {
-                        widgets.push(<DataTable key={i} options={requestsArray[i].widget} results={arr} />);
+                    if (data.widgets[i].widget.name === 'dataTable' && data.widgets[i].arr.length) {
+                        widgets.push(<DataTable index={i} key={i} options={data.widgets[i].widget} results={data.widgets[i].arr} />);
                     }
 
                     // if there are widgets of type chart
-                    if (requestsArray[i].widget.name === 'dataChart' && arr.length) {
-                        widgets.push(<DataChart key={i} options={requestsArray[i].widget} results={arr} />);
+                    if (data.widgets[i].widget.name === 'dataChart' && data.widgets[i].arr.length) {
+                        widgets.push(<DataChart index={i} key={i} options={requestsArray[i].widget} results={data.widgets[i].arr} />);
                     }
 
                     // if there are widgets of type sliding tool box
-                    if (requestsArray[i].widget.name === 'slidingToolbox' && arr.length) {
-                        widgets.push(<SlidingToolBox key={i} options={requestsArray[i].widget} results={arr} />);
+                    if (data.widgets[i].widget.name === 'slidingToolbox' && data.widgets[i].arr.length) {
+                        widgets.push(<SlidingToolBox index={i} key={i} options={requestsArray[i].widget} results={data.widgets[i].arr} />);
                     }
                 }
+            }
 
-                this.setState({widgets: widgets});
+            data.that.setState({widgets: widgets});
+
         });
+
     }
 
     render() {

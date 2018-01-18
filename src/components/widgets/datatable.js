@@ -109,7 +109,7 @@ export class DataTable extends Component {
             <div key={this.props.index} className={this.props.options.bootStrapClass}>
                 <div className="wrapper wrapper__content--whiteBox">
                     <h2 className={this.props.options.titleClass}>{title__text}</h2>
-                    <BootstrapTable data={tableData} options={options} striped hover pagination containerClass={this.props.options.tableSize} tableHeaderClass={this.props.options.tableHeaderClass} trClassName={this.props.options.trClassName}>
+                    <BootstrapTable key={this.props.index} data={tableData} options={options} striped hover pagination containerClass={this.props.options.tableSize} tableHeaderClass={this.props.options.tableHeaderClass} trClassName={this.props.options.trClassName}>
                         {tableHeaders}
                     </BootstrapTable>
                     <div className="dataTable__pagination"></div>

@@ -25,16 +25,25 @@ var defaultLang = global.defaultLang;
    * @param widget [Object] The widget's config as it appears in the options constant.
    */
  export function RequestWidget(widget) {
-
+     var arr = [];
      var request = {
          request: $.ajax({
              url: widget.endpoint,
              dataType: 'json',
              cache: false,
+             success: function(data, status) {
+                 /**
+                  * Successful operation, but we don't do anything here
+                  * rather, we pass an array of ajax calls to our async function.
+                  * where we can manipulate the data after they have all executed.
+                  */
+             },
              error: function(xhr, status, err) {
                  console.error(xhr, err.toString());
-             }}),
-         widget: widget
+             },
+
+        }),
+        widget: widget || {}
     };
     return request;
  }
@@ -53,14 +62,33 @@ var defaultLang = global.defaultLang;
    *
    */
 export function Async(that, requestsArray, cb) {
-    $.when(requestsArray).then(cb.bind(that));
+    console.log('startin');
+    var widgets = [];
+    var data = {};
+    $.when(requestsArray).then(function() {
+        for (var i = 0; i < requestsArray.length; i++) {
+            if (requestsArray[i].request.responseJSON.results instanceof Array) {
+                widgets.push({widget: requestsArray[i].widget, arr: requestsArray[i].request.responseJSON.results});
+            } else {
+                widgets.push({widget: requestsArray[i].widget, arr: Object.values(requestsArray[i].request.responseJSON.results)});
+            }
+        }
+        data = {that: that, widgets: widgets};
+        return data;
+    }).done(function(data) {
+        cb(data);
+    });
 }
 
 /** Transforms a object to array format
-@param obj a JSON format object where the results are not listed as an array 
+@param obj a JSON format object where the results are not listed as an array
 */
 export function ObjectToArray(obj) {
-
+    // if (obj instanceof Array) {
+    //     return obj;
+    // } else {
+    //     return Object.values(obj);
+    // }
 }
 
  /**
