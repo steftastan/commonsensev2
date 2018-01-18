@@ -97,8 +97,8 @@ const options = {
         trClassName: 'dataTable__row--content',
         tableHeaderClass: 'dataTable__row--header',
         options: {},
-        tableHeaders: ['supplier', 'loc', 'currentWeek', 'totalDue', 'currency', 'type'],
-        sortBy: ['supplier', 'loc', 'totalDue']
+        tableHeaders: ['location', 'currentWeek', 'totalDue', 'currency', 'type'],
+        sortBy: ['location', 'totalDue']
     }, {
         name: 'dataChart',
         title: 'accountsPayableChart',

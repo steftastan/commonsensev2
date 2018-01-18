@@ -35,6 +35,7 @@ global.languages  = {
   "lastCheque" : ["Last Cheque", "Dernier Chèque"],
   "currentPer" : ["Current Per.", "Per Courant"],
   "loc" : ["LOC", ""],
+  "location" : ["Location", "Location"],
   "currentWeek" : ["Current Week", "Semaine Courant"],
   "totalDue" : ["Total Due", "Total Dû"],
   "currency" : ["Currency", "Devise"],
