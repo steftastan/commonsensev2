@@ -138,6 +138,11 @@ export class BreadCrumbs extends Component {
     }
 
     saveSessionLang(selected) {
+        /**
+         * TODO: Check to see if this plugin would be helpful for this operation
+         * https://ciphertrick.com/demo/jquerysession/
+         */
+
         global.defaultLang = selected;
         $.ajax({
             url: global.endpoints.language.prod,
@@ -152,8 +157,9 @@ export class BreadCrumbs extends Component {
             error: function(xhr, status, err) {
                 console.error(xhr, err.toString());
             },
-
        });
+       
+       window.location.reload();
     }
 
     buildCrumbs() {

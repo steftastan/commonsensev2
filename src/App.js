@@ -16,7 +16,6 @@ import { Layout } from './components/layout/layout.js';
  * https://reacttraining.com/react-router/web/guides/philosophy
  */
 
-
 export class App extends Component {
     constructor(props) {
       super(props);
@@ -44,11 +43,11 @@ export class App extends Component {
         });
 
         return (
-                <Layout>
-                    <Switch>
-                        {components}
-                    </Switch>
-                </Layout>
+            <Layout>
+                <Switch>
+                    {components}
+                </Switch>
+            </Layout>
         );
     }
 };
