@@ -5,11 +5,50 @@
  */
 
 global.loggedIn = true;
-global.defaultLang = 'fr';
+global.defaultLang = 'en_CA';
 global.company = '';
 global.paths = {
     prod: '/commonsense/react',
     dev: ''
+};
+
+global.endpoints = {
+    companies:  {
+        prod: global.paths.prod+'/services/user/portal/companies',
+        dev: '/webservices/Companies.json'
+    },
+    accordion: {
+        prod: global.paths.prod+'/services/user/portal/menu',
+        dev: '/webservices/FullMenu.json'
+    },
+    submenu:  {
+        prod: global.paths.prod+'/services/user/portal/submenu',
+        dev: '/webservices/SubMenu.json'
+    },
+    accountsPayable:  {
+        prod: global.paths.prod+'/services/finance/accounts-payable',
+        dev: '/webservices/AccountsPayable.json'
+    },
+    cashDisbursement: {
+        prod: global.paths.prod+'/services/finance/accounts-payable/cash-disbursement',
+        dev: '/webservices/AccountsPayableCashDisbursement.json'
+    },
+    summary: {
+        prod: global.paths.prod+'/services/finance/accounts-payable/summary',
+        dev: '/webservices/AccountsPayableSummary.json'
+    },
+    toolBox: {
+        prod: null, /* TODO: */
+        dev: '/webservices/AccountsPayableToolbox.json'
+    },
+    sliding: {
+        prod: null, /* TODO: */
+        dev: '/webservices/AccountsPayableSlidingToolBox.json'
+    },
+    language: {
+        prod: global.paths.prod+'/services/user/session',
+        dev: null /* No need for session storage on dev */
+    }
 };
 
 global.colors =  [

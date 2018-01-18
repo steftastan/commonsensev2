@@ -31,29 +31,6 @@ import { SlidingToolBox } from './../components/widgets/sliding-toolbox.js';
  *
  */
 
-const endpoints = {
-    accountsPayable:  {
-        prod: global.paths.prod+'/services/finance/accounts-payable',
-        dev: '/webservices/AccountsPayable.json'
-    },
-    cashDisbursement: {
-        prod: global.paths.prod+'/services/finance/accounts-payable/cash-disbursement',
-        dev: '/webservices/AccountsPayableCashDisbursement.json'
-    },
-    summary: {
-        prod: global.paths.prod+'/services/finance/accounts-payable/summary',
-        dev: '/webservices/AccountsPayableSummary.json'
-    },
-    toolBox: {
-        prod: null, /* TODO: */
-        dev: '/webservices/AccountsPayableToolbox.json'
-    },
-    sliding: {
-        prod: null, /* TODO: */
-        dev: '/webservices/AccountsPayableSlidingToolBox.json'
-    }
-};
-
 const options = {
     breadcrumbs: [{
         name:'dashboard',
@@ -66,10 +43,10 @@ const options = {
         path:'http://google.com' }],
     widgets : [{
         name: 'toolBox',
-        endpoint: endpoints.toolBox.dev
+        endpoint: global.endpoints.toolBox.dev
     }, {
         name: 'dataTable',
-        endpoint: endpoints.accountsPayable.dev,
+        endpoint: global.endpoints.accountsPayable.dev,
         bootStrapClass : 'col-12',
         tableSize: 'dataTable--fullWidth',
         trClassName: 'dataTable__row--content',
@@ -91,7 +68,7 @@ const options = {
         name: 'dataTable',
         title: 'cashDisbursement',
         titleClass: 'dataTable__title',
-        endpoint: endpoints.cashDisbursement.dev,
+        endpoint: global.endpoints.cashDisbursement.dev,
         bootStrapClass: 'col-lg-6 col-sm-12',
         tableSize: 'dataTable--halfWidth',
         trClassName: 'dataTable__row--content',
@@ -103,7 +80,7 @@ const options = {
         name: 'dataChart',
         title: 'accountsPayableChart',
         titleClass: 'dataTable__title',
-        endpoint: endpoints.cashDisbursement.dev,
+        endpoint: global.endpoints.cashDisbursement.dev,
         bootStrapClass: 'col-lg-6 col-sm-12',
         type: 'pie',
         aggregateBy: 'type',
@@ -114,7 +91,7 @@ const options = {
         name: 'dataTable',
         title: 'Testing Table',
         titleClass: 'dataTable__title',
-        endpoint: endpoints.summary.dev,
+        endpoint: global.endpoints.summary.dev,
         bootStrapClass: 'col-lg-6 col-sm-12',
         tableSize: 'dataTable--halfWidth',
         trClassName: 'dataTable__row--content',
@@ -124,7 +101,7 @@ const options = {
         sortBy: ['name', 'balance', 'city']
     }, {
         name: 'slidingToolbox',
-        endpoint: endpoints.sliding.dev
+        endpoint: global.endpoints.sliding.dev
     }
 ]
 };

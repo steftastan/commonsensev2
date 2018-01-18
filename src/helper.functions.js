@@ -125,9 +125,9 @@ export function ObjectToArray(obj) {
          phrase = global.languages[dictionary_entry];
 
          if (phrase) {
-             if (defaultLang === 'en') {
+             if (defaultLang === 'en_CA') {
                  translation = phrase[0];
-             } else if (defaultLang === 'fr') {
+             } else if (defaultLang === 'fr_CA') {
                  translation = phrase[1];
              }
          } else {

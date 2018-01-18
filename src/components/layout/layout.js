@@ -6,17 +6,6 @@ import { Header } from './../../components/layout/header.js';
 import { CompanyList } from './../../components/layout/company-list.js';
 import { Accordion } from './../../components/layout/accordion.js';;
 
-const endpoints = {
-    companies:  {
-        prod: global.paths.prod+'/services/user/portal/companies',
-        dev: '/webservices/Companies.json'
-    },
-    accordion: {
-        prod: global.paths.prod+'/services/user/portal/menu',
-        dev: '/webservices/FullMenu.json'
-    }
-};
-
 export class Layout extends Component {
 
     constructor(props) {
@@ -78,7 +67,7 @@ export class Layout extends Component {
               */
             $.when(
                 $.ajax({
-                    url: endpoints.accordion.dev,
+                    url: global.endpoints.accordion.dev,
                     dataType: 'json',
                     cache: false,
                     success: function(data) {
@@ -90,7 +79,7 @@ export class Layout extends Component {
                 }),
 
                 $.ajax({
-                    url: endpoints.companies.dev,
+                    url: global.endpoints.companies.dev,
                     dataType: 'json',
                     cache: false,
                     success: function(data) {

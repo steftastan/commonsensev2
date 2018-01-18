@@ -25,11 +25,12 @@ export class BreadCrumbs extends Component {
       this.openLang = this.openLang.bind(this);
       this.toggleLang = this.toggleLang.bind(this);
       this.buildCrumbs = this.buildCrumbs.bind(this);
+      this.saveSessionLang = this.saveSessionLang.bind(this);
       this.state = {
           open: true,
           selectedLang: global.defaultLang
       };
-      this.defaultLang = 'en';
+      this.defaultLang = global.defaultLang;
       this.openClassName = '';
       this.navButtonId = 'navButton';
       this.navButton = {};
@@ -116,7 +117,8 @@ export class BreadCrumbs extends Component {
                         selectedLang: languages[i].id
                     });
 
-                    global.defaultLang = this.state.selectedLang;
+                    /* Language is saved to session here */
+                    this.saveSessionLang(this.state.selectedLang);
 
                     clickedLang = document.getElementById(languages[i].id);
                     if (!clickedLang.classList.contains(this.selectedClass)) {
@@ -133,6 +135,25 @@ export class BreadCrumbs extends Component {
                 }
             }
         }
+    }
+
+    saveSessionLang(selected) {
+        global.defaultLang = selected;
+        $.ajax({
+            url: global.endpoints.language.prod,
+            method: 'PUT',
+            cache: false,
+            headers: {"X-HTTP-Method-Override": "PUT"},
+            data: 'language='+global.defaultLang,
+            success: function(data, status) {
+                console.log(data);
+
+            },
+            error: function(xhr, status, err) {
+                console.error(xhr, err.toString());
+            },
+
+       });
     }
 
     buildCrumbs() {
@@ -167,6 +188,7 @@ export class BreadCrumbs extends Component {
      * @param defaultLang - a boolean flag that allows the default language to be highlighted after a page load.
      */
     toggleLang(lang, active, defaultLang) {
+
         if (defaultLang) {
             lang.classList.add(this.selectedClass);
         }
@@ -264,8 +286,8 @@ export class BreadCrumbs extends Component {
                     <div className="grid__item rightnav rightnav--mobileHidden">
                         <div id="langWrapper" className="wrapper rightnav__langSelect">
                             <div className="rightnav__container">
-                            <span id="en" className="rightnav__lang">EN</span>
-                            <span id="fr" className="rightnav__lang">FR</span>
+                            <span id="en_CA" className="rightnav__lang">EN</span>
+                            <span id="fr_CA" className="rightnav__lang">FR</span>
                             </div>
                         </div>
                         <Link className="rightnav__logout" to="/logout">{logout__text}</Link>
