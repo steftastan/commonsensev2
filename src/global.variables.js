@@ -5,7 +5,6 @@
  */
 
 global.loggedIn = true;
-global.defaultLang = 'en_CA';
 global.company = '';
 global.paths = {
     routing: '/commonsense/react',
@@ -39,12 +38,12 @@ global.endpoints = {
         dev: '/webservices/AccountsPayableSummary.json'
     },
     toolBox: {
-        prod: null, /* TODO: */
-        dev: global.paths.routing+'/webservices/AccountsPayableToolbox.json'
+        prod: global.paths.routing+'/webservices/AccountsPayableToolbox.json', /* TODO: Create data endpoint for this */
+        dev: '/webservices/AccountsPayableToolbox.json'
     },
     sliding: {
-        prod: null, /* TODO: */
-        dev: global.paths.routing+'/webservices/AccountsPayableSlidingToolBox.json'
+        prod: global.paths.routing+'/webservices/AccountsPayableSlidingToolBox.json', /* TODO: Create data endpoint for this  */
+        dev: '/webservices/AccountsPayableSlidingToolBox.json'
     },
     language: {
         prod: global.paths.prod+'/services/user/session',

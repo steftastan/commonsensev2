@@ -2,7 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import './global.languages.js';
 import './global.variables.js';
-var defaultLang = global.defaultLang;
+ /*TODO lang*/
 
 /**
  * HELPER FUNCTION LIBRARY.
@@ -20,6 +20,25 @@ var defaultLang = global.defaultLang;
  *
  */
 
+export function GetLanguage() {
+    var defaultLanguage = 'en_CA';
+
+    $.ajax({
+        url: global.endpoints.language.prod,
+        dataType: 'json',
+        cache: false,
+        success: function(data) {
+            if (data && data.language) {
+                defaultLanguage = data.language;
+            }
+        },
+        error: function(xhr, status, err) {
+            console.error(xhr, status, err.toString());
+        }
+    });
+
+    return defaultLanguage;
+}
  /**
    * Allows to build an AJAX call object depending on the parameters passed.
    * @param widget [Object] The widget's config as it appears in the options constant.
@@ -62,7 +81,6 @@ var defaultLang = global.defaultLang;
    *
    */
 export function Async(that, requestsArray, cb) {
-    console.log('startin');
     var widgets = [];
     var data = {};
     $.when(requestsArray).then(function() {
@@ -117,6 +135,7 @@ export function ObjectToArray(obj) {
  export function Localization(dictionary_entry) {
      var translation;
      var phrase;
+     var defaultLang = GetLanguage();
 
      if (dictionary_entry && dictionary_entry.length) {
 

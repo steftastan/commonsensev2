@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './../../global.variables.js';
 import $ from 'jquery';
 import { Link } from 'react-router-dom';
-import { Localization, WhichDevice } from './../../helper.functions.js';
+import { Localization, WhichDevice, GetLanguage } from './../../helper.functions.js';
 
 /**
  * BREADCRUMBS LAYOUT COMPONENT
@@ -18,6 +18,7 @@ export class BreadCrumbs extends Component {
       super(props);
       this.Localization = Localization;
       this.WhichDevice = WhichDevice;
+      this.GetLanguage = GetLanguage;
       this.toggleNav = this.toggleNav.bind(this);
       this.toggleLayout = this.toggleLayout.bind(this);
       this.clickAnywhereToClose = this.clickAnywhereToClose.bind(this);
@@ -28,9 +29,9 @@ export class BreadCrumbs extends Component {
       this.saveSessionLang = this.saveSessionLang.bind(this);
       this.state = {
           open: true,
-          selectedLang: global.defaultLang
+          selectedLang: this.GetLanguage()
       };
-      this.defaultLang = global.defaultLang;
+      this.defaultLang = this.GetLanguage;
       this.openClassName = '';
       this.navButtonId = 'navButton';
       this.navButton = {};
@@ -51,7 +52,6 @@ export class BreadCrumbs extends Component {
           breadcrumbs: 'breadcrumbs',
           contentWrapper: 'contentWrapper'
       };
-
     }
 
     componentWillMount() {
@@ -88,7 +88,7 @@ export class BreadCrumbs extends Component {
 
         /* Grab the default language from the global variable and set it.  */
         if (this.langWrapper) {
-            selectedLang = document.getElementById(global.defaultLang);
+            selectedLang = document.getElementById(this.GetLanguage());
             this.toggleLang(selectedLang, true, true);
         }
     }
@@ -143,13 +143,13 @@ export class BreadCrumbs extends Component {
          * https://ciphertrick.com/demo/jquerysession/
          */
 
-        global.defaultLang = selected;
+
         $.ajax({
-            url: global.endpoints.language.prod,
+            url: global.endpoints.language.dev,
             method: 'PUT',
             cache: false,
             headers: {"X-HTTP-Method-Override": "PUT"},
-            data: 'language='+global.defaultLang,
+            data: 'language='+selected,
             success: function(data, status) {
                 console.log(data);
 
@@ -158,7 +158,7 @@ export class BreadCrumbs extends Component {
                 console.error(xhr, err.toString());
             },
        });
-       
+
        window.location.reload();
     }
 

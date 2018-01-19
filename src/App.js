@@ -36,7 +36,8 @@ export class App extends Component {
          */
 
         var components = data.map(function(item, key) {
-            path = global.paths.routing+Hyphenize(item.path);
+            path = global.paths.dev+Hyphenize(item.path);
+            console.log(path);
             return (
                 <Route path={path} key={key} component={item.component}/>
             );

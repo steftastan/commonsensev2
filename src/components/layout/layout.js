@@ -67,7 +67,7 @@ export class Layout extends Component {
               */
             $.when(
                 $.ajax({
-                    url: global.endpoints.accordion.prod,
+                    url: global.endpoints.accordion.dev,
                     dataType: 'json',
                     cache: false,
                     success: function(data) {
@@ -79,7 +79,7 @@ export class Layout extends Component {
                 }),
 
                 $.ajax({
-                    url: global.endpoints.companies.prod,
+                    url: global.endpoints.companies.dev,
                     dataType: 'json',
                     cache: false,
                     success: function(data) {

@@ -227,8 +227,6 @@ export class Section extends Component {
     };
 
     render() {
-        // console.log('aaaarrggh');
-        // console.log(this.props);
         return (
             <li id={this.props.id}  className={this.state.className} onClick={this.handleClick}>
                 {this.props.children}
