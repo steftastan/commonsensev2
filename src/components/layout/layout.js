@@ -119,14 +119,16 @@ export class Layout extends Component {
     }
 
     renderIfLogged() {
+        var logoPath = "";
         if (global.loggedIn) {
+            logoPath = global.paths.dev+'images/logo/'+this.state.defaultCompany.name+'/logo.gif';
             return (
                 <div className="wrapper wrapper__app App logged">
                     <Accordion links={this.state.accordion} employeeName={this.state.employeeName}>
-                        <CompanyList defaultCompanyName={this.state.defaultCompany.name} defaultCompanyIcon={this.state.defaultCompany.icon} companies={this.state.companies}/>
+                        <CompanyList defaultCompanyName={this.state.defaultCompany.name} defaultCompanyIcon={logoPath} companies={this.state.companies}/>
                     </Accordion>
                     <section id="contentWrapper" className="wrapper wrapper__content wrapper__content--inner">
-                        <Header companies={this.state.companies} defaultCompanyName={this.state.defaultCompany.name} defaultCompanyIcon={this.state.defaultCompany.icon} />
+                        <Header companies={this.state.companies} defaultCompanyName={this.state.defaultCompany.name} defaultCompanyIcon={logoPath} />
                         {this.props.children}
                     </section>
                 </div>

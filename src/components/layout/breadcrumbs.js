@@ -117,8 +117,9 @@ export class BreadCrumbs extends Component {
                         selectedLang: languages[i].id
                     });
 
+                    console.log(languages[i].id);
                     /* Language is saved to session here */
-                    this.saveSessionLang(this.state.selectedLang);
+                    this.saveSessionLang(languages[i].id);
 
                     clickedLang = document.getElementById(languages[i].id);
                     if (!clickedLang.classList.contains(this.selectedClass)) {
@@ -143,23 +144,20 @@ export class BreadCrumbs extends Component {
          * https://ciphertrick.com/demo/jquerysession/
          */
 
-
         $.ajax({
             url: global.endpoints.language.dev,
             method: 'PUT',
             cache: false,
-            headers: {"X-HTTP-Method-Override": "PUT"},
-            data: 'language='+selected,
+            data: {language: selected, filename: 'SERVICE', user: 'ETASTAN'},
             success: function(data, status) {
                 console.log(data);
-
             },
             error: function(xhr, status, err) {
                 console.error(xhr, err.toString());
             },
        });
 
-       window.location.reload();
+       //window.location.reload();
     }
 
     buildCrumbs() {
@@ -282,7 +280,7 @@ export class BreadCrumbs extends Component {
     }
 
     render() {
-        var logout__text =  this.Localization('logout');
+        var logout__text = this.Localization('logout');
         return (
             <section id="breadcrumbs" className="breadcrumbs">
                 <div className="wrapper wrapper__breadcrumbs">

@@ -20,12 +20,14 @@
 .header__logo {
   color:  $white;
   height: 100%;
+  font-size: 40px;
 }
 
 .header__logo--img {
     width: 100%;
     height: auto;
-    font-size: 70px;
+    vertical-align: middle;
+
 }
 
 
@@ -65,7 +67,7 @@
     .header__logo {
       width: 65px;
       height: 100%;
-      font-size: 70px;
+      font-size: 55px;
     }
 
     .header__mainTitle {

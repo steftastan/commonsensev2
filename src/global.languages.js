@@ -20,6 +20,7 @@ global.languages  = {
   "cashDisbursement" : ["Cash Disbursement", "Dépenses en Espèces"],
   "id" : ["ID", "ID"],
   "supplier" : ["Supplier", "Fournisseur"],
+  "supNum" : ["Supplier Num", "Fournisseur"],
   "address" : ["Address", "Addresse"],
   "city" : ["City", "Ville"],
   "name" : ["Name", "Nom"],

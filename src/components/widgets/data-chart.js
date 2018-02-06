@@ -38,7 +38,7 @@ export class DataChart extends Component {
         if (rawData && aggregateBy && calculateBy) {
             output = rawData.reduce(function(out, curr) {
 
-                parseNumber = (!isNaN(curr.totalDue) ? Math.floor(curr.totalDue) : Math.floor(parseInt(curr.totalDue.replace(/\s/g, "").replace(",", ""))));
+                parseNumber = (!isNaN(curr[calculateBy]) ? Math.floor(curr[calculateBy]) : Math.floor(parseInt(curr[calculateBy].replace(/\s/g, "").replace(",", ""))));
 
                 out.dataset[curr[aggregateBy]] = out.dataset[curr[aggregateBy]] || {};
                 out.dataset[curr[aggregateBy]]['dataName'] = curr[aggregateBy] || {};

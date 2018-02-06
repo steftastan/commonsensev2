@@ -23,19 +23,20 @@ import './global.variables.js';
 export function GetLanguage() {
     var defaultLanguage = 'en_CA';
 
-    $.ajax({
-        url: global.endpoints.language.prod,
-        dataType: 'json',
-        cache: false,
-        success: function(data) {
-            if (data && data.language) {
-                defaultLanguage = data.language;
-            }
-        },
-        error: function(xhr, status, err) {
-            console.error(xhr, status, err.toString());
-        }
-    });
+    // $.ajax({
+    //     url: global.endpoints.language.dev,
+    //     dataType: 'json',
+    //     cache: false,
+    //     success: function(data) {
+    //         console.log(data);
+    //         if (data && data.language) {
+    //             defaultLanguage = data.language;
+    //         }
+    //     },
+    //     error: function(xhr, status, err) {
+    //         console.error(xhr, status, err.toString());
+    //     }
+    // });
 
     return defaultLanguage;
 }
@@ -96,17 +97,6 @@ export function Async(that, requestsArray, cb) {
     }).done(function(data) {
         cb(data);
     });
-}
-
-/** Transforms a object to array format
-@param obj a JSON format object where the results are not listed as an array
-*/
-export function ObjectToArray(obj) {
-    // if (obj instanceof Array) {
-    //     return obj;
-    // } else {
-    //     return Object.values(obj);
-    // }
 }
 
  /**
