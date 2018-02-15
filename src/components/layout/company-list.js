@@ -12,8 +12,8 @@ export class CompanyList extends Component {
         var logoPath = "";
         if (this.props.companies.results && this.props.companies.results.length) {
             this.companyList = this.props.companies.results.map(function(item, key) {
-                if (item.name !== "") {
-                  logoPath = global.paths.dev+'images/logo/'+item.name+'/logo.gif';
+                if (item.name) {
+                  logoPath = global.paths.prod+'images/logo/'+item.name+'/logo.gif';
                   return (<option key={key} value={item.name} icon={logoPath} id={key}>{item.name}</option>);
                 }
             }, this);

@@ -20,6 +20,19 @@ import './global.variables.js';
  *
  */
 
+
+export function HandleWebFacingLink(link) {
+	 window.open("/commonsense/servlet/" + link + "&turnCacheOff=" + (new Date()).getTime(), "appa", "scrollbars=yes,status=1,resizable=yes,menubar=0,screenX=0,screenY=0,left=0,top=0,width=" + (window.availWidth-10) + ",height=" + (window.availHeight-50));
+};
+
+export function HandlePopupLink(link, windowName, width, height) {
+	 window.open("/commonsense/servlet/" + link, windowName, "height=" + height + ",width=" + width + ",resizeable=yes,menubar=0,toolbar=0,location=0,directories=0,scrollbars=1,status=0");
+};
+
+export function HandleRegularLink(link) {
+	 window.location.href = "/commonsense/servlet/" + link;
+};
+
 export function GetLanguage() {
     var defaultLanguage = 'en_CA';
 
@@ -151,13 +164,28 @@ export function Async(that, requestsArray, cb) {
   * Converts any given string to camelCase, in order to match tke
   * key values in the languages dictionary.
   * It also changes any ampersands to the literal word 'and'
+  * Removes parentheses, hyphens, slashes and dots. If any more characters
+  * need to be removed, add them inside the [brackets] in the second regular expression.
+	* @param firstLetterUpper {boolean} Flag that specifies if the first letter should be kept uppercase or not.
+	* If not specified, always lowercase the letter.
   */
- export function Camelize(str) {
-     if (str.indexOf(' ') !== -1) str = str.toLowerCase();
-     return str.replace(/&/g, "and").replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
-     return index === 0 ? letter.toLowerCase() : letter.toUpperCase();
-   }).replace(/\s+/g, '');
+ export function Camelize(str, firstLetterUpper) {
+	if (str.indexOf(' ') !== -1) str = str.toLowerCase();
+    return str.replace(/&/g, "and")
+		.replace(/[()-/.]/g, "")
+		.replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
+			if (index === 0 && !firstLetterUpper) {
+				return letter.toLowerCase();
+			} else {
+				return letter.toUpperCase();
+			}
+		}).replace(/\s+/g, '');
  }
+
+ /**
+  * Replaces spaces and special characters to hyphens
+	* Use this to build URLs when necessary
+  */
 
  export function Hyphenize(myStr) {
     myStr = myStr.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`);
@@ -166,7 +194,6 @@ export function Async(that, requestsArray, cb) {
     }
     return myStr;
  }
-
 
 /**
  * This function checks the device the site is currently being viewed on.
@@ -198,6 +225,13 @@ export function WhichDevice() {
  */
 export function SetCompany(company) {
     global.company = company;
+}
+
+/**
+ * Sets the default company in the global variable per result received from Web Service.
+ */
+export function GetCompany() {
+    return global.company;
 }
 
 

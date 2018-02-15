@@ -34,13 +34,14 @@ import { SlidingToolBox } from './../components/widgets/sliding-toolbox.js';
 const options = {
     breadcrumbs: [{
         name:'dashboard',
-        path:'http://google.com'
+        code:'7'
     }, {
         name:'financials',
-        path:'http://google.com'
+        code:'5'
     },{
         name:'Accounts Payable',
-        path:'http://google.com' }],
+        path:'#'
+    }],
     widgets : [{
         name: 'toolBox',
         endpoint: global.endpoints.toolBox.dev

@@ -5,10 +5,11 @@
  */
 
 global.loggedIn = true;
-global.company = '';
+global.company = 'BOW';
 global.paths = {
-    routing: '/commonsense/react',
+    prodRouting: '/commonsense/react',
     prod: '/commonsense',
+    prodLinks: '/commonsense/servlet',
     dev: ''
 };
 
@@ -38,11 +39,11 @@ global.endpoints = {
         dev: '/webservices/AccountsPayableSummary.json'
     },
     toolBox: {
-        prod: global.paths.routing+'/webservices/AccountsPayableToolbox.json', /* TODO: Create data endpoint for this */
+        prod: global.paths.prodRouting+'/webservices/AccountsPayableToolbox.json', /* TODO: Create data endpoint for this */
         dev: '/webservices/AccountsPayableToolbox.json'
     },
     sliding: {
-        prod: global.paths.routing+'/webservices/AccountsPayableSlidingToolBox.json', /* TODO: Create data endpoint for this  */
+        prod: global.paths.prodRouting+'/webservices/AccountsPayableSlidingToolBox.json', /* TODO: Create data endpoint for this  */
         dev: '/webservices/AccountsPayableSlidingToolBox.json'
     },
     language: {

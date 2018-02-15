@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './../../global.variables.js';
-import { Localization, SetCompany } from './../../helper.functions.js';
+import { Localization, GetCompany, SetCompany, HandleWebFacingLink, HandlePopupLink, HandleRegularLink} from './../../helper.functions.js';
 
 /**
  * ACCORDION/LEFT NAV COMPONENT
@@ -13,6 +13,7 @@ export class Accordion extends Component {
     constructor(props) {
       super(props);
       this.Localization = Localization;
+      this.GetCompany = GetCompany;
       this.filterLinkList = this.filterLinkList.bind(this);
       this.toggleElem = this.toggleElem.bind(this);
     }
@@ -122,6 +123,7 @@ export class Accordion extends Component {
     }
 
     render() {
+        var link = "";
         var link__text;
         var welcome__text = this.Localization('welcome');
         var filterNavigation__text = this.Localization('filterNavigation');
@@ -129,12 +131,13 @@ export class Accordion extends Component {
         if (this.props.links.results && this.props.links.results.length) {
             var commonSenseLinkList = this.props.links.results.map(function(item, key) {
                 link__text = this.Localization(item.name);
+                link = global.paths.prodLinks+"/com.sia.commonsense.shared.LoginServlet?code="+item.code+"&company="+this.GetCompany();
 
                 return (
                     <Section key={key}>
                         <div id={item.code} className="leftnav__section">
                             <span className={"leftnav__child leftnav__icon icon-" + item.icon + "_32 " + item.color}></span>
-                            <a className="leftnav__child leftnav__link" href={item.url}>{link__text}</a>
+                            <a className="leftnav__child leftnav__link" href={link}>{link__text}</a>
                             <a className="leftnav__child leftnav__arrow fa fa-chevron-right" href="#"></a>
                         </div>
                         <SubLinkList sublinks={item.sublinks} />
@@ -191,6 +194,9 @@ export class Section extends Component {
     constructor() {
       super();
       this.handleClick = this.handleClick.bind(this);
+      this.handleWebFacingLink = HandleWebFacingLink;
+      this.handlePopupLink = HandlePopupLink;
+      this.handleRegularLink = HandleRegularLink;
       this.state = {
           open: false,
           childClass: "leftnav__child",
@@ -211,6 +217,13 @@ export class Section extends Component {
 
         event.preventDefault();
 
+        console.log(event.target);
+
+        if (event.target.hasAttribute("href")) {
+          console.log(event.target.href);
+          window.location = event.target.href;
+        }
+
         if(this.state.open) {
             this.setState({
                 open: false,
@@ -224,7 +237,7 @@ export class Section extends Component {
                 className: 'leftnav__item leftnav__item--open'
             });
         }
-    };
+    }
 
     render() {
         return (

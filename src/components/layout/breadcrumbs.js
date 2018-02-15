@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './../../global.variables.js';
 import $ from 'jquery';
 import { Link } from 'react-router-dom';
-import { Localization, WhichDevice, GetLanguage } from './../../helper.functions.js';
+import { Localization, WhichDevice, GetLanguage, GetCompany } from './../../helper.functions.js';
 
 /**
  * BREADCRUMBS LAYOUT COMPONENT
@@ -19,6 +19,7 @@ export class BreadCrumbs extends Component {
       this.Localization = Localization;
       this.WhichDevice = WhichDevice;
       this.GetLanguage = GetLanguage;
+      this.GetCompany = GetCompany;
       this.toggleNav = this.toggleNav.bind(this);
       this.toggleLayout = this.toggleLayout.bind(this);
       this.clickAnywhereToClose = this.clickAnywhereToClose.bind(this);
@@ -162,16 +163,24 @@ export class BreadCrumbs extends Component {
 
     buildCrumbs() {
             var caret;
+            var link;
             var link__text;
             var trail = this.props.breadcrumbs.map(function(item, key) {
                 link__text = this.Localization(item.name);
+
+                if (item.hasOwnProperty('code')) {
+                    link = global.paths.devLinks+'/com.sia.commonsense.shared.LoginServlet?code='+item.code+'&company='+this.GetCompany();
+                } else {
+                    link = '#';
+                }
+
                 if (key > 0 && key < this.props.breadcrumbs.length) {
                     caret = 'fa fa-caret-right';
                 } else {
                     caret = '';
                 }
                 return (
-                    <Link key={key} className={"breadcrumbs__link"} to={item.path}>
+                    <Link key={key} className={"breadcrumbs__link"} to={link}>
                         <span className={"breadcrumbs__caret " + caret}></span>
                         {link__text}
                     </Link>
@@ -280,7 +289,7 @@ export class BreadCrumbs extends Component {
     }
 
     render() {
-        var logout__text = this.Localization('logout');
+        var logout__text =  this.Localization('logout');
         return (
             <section id="breadcrumbs" className="breadcrumbs">
                 <div className="wrapper wrapper__breadcrumbs">
