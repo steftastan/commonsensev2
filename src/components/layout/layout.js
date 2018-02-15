@@ -43,10 +43,6 @@ export class Layout extends Component {
 
     }
 
-    componentDidMount() {
-        console.log(this.props);
-
-    }
 
     render() {
       var logoPath = "";

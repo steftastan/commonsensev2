@@ -2,12 +2,15 @@ import $ from 'jquery';
 import './global.variables.js';
 import { Hyphenize, Camelize, GetCompany, SetCompany } from './helper.functions.js';
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Router } from 'react-router-dom';
+import createBrowserHistory from 'history/createBrowserHistory';
 import { Dashboard } from './pages/Dashboard.js';
-import { AccountsPayable } from './pages/AccountsPayable.js';
 import { Login } from './pages/Login';
 import { ChangePassword } from './pages/ChangePassword';
 import { Layout } from './components/layout/layout.js';
+
+
+
 
 
 /** APP.JS
@@ -26,6 +29,7 @@ export class App extends Component {
       this.SetCompany = SetCompany;
       this.GetCompany = GetCompany;
       this.Camelize = Camelize;
+
       this.updateCompany = this.updateCompany.bind(this);
       this.renderIfLogged = this.renderIfLogged.bind(this);
       this.companies = {};
@@ -135,69 +139,61 @@ export class App extends Component {
 
     }
 
+
     renderIfLogged() {
         var logoPath = "";
         var link;
         var subLinks;
+        var childRoutes = [];
+        var testDataLinks = {};
         var dataLinks = [];
-        var testDataLinks = [];
-
         var comp;
         var path = '';
-        var data = [
-            {component: Login, path: 'Login'},
-            {component: ChangePassword, path: 'ChangePassword'},
-            {component: Dashboard, path: 'dashboard'}
-        ];
+        // dataLinks = [
+        //     {component: "Login", path: 'login'},
+        //     {component: "ChangePassword", path: 'change-password'},
+        //     {component: "Dashboard", path: 'dashboard'}
+        // ];
 
-
-        /** TODO: Call full menu WS here, load the data array with actual
-          links so that in the React version of Common Sense, the links will look like:
-          http://localhost:9080/commonsense/react/com.sia.commonsense.ap.servlets.APServlet
-          Plus I also need to pass the Company in the URL, and the code for the category.
-          By passing data via URL I could also dynamically generate the breadcrumbs for each sub page.
-        **/
 
         if (this.accordion.results && this.accordion.results.length) {
             this.accordion.results.map(function(item, key) {
                 link = global.paths.prodLinks+"/com.sia.commonsense.shared.LoginServlet?code="+item.code+"&company="+this.GetCompany();
 
-                dataLinks.push({component: comp, path: link});
-
                 if (item.sublinks && item.sublinks.length) {
                     subLinks = item.sublinks.map(function(item, key) {
                         if (item && item.name &&  item.name === "Accounts Payable") {
-
-                            comp = this.Camelize(item.name, true);
-                            console.log(comp);
-                            console.log(React.Component[comp]);
-                            var Compo = Component[comp];
-
-
-
-                            testDataLinks.push({component:Compo, path: item.url});
-                            //dataLinks.push({component: this.Camelize(item.name, true), path: item.url});
+                            dataLinks.push({component: this.Camelize(item.name, true), path: item.url});
                         }
                     }, this);
                 }
             }, this);
         }
 
-        console.log(testDataLinks);
+        // console.log(dataLinks);
 
-        /**
-         * Loop through data array and print the routes for each page of the application.
-         */
 
-        // data.map(page => <Route path={page.link} component={page.property} key={page.id}/>);
-
-        var components = data.map(function(item, key) {
+        var components = dataLinks.map(function(item, key) {
             path = '/'+item.path;
-
             return (
-                <Route path={path} key={key} component={item.component} />
+
+                <div>
+
+                <Router path={path} key={key} getComponent={(path, cb)=> {
+                    require.ensure([], (require) => {
+                        cb(null, require('./pages/'+item.component+'.js'));
+                    })
+                }} />
+
+                <Route path={path} key={key} component={Dashboard} />
+
+                </div>
+
+
             );
         });
+
+        console.log(components);
 
         if (global.loggedIn) {
             return (
