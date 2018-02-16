@@ -10,7 +10,7 @@ global.paths = {
     prodRouting: '/commonsense/react',
     prod: '/commonsense',
     prodLinks: '/commonsense/servlet',
-    dev: ''
+    dev: '/'
 };
 
 global.endpoints = {

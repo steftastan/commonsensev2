@@ -43,11 +43,10 @@ export class Layout extends Component {
 
     }
 
-
     render() {
       var logoPath = "";
       if (global.loggedIn) {
-          logoPath = global.paths.dev+'/images/logo/'+this.props.defaultCompany.name+'/logo.gif';
+          logoPath = global.paths.dev+'images/logo/'+this.props.defaultCompany.name+'/logo.gif';
       }
 
       return (

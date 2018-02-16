@@ -1,14 +1,10 @@
 import $ from 'jquery';
 import './global.variables.js';
-import { Hyphenize, Camelize, GetCompany, SetCompany } from './helper.functions.js';
+import { Camelize, GetCompany, SetCompany } from './helper.functions.js';
 import React, { Component } from 'react';
-import { Switch, Route, Router } from 'react-router-dom';
-import createBrowserHistory from 'history/createBrowserHistory';
-import { Dashboard } from './pages/Dashboard.js';
-import { Login } from './pages/Login';
-import { ChangePassword } from './pages/ChangePassword';
+import { Switch, Route } from 'react-router-dom';
 import { Layout } from './components/layout/layout.js';
-
+import { Dashboard } from './pages/Dashboard.js';
 
 
 
@@ -19,6 +15,9 @@ import { Layout } from './components/layout/layout.js';
  *
  * Link to React Router 4 documentation:
  * https://reacttraining.com/react-router/web/guides/philosophy
+ *
+ * Pattern for dynamically loading react components.
+ * https://gist.github.com/davidgljay/5d7a29c5add8b360b93db838235e80a8
  */
 
 export class App extends Component {
@@ -29,9 +28,7 @@ export class App extends Component {
       this.SetCompany = SetCompany;
       this.GetCompany = GetCompany;
       this.Camelize = Camelize;
-
       this.updateCompany = this.updateCompany.bind(this);
-      this.renderIfLogged = this.renderIfLogged.bind(this);
       this.companies = {};
       this.accordion = {};
       this.defaultCompany = {};
@@ -134,84 +131,45 @@ export class App extends Component {
                 icon: $('#companyList option:selected').attr('icon')
             }
         });
-
         global.company = e.target.value;
-
     }
 
+    render() {
 
-    renderIfLogged() {
-        var logoPath = "";
         var link;
-        var subLinks;
-        var childRoutes = [];
-        var testDataLinks = {};
-        var dataLinks = [];
-        var comp;
-        var path = '';
-        // dataLinks = [
-        //     {component: "Login", path: 'login'},
-        //     {component: "ChangePassword", path: 'change-password'},
-        //     {component: "Dashboard", path: 'dashboard'}
-        // ];
-
+        var comps = {};
+        var routesToComponents = [];
 
         if (this.accordion.results && this.accordion.results.length) {
+
             this.accordion.results.map(function(item, key) {
                 link = global.paths.prodLinks+"/com.sia.commonsense.shared.LoginServlet?code="+item.code+"&company="+this.GetCompany();
 
                 if (item.sublinks && item.sublinks.length) {
-                    subLinks = item.sublinks.map(function(item, key) {
-                        if (item && item.name &&  item.name === "Accounts Payable") {
-                            dataLinks.push({component: this.Camelize(item.name, true), path: item.url});
+                    item.sublinks.map((comp) => {
+                        try {
+                            let Component = require('./pages/'+this.Camelize(comp.name, true)+'.js').default;
+                            routesToComponents.push(<Route path={global.paths.dev+comp.url} key={key} exact component={Component} />);
                         }
-                    }, this);
+                        catch(err) {
+                            /* Render dashboard in case of pages that don't exist yet
+                             * TODO: Uncomment the console message to see a list components that still need to be created.
+                             * console.log('Failed to create a route for the Component: '+this.Camelize(comp.name, true)+". Rendering Dashboard instead.");
+                             */
+                            routesToComponents.push(<Route path={global.paths.dev+comp.url} key={key} exact component={Dashboard} />);
+                        }
+                  	});
                 }
             }, this);
         }
 
-        // console.log(dataLinks);
-
-
-        var components = dataLinks.map(function(item, key) {
-            path = '/'+item.path;
-            return (
-
-                <div>
-
-                <Router path={path} key={key} getComponent={(path, cb)=> {
-                    require.ensure([], (require) => {
-                        cb(null, require('./pages/'+item.component+'.js'));
-                    })
-                }} />
-
-                <Route path={path} key={key} component={Dashboard} />
-
-                </div>
-
-
-            );
-        });
-
-        console.log(components);
-
-        if (global.loggedIn) {
-            return (
-              <Layout accordion={this.accordion} companies={this.companies} employeeName={this.employeeName} defaultCompany={this.defaultCompany}>
-                  <Switch>
-                      {components}
-                  </Switch>
-              </Layout>
-            );
-        } else {
-            return (
-                <div>You are not logged in.</div>
-            );
-        }
-    }
-
-    render() {
-        return this.renderIfLogged();
+        return (
+          <Layout accordion={this.accordion} companies={this.companies} employeeName={this.employeeName} defaultCompany={this.defaultCompany}>
+                <Switch>
+                    {routesToComponents }
+                </Switch>
+          </Layout>
+        );
     }
 };
 

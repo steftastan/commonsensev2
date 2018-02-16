@@ -169,7 +169,7 @@ export class BreadCrumbs extends Component {
                 link__text = this.Localization(item.name);
 
                 if (item.hasOwnProperty('code')) {
-                    link = global.paths.devLinks+'/com.sia.commonsense.shared.LoginServlet?code='+item.code+'&company='+this.GetCompany();
+                    link = global.paths.dev+'com.sia.commonsense.shared.LoginServlet?code='+item.code+'&company='+this.GetCompany();
                 } else {
                     link = '#';
                 }

@@ -1,11 +1,11 @@
-import './../../global.variables.js';
+import './../global.variables.js';
 import React, { Component } from 'react';
-import { RequestWidget, Async, ObjectToArray } from './../../helper.functions.js';
-import { BreadCrumbs } from './../../components/layout/breadcrumbs.js';
-import { ToolBox } from './../../components/widgets/toolbox.js';
-import { DataTable } from './../../components/widgets/datatable.js';
-import { DataChart } from './../../components/widgets/data-chart.js';
-import { SlidingToolBox } from './../../components/widgets/sliding-toolbox.js';
+import { RequestWidget, Async, ObjectToArray } from './../helper.functions.js';
+import { BreadCrumbs } from './../components/layout/breadcrumbs.js';
+import { ToolBox } from './../components/widgets/toolbox.js';
+import { DataTable } from './../components/widgets/datatable.js';
+import { DataChart } from './../components/widgets/data-chart.js';
+import { SlidingToolBox } from './../components/widgets/sliding-toolbox.js';
 
 /** ACCOUNTS PAYABLE
  *
@@ -179,6 +179,9 @@ export class AccountsPayable extends Component {
     }
 
     render() {
+        console.log('hiii');
+
+        console.log(this.state);
         return (
             <div>
                 {this.state.widgets}

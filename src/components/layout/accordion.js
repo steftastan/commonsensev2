@@ -137,7 +137,7 @@ export class Accordion extends Component {
                     <Section key={key}>
                         <div id={item.code} className="leftnav__section">
                             <span className={"leftnav__child leftnav__icon icon-" + item.icon + "_32 " + item.color}></span>
-                            <a className="leftnav__child leftnav__link" href={link}>{link__text}</a>
+                            <a className="leftnav__child leftnav__link" href={global.paths.dev+link}>{link__text}</a>
                             <a className="leftnav__child leftnav__arrow fa fa-chevron-right" href="#"></a>
                         </div>
                         <SubLinkList sublinks={item.sublinks} />
@@ -257,7 +257,7 @@ export class SubLinkList extends Component {
         if (this.props.sublinks && this.props.sublinks && this.props.sublinks.length) {
             subLinks = this.props.sublinks.map(function(item, key) {
                 return (
-                    <a key={key} className="leftnav__subItem" href={item.url}>{item.name}</a>
+                    <a key={key} className="leftnav__subItem" href={global.paths.dev+item.url}>{item.name}</a>
                 );
             }, this);
         }
