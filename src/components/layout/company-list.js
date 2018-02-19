@@ -9,18 +9,18 @@ export class CompanyList extends Component {
     }
 
     render() {
-        var logoPath = "";
-        if (this.props.companies.results && this.props.companies.results.length) {
+        var defaultCompanyName = (this.props.defaultCompany && this.props.defaultCompany.name ? this.props.defaultCompany.name : '');
+        var selected;
+        if (this.props.companies && this.props.companies.results) {
             this.companyList = this.props.companies.results.map(function(item, key) {
                 if (item.name) {
-                  logoPath = global.paths.prod+'images/logo/'+item.name+'/logo.gif';
-                  return (<option key={key} value={item.name} icon={logoPath} id={key}>{item.name}</option>);
+                    return (<option key={key} value={item.name} id={key}>{item.name}</option>);
                 }
             }, this);
         }
 
         return(
-            <select id="companyList" value={this.props.defaultCompanyName} className="form__item form__selectCompany">
+            <select id="companyList" defaultValue={defaultCompanyName} className="form__item form__selectCompany">
                 {this.companyList}
             </select>
         );

@@ -123,12 +123,13 @@ export class Accordion extends Component {
     }
 
     render() {
+        console.log('2 accordion.js');
         var link = "";
         var link__text;
         var welcome__text = this.Localization('welcome');
         var filterNavigation__text = this.Localization('filterNavigation');
 
-        if (this.props.links.results && this.props.links.results.length) {
+        if (this.props.links && this.props.links.results) {
             var commonSenseLinkList = this.props.links.results.map(function(item, key) {
                 link__text = this.Localization(item.name);
                 link = global.paths.prodLinks+"/com.sia.commonsense.shared.LoginServlet?code="+item.code+"&company="+this.GetCompany();
@@ -217,10 +218,7 @@ export class Section extends Component {
 
         event.preventDefault();
 
-        console.log(event.target);
-
         if (event.target.hasAttribute("href")) {
-          console.log(event.target.href);
           window.location = event.target.href;
         }
 

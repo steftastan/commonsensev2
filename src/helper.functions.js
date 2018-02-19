@@ -35,46 +35,31 @@ export function HandleRegularLink(link) {
 
 export function GetLanguage() {
     var defaultLanguage = 'en_CA';
-
-    // $.ajax({
-    //     url: global.endpoints.language.dev,
-    //     dataType: 'json',
-    //     cache: false,
-    //     success: function(data) {
-    //         console.log(data);
-    //         if (data && data.language) {
-    //             defaultLanguage = data.language;
-    //         }
-    //     },
-    //     error: function(xhr, status, err) {
-    //         console.error(xhr, status, err.toString());
-    //     }
-    // });
-
     return defaultLanguage;
 }
  /**
    * Allows to build an AJAX call object depending on the parameters passed.
    * @param widget [Object] The widget's config as it appears in the options constant.
    */
+
+
  export function RequestWidget(widget) {
      var arr = [];
      var request = {
-         request: $.ajax({
-             url: widget.endpoint,
-             dataType: 'json',
-             cache: false,
-             success: function(data, status) {
+         	request: $.ajax({
+            url: widget.endpoint,
+            dataType: 'json',
+            cache: false,
+            success: function(data, status) {
                  /**
                   * Successful operation, but we don't do anything here
                   * rather, we pass an array of ajax calls to our async function.
                   * where we can manipulate the data after they have all executed.
                   */
-             },
-             error: function(xhr, status, err) {
-                 console.error(xhr, err.toString());
-             },
-
+            },
+            error: function(xhr, status, err) {
+                console.error(xhr, err.toString());
+            },
         }),
         widget: widget || {}
     };
@@ -97,13 +82,20 @@ export function GetLanguage() {
 export function Async(that, requestsArray, cb) {
     var widgets = [];
     var data = {};
+	//console.log(requestsArray);
     $.when(requestsArray).then(function() {
         for (var i = 0; i < requestsArray.length; i++) {
-            if (requestsArray[i].request.responseJSON.results instanceof Array) {
-                widgets.push({widget: requestsArray[i].widget, arr: requestsArray[i].request.responseJSON.results});
-            } else {
-                widgets.push({widget: requestsArray[i].widget, arr: Object.values(requestsArray[i].request.responseJSON.results)});
-            }
+
+			console.log(requestsArray[i].request);
+
+			if (requestsArray[i].request.status == 200 && requestsArray[i].request.readyState === 4) {
+				if (requestsArray[i].request.responseJSON.results instanceof Array) {
+					widgets.push({widget: requestsArray[i].widget, arr: requestsArray[i].request.responseJSON.results});
+				} else {
+					widgets.push({widget: requestsArray[i].widget, arr: Object.values(requestsArray[i].request.responseJSON.results)});
+				}
+			}
+
         }
         data = {that: that, widgets: widgets};
         return data;

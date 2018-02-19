@@ -1944,7 +1944,7 @@ th.react-bs-table-expand-cell > div {
 .dataTable__row--header {
   text-transform: uppercase;
   background-color: #18273C;
-  color: #F26322;
+  color: #FFF;
   font-size: 12px;
   font-weight: 700; }
 
@@ -2341,7 +2341,7 @@ th.react-bs-table-expand-cell > div {
 .dataChart__heading {
   background-color: #18273C;
   text-transform: uppercase;
-  color: #F26322;
+  color: #FFF;
   font-size: 12px;
   font-weight: 700; }
 

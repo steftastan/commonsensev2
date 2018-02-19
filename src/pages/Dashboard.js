@@ -54,6 +54,8 @@ export class Dashboard extends Component {
             });
         }
 
+        console.log('3 dashboard.js');
+
         return (
             <div>
                 <BreadCrumbs breadcrumbs={options.breadcrumbs}/>

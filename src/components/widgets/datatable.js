@@ -81,9 +81,12 @@ export class DataTable extends Component {
 
                     /* Append "All" option as another default item in pagination count. */
                     if (key === 'sizePerPageList') {
-                        options.sizePerPageList.push({
-                            text: this.Localization('all'), value: tableData.length
-                        });
+                        /* TODO: This is currently causing a bug where everytime a React Component is updated,
+                         * it triggers the code below, so a new "All" option will be added even if it already exists.
+                         */
+                        // options.sizePerPageList['All'] = .push({
+                        //     text: this.Localization('all'), value: tableData.length
+                        // });
                     }
                 }
             }

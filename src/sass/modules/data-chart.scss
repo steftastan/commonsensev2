@@ -18,7 +18,7 @@
 .dataChart__heading {
     background-color: $blue-90;
     text-transform: uppercase;
-    @include font($font-size-content, $font-weight-bold, $peach-40);
+    @include font($font-size-content, $font-weight-bold, $white);
 
 }
 
