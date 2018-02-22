@@ -30,7 +30,9 @@ export class BreadCrumbs extends Component {
       this.saveSessionLang = this.saveSessionLang.bind(this);
       this.state = {
           open: true,
-          selectedLang: this.GetLanguage()
+          selectedLang: this.GetLanguage(),
+          breadcrumbs: [],
+          trail: []
       };
       this.defaultLang = this.GetLanguage;
       this.openClassName = '';
@@ -47,7 +49,7 @@ export class BreadCrumbs extends Component {
       this.openClass = 'rightnav__lang--open';
       this.selectedClass = 'rightnav__lang--selected';
       this.toolBox;
-      this.trail = '';
+      this.trail = [];
       this.elemsToToggle = {
           header: 'header',
           breadcrumbs: 'breadcrumbs',
@@ -55,14 +57,22 @@ export class BreadCrumbs extends Component {
       };
     }
 
-    componentWillMount() {
-        this.buildCrumbs();
-    }
-
     componentDidUpdate(prevProps, prevState) {
         this.langWrapper.addEventListener('mouseenter', this.openLang, false);
         this.langWrapper.addEventListener('mouseleave', this.openLang, false);
         this.langWrapper.addEventListener('mousedown', this.openLang, false);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        /** Verify the breadcrumb props received from the parent Component
+         * and assign them to this Component's state
+         */
+        if (nextProps.breadcrumbs && nextProps.breadcrumbs.length) {
+            this.setState({
+                breadcrumbs : nextProps.breadcrumbs,
+                trail: this.buildCrumbs(nextProps.breadcrumbs)
+            });
+        }
     }
 
     componentDidMount() {
@@ -118,7 +128,6 @@ export class BreadCrumbs extends Component {
                         selectedLang: languages[i].id
                     });
 
-                    console.log(languages[i].id);
                     /* Language is saved to session here */
                     this.saveSessionLang(languages[i].id);
 
@@ -161,37 +170,31 @@ export class BreadCrumbs extends Component {
        //window.location.reload();
     }
 
-    buildCrumbs() {
-            var caret;
-            var link;
-            var link__text;
-            var trail = this.props.breadcrumbs.map(function(item, key) {
-                link__text = this.Localization(item.name);
 
-                if (item.hasOwnProperty('code')) {
-                    link = global.paths.dev+'com.sia.commonsense.shared.LoginServlet?code='+item.code+'&company='+this.GetCompany();
-                } else {
-                    link = '#';
-                }
+    buildCrumbs(crumbs) {
+        var trail = [];
+        var caret = '';
+        var link;
+        var link__text;
 
-                if (key > 0 && key < this.props.breadcrumbs.length) {
-                    caret = 'fa fa-caret-right';
-                } else {
-                    caret = '';
-                }
-                return (
-                    <Link key={key} className={"breadcrumbs__link"} to={link}>
-                        <span className={"breadcrumbs__caret " + caret}></span>
-                        {link__text}
-                    </Link>
-                );
-            }, this);
+        return trail = crumbs.map(function(item, key) {
+            link__text = this.Localization(item.name);
 
-            this.trail = (
-                <div className="grid__item breadcrumbs__trail">
-                    {trail}
-                </div>
+            if (item.hasOwnProperty('code')) {
+                link = global.paths.dev+global.paths.devCategoryLinks+item.code;
+            } else {
+                link = '#';
+            }
+
+            if (key > 0 && key < crumbs.length) caret = 'fa fa-caret-right';
+
+            return (
+                <Link key={key} className={"breadcrumbs__link"} to={link}>
+                    <span className={"breadcrumbs__caret " + caret}></span>
+                    {link__text}
+                </Link>
             );
+        }, this);
     }
 
     /**
@@ -290,11 +293,14 @@ export class BreadCrumbs extends Component {
 
     render() {
         var logout__text =  this.Localization('logout');
+
         return (
             <section id="breadcrumbs" className="breadcrumbs">
                 <div className="wrapper wrapper__breadcrumbs">
                     <div id="navButton" className="grid__item leftnav__hamburger fa fa-close"></div>
-                    {this.trail}
+                    <div className="grid__item breadcrumbs__trail">
+                        {this.state.trail}
+                    </div>
                     {this.props.children}
                     <div className="grid__item rightnav rightnav--mobileHidden">
                         <div id="langWrapper" className="wrapper rightnav__langSelect">

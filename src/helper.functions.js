@@ -22,15 +22,18 @@ import './global.variables.js';
 
 
 export function HandleWebFacingLink(link) {
-	 window.open("/commonsense/servlet/" + link + "&turnCacheOff=" + (new Date()).getTime(), "appa", "scrollbars=yes,status=1,resizable=yes,menubar=0,screenX=0,screenY=0,left=0,top=0,width=" + (window.availWidth-10) + ",height=" + (window.availHeight-50));
+	 window.open(global.paths.servletLink + link + "&turnCacheOff=" + (new Date()).getTime(), "appa", "scrollbars=yes,status=1,resizable=yes,menubar=0,screenX=0,screenY=0,left=0,top=0,width=" + (window.availWidth-10) + ",height=" + (window.availHeight-50));
 };
 
 export function HandlePopupLink(link, windowName, width, height) {
-	 window.open("/commonsense/servlet/" + link, windowName, "height=" + height + ",width=" + width + ",resizeable=yes,menubar=0,toolbar=0,location=0,directories=0,scrollbars=1,status=0");
+	windowName = windowName ? windowName : '';
+	width = width ? width : 1024;
+	height = height ? height : 768;
+	 window.open(global.paths.servletLink + link, windowName, "height=" + height + ",width=" + width + ",resizeable=yes,menubar=0,toolbar=0,location=0,directories=0,scrollbars=1,status=0");
 };
 
 export function HandleRegularLink(link) {
-	 window.location.href = "/commonsense/servlet/" + link;
+	window.location.href = global.paths.servletLink + link;
 };
 
 export function GetLanguage() {
@@ -45,6 +48,8 @@ export function GetLanguage() {
 
  export function RequestWidget(widget) {
      var arr = [];
+	 //var request = $.getJSON(widget.endpoint);
+	 var d = $.Deferred();
      var request = {
          	request: $.ajax({
             url: widget.endpoint,
@@ -56,14 +61,16 @@ export function GetLanguage() {
                   * rather, we pass an array of ajax calls to our async function.
                   * where we can manipulate the data after they have all executed.
                   */
+				  d.resolve(data);
             },
             error: function(xhr, status, err) {
                 console.error(xhr, err.toString());
+				d.resolve();
             },
         }),
         widget: widget || {}
     };
-    return request;
+    return d;
  }
 
  /** https://css-tricks.com/multiple-simultaneous-ajax-requests-one-callback-jquery/

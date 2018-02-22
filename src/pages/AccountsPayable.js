@@ -143,7 +143,6 @@ export class AccountsPayable extends Component {
             * @param function {Function} Anonymous function The callback function to execute when the JavaScript promise returns a positive result.
             **/
 
-            console.log(requestsArray);
             this.Async(this, requestsArray, function(data) {
                 var widgets = [];
 
@@ -154,7 +153,9 @@ export class AccountsPayable extends Component {
                  * widgets in the config.
                  * I may have to get rid of the async function because RequestWidget is making the request anyways.
                  */
-                console.log(data);
+
+                 console.log(data);
+
                 if (data) {
                     /* Set the state variables for all the information obtained in the waterfall of AJAX calls */
                     for (var i = 0; i < data.widgets.length; i++) {

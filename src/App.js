@@ -6,6 +6,8 @@ import { Switch, Route } from 'react-router-dom';
 import { Header } from './components/layout/header.js';
 import { CompanyList } from './components/layout/company-list.js';
 import { Accordion } from './components/layout/accordion.js';
+import { Login } from './pages/Login.js';
+import { ChangePassword } from './pages/ChangePassword.js';
 import { Dashboard } from './pages/Dashboard.js';
 
 /** APP.JS
@@ -114,20 +116,17 @@ export class App extends Component {
 
             /* Set the state variables for all the information obtained in every AJAX call */
 
-            // setTimeout(function(){
                 this.setState({
                     accordion: this.accordion,
                     companies: this.companies,
                     employeeName: this.employeeName,
                     defaultCompany: this.defaultCompany,
                     routes: this.routes,
-                    logoPath: global.paths.dev+'images/logo/'+this.defaultCompany.name+'/logo.gif'
+                    logoPath: global.paths.dev+'/images/logo/'+this.defaultCompany.name+'/logo.gif'
                 });
 
-            // }.bind(this), 500);
-
-
             /* Set default company*/
+            /* TODO: Change this to PUT request */
             this.SetCompany(this.defaultCompany.name);
 
         }.bind(this));
@@ -140,7 +139,7 @@ export class App extends Component {
                 name: e.target.value,
                 default: true
             },
-            logoPath: global.paths.dev+'images/logo/'+e.target.value+'/logo.gif'
+            logoPath: global.paths.dev+'/images/logo/'+e.target.value+'/logo.gif'
         });
 
         this.SetCompany(this.defaultCompany.name);
@@ -154,31 +153,66 @@ export class App extends Component {
     }
 
     render() {
-        var link;
+        var code;
+        var links = {};
+        var staticPages = [
+            {component: Login, path: 'login'},
+            {component: ChangePassword, path: 'change-password'},
+            {component: Dashboard, path: 'dashboard'}
+        ];
+
+        /* Create routes to pages that aren't returned from the DB
+         * The Dashboard is code 7 in the links list. Update dashboard path to this:
+         * servlet/com.sia.commonsense.shared.LoginServlet?code=7
+         */
+
+        staticPages.map(function(comp, key) {
+            this.routesToComponents.push(<Route
+                exact
+                key={key}
+                path={global.paths.devReactLink+comp.path}
+                component={comp.component} />);
+        }, this);
 
         if (this.state.routes && this.state.routes.length) {
             this.state.routes.map(function(item, key) {
 
-                link = global.paths.prodLinks+"/com.sia.commonsense.shared.LoginServlet?code="+item.code+"&company="+this.GetCompany();
+                /**
+                 * Build routes to the Dashboard component.
+                 * Each category will render depending on the value of
+                 * the code parameter passed via URL.
+                 */
+                this.routesToComponents.push(<Route
+                    exact
+                    key={key}
+                    path={global.paths.devReactLink+global.paths.devCategoryLinks+global.paths.devCategoryLinksParam}
+                    render={(code) => (
+                        <Dashboard {...code} />
+                    )}
+                />);
+
+
                 if (item.sublinks && item.sublinks.length) {
                     item.sublinks.map(function(comp, key) {
                         try {
-                            if (comp.name === 'Accounts Payable') {
-                                let Component = require('./pages/'+this.Camelize(comp.name, true)+'.js').default;
-                                this.routesToComponents.push(<Route path={global.paths.dev+comp.url} key={key} exact component={Component} />);
-                            }
-                        }
-                        catch(err) {
+                            let Component = require('./pages/'+this.Camelize(comp.name, true)+'.js').default;
+                            this.routesToComponents.push(<Route
+                                exact
+                                key={key}
+                                path={global.paths.devReactLink+comp.url}
+                                component={Component} />);
+                        } catch(err) {
                             /* Render dashboard in case of pages that don't exist yet
                              * TODO: Uncomment the console message to see a list components that still need to be created.
+                             * console.log('Failed to create a route for the Component: '+this.Camelize(comp.name, true));
                              */
-                            console.log('Failed to create a route for the Component: '+this.Camelize(comp.name, true)+". Rendering Dashboard instead.");
                         }
 
                     }, this);
                 }
             }, this);
         }
+
 
         return (
             <div className="wrapper wrapper__app App">
