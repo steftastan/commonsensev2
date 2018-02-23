@@ -131,80 +131,80 @@ export class AccountsPayable extends Component {
        var data = {};
        var result = {};
 
+       /**
+        * Begin the process of loading widgets after the component has finished mounting.
+        */
        if (prevState.loaded !== this.state.loaded) {
-           this.GetWidget(options.widgets, function(output) {
-               for (var i = 0; i < options.widgets.length; i++) {
-                   // add logic to tell apart components here
+           for (var i = 0; i < options.widgets.length; i++) {
+               this.GetWidget(i, options.widgets[i], function(key, result, widget) {
 
-                    console.log(output[i]);
+                   if (result) {
 
-                    if (output[i].responseJSON && output[i].responseJSON.hasOwnProperty('results')) {
-                         result = output[i].responseJSON.results;
-                    } else {
-                         result = output[i].responseJSON;
-                    }
+                       /**
+                        * Decide which components to display based on what was established in the options object.
+                        */
 
-                    if (result) {
-                        /**
-                         * Transform to array in case results are returned as objects.
-                         */
-                        if (!(result instanceof Array)) {
-                             result = Object.values(result);
+                        // if there are widgets of type data table
+                        if (widget.name === 'dataTable') {
+                            this.widgets.push(<DataTable index={key} key={key} options={widget} results={result} />);
                         }
 
-                        if (options.widgets[i].name === 'dataTable') {
-                            this.widgets.push(<DataTable index={i} key={i} options={options.widgets[i]} results={result} />);
-                        }
-
-                        // if there are widgets of type chart
-                        if (options.widgets[i].name === 'dataChart') {
-                            this.widgets.push(<DataChart index={i} key={i} options={options.widgets[i]} results={result} />);
+                        // if there are widgets of type graphic chart
+                        if (widget.name === 'dataChart') {
+                            this.widgets.push(<DataChart index={key} key={key} options={widget} results={result} />);
                         }
 
                         // if there is a toolbox
-                        if (options.widgets[i].name === 'toolBox') {
+                        if (widget.name === 'toolBox') {
                             this.widgets.push(
                                 <BreadCrumbs
-                                    index={i}
-                                    key={i}
+                                    index={key}
+                                    key={key}
                                     breadcrumbs={options.breadcrumbs}>
                                     <ToolBox
-                                        key={i}
-                                        options={options.widgets[i]}
+                                        key={key}
+                                        options={widget}
                                         results={result} />
                                 </BreadCrumbs>
                             );
                         }
 
                         // if there are widgets of type sliding tool box
-                        if (options.widgets[i].name === 'slidingToolbox') {
+                        if (widget.name === 'slidingToolbox') {
                             this.widgets.push(
                                 <SlidingToolBox
-                                    index={i}
-                                    key={i}
-                                    options={result}
-                                    results={options.widgets[i].data} />
-                                );
+                                    index={key}
+                                    key={key}
+                                    options={widget}
+                                    results={result} />
+                            );
                         }
                     }
-                 }
 
-                 this.setState({widgets: this.widgets});
-
-           }.bind(this));
-       }
+                /*
+                 * Saving the widget's to the component's state allows
+                 * us to trigger a component re-render so we can replace
+                 * the loading icon with our data.
+                 */
+                this.setState({widgets: this.widgets});
+                }.bind(this));
+            }
+        }
      }
 
+    /*
+     * Setting this flag to true allows the component to begin loading the components.
+     */
     componentDidMount() {
         this.setState({loaded:true});
     }
 
     render() {
-        var spinner="this is loading";
-        var spinner = (this.state.widgets && this.state.widgets.length ? <div>{this.state.widgets}</div> : <div className="spinner"></div>);
+        var content = (this.state.widgets && this.state.widgets.length ? <div>{this.state.widgets}</div> : <div className="spinner"></div>);
+
         return (
             <div>
-                {spinner}
+                {content}
             </div>
         );
     }

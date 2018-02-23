@@ -72,20 +72,19 @@ export function GetLanguage() {
 
 
  /**
-   * Allows to build an AJAX call object depending on the parameters passed.
-   * @param widget [Object] The widget's config as it appears in the options constant.
+   * Retrieve and process data for any widget.
+   * @param key [Integer] React's internal variable to identify items in an array.
+   * @param widget [Object] An individual in the options constant found in the component.
+   * @param cb [Function] A call back function that allows us to return data within the scope of the asynchronous function.
    */
- export function GetWidget(widgets, cb) {
-	 var data = {};
-	 var requests = [];
-
-	 for (var i = 0; i < widgets.length; i++) {
-		 requests.push($.getJSON(widgets[i].endpoint));
-	 }
-
-	 $.when(requests).then(function(data) {
-		cb(data);
-	});
+ export function GetWidget(key, widget, cb) {
+	 $.getJSON(widget.endpoint, function(data) {
+		 // Process data, some of it may be the value pertaining to a results property.
+		 // Additionally, some data may or be not already be in array format. We tranform it to ensure we always return an Array.
+		 data = data.hasOwnProperty('results') ? data.results : data;
+		 data = (!(data instanceof Array)) ?  Object.values(data) : data ;
+		 cb(key, data, widget);
+	 });
 }
 
  /**
