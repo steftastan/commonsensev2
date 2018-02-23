@@ -84,8 +84,8 @@ export class DataChart extends Component {
 
             if (buildTable) {
                 this.buildTable.push(
-                    <div key={key} className="col-lg-6">
-                        <table key={key} className="dataChart__table">
+                    <div key={this.props.index} className="col-lg-6">
+                        <table key={this.props.index} className="dataChart__table">
                             <thead className="dataChart__heading">
                                 <tr>
                                     <th className="dataChart__cell--heading">{this.props.options.aggregateBy}</th>

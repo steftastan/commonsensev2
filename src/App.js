@@ -144,7 +144,6 @@ export class App extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-      console.log('app.js updated');
       if (prevState.routes !== this.state.routes) {
           //this.setState({ loaded : true });
       }

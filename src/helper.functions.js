@@ -75,69 +75,17 @@ export function GetLanguage() {
    * Allows to build an AJAX call object depending on the parameters passed.
    * @param widget [Object] The widget's config as it appears in the options constant.
    */
- export function RequestWidget(widget) {
-     var arr = [];
-	 //var request = $.getJSON(widget.endpoint);
-	 var d = $.Deferred();
-     var request = {
-         	request: $.ajax({
-            url: widget.endpoint,
-            dataType: 'json',
-            cache: false,
-            success: function(data, status) {
-                 /**
-                  * Successful operation, but we don't do anything here
-                  * rather, we pass an array of ajax calls to our async function.
-                  * where we can manipulate the data after they have all executed.
-                  */
-				  d.resolve(data);
-            },
-            error: function(xhr, status, err) {
-                console.error(xhr, err.toString());
-				d.resolve();
-            },
-        }),
-        widget: widget || {}
-    };
-    return d;
- }
+ export function GetWidget(widgets, cb) {
+	 var data = {};
+	 var requests = [];
 
- /** https://css-tricks.com/multiple-simultaneous-ajax-requests-one-callback-jquery/
-   * Although the guide referenced above says these AJAX queries will
-   * run in parallel, they actually run in waterfall format, so if the first one fails,
-   * the rest will NOT be excecuted.
-   *
-   * We structured our code like this because we have to avoid at all costs calling the
-   * setState() function too many times in the application, because doing so will trigger
-   * a re-render of the page.
-   *
-   * We fetch all our data from our Endpoint. We return a callback function to allow
-   * each page to render their corresponding components.
-   *
-   */
-export function Async(that, requestsArray, cb) {
-    var widgets = [];
-    var data = {};
-	//console.log(requestsArray);
-    $.when(requestsArray).then(function() {
-        for (var i = 0; i < requestsArray.length; i++) {
+	 for (var i = 0; i < widgets.length; i++) {
+		 requests.push($.getJSON(widgets[i].endpoint));
+	 }
 
-			console.log(requestsArray[i].request);
-
-			if (requestsArray[i].request.status == 200 && requestsArray[i].request.readyState === 4) {
-				if (requestsArray[i].request.responseJSON.results instanceof Array) {
-					widgets.push({widget: requestsArray[i].widget, arr: requestsArray[i].request.responseJSON.results});
-				} else {
-					widgets.push({widget: requestsArray[i].widget, arr: Object.values(requestsArray[i].request.responseJSON.results)});
-				}
-			}
-
-        }
-        data = {that: that, widgets: widgets};
-        return data;
-    }).done(function(data) {
-        cb(data);
-    });
+	 $.when(requests).then(function(data) {
+		cb(data);
+	});
 }
 
  /**

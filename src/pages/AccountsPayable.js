@@ -1,6 +1,7 @@
 import './../global.variables.js';
+import $ from 'jquery';
 import React, { Component } from 'react';
-import { RequestWidget, Async, ObjectToArray } from './../helper.functions.js';
+import { GetWidget, ObjectToArray } from './../helper.functions.js';
 import { BreadCrumbs } from './../components/layout/breadcrumbs.js';
 import { ToolBox } from './../components/widgets/toolbox.js';
 import { DataTable } from './../components/widgets/datatable.js';
@@ -111,97 +112,99 @@ export class AccountsPayable extends Component {
 
     constructor(props) {
       super(props);
-      this.Async = Async;
-      this.RequestWidget = RequestWidget;
+      this.GetWidget = GetWidget;
       this.toolBox = [];
       this.widgets = [];
+      this.data = [];
       this.state = {
-          widgets: []
+          widgets: [],
+          loaded: false
       };
     }
 
-    componentDidMount() {
-        var requestsArray = [];
-        var componentArray = [];
-        var arr = [];
+    /**
+     * Perform all ajax tasks here
+     * Maybe update the state. in any case the widgets should render and data should be applied on componentDidUpdate
+     */
 
+     componentDidUpdate(prevProps, prevState) {
+       var data = {};
+       var result = {};
 
-        /** Extract the data table information from the options array */
-        if (options && options.widgets) {
-            for (var i = 0; i < options.widgets.length; i++) {
-                // add logic to tell apart components here
-                if (options.widgets[i].name && options.widgets[i].endpoint) {
-                    requestsArray.push(this.RequestWidget(options.widgets[i]));
-                }
-            }
+       if (prevState.loaded !== this.state.loaded) {
+           this.GetWidget(options.widgets, function(output) {
+               for (var i = 0; i < options.widgets.length; i++) {
+                   // add logic to tell apart components here
 
-            /**
-            * Build the page here with all the widgets provided in the config.
-            * @param this {Object} emcompasses the entire scope of this component.
-            * @param requestsArray {Array} An array of AJAX requests to be executed on the when()
-            * clause of the async function
-            * @param function {Function} Anonymous function The callback function to execute when the JavaScript promise returns a positive result.
-            **/
+                    console.log(output[i]);
 
-            this.Async(this, requestsArray, function(data) {
-                var widgets = [];
+                    if (output[i].responseJSON && output[i].responseJSON.hasOwnProperty('results')) {
+                         result = output[i].responseJSON.results;
+                    } else {
+                         result = output[i].responseJSON;
+                    }
 
-                /* TODO: Ocassionally this function does not return all of the widgets
-                 * specified in the config table. It could be due to the async operation taking too
-                 * long before the object is returned. It could also be due to data being parsed incorrectly.
-                 * TIP: Find a way to return the assembled data only after it has gone through all
-                 * widgets in the config.
-                 * I may have to get rid of the async function because RequestWidget is making the request anyways.
-                 */
+                    if (result) {
+                        /**
+                         * Transform to array in case results are returned as objects.
+                         */
+                        if (!(result instanceof Array)) {
+                             result = Object.values(result);
+                        }
 
-                 console.log(data);
+                        if (options.widgets[i].name === 'dataTable') {
+                            this.widgets.push(<DataTable index={i} key={i} options={options.widgets[i]} results={result} />);
+                        }
 
-                if (data) {
-                    /* Set the state variables for all the information obtained in the waterfall of AJAX calls */
-                    for (var i = 0; i < data.widgets.length; i++) {
+                        // if there are widgets of type chart
+                        if (options.widgets[i].name === 'dataChart') {
+                            this.widgets.push(<DataChart index={i} key={i} options={options.widgets[i]} results={result} />);
+                        }
 
-                        console.log('async but in accounts payable');
-                        if (data.widgets[i].widget.name === 'toolBox' && data.widgets[i].arr.length) {
-                            widgets.push(
+                        // if there is a toolbox
+                        if (options.widgets[i].name === 'toolBox') {
+                            this.widgets.push(
                                 <BreadCrumbs
                                     index={i}
                                     key={i}
                                     breadcrumbs={options.breadcrumbs}>
                                     <ToolBox
                                         key={i}
-                                        options={data.widgets[i].widget}
-                                        results={data.widgets[i].arr} />
+                                        options={options.widgets[i]}
+                                        results={result} />
                                 </BreadCrumbs>
                             );
                         }
 
-                        // if there are widget of datatable type
-                        if (data.widgets[i].widget.name === 'dataTable' && data.widgets[i].arr.length) {
-                            widgets.push(<DataTable index={i} key={i} options={data.widgets[i].widget} results={data.widgets[i].arr} />);
-                        }
-
-                        // if there are widgets of type chart
-                        if (data.widgets[i].widget.name === 'dataChart' && data.widgets[i].arr.length) {
-                            widgets.push(<DataChart index={i} key={i} options={requestsArray[i].widget} results={data.widgets[i].arr} />);
-                        }
-
                         // if there are widgets of type sliding tool box
-                        if (data.widgets[i].widget.name === 'slidingToolbox' && data.widgets[i].arr.length) {
-                            widgets.push(<SlidingToolBox index={i} key={i} options={requestsArray[i].widget} results={data.widgets[i].arr} />);
+                        if (options.widgets[i].name === 'slidingToolbox') {
+                            this.widgets.push(
+                                <SlidingToolBox
+                                    index={i}
+                                    key={i}
+                                    options={result}
+                                    results={options.widgets[i].data} />
+                                );
                         }
                     }
-                }
+                 }
 
-                data.that.setState({widgets: widgets});
-            });
-        }
+                 this.setState({widgets: this.widgets});
+
+           }.bind(this));
+       }
+     }
+
+    componentDidMount() {
+        this.setState({loaded:true});
     }
 
     render() {
-        console.log('fjflskdfjsl');
+        var spinner="this is loading";
+        var spinner = (this.state.widgets && this.state.widgets.length ? <div>{this.state.widgets}</div> : <div className="spinner"></div>);
         return (
             <div>
-                {this.state.widgets}
+                {spinner}
             </div>
         );
     }
