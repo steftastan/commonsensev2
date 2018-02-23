@@ -132,7 +132,7 @@ export class Accordion extends Component {
             var commonSenseLinkList = this.props.links.results.map(function(item, key) {
                 link__text = this.Localization(item.name);
 
-                link = global.paths.devServletLink+"com.sia.commonsense.shared.LoginServlet?code="+item.code+"&company="+this.GetCompany();
+                link = global.paths.devServletLink+global.paths.devCategoryLinks+(item.code);
 
                 return (
                     <Section key={key}>

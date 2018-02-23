@@ -5,12 +5,9 @@ export class CompanyList extends Component {
     constructor(props) {
       super(props);
       this.companyList = [];
-
     }
 
     render() {
-        var defaultCompanyName = (this.props.defaultCompany && this.props.defaultCompany.name ? this.props.defaultCompany.name : '');
-        var selected;
         if (this.props.companies && this.props.companies.results) {
             this.companyList = this.props.companies.results.map(function(item, key) {
                 if (item.name) {
@@ -20,7 +17,7 @@ export class CompanyList extends Component {
         }
 
         return(
-            <select id="companyList" defaultValue={defaultCompanyName} className="form__item form__selectCompany">
+            <select id="companyList" value={this.props.defaultCompanyName} onChange={this.props.onChange} className="form__item form__selectCompany">
                 {this.companyList}
             </select>
         );

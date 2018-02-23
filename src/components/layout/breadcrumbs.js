@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './../../global.variables.js';
 import $ from 'jquery';
 import { Link } from 'react-router-dom';
-import { Localization, WhichDevice, GetLanguage, GetCompany } from './../../helper.functions.js';
+import { Localization, WhichDevice, GetLanguage, GetCompany, SaveSessionDetails } from './../../helper.functions.js';
 
 /**
  * BREADCRUMBS LAYOUT COMPONENT
@@ -20,6 +20,7 @@ export class BreadCrumbs extends Component {
       this.WhichDevice = WhichDevice;
       this.GetLanguage = GetLanguage;
       this.GetCompany = GetCompany;
+      this.SaveSessionDetails = SaveSessionDetails;
       this.toggleNav = this.toggleNav.bind(this);
       this.toggleLayout = this.toggleLayout.bind(this);
       this.clickAnywhereToClose = this.clickAnywhereToClose.bind(this);
@@ -27,7 +28,6 @@ export class BreadCrumbs extends Component {
       this.openLang = this.openLang.bind(this);
       this.toggleLang = this.toggleLang.bind(this);
       this.buildCrumbs = this.buildCrumbs.bind(this);
-      this.saveSessionLang = this.saveSessionLang.bind(this);
       this.state = {
           open: true,
           selectedLang: this.GetLanguage(),
@@ -129,7 +129,7 @@ export class BreadCrumbs extends Component {
                     });
 
                     /* Language is saved to session here */
-                    this.saveSessionLang(languages[i].id);
+                    this.SaveSessionDetails(languages[i].id);
 
                     clickedLang = document.getElementById(languages[i].id);
                     if (!clickedLang.classList.contains(this.selectedClass)) {
@@ -148,29 +148,6 @@ export class BreadCrumbs extends Component {
         }
     }
 
-    saveSessionLang(selected) {
-        /**
-         * TODO: Check to see if this plugin would be helpful for this operation
-         * https://ciphertrick.com/demo/jquerysession/
-         */
-
-        $.ajax({
-            url: global.endpoints.language.dev,
-            method: 'PUT',
-            cache: false,
-            data: {language: selected, filename: 'SERVICE', user: 'ETASTAN'},
-            success: function(data, status) {
-                console.log(data);
-            },
-            error: function(xhr, status, err) {
-                console.error(xhr, err.toString());
-            },
-       });
-
-       //window.location.reload();
-    }
-
-
     buildCrumbs(crumbs) {
         var trail = [];
         var caret = '';
@@ -181,7 +158,7 @@ export class BreadCrumbs extends Component {
             link__text = this.Localization(item.name);
 
             if (item.hasOwnProperty('code')) {
-                link = global.paths.dev+global.paths.devCategoryLinks+item.code;
+                link = global.paths.devReactLink+global.paths.devCategoryLinks+item.code;
             } else {
                 link = '#';
             }
@@ -189,10 +166,10 @@ export class BreadCrumbs extends Component {
             if (key > 0 && key < crumbs.length) caret = 'fa fa-caret-right';
 
             return (
-                <Link key={key} className={"breadcrumbs__link"} to={link}>
+                <a key={key} className={"breadcrumbs__link"} href={link}>
                     <span className={"breadcrumbs__caret " + caret}></span>
                     {link__text}
-                </Link>
+                </a>
             );
         }, this);
     }

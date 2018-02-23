@@ -194,13 +194,11 @@ export class AccountsPayable extends Component {
 
                 data.that.setState({widgets: widgets});
             });
-
         }
-
-
     }
 
     render() {
+        console.log('fjflskdfjsl');
         return (
             <div>
                 {this.state.widgets}

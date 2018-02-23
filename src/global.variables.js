@@ -7,12 +7,12 @@
 global.loggedIn = true;
 global.company = 'BOW';
 global.paths = {
-    prodReactLink: '/commonsense/react/',
-    devReactLink: '/commonsense/react/',
-    prod: '/commonsense/',
-    servletLink: '/commonsense/servlet/',
     dev: '/',
-    devRouting: '/',
+    prod: '/commonsense/',
+    devReactLink: '/commonsense/react/',
+    prodReactLink: '/commonsense/react/',
+    prodServletLink: '/commonsense/servlet/',
+    devServletLink: '/commonsense/react/',
     devCategoryLinks: 'dashboard/',
     devCategoryLinksParam: ':code',
     prodCategoryLinks: 'com.sia.commonsense.shared.LoginServlet?code=',
@@ -48,7 +48,7 @@ global.endpoints = {
         prod: global.paths.devReactLink+'webservices/AccountsPayableSlidingToolBox.json', /* TODO: Create data endpoint for this  */
         dev: '/webservices/AccountsPayableSlidingToolBox.json'
     },
-    language: {
+    session: {
         prod: global.paths.dev+'services/user/session',
         dev: null /* No need for session storage on dev */
     }

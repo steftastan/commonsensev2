@@ -29,7 +29,6 @@ export class App extends Component {
       this.SetCompany = SetCompany;
       this.GetCompany = GetCompany;
       this.Camelize = Camelize;
-      this.SetCompany = SetCompany;
       this.updateCompany = this.updateCompany.bind(this);
       this.companies = {};
       this.accordion = {};
@@ -41,17 +40,11 @@ export class App extends Component {
           routes: null,
           loaded: false,
           accordion: null,
-          companies: null,
-          employeeName: null,
-          defaultCompany: null,
-          logoPath: null
+          companies: [],
+          employeeName: '',
+          defaultCompany: '',
+          logoPath: ''
       }
-    }
-
-    componentDidMount() {
-        /* Listen for the company switch */
-        this.companyDropDown = document.getElementById(this.companyDropDown);
-        if (this.companyDropDown) this.companyDropDown.addEventListener('change', this.updateCompany);
     }
 
     componentWillMount() {
@@ -120,9 +113,9 @@ export class App extends Component {
                     accordion: this.accordion,
                     companies: this.companies,
                     employeeName: this.employeeName,
-                    defaultCompany: this.defaultCompany,
+                    defaultCompany: this.defaultCompany.name,
                     routes: this.routes,
-                    logoPath: global.paths.dev+'/images/logo/'+this.defaultCompany.name+'/logo.gif'
+                    logoPath: global.paths.dev+'images/logo/'+this.defaultCompany.name+'/logo.gif'
                 });
 
             /* Set default company*/
@@ -133,20 +126,25 @@ export class App extends Component {
 
     }
 
+    componentWillReceiveProps(nextProps) {
+        /**
+         * Set the dropdown list to the default company.
+         */
+        if (nextProps) {
+        }
+    }
+
     updateCompany(e) {
         this.setState({
-            defaultCompany: {
-                name: e.target.value,
-                default: true
-            },
-            logoPath: global.paths.dev+'/images/logo/'+e.target.value+'/logo.gif'
+            defaultCompany: e.target.value,
+            logoPath: global.paths.dev+'images/logo/'+e.target.value+'/logo.gif'
         });
 
         this.SetCompany(this.defaultCompany.name);
     }
 
     componentDidUpdate(prevProps, prevState) {
-      console.log('app.js component did update, the routes are loaded and generated');
+      console.log('app.js updated');
       if (prevState.routes !== this.state.routes) {
           //this.setState({ loaded : true });
       }
@@ -165,7 +163,6 @@ export class App extends Component {
          * The Dashboard is code 7 in the links list. Update dashboard path to this:
          * servlet/com.sia.commonsense.shared.LoginServlet?code=7
          */
-
         staticPages.map(function(comp, key) {
             this.routesToComponents.push(<Route
                 exact
@@ -191,7 +188,6 @@ export class App extends Component {
                     )}
                 />);
 
-
                 if (item.sublinks && item.sublinks.length) {
                     item.sublinks.map(function(comp, key) {
                         try {
@@ -199,7 +195,7 @@ export class App extends Component {
                             this.routesToComponents.push(<Route
                                 exact
                                 key={key}
-                                path={global.paths.devReactLink+comp.url}
+                                path={global.paths.dev+comp.url}
                                 component={Component} />);
                         } catch(err) {
                             /* Render dashboard in case of pages that don't exist yet
@@ -213,13 +209,13 @@ export class App extends Component {
             }, this);
         }
 
-
         return (
             <div className="wrapper wrapper__app App">
                 <Accordion
                     links={this.state.accordion}
                     employeeName={this.state.employeeName}>
                     <CompanyList
+                        onChange={this.updateCompany}
                         defaultCompanyName={this.state.defaultCompany}
                         defaultCompanyIcon={this.state.logoPath}
                         companies={this.state.companies}/>

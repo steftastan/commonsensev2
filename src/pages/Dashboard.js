@@ -52,8 +52,13 @@ export class Dashboard extends Component {
             for (var i = 0; i < this.state.data.length; i++) {
                 if (id == this.state.data[i].code) {
 
-                    /* Build breadcrumb object */
-                    crumbs.push({name: this.state.data[i].name, code: this.state.data[i].code});
+                    /**
+                     * Build breadcrumb object
+                     * Don't build a breadcrumb for the Personal Preference Dashboard
+                     */
+                    if (crumbs[0].code !== this.state.data[i].code) {
+                        crumbs.push({name: this.state.data[i].name, code: this.state.data[i].code});
+                    }
 
                     this.setState({
                         dashboardLinks : this.state.data[i].sublinks,
