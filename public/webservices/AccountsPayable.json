@@ -14,7 +14,7 @@
             "currentPer" : "Something goes here Something goes here"
         },
         {
-            "id" : "17",
+            "id" : "",
             "supplier" : "Hello",
             "address" : "6911 Creditview Ro",
             "city" : "Mississauga",
@@ -26,7 +26,7 @@
             "currentPer" : "Egg"
         },
         {
-            "id" : "17",
+            "id" : null,
             "supplier" : "Tech C",
             "address" : "6911 Creditview Ro",
             "city" : "Mississauga",
@@ -51,7 +51,7 @@
         },
         {
             "id" : "17",
-            "supplier" : "Moo Canada C",
+            "supplier" : null,
             "address" : "6911 Creditview Ro",
             "city" : "Mississauga",
             "province" : "ON",
@@ -63,7 +63,7 @@
         },
         {
             "id" : "17",
-            "supplier" : "Tech Data Canada C",
+            "supplier" : "",
             "address" : "6911 Creditview Ro",
             "city" : "Mississauga",
             "province" : "ON",
@@ -75,7 +75,7 @@
         },
         {
             "id" : "17",
-            "supplier" : "Tech Data Canada C",
+            "supplier" : null,
             "address" : "6911 Creditview Ro",
             "city" : "Mississauga",
             "province" : "ON",

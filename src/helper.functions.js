@@ -20,65 +20,86 @@ import './global.variables.js';
  *
  */
 
+/**
+ * Function that saves session details
+ * @param language [String] the selected language
+ * @param filename [String] the selected company
+ * @param user [String] the corresponding username
+ */
+export function SaveSessionDetails(language, filename, user) {
+	/**
+	 * TODO: Check to see if this plugin would be helpful for this operation
+	 * https://ciphertrick.com/demo/jquerysession/
+	 */
+	language = language ? language : '';
+	filename = filename ? filename : '';
+	user = user ? user : '';
+
+	$.ajax({
+		url: global.endpoints.session.dev,
+		method: 'PUT',
+		cache: false,
+		data: {language: language, filename: filename, user: user},
+		success: function(data, status) {
+			console.log(data);
+			window.location.reload();
+		},
+		error: function(xhr, status, err) {
+			console.error(xhr, err.toString());
+		}
+   });
+}
 
 export function HandleWebFacingLink(link) {
-	 window.open("/commonsense/servlet/" + link + "&turnCacheOff=" + (new Date()).getTime(), "appa", "scrollbars=yes,status=1,resizable=yes,menubar=0,screenX=0,screenY=0,left=0,top=0,width=" + (window.availWidth-10) + ",height=" + (window.availHeight-50));
+	 window.open(global.paths.devServletLink + link + "&turnCacheOff=" + (new Date()).getTime(), "appa", "scrollbars=yes,status=1,resizable=yes,menubar=0,screenX=0,screenY=0,left=0,top=0,width=" + (window.availWidth-10) + ",height=" + (window.availHeight-50));
 };
 
 export function HandlePopupLink(link, windowName, width, height) {
-	 window.open("/commonsense/servlet/" + link, windowName, "height=" + height + ",width=" + width + ",resizeable=yes,menubar=0,toolbar=0,location=0,directories=0,scrollbars=1,status=0");
+	windowName = windowName ? windowName : '';
+	width = width ? width : 1024;
+	height = height ? height : 768;
+	 window.open(global.paths.devServletLink + link, windowName, "height=" + height + ",width=" + width + ",resizeable=yes,menubar=0,toolbar=0,location=0,directories=0,scrollbars=1,status=0");
 };
 
 export function HandleRegularLink(link) {
-	 window.location.href = "/commonsense/servlet/" + link;
+	window.location.href = global.paths.dev+link;
 };
 
 export function GetLanguage() {
     var defaultLanguage = 'en_CA';
-
-    // $.ajax({
-    //     url: global.endpoints.language.dev,
-    //     dataType: 'json',
-    //     cache: false,
-    //     success: function(data) {
-    //         console.log(data);
-    //         if (data && data.language) {
-    //             defaultLanguage = data.language;
-    //         }
-    //     },
-    //     error: function(xhr, status, err) {
-    //         console.error(xhr, status, err.toString());
-    //     }
-    // });
-
     return defaultLanguage;
 }
+
+
  /**
    * Allows to build an AJAX call object depending on the parameters passed.
    * @param widget [Object] The widget's config as it appears in the options constant.
    */
  export function RequestWidget(widget) {
      var arr = [];
+	 //var request = $.getJSON(widget.endpoint);
+	 var d = $.Deferred();
      var request = {
-         request: $.ajax({
-             url: widget.endpoint,
-             dataType: 'json',
-             cache: false,
-             success: function(data, status) {
+         	request: $.ajax({
+            url: widget.endpoint,
+            dataType: 'json',
+            cache: false,
+            success: function(data, status) {
                  /**
                   * Successful operation, but we don't do anything here
                   * rather, we pass an array of ajax calls to our async function.
                   * where we can manipulate the data after they have all executed.
                   */
-             },
-             error: function(xhr, status, err) {
-                 console.error(xhr, err.toString());
-             },
-
+				  d.resolve(data);
+            },
+            error: function(xhr, status, err) {
+                console.error(xhr, err.toString());
+				d.resolve();
+            },
         }),
         widget: widget || {}
     };
-    return request;
+    return d;
  }
 
  /** https://css-tricks.com/multiple-simultaneous-ajax-requests-one-callback-jquery/
@@ -97,13 +118,20 @@ export function GetLanguage() {
 export function Async(that, requestsArray, cb) {
     var widgets = [];
     var data = {};
+	//console.log(requestsArray);
     $.when(requestsArray).then(function() {
         for (var i = 0; i < requestsArray.length; i++) {
-            if (requestsArray[i].request.responseJSON.results instanceof Array) {
-                widgets.push({widget: requestsArray[i].widget, arr: requestsArray[i].request.responseJSON.results});
-            } else {
-                widgets.push({widget: requestsArray[i].widget, arr: Object.values(requestsArray[i].request.responseJSON.results)});
-            }
+
+			console.log(requestsArray[i].request);
+
+			if (requestsArray[i].request.status == 200 && requestsArray[i].request.readyState === 4) {
+				if (requestsArray[i].request.responseJSON.results instanceof Array) {
+					widgets.push({widget: requestsArray[i].widget, arr: requestsArray[i].request.responseJSON.results});
+				} else {
+					widgets.push({widget: requestsArray[i].widget, arr: Object.values(requestsArray[i].request.responseJSON.results)});
+				}
+			}
+
         }
         data = {that: that, widgets: widgets};
         return data;
@@ -226,6 +254,7 @@ export function WhichDevice() {
 export function SetCompany(company) {
     global.company = company;
 }
+
 
 /**
  * Sets the default company in the global variable per result received from Web Service.

@@ -21,7 +21,7 @@
 .dataTable__row--header {
     text-transform: uppercase;
     background-color: $blue-90;
-    @include font($font-size-content, $font-weight-bold, $peach-40);
+    @include font($font-size-content, $font-weight-bold, $white);
 }
 
 .dataTable__pagination {

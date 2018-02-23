@@ -7,47 +7,49 @@
 global.loggedIn = true;
 global.company = 'BOW';
 global.paths = {
-    prodRouting: '/commonsense/react',
-    prod: '/commonsense',
-    prodLinks: '/commonsense/servlet',
-    dev: ''
+    dev: '/',
+    prod: '/commonsense/',
+    devReactLink: '/commonsense/react/',
+    prodReactLink: '/commonsense/react/',
+    prodServletLink: '/commonsense/servlet/',
+    devServletLink: '/commonsense/react/',
+    devCategoryLinks: 'dashboard/',
+    devCategoryLinksParam: ':code',
+    prodCategoryLinks: 'com.sia.commonsense.shared.LoginServlet?code=',
+    prodCategoryLinksParam: ''
 };
 
 global.endpoints = {
     companies:  {
-        prod: global.paths.prod+'/services/user/portal/companies',
+        prod: global.paths.dev+'services/user/portal/companies',
         dev: '/webservices/Companies.json'
     },
     accordion: {
-        prod: global.paths.prod+'/services/user/portal/menu',
+        prod: global.paths.dev+'services/user/portal/menu',
         dev: '/webservices/FullMenu.json'
     },
-    submenu:  {
-        prod: global.paths.prod+'/services/user/portal/submenu',
-        dev: '/webservices/SubMenu.json'
-    },
     accountsPayable:  {
-        prod: global.paths.prod+'/services/finance/accounts-payable',
+        prod: global.paths.dev+'services/finance/accounts-payable',
         dev: '/webservices/AccountsPayable.json'
     },
     cashDisbursement: {
-        prod: global.paths.prod+'/services/finance/accounts-payable/cash-disbursement',
+        prod: global.paths.dev+'services/finance/accounts-payable/cash-disbursement',
         dev: '/webservices/AccountsPayableCashDisbursement.json'
     },
     summary: {
-        prod: global.paths.prod+'/services/finance/accounts-payable/summary',
+        prod: global.paths.dev+'services/finance/accounts-payable/summary',
         dev: '/webservices/AccountsPayableSummary.json'
     },
     toolBox: {
-        prod: global.paths.prodRouting+'/webservices/AccountsPayableToolbox.json', /* TODO: Create data endpoint for this */
+        prod: global.paths.devReactLink+'webservices/AccountsPayableToolbox.json', /* TODO: Create data endpoint for this */
         dev: '/webservices/AccountsPayableToolbox.json'
     },
     sliding: {
-        prod: global.paths.prodRouting+'/webservices/AccountsPayableSlidingToolBox.json', /* TODO: Create data endpoint for this  */
+        prod: global.paths.devReactLink+'webservices/AccountsPayableSlidingToolBox.json', /* TODO: Create data endpoint for this  */
         dev: '/webservices/AccountsPayableSlidingToolBox.json'
     },
-    language: {
-        prod: global.paths.prod+'/services/user/session',
+    session: {
+        prod: global.paths.dev+'services/user/session',
         dev: null /* No need for session storage on dev */
     }
 };

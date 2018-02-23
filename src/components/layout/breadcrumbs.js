@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './../../global.variables.js';
 import $ from 'jquery';
 import { Link } from 'react-router-dom';
-import { Localization, WhichDevice, GetLanguage, GetCompany } from './../../helper.functions.js';
+import { Localization, WhichDevice, GetLanguage, GetCompany, SaveSessionDetails } from './../../helper.functions.js';
 
 /**
  * BREADCRUMBS LAYOUT COMPONENT
@@ -20,6 +20,7 @@ export class BreadCrumbs extends Component {
       this.WhichDevice = WhichDevice;
       this.GetLanguage = GetLanguage;
       this.GetCompany = GetCompany;
+      this.SaveSessionDetails = SaveSessionDetails;
       this.toggleNav = this.toggleNav.bind(this);
       this.toggleLayout = this.toggleLayout.bind(this);
       this.clickAnywhereToClose = this.clickAnywhereToClose.bind(this);
@@ -27,10 +28,11 @@ export class BreadCrumbs extends Component {
       this.openLang = this.openLang.bind(this);
       this.toggleLang = this.toggleLang.bind(this);
       this.buildCrumbs = this.buildCrumbs.bind(this);
-      this.saveSessionLang = this.saveSessionLang.bind(this);
       this.state = {
           open: true,
-          selectedLang: this.GetLanguage()
+          selectedLang: this.GetLanguage(),
+          breadcrumbs: [],
+          trail: []
       };
       this.defaultLang = this.GetLanguage;
       this.openClassName = '';
@@ -47,7 +49,7 @@ export class BreadCrumbs extends Component {
       this.openClass = 'rightnav__lang--open';
       this.selectedClass = 'rightnav__lang--selected';
       this.toolBox;
-      this.trail = '';
+      this.trail = [];
       this.elemsToToggle = {
           header: 'header',
           breadcrumbs: 'breadcrumbs',
@@ -55,14 +57,22 @@ export class BreadCrumbs extends Component {
       };
     }
 
-    componentWillMount() {
-        this.buildCrumbs();
-    }
-
     componentDidUpdate(prevProps, prevState) {
         this.langWrapper.addEventListener('mouseenter', this.openLang, false);
         this.langWrapper.addEventListener('mouseleave', this.openLang, false);
         this.langWrapper.addEventListener('mousedown', this.openLang, false);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        /** Verify the breadcrumb props received from the parent Component
+         * and assign them to this Component's state
+         */
+        if (nextProps.breadcrumbs && nextProps.breadcrumbs.length) {
+            this.setState({
+                breadcrumbs : nextProps.breadcrumbs,
+                trail: this.buildCrumbs(nextProps.breadcrumbs)
+            });
+        }
     }
 
     componentDidMount() {
@@ -118,9 +128,8 @@ export class BreadCrumbs extends Component {
                         selectedLang: languages[i].id
                     });
 
-                    console.log(languages[i].id);
                     /* Language is saved to session here */
-                    this.saveSessionLang(languages[i].id);
+                    this.SaveSessionDetails(languages[i].id);
 
                     clickedLang = document.getElementById(languages[i].id);
                     if (!clickedLang.classList.contains(this.selectedClass)) {
@@ -139,59 +148,30 @@ export class BreadCrumbs extends Component {
         }
     }
 
-    saveSessionLang(selected) {
-        /**
-         * TODO: Check to see if this plugin would be helpful for this operation
-         * https://ciphertrick.com/demo/jquerysession/
-         */
+    buildCrumbs(crumbs) {
+        var trail = [];
+        var caret = '';
+        var link;
+        var link__text;
 
-        $.ajax({
-            url: global.endpoints.language.dev,
-            method: 'PUT',
-            cache: false,
-            data: {language: selected, filename: 'SERVICE', user: 'ETASTAN'},
-            success: function(data, status) {
-                console.log(data);
-            },
-            error: function(xhr, status, err) {
-                console.error(xhr, err.toString());
-            },
-       });
+        return trail = crumbs.map(function(item, key) {
+            link__text = this.Localization(item.name);
 
-       //window.location.reload();
-    }
+            if (item.hasOwnProperty('code')) {
+                link = global.paths.devReactLink+global.paths.devCategoryLinks+item.code;
+            } else {
+                link = '#';
+            }
 
-    buildCrumbs() {
-            var caret;
-            var link;
-            var link__text;
-            var trail = this.props.breadcrumbs.map(function(item, key) {
-                link__text = this.Localization(item.name);
+            if (key > 0 && key < crumbs.length) caret = 'fa fa-caret-right';
 
-                if (item.hasOwnProperty('code')) {
-                    link = global.paths.devLinks+'/com.sia.commonsense.shared.LoginServlet?code='+item.code+'&company='+this.GetCompany();
-                } else {
-                    link = '#';
-                }
-
-                if (key > 0 && key < this.props.breadcrumbs.length) {
-                    caret = 'fa fa-caret-right';
-                } else {
-                    caret = '';
-                }
-                return (
-                    <Link key={key} className={"breadcrumbs__link"} to={link}>
-                        <span className={"breadcrumbs__caret " + caret}></span>
-                        {link__text}
-                    </Link>
-                );
-            }, this);
-
-            this.trail = (
-                <div className="grid__item breadcrumbs__trail">
-                    {trail}
-                </div>
+            return (
+                <a key={key} className={"breadcrumbs__link"} href={link}>
+                    <span className={"breadcrumbs__caret " + caret}></span>
+                    {link__text}
+                </a>
             );
+        }, this);
     }
 
     /**
@@ -290,11 +270,14 @@ export class BreadCrumbs extends Component {
 
     render() {
         var logout__text =  this.Localization('logout');
+
         return (
             <section id="breadcrumbs" className="breadcrumbs">
                 <div className="wrapper wrapper__breadcrumbs">
                     <div id="navButton" className="grid__item leftnav__hamburger fa fa-close"></div>
-                    {this.trail}
+                    <div className="grid__item breadcrumbs__trail">
+                        {this.state.trail}
+                    </div>
                     {this.props.children}
                     <div className="grid__item rightnav rightnav--mobileHidden">
                         <div id="langWrapper" className="wrapper rightnav__langSelect">

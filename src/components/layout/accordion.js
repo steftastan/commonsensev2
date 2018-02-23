@@ -128,10 +128,11 @@ export class Accordion extends Component {
         var welcome__text = this.Localization('welcome');
         var filterNavigation__text = this.Localization('filterNavigation');
 
-        if (this.props.links.results && this.props.links.results.length) {
+        if (this.props.links && this.props.links.results) {
             var commonSenseLinkList = this.props.links.results.map(function(item, key) {
                 link__text = this.Localization(item.name);
-                link = global.paths.prodLinks+"/com.sia.commonsense.shared.LoginServlet?code="+item.code+"&company="+this.GetCompany();
+
+                link = global.paths.devServletLink+global.paths.devCategoryLinks+(item.code);
 
                 return (
                     <Section key={key}>
@@ -194,9 +195,6 @@ export class Section extends Component {
     constructor() {
       super();
       this.handleClick = this.handleClick.bind(this);
-      this.handleWebFacingLink = HandleWebFacingLink;
-      this.handlePopupLink = HandlePopupLink;
-      this.handleRegularLink = HandleRegularLink;
       this.state = {
           open: false,
           childClass: "leftnav__child",
@@ -217,10 +215,7 @@ export class Section extends Component {
 
         event.preventDefault();
 
-        console.log(event.target);
-
         if (event.target.hasAttribute("href")) {
-          console.log(event.target.href);
           window.location = event.target.href;
         }
 
@@ -250,15 +245,34 @@ export class Section extends Component {
 
 export class SubLinkList extends Component {
 
+    constructor() {
+      super();
+      this.HandleWebFacingLink = HandleWebFacingLink;
+      this.HandlePopupLink = HandlePopupLink;
+      this.HandleRegularLink = HandleRegularLink;
+    }
+
     render() {
 
+        var link;
         var subLinks;
+        var linkOnClick = {};
 
         if (this.props.sublinks && this.props.sublinks && this.props.sublinks.length) {
             subLinks = this.props.sublinks.map(function(item, key) {
-                return (
-                    <a key={key} className="leftnav__subItem" href={item.url}>{item.name}</a>
-                );
+
+                if (item.url.indexOf("GatewayServlet") !== -1) {
+                    linkOnClick = this.HandleWebFacingLink.bind(this, item.url);
+                }
+                else if (item.url.indexOf("popup") !== -1) {
+                    linkOnClick = this.HandlePopupLink.bind(this, item.url);
+                }
+                else {
+                    linkOnClick = this.HandleRegularLink.bind(this, item.url);
+                }
+
+                return link = (<a key={key} className="leftnav__subItem" onClick={linkOnClick}>{item.name}</a>);
+
             }, this);
         }
 

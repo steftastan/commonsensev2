@@ -1795,6 +1795,8 @@ th.react-bs-table-expand-cell > div {
 @media only screen and (min-device-width: 1025px) {
   .category {
     padding: 30px 20px; }
+  .category__text {
+    width: 205px; }
   .category__item {
     padding: 0 0 0 15px;
     margin: 0 0 15px 0; }
@@ -1944,7 +1946,7 @@ th.react-bs-table-expand-cell > div {
 .dataTable__row--header {
   text-transform: uppercase;
   background-color: #18273C;
-  color: #F26322;
+  color: #FFF;
   font-size: 12px;
   font-weight: 700; }
 
@@ -2341,7 +2343,7 @@ th.react-bs-table-expand-cell > div {
 .dataChart__heading {
   background-color: #18273C;
   text-transform: uppercase;
-  color: #F26322;
+  color: #FFF;
   font-size: 12px;
   font-weight: 700; }
 
