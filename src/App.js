@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import './global.variables.js';
-import { Camelize, GetCompany, SetCompany } from './helper.functions.js';
+import { Camelize, GetCompany, SaveSessionDetails } from './helper.functions.js';
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Header } from './components/layout/header.js';
@@ -26,7 +26,7 @@ export class App extends Component {
     constructor(props) {
       super(props);
       this.componentList = [];
-      this.SetCompany = SetCompany;
+      this.SaveSessionDetails= SaveSessionDetails;
       this.GetCompany = GetCompany;
       this.Camelize = Camelize;
       this.updateCompany = this.updateCompany.bind(this);
@@ -119,8 +119,7 @@ export class App extends Component {
                 });
 
             /* Set default company*/
-            /* TODO: Change this to PUT request */
-            this.SetCompany(this.defaultCompany.name);
+            // this.SaveSessionDetails(null, this.defaultCompany.name, null);
 
         }.bind(this));
 
@@ -140,7 +139,8 @@ export class App extends Component {
             logoPath: global.paths.dev+'images/logo/'+e.target.value+'/logo.gif'
         });
 
-        this.SetCompany(this.defaultCompany.name);
+        /* Update default company */
+        this.SaveSessionDetails(null, this.defaultCompany.name, null);
     }
 
     componentDidUpdate(prevProps, prevState) {

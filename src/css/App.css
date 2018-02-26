@@ -2372,6 +2372,7 @@ th.react-bs-table-expand-cell > div {
 /* Desktop-specific styles */
 @media only screen and (min-device-width: 1025px) {
   .dataChart__table {
+    display: inline-table;
     margin-top: 0; } }
 
 /* ==========================================================================

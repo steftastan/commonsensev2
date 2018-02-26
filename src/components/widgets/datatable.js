@@ -42,9 +42,11 @@ export class DataTable extends Component {
 
     render() {
         var tableData = this.props.results || [];
+        var dataColumns = [];
         var tableHeaders;
+        var filterBy;
         var title__text;
-
+        var headerName__text;
 
         if (tableData && tableData.length) {
             var options = {
@@ -85,46 +87,46 @@ export class DataTable extends Component {
                         /* TODO: This is currently causing a bug where everytime a React Component is updated,
                          * it triggers the code below, so a new "All" option will be added even if it already exists.
                          */
-                        // options.sizePerPageList['All'] = .push({
-                        //     text: this.Localization('all'), value: tableData.length
-                        // });
+                        options.sizePerPageList['All'] = {
+                            text: this.Localization('all'), value: tableData.length
+                        };
                     }
                 }
             }
-        }
 
-        /**
-         * Build and customize each table header according to the data received from options object.
-         */
-        if (this.props.options && this.props.options.tableHeaders) {
-            tableHeaders = this.props.options.tableHeaders.map(function(item, key) {
-                var filterBy = (this.props.options.filterBy && (this.props.options.filterBy.indexOf(item) !== -1)) ? { type: 'TextFilter' } : {}
-                var sortBy = (this.props.options.sortBy && (this.props.options.sortBy.indexOf(item) !== -1)) ? true : false;
-                var headerName__text = this.Localization(item);
-                title__text = this.Localization(this.props.options.title);
-                return (
-                    <TableHeaderColumn width='100' dataSort={sortBy} filter={filterBy} isKey={key === 0 ? true : false} key={key} dataField={item}>{headerName__text}</TableHeaderColumn>
-                );
+            /**
+             * Build and customize each table header according to the data received from options object.
+             * We can grab the first value in the tableData array, under the assumption every record has the same column name.
+             */
 
-            }, this);
+            dataColumns = Object.keys(tableData[0]);
+
+            tableHeaders = dataColumns.map(function(item, key) {
+                 filterBy = (dataColumns && (dataColumns.indexOf(item) !== -1)) ? { type: 'TextFilter' } : {};
+                 headerName__text = this.Localization(item);
+                 title__text = this.Localization(this.props.options.title);
+                 return (
+                     <TableHeaderColumn width='100' key={key} dataSort={true} filter={filterBy} isKey={key === 0 ? true : false} dataField={item}>{headerName__text}</TableHeaderColumn>
+                 );
+
+             }, this);
+
         }
 
         if (tableData) {
             var table = (
-                <div key={this.props.index} className={this.props.options.bootStrapClass}>
-                    <div className="wrapper wrapper__content--whiteBox">
-                        <h2 className={this.props.options.titleClass}>{title__text}</h2>
-                        <BootstrapTable key={this.props.index} data={tableData} options={options} striped hover pagination containerClass={this.props.options.tableSize} tableHeaderClass={this.props.options.tableHeaderClass} trClassName={this.props.options.trClassName}>
-                            {tableHeaders}
-                        </BootstrapTable>
-                        <div className="dataTable__pagination"></div>
-                    </div>
+                <div className="wrapper wrapper__content--whiteBox">
+                    <h2 className={'dataTable__title'}>{title__text}</h2>
+                    <BootstrapTable key={this.props.index} data={tableData} options={options} striped hover pagination tableHeaderClass={'dataTable__row--header'} trClassName={'dataTable__row--content'}>
+                        {tableHeaders}
+                    </BootstrapTable>
+                    <div className="dataTable__pagination"></div>
                 </div>
             );
         }
 
         return (
-            <div>
+            <div key={this.props.index} className={this.props.options.bootStrapClass}>
                 {table}
             </div>
 

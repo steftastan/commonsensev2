@@ -90,7 +90,7 @@ export class DataChart extends Component {
                                 <tr>
                                     <th className="dataChart__cell--heading">{this.props.options.aggregateBy}</th>
                                     <th className="dataChart__cell--heading">{this.props.options.calculateBy}</th>
-                                    <th className="dataChart__cell--heading">Percentage</th>
+                                    <th className="dataChart__cell--heading">%</th>
                                 </tr>
                             </thead>
                             <tbody className="dataChart__tableBody">
@@ -131,7 +131,7 @@ export class DataChart extends Component {
         return (
             <div key={this.props.theKey} className={this.props.options.bootStrapClass}>
                 <div className="wrapper wrapper__content--whiteBox">
-                    <h2 className={this.props.options.titleClass}>{title__text}</h2>
+                    <h2 className={'dataTable__title'}>{title__text}</h2>
                     <div className={bootStrapClass}>
                         <RC2 data={this.data} type={this.data.type} />
                     </div>

@@ -11,21 +11,18 @@ import { SlidingToolBox } from './../components/widgets/sliding-toolbox.js';
 /** ACCOUNTS PAYABLE
  *
  * Options config object
- * @param widgets {Array} Contains an array of objects for each Data Table that needs to be displayed.
+ * @param widgets {Array} Array of objects for each widget that needs to be displayed.
  *
  * Key/Value options available for the widget variable.
- *** @param webService {String} the URL to Web Service where data for that table can be fetched.
+ *** @param endpoint {String} the URL to Web Service where data for that table can be fetched.
  *** @param bootStrapClass {String} the bootstrap grid class to allow our table to be responsive.
- *** @param tableSize {String} CSS class that determines if the table should span full width or half-width.
- *** @param trClassName {String} Part of BootStrap table config, passes a class to the table's rows.
- *** @param tableHeaderClass {String} Part of BootStrap table config, passes a class to the table's header.
+ ***    col-12: Makes a full-width table
+ ***    col-lg-6 col-sm-12: Makes a half-width table on desktop and full width on mobile.
+ ***    Any bootstrap style grids apply. Check their documentation for all options.
+ ***    https://getbootstrap.com/docs/4.0/layout/grid/
  *** @param options {Object} This optional parameter allows to override default options for the widget.
  *** More information on what data can be passed via table options is available at src/components/modules/datatable.js
- *** @param tableHeaders {Array} The list of header/rows per table. Every row that needs to be displayed *MUST* appear
- *** here. Additionally, the DataTable widget will transform the camelCase names into Standard Case words by adding
- *** a space after every uppercase letter it finds.
- *** @param filterBy {Array} a list of the columns that will have a TextBox to filter results.
- *** @param sortBy {Array} a list of the columns that will have a TextBox to filter results.
+
  *
  * NOTE: Regarding filterBy and sortBy, the values provided MUST MATCH the names of the
  * key/columns received from the WS response, or else the association will fail.
@@ -33,16 +30,6 @@ import { SlidingToolBox } from './../components/widgets/sliding-toolbox.js';
  */
 
 const options = {
-    breadcrumbs: [{
-        name:'dashboard',
-        code:'7'
-    }, {
-        name:'financials',
-        code:'5'
-    },{
-        name:'Accounts Payable',
-        path:'#'
-    }],
     widgets : [{
         name: 'toolBox',
         endpoint: global.endpoints.toolBox.dev
@@ -50,9 +37,6 @@ const options = {
         name: 'dataTable',
         endpoint: global.endpoints.accountsPayable.dev,
         bootStrapClass : 'col-12',
-        tableSize: 'dataTable--fullWidth',
-        trClassName: 'dataTable__row--content',
-        tableHeaderClass: 'dataTable__row--header',
         options: {
             sizePerPageList: [ {
             text: '25', value: 25
@@ -62,28 +46,18 @@ const options = {
             text: '500', value: 500
             }],
             sizePerPage: 25
-        },
-        tableHeaders: ['id', 'supplier', 'address', 'city', 'province', 'telephone', 'balanceDue', 'lastInvoice'],
-        filterBy: ['id', 'supplier', 'address'],
-        sortBy: ['id', 'supplier', 'address', 'city', 'province', 'telephone', 'balanceDue', 'lastInvoice']
+        }
     }, {
         name: 'dataTable',
         title: 'cashDisbursement',
-        titleClass: 'dataTable__title',
         endpoint: global.endpoints.cashDisbursement.dev,
-        bootStrapClass: 'col-lg-6 col-sm-12',
-        tableSize: 'dataTable--halfWidth',
-        trClassName: 'dataTable__row--content',
-        tableHeaderClass: 'dataTable__row--header',
-        options: {},
-        tableHeaders: ['location', 'currentWeek', 'totalDue', 'currency', 'type'],
-        sortBy: ['location', 'totalDue']
+        bootStrapClass : 'col-lg-6 col-sm-12',
+        options: {}
     }, {
         name: 'dataChart',
         title: 'accountsPayableChart',
-        titleClass: 'dataTable__title',
         endpoint: global.endpoints.cashDisbursement.dev,
-        bootStrapClass: 'col-lg-6 col-sm-12',
+        bootStrapClass : 'col-lg-6 col-sm-12',
         type: 'pie',
         aggregateBy: 'type',
         calculateBy: 'totalDue',
@@ -92,21 +66,16 @@ const options = {
     }, {
         name: 'dataTable',
         title: 'Testing Table',
-        titleClass: 'dataTable__title',
         endpoint: global.endpoints.summary.dev,
-        bootStrapClass: 'col-lg-6 col-sm-12',
-        tableSize: 'dataTable--halfWidth',
-        trClassName: 'dataTable__row--content',
-        tableHeaderClass: 'dataTable__row--header',
-        options: {},
-        tableHeaders: ['name', 'type', 'balance',  'checkPaid', 'address', 'city', 'province', 'currentPeriodAMT', 'lastCheckDate', 'lastInvoiceDate', 'supNum', 'telephone', 'ytdamount'],
-        sortBy: ['name', 'balance', 'city']
+        bootStrapClass : 'col-lg-6 col-sm-12',
+        options: {}
     }, {
         name: 'slidingToolbox',
         endpoint: global.endpoints.sliding.dev
     }
-]
-};
+]};
+
+
 
 export class AccountsPayable extends Component {
 
@@ -180,6 +149,9 @@ export class AccountsPayable extends Component {
                             );
                         }
                     }
+
+                /* Sort widgets by order their in the config object. */
+                this.widgets.sort(function(a, b) {return (a.key > b.key) ? 1 : ((b.key > a.key) ? -1 : 0);} );
 
                 /*
                  * Saving the widget's to the component's state allows

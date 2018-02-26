@@ -31,9 +31,9 @@ export function SaveSessionDetails(language, filename, user) {
 	 * TODO: Check to see if this plugin would be helpful for this operation
 	 * https://ciphertrick.com/demo/jquerysession/
 	 */
-	language = language ? language : '';
+	language = language ? language : GetLanguage(); //Get DefaultLanguage func
 	filename = filename ? filename : '';
-	user = user ? user : '';
+	user = user ? user : ''; //Get DefaultLanguage user
 
 	$.ajax({
 		url: global.endpoints.session.dev,
@@ -66,6 +66,7 @@ export function HandleRegularLink(link) {
 };
 
 export function GetLanguage() {
+	// TODO: Switch this to either obtain from session or default to english
     var defaultLanguage = 'en_CA';
     return defaultLanguage;
 }
@@ -74,7 +75,7 @@ export function GetLanguage() {
  /**
    * Retrieve and process data for any widget.
    * @param key [Integer] React's internal variable to identify items in an array.
-   * @param widget [Object] An individual in the options constant found in the component.
+   * @param widget [Object] The widget's configuration as it appears in the options constant.
    * @param cb [Function] A call back function that allows us to return data within the scope of the asynchronous function.
    */
  export function GetWidget(key, widget, cb) {
@@ -110,14 +111,15 @@ export function GetLanguage() {
   * 3) Print the variable__text as you normally would.
   *
   */
- export function Localization(dictionary_entry) {
+ export function Localization(entry) {
      var translation;
      var phrase;
+	 var dictionary_entry;
      var defaultLang = GetLanguage();
 
-     if (dictionary_entry && dictionary_entry.length) {
+     if (entry) {
 
-         dictionary_entry = Camelize(dictionary_entry.trim());
+         dictionary_entry = Camelize(entry.trim());
 
          phrase = global.languages[dictionary_entry];
 
@@ -128,10 +130,13 @@ export function GetLanguage() {
                  translation = phrase[1];
              }
          } else {
-             translation = '';
+			 /* Default to the text sent via parameter if no translation is available */
+			 translation = entry;
          }
 
-     }
+     } else {
+		 translation = entry;
+	 }
      return translation;
  }
 
@@ -193,15 +198,6 @@ export function WhichDevice() {
 
     return device;
 }
-
-
-/**
- * Sets the default company in the global variable per result received from Web Service.
- */
-export function SetCompany(company) {
-    global.company = company;
-}
-
 
 /**
  * Sets the default company in the global variable per result received from Web Service.
