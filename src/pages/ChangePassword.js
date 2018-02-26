@@ -24,19 +24,17 @@ export class ChangePassword extends Component {
     render() {
         return (
             <div>
-                <section className="wrapper">
-                    <div className="container-fluid wrapper__content--login">
-                        <h2 className="login__title">Update your credentials</h2>
-                        <form>
-                            <input name="username" className="login__input" type="text" placeholder="Username"/>
-                            <input name="password" className="login__input" type="password" placeholder="Old Password"/>
-                            <input name="newPassword" className="login__input" type="password" placeholder="New Password"/>
-                            <input name="newPassword2" className="login__input" type="password" placeholder="Confirm New Password"/>
-                            <input className="login__submit" type="submit" value="Submit"/>
-                            <a className="login__pwChange login__pwChange--margin" href="/login">Go back</a>
-                        </form>
-                    </div>
-                </section>
+                <div className="container-fluid wrapper__content--login">
+                    <h2 className="login__title">Update your credentials</h2>
+                    <form>
+                        <input name="username" className="login__input" type="text" placeholder="Username"/>
+                        <input name="password" className="login__input" type="password" placeholder="Old Password"/>
+                        <input name="newPassword" className="login__input" type="password" placeholder="New Password"/>
+                        <input name="newPassword2" className="login__input" type="password" placeholder="Confirm New Password"/>
+                        <input className="login__submit" type="submit" value="Submit"/>
+                        <a className="login__pwChange login__pwChange--margin" href="/login">Go back</a>
+                    </form>
+                </div>
             </div>
         );
     }

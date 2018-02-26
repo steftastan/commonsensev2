@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import './global.variables.js';
-import { Camelize, GetCompany, SaveSessionDetails } from './helper.functions.js';
+import { Camelize, GetCompany, GetSession, SetSession } from './helper.functions.js';
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Header } from './components/layout/header.js';
@@ -26,7 +26,8 @@ export class App extends Component {
     constructor(props) {
       super(props);
       this.componentList = [];
-      this.SaveSessionDetails= SaveSessionDetails;
+      this.GetSession = GetSession;
+      this.SetSession = SetSession;
       this.GetCompany = GetCompany;
       this.Camelize = Camelize;
       this.updateCompany = this.updateCompany.bind(this);
@@ -119,7 +120,7 @@ export class App extends Component {
                 });
 
             /* Set default company*/
-            // this.SaveSessionDetails(null, this.defaultCompany.name, null);
+            this.SetSession(null, this.defaultCompany.name, null);
 
         }.bind(this));
 
@@ -140,7 +141,7 @@ export class App extends Component {
         });
 
         /* Update default company */
-        this.SaveSessionDetails(null, this.defaultCompany.name, null);
+        this.SetSession(null, this.defaultCompany.name, null);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -152,6 +153,7 @@ export class App extends Component {
     render() {
         var code;
         var links = {};
+        var page = [];
         var staticPages = [
             {component: Login, path: 'login'},
             {component: ChangePassword, path: 'change-password'},
@@ -178,26 +180,39 @@ export class App extends Component {
                  * Each category will render depending on the value of
                  * the code parameter passed via URL.
                  */
-                this.routesToComponents.push(<Route
-                    exact
-                    key={key}
-                    path={global.paths.devReactLink+global.paths.devCategoryLinks+global.paths.devCategoryLinksParam}
-                    render={(code) => (
-                        <Dashboard {...code} />
-                    )}
-                />);
+                this.routesToComponents.push(
+                    <Route
+                        exact
+                        key={key}
+                        path={global.paths.devReactLink+global.paths.devCategoryLinks+global.paths.devCategoryLinksParam}
+                        render={(code) => (
+                            <Dashboard {...code} />
+                        )}
+                    />);
 
                 if (item.sublinks && item.sublinks.length) {
                     item.sublinks.map(function(comp, key) {
                         try {
                             let Component = require('./pages/'+this.Camelize(comp.name, true)+'.js').default;
-                            this.routesToComponents.push(<Route
-                                exact
-                                key={key}
-                                path={global.paths.dev+comp.url}
-                                component={Component} />);
+                            page = {
+                                code: item.code,
+                                category: item.name,
+                                name: comp.name,
+                                url: global.paths.dev+comp.url,
+                                isPage: true
+                            };
+
+                            this.routesToComponents.push(
+                                <Route
+                                    exact
+                                    key={key}
+                                    path={global.paths.dev+comp.url}
+                                    render={(props) => (
+                                        <Component {...props} page={page} />
+                                    )}
+                                />);
                         } catch(err) {
-                            /* Render dashboard in case of pages that don't exist yet
+                            /** Render dashboard in case of pages that don't exist yet
                              * TODO: Uncomment the console message to see a list components that still need to be created.
                              * console.log('Failed to create a route for the Component: '+this.Camelize(comp.name, true));
                              */
@@ -225,7 +240,7 @@ export class App extends Component {
                         defaultCompanyName={this.state.defaultCompany}
                         defaultCompanyIcon={this.state.logoPath} />
                     <Switch>
-                         {this.routesToComponents}
+                        {this.routesToComponents}
                     </Switch>
                  </section>
             </div>

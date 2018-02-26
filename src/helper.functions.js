@@ -26,11 +26,8 @@ import './global.variables.js';
  * @param filename [String] the selected company
  * @param user [String] the corresponding username
  */
-export function SaveSessionDetails(language, filename, user) {
-	/**
-	 * TODO: Check to see if this plugin would be helpful for this operation
-	 * https://ciphertrick.com/demo/jquerysession/
-	 */
+export function SetSession(language, filename, user) {
+
 	language = language ? language : GetLanguage(); //Get DefaultLanguage func
 	filename = filename ? filename : '';
 	user = user ? user : ''; //Get DefaultLanguage user
@@ -42,7 +39,24 @@ export function SaveSessionDetails(language, filename, user) {
 		data: {language: language, filename: filename, user: user},
 		success: function(data, status) {
 			console.log(data);
-			window.location.reload();
+		},
+		error: function(xhr, status, err) {
+			console.error(xhr, err.toString());
+		}
+   });
+}
+
+/**
+ * Function that gets session details
+ */
+export function GetSession() {
+
+	$.ajax({
+		url: global.endpoints.session.dev,
+		method: 'GET',
+		cache: false,
+		success: function(data, status) {
+			console.log(data);
 		},
 		error: function(xhr, status, err) {
 			console.error(xhr, err.toString());
@@ -58,7 +72,7 @@ export function HandlePopupLink(link, windowName, width, height) {
 	windowName = windowName ? windowName : '';
 	width = width ? width : 1024;
 	height = height ? height : 768;
-	 window.open(global.paths.devServletLink + link, windowName, "height=" + height + ",width=" + width + ",resizeable=yes,menubar=0,toolbar=0,location=0,directories=0,scrollbars=1,status=0");
+	window.open(global.paths.devServletLink + link, windowName, "height=" + height + ",width=" + width + ",resizeable=yes,menubar=0,toolbar=0,location=0,directories=0,scrollbars=1,status=0");
 };
 
 export function HandleRegularLink(link) {

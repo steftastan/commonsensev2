@@ -43,10 +43,7 @@ export class Dashboard extends Component {
     componentDidUpdate(prevProps, prevState) {
         const {match} = this.props;
         const id = match.params.code;
-        var crumbs = [{
-            name:'Personal Preferences', //Default Category
-            code: 7 //Default code
-        }];
+        var crumbs = {};
 
         if (prevState.data !== this.state.data) {
             for (var i = 0; i < this.state.data.length; i++) {
@@ -56,9 +53,7 @@ export class Dashboard extends Component {
                      * Build breadcrumb object
                      * Don't build a breadcrumb for the Personal Preference Dashboard
                      */
-                    if (crumbs[0].code !== this.state.data[i].code) {
-                        crumbs.push({name: this.state.data[i].name, code: this.state.data[i].code});
-                    }
+                    crumbs = {name: this.state.data[i].name, code: this.state.data[i].code, isPage: false};
 
                     this.setState({
                         dashboardLinks : this.state.data[i].sublinks,
@@ -106,11 +101,9 @@ export class Dashboard extends Component {
         return (
             <div>
                 <BreadCrumbs breadcrumbs={this.state.breadcrumbs}/>
-                <section className="wrapper">
-                    <div className="container-fluid wrapper__content--categoryGrid">
-                        {dashboardLinks}
-                    </div>
-                </section>
+                <div className="container-fluid wrapper__content--categoryGrid">
+                    {dashboardLinks}
+                </div>
             </div>
         );
     }

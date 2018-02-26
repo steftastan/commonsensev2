@@ -126,15 +126,9 @@ export class AccountsPayable extends Component {
                         // if there is a toolbox
                         if (widget.name === 'toolBox') {
                             this.widgets.push(
-                                <BreadCrumbs
-                                    index={key}
-                                    key={key}
-                                    breadcrumbs={options.breadcrumbs}>
-                                    <ToolBox
-                                        key={key}
-                                        options={widget}
-                                        results={result} />
-                                </BreadCrumbs>
+                                <div key={key} className="wrapper wrapper__content--widgetToolBox">
+                                    <ToolBox key={key} options={widget} results={result} />
+                                </div>
                             );
                         }
 
@@ -168,14 +162,17 @@ export class AccountsPayable extends Component {
      * Setting this flag to true allows the component to begin loading the components.
      */
     componentDidMount() {
+
         this.setState({loaded:true});
     }
 
     render() {
         var content = (this.state.widgets && this.state.widgets.length ? <div>{this.state.widgets}</div> : <div className="spinner"></div>);
 
+        console.log(this.props.page);
         return (
             <div>
+                <BreadCrumbs breadcrumbs={this.props.page}/>
                 {content}
             </div>
         );
