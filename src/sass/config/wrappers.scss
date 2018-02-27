@@ -49,6 +49,7 @@
         top: 105px;
         left: 0;
         width: 100%;
+        margin-top: 0;
         -webkit-transition: all 0.3s ease-in;
         -moz-transition: all 0.3s ease-in;
         -o-transition: all 0.3s ease-in;
@@ -88,6 +89,27 @@
     @include desktop {
     }
 }
+
+.wrapper__content--widgetToolBox {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    border-radius: 5px;
+
+    @include mobile {
+        margin: 0;
+        display: inline-block;
+        position: fixed;
+        width: 100%;
+        top: 50px;
+        z-index: 999999;
+    }
+
+    @include tablet {
+        display: none;
+    }
+}
+
 
 .wrapper__content--categoryGrid {
     border-radius: 5px;

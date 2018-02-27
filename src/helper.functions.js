@@ -2,7 +2,6 @@ import React from 'react';
 import $ from 'jquery';
 import './global.languages.js';
 import './global.variables.js';
- /*TODO lang*/
 
 /**
  * HELPER FUNCTION LIBRARY.
@@ -26,14 +25,11 @@ import './global.variables.js';
  * @param filename [String] the selected company
  * @param user [String] the corresponding username
  */
-export function SaveSessionDetails(language, filename, user) {
-	/**
-	 * TODO: Check to see if this plugin would be helpful for this operation
-	 * https://ciphertrick.com/demo/jquerysession/
-	 */
-	language = language ? language : '';
+export function SetSession(language, filename, user) {
+
+	language = language ? language : GetLanguage(); //Get DefaultLanguage func
 	filename = filename ? filename : '';
-	user = user ? user : '';
+	user = user ? user : ''; //Get DefaultLanguage user
 
 	$.ajax({
 		url: global.endpoints.session.dev,
@@ -42,7 +38,24 @@ export function SaveSessionDetails(language, filename, user) {
 		data: {language: language, filename: filename, user: user},
 		success: function(data, status) {
 			console.log(data);
-			window.location.reload();
+		},
+		error: function(xhr, status, err) {
+			console.error(xhr, err.toString());
+		}
+   });
+}
+
+/**
+ * Function that gets session details
+ */
+export function GetSession() {
+
+	$.ajax({
+		url: global.endpoints.session.dev,
+		method: 'GET',
+		cache: false,
+		success: function(data, status) {
+			console.log(data);
 		},
 		error: function(xhr, status, err) {
 			console.error(xhr, err.toString());
@@ -58,86 +71,39 @@ export function HandlePopupLink(link, windowName, width, height) {
 	windowName = windowName ? windowName : '';
 	width = width ? width : 1024;
 	height = height ? height : 768;
-	 window.open(global.paths.devServletLink + link, windowName, "height=" + height + ",width=" + width + ",resizeable=yes,menubar=0,toolbar=0,location=0,directories=0,scrollbars=1,status=0");
+	window.open(global.paths.devServletLink + link, windowName, "height=" + height + ",width=" + width + ",resizeable=yes,menubar=0,toolbar=0,location=0,directories=0,scrollbars=1,status=0");
 };
 
 export function HandleRegularLink(link) {
-	window.location.href = global.paths.dev+link;
+	if (link.indexOf("react") != -1) {
+		window.location.href = global.paths.dev+link;
+	} else {
+		window.location.href = global.paths.devServletLink+link;
+	}
+
 };
 
 export function GetLanguage() {
+	// TODO: Switch this to either obtain from session or default to english
     var defaultLanguage = 'en_CA';
     return defaultLanguage;
 }
 
 
  /**
-   * Allows to build an AJAX call object depending on the parameters passed.
-   * @param widget [Object] The widget's config as it appears in the options constant.
+   * Retrieve and process data for any widget.
+   * @param key [Integer] React's internal variable to identify items in an array.
+   * @param widget [Object] The widget's configuration as it appears in the options constant.
+   * @param cb [Function] A call back function that allows us to return data within the scope of the asynchronous function.
    */
- export function RequestWidget(widget) {
-     var arr = [];
-	 //var request = $.getJSON(widget.endpoint);
-	 var d = $.Deferred();
-     var request = {
-         	request: $.ajax({
-            url: widget.endpoint,
-            dataType: 'json',
-            cache: false,
-            success: function(data, status) {
-                 /**
-                  * Successful operation, but we don't do anything here
-                  * rather, we pass an array of ajax calls to our async function.
-                  * where we can manipulate the data after they have all executed.
-                  */
-				  d.resolve(data);
-            },
-            error: function(xhr, status, err) {
-                console.error(xhr, err.toString());
-				d.resolve();
-            },
-        }),
-        widget: widget || {}
-    };
-    return d;
- }
-
- /** https://css-tricks.com/multiple-simultaneous-ajax-requests-one-callback-jquery/
-   * Although the guide referenced above says these AJAX queries will
-   * run in parallel, they actually run in waterfall format, so if the first one fails,
-   * the rest will NOT be excecuted.
-   *
-   * We structured our code like this because we have to avoid at all costs calling the
-   * setState() function too many times in the application, because doing so will trigger
-   * a re-render of the page.
-   *
-   * We fetch all our data from our Endpoint. We return a callback function to allow
-   * each page to render their corresponding components.
-   *
-   */
-export function Async(that, requestsArray, cb) {
-    var widgets = [];
-    var data = {};
-	//console.log(requestsArray);
-    $.when(requestsArray).then(function() {
-        for (var i = 0; i < requestsArray.length; i++) {
-
-			console.log(requestsArray[i].request);
-
-			if (requestsArray[i].request.status == 200 && requestsArray[i].request.readyState === 4) {
-				if (requestsArray[i].request.responseJSON.results instanceof Array) {
-					widgets.push({widget: requestsArray[i].widget, arr: requestsArray[i].request.responseJSON.results});
-				} else {
-					widgets.push({widget: requestsArray[i].widget, arr: Object.values(requestsArray[i].request.responseJSON.results)});
-				}
-			}
-
-        }
-        data = {that: that, widgets: widgets};
-        return data;
-    }).done(function(data) {
-        cb(data);
-    });
+ export function GetWidget(key, widget, cb) {
+	 $.getJSON(widget.endpoint, function(data) {
+		 // Process data, some of it may be the value pertaining to a results property.
+		 // Additionally, some data may or be not already be in array format. We tranform it to ensure we always return an Array.
+		 data = data.hasOwnProperty('results') ? data.results : data;
+		 data = (!(data instanceof Array)) ?  Object.values(data) : data ;
+		 cb(key, data, widget);
+	 });
 }
 
  /**
@@ -163,14 +129,15 @@ export function Async(that, requestsArray, cb) {
   * 3) Print the variable__text as you normally would.
   *
   */
- export function Localization(dictionary_entry) {
+ export function Localization(entry) {
      var translation;
      var phrase;
+	 var dictionary_entry;
      var defaultLang = GetLanguage();
 
-     if (dictionary_entry && dictionary_entry.length) {
+     if (entry) {
 
-         dictionary_entry = Camelize(dictionary_entry.trim());
+         dictionary_entry = Camelize(entry.trim());
 
          phrase = global.languages[dictionary_entry];
 
@@ -181,10 +148,13 @@ export function Async(that, requestsArray, cb) {
                  translation = phrase[1];
              }
          } else {
-             translation = '';
+			 /* Default to the text sent via parameter if no translation is available */
+			 translation = entry;
          }
 
-     }
+     } else {
+		 translation = entry;
+	 }
      return translation;
  }
 
@@ -246,15 +216,6 @@ export function WhichDevice() {
 
     return device;
 }
-
-
-/**
- * Sets the default company in the global variable per result received from Web Service.
- */
-export function SetCompany(company) {
-    global.company = company;
-}
-
 
 /**
  * Sets the default company in the global variable per result received from Web Service.

@@ -78,16 +78,6 @@ export class ToolBox extends Component {
         }
     }
 
-    /* Allow the navigation to close if the user clicks anywhere on the window but the navigation */
-    clickAnywhereToClose(event) {
-        if(this.state.open) {
-            this.setState({
-                open: false
-            });
-            this.toolNav.classList.remove(this.toggleClass);
-        }
-    }
-
     componentWillMount() {
         /**
          * Obtain ToolBox data in order to build navigation
@@ -106,6 +96,7 @@ export class ToolBox extends Component {
 
     componentDidMount() {
         var navButton = document.getElementById(this.toolButtonId);
+        document.addEventListener('mousedown', this.clickAnywhereToClose, false);
 
         /* Add click event to the tool box button on mobile */
         navButton.addEventListener('mousedown', this.toggleNav, false);
@@ -129,6 +120,17 @@ export class ToolBox extends Component {
 
                     return false;
                 });
+
+                $("#toolBox").detach().appendTo("#toolBoxHolder");
+            });
+
+            $(document).mouseup(function(e) {
+                var container = $(".navbar a.toolBox__toggle");
+
+                // if the target of the click isn't the container nor a descendant of the container
+                if (!container.is(e.target) && container.has(e.target).length === 0) {
+                    $('.nav li.open').removeClass("open");
+                }
             });
         }
     }
@@ -142,7 +144,6 @@ export class ToolBox extends Component {
         if (this.WhichDevice() === 'mobile') {
             this.toolBoxWrapper.addEventListener('click', this.animateToolBox);
         }
-
     }
 
     /**
@@ -239,7 +240,7 @@ export class ToolBox extends Component {
         }
 
         return (
-            <section className="toolBox">
+            <section id="toolBox" className="toolBox">
                 <div id="toolButton" className="grid__item leftnav__ellipsis leftnav--desktopHidden fa fa-ellipsis-v"></div>
                 <div id="toolBoxWrapper" className={"toolBox__wrapper " + this.wrapperClass}>
                     <ul id="firstToolBox" className={this.navClass + " toolBox__group"}  role="navigation">

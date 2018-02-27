@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './../../global.variables.js';
 import $ from 'jquery';
 import { Link } from 'react-router-dom';
-import { Localization, WhichDevice, GetLanguage, GetCompany, SaveSessionDetails } from './../../helper.functions.js';
+import { Localization, WhichDevice, GetLanguage, GetCompany, GetSession, SetSession, HandleRegularLink } from './../../helper.functions.js';
 
 /**
  * BREADCRUMBS LAYOUT COMPONENT
@@ -20,7 +20,8 @@ export class BreadCrumbs extends Component {
       this.WhichDevice = WhichDevice;
       this.GetLanguage = GetLanguage;
       this.GetCompany = GetCompany;
-      this.SaveSessionDetails = SaveSessionDetails;
+      this.SetSession = SetSession;
+      this.HandleRegularLink = HandleRegularLink;
       this.toggleNav = this.toggleNav.bind(this);
       this.toggleLayout = this.toggleLayout.bind(this);
       this.clickAnywhereToClose = this.clickAnywhereToClose.bind(this);
@@ -67,7 +68,7 @@ export class BreadCrumbs extends Component {
         /** Verify the breadcrumb props received from the parent Component
          * and assign them to this Component's state
          */
-        if (nextProps.breadcrumbs && nextProps.breadcrumbs.length) {
+        if (nextProps.breadcrumbs) {
             this.setState({
                 breadcrumbs : nextProps.breadcrumbs,
                 trail: this.buildCrumbs(nextProps.breadcrumbs)
@@ -129,7 +130,7 @@ export class BreadCrumbs extends Component {
                     });
 
                     /* Language is saved to session here */
-                    this.SaveSessionDetails(languages[i].id);
+                    this.SetSession(languages[i].id);
 
                     clickedLang = document.getElementById(languages[i].id);
                     if (!clickedLang.classList.contains(this.selectedClass)) {
@@ -148,27 +149,39 @@ export class BreadCrumbs extends Component {
         }
     }
 
-    buildCrumbs(crumbs) {
+    buildCrumbs(crumb) {
         var trail = [];
         var caret = '';
-        var link;
-        var link__text;
 
-        return trail = crumbs.map(function(item, key) {
-            link__text = this.Localization(item.name);
+        var crumbs = [{
+            name:'Personal Preferences',
+            code: 7,
+            url:  global.paths.devReactLink+global.paths.devCategoryLinks+'7'
+        }];
 
-            if (item.hasOwnProperty('code')) {
-                link = global.paths.devReactLink+global.paths.devCategoryLinks+item.code;
+        if (crumb.code !== 7) {
+            crumb.name = this.Localization(crumb.name);
+
+            if (crumb.hasOwnProperty('code') && !crumb.isPage) {
+                crumb['url'] = global.paths.devReactLink+global.paths.devCategoryLinks+crumb.code;
+            } else if (crumb.hasOwnProperty('code') && crumb.isPage) {
+                crumbs.push({name: crumb.category, url: global.paths.devReactLink+global.paths.devCategoryLinks+crumb.code});
+                crumb['url'] = crumb.url;
             } else {
-                link = '#';
+                crumb['url'] = '#';
             }
 
-            if (key > 0 && key < crumbs.length) caret = 'fa fa-caret-right';
+            crumbs.push(crumb);
+        }
 
+
+        return trail = crumbs.map(function(item, key) {
+            if (key > 0 && key < crumbs.length) caret = 'fa fa-caret-right';
+            this.HandleRegularLink.bind(this, item.url);
             return (
-                <a key={key} className={"breadcrumbs__link"} href={link}>
+                <a key={key} className={"breadcrumbs__link"}>
                     <span className={"breadcrumbs__caret " + caret}></span>
-                    {link__text}
+                    {item.name}
                 </a>
             );
         }, this);

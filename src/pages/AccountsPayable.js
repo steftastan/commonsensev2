@@ -1,6 +1,7 @@
 import './../global.variables.js';
+import $ from 'jquery';
 import React, { Component } from 'react';
-import { RequestWidget, Async, ObjectToArray } from './../helper.functions.js';
+import { GetWidget, ObjectToArray } from './../helper.functions.js';
 import { BreadCrumbs } from './../components/layout/breadcrumbs.js';
 import { ToolBox } from './../components/widgets/toolbox.js';
 import { DataTable } from './../components/widgets/datatable.js';
@@ -10,21 +11,18 @@ import { SlidingToolBox } from './../components/widgets/sliding-toolbox.js';
 /** ACCOUNTS PAYABLE
  *
  * Options config object
- * @param widgets {Array} Contains an array of objects for each Data Table that needs to be displayed.
+ * @param widgets {Array} Array of objects for each widget that needs to be displayed.
  *
  * Key/Value options available for the widget variable.
- *** @param webService {String} the URL to Web Service where data for that table can be fetched.
+ *** @param endpoint {String} the URL to Web Service where data for that table can be fetched.
  *** @param bootStrapClass {String} the bootstrap grid class to allow our table to be responsive.
- *** @param tableSize {String} CSS class that determines if the table should span full width or half-width.
- *** @param trClassName {String} Part of BootStrap table config, passes a class to the table's rows.
- *** @param tableHeaderClass {String} Part of BootStrap table config, passes a class to the table's header.
+ ***    col-12: Makes a full-width table
+ ***    col-lg-6 col-sm-12: Makes a half-width table on desktop and full width on mobile.
+ ***    Any bootstrap style grids apply. Check their documentation for all options.
+ ***    https://getbootstrap.com/docs/4.0/layout/grid/
  *** @param options {Object} This optional parameter allows to override default options for the widget.
  *** More information on what data can be passed via table options is available at src/components/modules/datatable.js
- *** @param tableHeaders {Array} The list of header/rows per table. Every row that needs to be displayed *MUST* appear
- *** here. Additionally, the DataTable widget will transform the camelCase names into Standard Case words by adding
- *** a space after every uppercase letter it finds.
- *** @param filterBy {Array} a list of the columns that will have a TextBox to filter results.
- *** @param sortBy {Array} a list of the columns that will have a TextBox to filter results.
+
  *
  * NOTE: Regarding filterBy and sortBy, the values provided MUST MATCH the names of the
  * key/columns received from the WS response, or else the association will fail.
@@ -32,16 +30,6 @@ import { SlidingToolBox } from './../components/widgets/sliding-toolbox.js';
  */
 
 const options = {
-    breadcrumbs: [{
-        name:'dashboard',
-        code:'7'
-    }, {
-        name:'financials',
-        code:'5'
-    },{
-        name:'Accounts Payable',
-        path:'#'
-    }],
     widgets : [{
         name: 'toolBox',
         endpoint: global.endpoints.toolBox.dev
@@ -49,9 +37,6 @@ const options = {
         name: 'dataTable',
         endpoint: global.endpoints.accountsPayable.dev,
         bootStrapClass : 'col-12',
-        tableSize: 'dataTable--fullWidth',
-        trClassName: 'dataTable__row--content',
-        tableHeaderClass: 'dataTable__row--header',
         options: {
             sizePerPageList: [ {
             text: '25', value: 25
@@ -61,28 +46,18 @@ const options = {
             text: '500', value: 500
             }],
             sizePerPage: 25
-        },
-        tableHeaders: ['id', 'supplier', 'address', 'city', 'province', 'telephone', 'balanceDue', 'lastInvoice'],
-        filterBy: ['id', 'supplier', 'address'],
-        sortBy: ['id', 'supplier', 'address', 'city', 'province', 'telephone', 'balanceDue', 'lastInvoice']
+        }
     }, {
         name: 'dataTable',
         title: 'cashDisbursement',
-        titleClass: 'dataTable__title',
         endpoint: global.endpoints.cashDisbursement.dev,
-        bootStrapClass: 'col-lg-6 col-sm-12',
-        tableSize: 'dataTable--halfWidth',
-        trClassName: 'dataTable__row--content',
-        tableHeaderClass: 'dataTable__row--header',
-        options: {},
-        tableHeaders: ['location', 'currentWeek', 'totalDue', 'currency', 'type'],
-        sortBy: ['location', 'totalDue']
+        bootStrapClass : 'col-lg-6 col-sm-12',
+        options: {}
     }, {
         name: 'dataChart',
         title: 'accountsPayableChart',
-        titleClass: 'dataTable__title',
         endpoint: global.endpoints.cashDisbursement.dev,
-        bootStrapClass: 'col-lg-6 col-sm-12',
+        bootStrapClass : 'col-lg-6 col-sm-12',
         type: 'pie',
         aggregateBy: 'type',
         calculateBy: 'totalDue',
@@ -91,117 +66,115 @@ const options = {
     }, {
         name: 'dataTable',
         title: 'Testing Table',
-        titleClass: 'dataTable__title',
         endpoint: global.endpoints.summary.dev,
-        bootStrapClass: 'col-lg-6 col-sm-12',
-        tableSize: 'dataTable--halfWidth',
-        trClassName: 'dataTable__row--content',
-        tableHeaderClass: 'dataTable__row--header',
-        options: {},
-        tableHeaders: ['name', 'type', 'balance',  'checkPaid', 'address', 'city', 'province', 'currentPeriodAMT', 'lastCheckDate', 'lastInvoiceDate', 'supNum', 'telephone', 'ytdamount'],
-        sortBy: ['name', 'balance', 'city']
+        bootStrapClass : 'col-lg-6 col-sm-12',
+        options: {}
     }, {
         name: 'slidingToolbox',
         endpoint: global.endpoints.sliding.dev
     }
-]
-};
+]};
+
+
 
 export class AccountsPayable extends Component {
 
     constructor(props) {
       super(props);
-      this.Async = Async;
-      this.RequestWidget = RequestWidget;
+      this.GetWidget = GetWidget;
       this.toolBox = [];
       this.widgets = [];
+      this.data = [];
       this.state = {
-          widgets: []
+          widgets: [],
+          loaded: false
       };
     }
 
-    componentDidMount() {
-        var requestsArray = [];
-        var componentArray = [];
-        var arr = [];
+    /**
+     * Perform all ajax tasks here
+     * Maybe update the state. in any case the widgets should render and data should be applied on componentDidUpdate
+     */
 
+     componentDidUpdate(prevProps, prevState) {
+       var data = {};
+       var result = {};
 
-        /** Extract the data table information from the options array */
-        if (options && options.widgets) {
-            for (var i = 0; i < options.widgets.length; i++) {
-                // add logic to tell apart components here
-                if (options.widgets[i].name && options.widgets[i].endpoint) {
-                    requestsArray.push(this.RequestWidget(options.widgets[i]));
-                }
-            }
+       /**
+        * Begin the process of loading widgets after the component has finished mounting.
+        */
+       if (prevState.loaded !== this.state.loaded) {
+           for (var i = 0; i < options.widgets.length; i++) {
+               this.GetWidget(i, options.widgets[i], function(key, result, widget) {
 
-            /**
-            * Build the page here with all the widgets provided in the config.
-            * @param this {Object} emcompasses the entire scope of this component.
-            * @param requestsArray {Array} An array of AJAX requests to be executed on the when()
-            * clause of the async function
-            * @param function {Function} Anonymous function The callback function to execute when the JavaScript promise returns a positive result.
-            **/
+                   if (result) {
+                       /**
+                        * Decide which components to display based on what was established in the options object.
+                        */
 
-            this.Async(this, requestsArray, function(data) {
-                var widgets = [];
+                        // if there are widgets of type data table
+                        if (widget.name === 'dataTable') {
+                            this.widgets.push(<DataTable index={key} key={key} options={widget} results={result} />);
+                        }
 
-                /* TODO: Ocassionally this function does not return all of the widgets
-                 * specified in the config table. It could be due to the async operation taking too
-                 * long before the object is returned. It could also be due to data being parsed incorrectly.
-                 * TIP: Find a way to return the assembled data only after it has gone through all
-                 * widgets in the config.
-                 * I may have to get rid of the async function because RequestWidget is making the request anyways.
-                 */
+                        // if there are widgets of type graphic chart
+                        if (widget.name === 'dataChart') {
+                            this.widgets.push(<DataChart index={key} key={key} options={widget} results={result} />);
+                        }
 
-                 console.log(data);
-
-                if (data) {
-                    /* Set the state variables for all the information obtained in the waterfall of AJAX calls */
-                    for (var i = 0; i < data.widgets.length; i++) {
-
-                        console.log('async but in accounts payable');
-                        if (data.widgets[i].widget.name === 'toolBox' && data.widgets[i].arr.length) {
-                            widgets.push(
-                                <BreadCrumbs
-                                    index={i}
-                                    key={i}
-                                    breadcrumbs={options.breadcrumbs}>
-                                    <ToolBox
-                                        key={i}
-                                        options={data.widgets[i].widget}
-                                        results={data.widgets[i].arr} />
-                                </BreadCrumbs>
+                        // if there is a toolbox
+                        if (widget.name === 'toolBox') {
+                            this.widgets.push(
+                                <div key={key} className="wrapper wrapper__content--widgetToolBox">
+                                    <ToolBox key={key} options={widget} results={result} />
+                                </div>
                             );
                         }
 
-                        // if there are widget of datatable type
-                        if (data.widgets[i].widget.name === 'dataTable' && data.widgets[i].arr.length) {
-                            widgets.push(<DataTable index={i} key={i} options={data.widgets[i].widget} results={data.widgets[i].arr} />);
-                        }
-
-                        // if there are widgets of type chart
-                        if (data.widgets[i].widget.name === 'dataChart' && data.widgets[i].arr.length) {
-                            widgets.push(<DataChart index={i} key={i} options={requestsArray[i].widget} results={data.widgets[i].arr} />);
-                        }
-
                         // if there are widgets of type sliding tool box
-                        if (data.widgets[i].widget.name === 'slidingToolbox' && data.widgets[i].arr.length) {
-                            widgets.push(<SlidingToolBox index={i} key={i} options={requestsArray[i].widget} results={data.widgets[i].arr} />);
+                        if (widget.name === 'slidingToolbox') {
+                            this.widgets.push(
+                                <SlidingToolBox
+                                    index={key}
+                                    key={key}
+                                    options={widget}
+                                    results={result} />
+                            );
                         }
                     }
-                }
 
-                data.that.setState({widgets: widgets});
-            });
+                /* Sort widgets by order their in the config object. */
+                this.widgets.sort(function(a, b) {return (a.key > b.key) ? 1 : ((b.key > a.key) ? -1 : 0);} );
+
+                /*
+                 * Saving the widget's to the component's state allows
+                 * us to trigger a component re-render so we can replace
+                 * the loading icon with our data.
+                 */
+                this.setState({widgets: this.widgets});
+                }.bind(this));
+            }
         }
+     }
+
+    /*
+     * Setting this flag to true allows the component to begin loading the components.
+     */
+    componentDidMount() {
+
+        this.setState({loaded:true});
     }
 
     render() {
-        console.log('fjflskdfjsl');
+        var content = (this.state.widgets && this.state.widgets.length ? <div>{this.state.widgets}</div> : <div className="spinner"></div>);
+
+        console.log(this.props.page);
         return (
             <div>
-                {this.state.widgets}
+                <BreadCrumbs breadcrumbs={this.props.page}>
+                    <div id="toolBoxHolder" className="toolBoxHolder"></div>
+                </BreadCrumbs>
+                {content}
             </div>
         );
     }

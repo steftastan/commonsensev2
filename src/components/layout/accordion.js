@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './../../global.variables.js';
-import { Localization, GetCompany, SetCompany, HandleWebFacingLink, HandlePopupLink, HandleRegularLink} from './../../helper.functions.js';
+import { Localization, GetCompany, HandleWebFacingLink, HandlePopupLink, HandleRegularLink} from './../../helper.functions.js';
 
 /**
  * ACCORDION/LEFT NAV COMPONENT
