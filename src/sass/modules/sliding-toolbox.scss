@@ -89,7 +89,7 @@
 @include tablet {
     .slidingToolBox {
         position: fixed;
-        top: 115px;
+        top: 105px;
         right: 0;
     }
 
@@ -98,8 +98,8 @@
         position: absolute;
         top: 0px;
         right: 0;
-        width: 60px;
-        height: 45px;
+        width: 45px;
+        height: 30px;
         border-top-left-radius: 30px;
         border-top-right-radius: 0;
         border-bottom-left-radius: 30px;
@@ -108,7 +108,7 @@
 
     .slidingToolBox__icon {
         padding: 7px 0 0 15px;
-        font-size: 28px;
+        font-size: 15px;
         color: $white;
     }
 

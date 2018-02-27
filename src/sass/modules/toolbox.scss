@@ -14,9 +14,11 @@
 
 /* Mobile */
 @include mobile {
-    .toolBox--mobileHidden {
+    .toolBox--mobileHidden,
+    .toolBoxHolder {
         display: none;
     }
+
 
     .toolBox {
         position: absolute;
@@ -117,6 +119,14 @@
 
 @include tablet {
 
+    .toolBoxHolder {
+        position: absolute;
+        right: 220px;
+        min-width: 45%;
+        TOP: 0;
+        height: 40PX;
+        background-color: $blue-60;
+    }
     .toolBox__wrapper {
         width: 100%;
     }

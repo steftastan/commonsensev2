@@ -120,7 +120,7 @@ export class App extends Component {
                 });
 
             /* Set default company*/
-            this.SetSession(null, this.defaultCompany.name, null);
+            //this.SetSession(null, this.defaultCompany.name, null);
 
         }.bind(this));
 
@@ -216,6 +216,7 @@ export class App extends Component {
                              * TODO: Uncomment the console message to see a list components that still need to be created.
                              * console.log('Failed to create a route for the Component: '+this.Camelize(comp.name, true));
                              */
+                             console.log('Failed to create a route for the Component: '+this.Camelize(comp.name, true));
                         }
 
                     }, this);

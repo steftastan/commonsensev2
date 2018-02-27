@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './../../global.variables.js';
 import $ from 'jquery';
 import { Link } from 'react-router-dom';
-import { Localization, WhichDevice, GetLanguage, GetCompany, GetSession, SetSession } from './../../helper.functions.js';
+import { Localization, WhichDevice, GetLanguage, GetCompany, GetSession, SetSession, HandleRegularLink } from './../../helper.functions.js';
 
 /**
  * BREADCRUMBS LAYOUT COMPONENT
@@ -21,6 +21,7 @@ export class BreadCrumbs extends Component {
       this.GetLanguage = GetLanguage;
       this.GetCompany = GetCompany;
       this.SetSession = SetSession;
+      this.HandleRegularLink = HandleRegularLink;
       this.toggleNav = this.toggleNav.bind(this);
       this.toggleLayout = this.toggleLayout.bind(this);
       this.clickAnywhereToClose = this.clickAnywhereToClose.bind(this);
@@ -176,8 +177,9 @@ export class BreadCrumbs extends Component {
 
         return trail = crumbs.map(function(item, key) {
             if (key > 0 && key < crumbs.length) caret = 'fa fa-caret-right';
+            this.HandleRegularLink.bind(this, item.url);
             return (
-                <a key={key} className={"breadcrumbs__link"} href={item.url}>
+                <a key={key} className={"breadcrumbs__link"}>
                     <span className={"breadcrumbs__caret " + caret}></span>
                     {item.name}
                 </a>

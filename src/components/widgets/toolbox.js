@@ -120,6 +120,8 @@ export class ToolBox extends Component {
 
                     return false;
                 });
+
+                $("#toolBox").detach().appendTo("#toolBoxHolder");
             });
 
             $(document).mouseup(function(e) {
@@ -238,7 +240,7 @@ export class ToolBox extends Component {
         }
 
         return (
-            <section className="toolBox">
+            <section id="toolBox" className="toolBox">
                 <div id="toolButton" className="grid__item leftnav__ellipsis leftnav--desktopHidden fa fa-ellipsis-v"></div>
                 <div id="toolBoxWrapper" className={"toolBox__wrapper " + this.wrapperClass}>
                     <ul id="firstToolBox" className={this.navClass + " toolBox__group"}  role="navigation">

@@ -2,7 +2,6 @@ import React from 'react';
 import $ from 'jquery';
 import './global.languages.js';
 import './global.variables.js';
- /*TODO lang*/
 
 /**
  * HELPER FUNCTION LIBRARY.
@@ -76,7 +75,12 @@ export function HandlePopupLink(link, windowName, width, height) {
 };
 
 export function HandleRegularLink(link) {
-	window.location.href = global.paths.dev+link;
+	if (link.indexOf("react") != -1) {
+		window.location.href = global.paths.dev+link;
+	} else {
+		window.location.href = global.paths.devServletLink+link;
+	}
+
 };
 
 export function GetLanguage() {

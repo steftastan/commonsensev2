@@ -108,7 +108,6 @@ export class AccountsPayable extends Component {
                this.GetWidget(i, options.widgets[i], function(key, result, widget) {
 
                    if (result) {
-
                        /**
                         * Decide which components to display based on what was established in the options object.
                         */
@@ -172,7 +171,9 @@ export class AccountsPayable extends Component {
         console.log(this.props.page);
         return (
             <div>
-                <BreadCrumbs breadcrumbs={this.props.page}/>
+                <BreadCrumbs breadcrumbs={this.props.page}>
+                    <div id="toolBoxHolder" className="toolBoxHolder"></div>
+                </BreadCrumbs>
                 {content}
             </div>
         );

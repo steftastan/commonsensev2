@@ -49,7 +49,7 @@
         top: 105px;
         left: 0;
         width: 100%;
-        margin-top: 50px;
+        margin-top: 0;
         -webkit-transition: all 0.3s ease-in;
         -moz-transition: all 0.3s ease-in;
         -o-transition: all 0.3s ease-in;
@@ -106,7 +106,7 @@
     }
 
     @include tablet {
-        padding: 15px 15px 0 15px;
+        display: none;
     }
 }
 
