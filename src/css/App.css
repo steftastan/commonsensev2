@@ -46,7 +46,7 @@
 /* Main colors */
 /* Main grayscale */
 /* Accent colors */
-/* Secondary accent colors */
+/* Darker accent colors */
 /* Assigning colors to classes of the same name, as well as their hover version */
 .green {
   background-color: #00AA5D;
@@ -88,45 +88,35 @@
   background-color: #787678;
   color: #787678; }
 
-.green-hover {
-  background-color: #00884B;
-  color: #00884B; }
+.category.green:hover {
+  background-color: #00884B; }
 
-.indigo-hover {
-  background-color: #5B50A2;
-  color: #5B50A2; }
+.category.indigo:hover {
+  background-color: #473793; }
 
-.magenta-hover {
-  background-color: #A91F62;
-  color: #A91F62; }
+.category.magenta:hover {
+  background-color: #A91F62; }
 
-.red-hover {
-  background-color: #AB2323;
-  color: #AB2323; }
+.category.red:hover {
+  background-color: #AB2323; }
 
-.lime-hover {
-  background-color: #5B8121;
-  color: #5B8121; }
+.category.lime:hover {
+  background-color: #5B8121; }
 
-.teal-hover {
-  background-color: #00A78F;
-  color: #00A78F; }
+.category.teal:hover {
+  background-color: #008673; }
 
-.warmgray-hover {
-  background-color: #605757;
-  color: #605757; }
+.category.warmgray:hover {
+  background-color: #605757; }
 
-.purple-hover {
-  background-color: #7732BB;
-  color: #7732BB; }
+.category.purple:hover {
+  background-color: #7732BB; }
 
-.orange-hover {
-  background-color: #D97D27;
-  color: #D97D27; }
+.category.orange:hover {
+  background-color: #D97D27; }
 
-.gray-hover {
-  background-color: #59585A;
-  color: #59585A; }
+.category.gray:hover {
+  background-color: #59585A; }
 
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
@@ -340,9 +330,7 @@ body {
       margin: 10px; } }
   @media only screen and (min-device-width: 767px) {
     .wrapper__content--categoryGrid {
-      margin: 15px;
-      padding: 15px 15px 0;
-      background-color: #FFF; } }
+      margin: 15px 10px; } }
 
 .wrapper__dataTable {
   display: inline-block;
@@ -1313,6 +1301,7 @@ th.react-bs-table-expand-cell > div {
 .breadcrumbs__link {
   line-height: 45px;
   margin-right: 10px;
+  cursor: pointer;
   color: #FFF;
   font-size: 12px;
   font-weight: 400; }
@@ -1498,11 +1487,11 @@ th.react-bs-table-expand-cell > div {
 
 .leftnav__item {
   overflow: hidden;
-  -webkit-transition: max-height 0.3s ease-in;
-  -moz-transition: max-height 0.3s ease-in;
-  -o-transition: max-height 0.3s ease-in;
-  -ms-transition: max-height 0.3s ease-in;
-  transition: max-height 0.3s ease-in;
+  -webkit-transition: max-height 0.4s ease-in;
+  -moz-transition: max-height 0.4s ease-in;
+  -o-transition: max-height 0.4s ease-in;
+  -ms-transition: max-height 0.4s ease-in;
+  transition: max-height 0.4s ease-in;
   border-bottom: 1px solid #2D408F;
   color: #FFF;
   font-size: 12px;
@@ -1540,7 +1529,9 @@ th.react-bs-table-expand-cell > div {
   -ms-transition: transform 0.3s ease-in;
   transition: transform 0.3s ease-in; }
 
-.leftnav__arrow:hover {
+.leftnav__arrow:hover,
+.leftnav__arrow:active,
+.leftnav__arrow:visited {
   color: #F26322;
   text-decoration: none; }
 
@@ -1548,11 +1539,11 @@ th.react-bs-table-expand-cell > div {
   max-height: 2000px; }
 
 .leftnav__item--open .leftnav__arrow {
-  -ms-transform: rotate(90deg);
+  -ms-transform: rotate(90deg) translate(3px, -3px);
   /* IE 9 */
-  -webkit-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg) translate(3px, -3px);
   /* Chrome, Safari, Opera */
-  transform: rotate(90deg);
+  transform: rotate(90deg) translate(3px, -3px);
   -webkit-transition: transform 0.3s ease-in;
   -moz-transition: transform 0.3s ease-in;
   -o-transition: transform 0.3s ease-in;
@@ -1584,7 +1575,11 @@ th.react-bs-table-expand-cell > div {
   padding: 15px 10px;
   background-color: #2D408F;
   line-height: 18px;
-  color: #FFF; }
+  color: #FFF;
+  -webkit-transition: all 0.1s ease-in;
+  -moz-transition: all 0.1s ease-in;
+  -o-transition: all 0.1s ease-in;
+  transition: all 0.1 ease-in; }
 
 .leftnav__subItem:hover {
   background-color: #1F57A4;
@@ -1788,9 +1783,15 @@ th.react-bs-table-expand-cell > div {
 @media only screen and (min-device-width: 767px) {
   .category {
     padding: 20px;
-    background-color: #E2EBEB; }
-  .category:hover {
-    background-color: #B8C1C1; }
+    background-color: #FFF;
+    cursor: pointer; }
+  .category:hover,
+  .category:hover .category__link {
+    -webkit-transition: all 0.2s ease-in;
+    -moz-transition: all  0.2s ease-in;
+    -o-transition: all  0.2s ease-in;
+    transition: all  0.2 ease-in;
+    color: #FFF; }
   .category__icon {
     display: none; }
   .category__item {
@@ -1816,12 +1817,10 @@ th.react-bs-table-expand-cell > div {
   .category {
     padding: 30px 20px; }
   .category__text {
-    width: 205px; }
+    width: auto; }
   .category__item {
-    padding: 0 0 0 15px;
-    margin: 0 0 15px 0; }
-  .category__item:nth-child(3n+1) {
-    padding: 0; }
+    padding: 0 10px;
+    margin: 0 0 20px 0; }
   .category__icon--desktop {
     padding: 15px;
     font-size: 40px;
@@ -1829,7 +1828,7 @@ th.react-bs-table-expand-cell > div {
   .category__name {
     font-size: 12px; }
   .category__link {
-    font-size: 24px; } }
+    font-size: 18px; } }
 
 /* ==========================================================================
    TAGS

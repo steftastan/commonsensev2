@@ -66,17 +66,18 @@ $purple-50: #A04C9D;
 $orange-30: #F6851F;
 $gray-50: #787678;
 
-/* Secondary accent colors */
+/* Darker accent colors */
 $green-50: #00884B;
-$indigo-60: #5B50A2;
+$indigo-70: #473793;
 $magenta-60: #A91F62;
 $red-60: #AB2323;
 $lime-50: #5B8121;
-$teal-40: #00A78F;
+$teal-50: #008673;
 $warmgray-60: #605757;
 $purple-60: #7732BB;
 $orange-40: #D97D27;
 $gray-60: #59585A;
+
 
 /* Assigning colors to classes of the same name, as well as their hover version */
 
@@ -132,52 +133,42 @@ $gray-60: #59585A;
     color: $gray-50;
 }
 
-.green-hover {
+.category.green:hover {
     background-color: $green-50;
-    color: $green-50;
 }
 
-.indigo-hover {
-    background-color: $indigo-60;
-    color: $indigo-60;
+.category.indigo:hover {
+    background-color: $indigo-70;
 }
 
-.magenta-hover {
+.category.magenta:hover {
     background-color: $magenta-60;
-    color: $magenta-60;
 }
 
-.red-hover {
+.category.red:hover {
     background-color: $red-60;
-    color: $red-60;
 }
 
-.lime-hover {
+.category.lime:hover {
     background-color: $lime-50;
-    color: $lime-50;
 }
 
-.teal-hover {
-    background-color: $teal-40;
-    color: $teal-40;
+.category.teal:hover {
+    background-color: $teal-50;
 }
 
-.warmgray-hover {
+.category.warmgray:hover {
     background-color: $warmgray-60;
-    color: $warmgray-60;
 }
 
-.purple-hover {
+.category.purple:hover {
     background-color: $purple-60;
-    color: $purple-60;
 }
 
-.orange-hover {
+.category.orange:hover {
     background-color: $orange-40;
-    color: $orange-40;
 }
 
-.gray-hover {
+.category.gray:hover {
     background-color: $gray-60;
-    color: $gray-60;
 }

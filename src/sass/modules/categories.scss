@@ -58,11 +58,17 @@
 @include tablet {
     .category {
         padding: 20px;
-        background-color: $cool-gray-1;
+        background-color: $white;
+        cursor: pointer;
     }
 
-    .category:hover {
-        background-color: $cool-gray-20;
+    .category:hover,
+    .category:hover .category__link {
+        -webkit-transition: all 0.2s ease-in;
+        -moz-transition: all  0.2s ease-in;
+        -o-transition: all  0.2s ease-in;
+        transition: all  0.2 ease-in;
+        color: $white;
     }
 
     .category__icon {
@@ -105,16 +111,12 @@
 
 
     .category__text {
-        width: 205px;
+        width: auto;
     }
 
     .category__item {
-        padding: 0 0 0 15px;
-        margin: 0 0 15px 0;
-    }
-
-    .category__item:nth-child(3n+1) {
-        padding: 0;
+        padding: 0 10px;
+        margin: 0 0 20px 0;
     }
 
     .category__icon--desktop {
@@ -128,7 +130,7 @@
     }
 
     .category__link {
-        font-size: $font-size-large;
+        font-size: $font-size-medium;
     }
 
 }

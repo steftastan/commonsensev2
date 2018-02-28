@@ -18,6 +18,7 @@
 .breadcrumbs__link {
     line-height: 45px;
     margin-right: 10px;
+    cursor: pointer;
     @include font($font-size-content, $font-weight-regular, $white);
 }
 

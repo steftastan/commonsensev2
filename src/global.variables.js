@@ -15,8 +15,10 @@ global.paths = {
     devServletLink: '/commonsense/react/',
     devCategoryLinks: 'dashboard/',
     devCategoryLinksParam: ':code',
-    prodCategoryLinks: 'com.sia.commonsense.shared.LoginServlet?code=',
-    prodCategoryLinksParam: ''
+    prodCategoryLinks: 'dashboard/',
+    prodCategoryLinksParam: ':code'
+    // prodCategoryLinks: 'com.sia.commonsense.shared.LoginServlet?code=',
+    // prodCategoryLinksParam: ''
 };
 
 /*TODO: find a better way to reduce the effort required to switch between dev and prod environments

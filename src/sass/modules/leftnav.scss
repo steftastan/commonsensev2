@@ -30,11 +30,11 @@
 
 .leftnav__item {
     overflow: hidden;
-    -webkit-transition: max-height 0.3s ease-in;
-    -moz-transition: max-height 0.3s ease-in;
-    -o-transition: max-height 0.3s ease-in;
-    -ms-transition: max-height 0.3s ease-in;
-    transition: max-height 0.3s ease-in;
+    -webkit-transition: max-height 0.4s ease-in;
+    -moz-transition: max-height 0.4s ease-in;
+    -o-transition: max-height 0.4s ease-in;
+    -ms-transition: max-height 0.4s ease-in;
+    transition: max-height 0.4s ease-in;
     border-bottom: 1px solid $blue-70;
     @include font($font-size-content, $font-weight-regular, $white);
     line-height: $font-size-content + 3px;
@@ -73,7 +73,9 @@
     transition: transform 0.3s ease-in;
 }
 
-.leftnav__arrow:hover {
+.leftnav__arrow:hover,
+.leftnav__arrow:active,
+.leftnav__arrow:visited {
     color: $peach-40;
     text-decoration: none;
 }
@@ -83,9 +85,9 @@
 }
 
 .leftnav__item--open .leftnav__arrow {
-    -ms-transform: rotate(90deg); /* IE 9 */
-    -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
-    transform: rotate(90deg);
+    -ms-transform: rotate(90deg) translate(3px, -3px); /* IE 9 */
+    -webkit-transform: rotate(90deg) translate(3px, -3px); /* Chrome, Safari, Opera */
+    transform: rotate(90deg) translate(3px,-3px);
     -webkit-transition: transform 0.3s ease-in;
     -moz-transition: transform 0.3s ease-in;
     -o-transition: transform 0.3s ease-in;
@@ -124,6 +126,10 @@
     background-color: $blue-70;
     line-height: 18px;
     color: $white;
+    -webkit-transition: all 0.1s ease-in;
+    -moz-transition: all 0.1s ease-in;
+    -o-transition: all 0.1s ease-in;
+    transition: all 0.1 ease-in;
 }
 
 .leftnav__subItem:hover {

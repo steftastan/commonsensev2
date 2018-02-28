@@ -167,8 +167,7 @@ export class AccountsPayable extends Component {
 
     render() {
         var content = (this.state.widgets && this.state.widgets.length ? <div>{this.state.widgets}</div> : <div className="spinner"></div>);
-
-        console.log(this.props.page);
+        
         return (
             <div>
                 <BreadCrumbs breadcrumbs={this.props.page}>

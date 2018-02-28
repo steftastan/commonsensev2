@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './../../global.variables.js';
 import $ from 'jquery';
 import { Link } from 'react-router-dom';
-import { Localization, WhichDevice, GetLanguage, GetCompany, GetSession, SetSession, HandleRegularLink } from './../../helper.functions.js';
+import { Localization, WhichDevice, GetLanguage, GetCompany, GetSession, SetSession, HandleWebFacingLink, HandlePopupLink, HandleRegularLink } from './../../helper.functions.js';
 
 /**
  * BREADCRUMBS LAYOUT COMPONENT
@@ -21,6 +21,8 @@ export class BreadCrumbs extends Component {
       this.GetLanguage = GetLanguage;
       this.GetCompany = GetCompany;
       this.SetSession = SetSession;
+      this.HandleWebFacingLink = HandleWebFacingLink;
+      this.HandlePopupLink = HandlePopupLink;
       this.HandleRegularLink = HandleRegularLink;
       this.toggleNav = this.toggleNav.bind(this);
       this.toggleLayout = this.toggleLayout.bind(this);
@@ -152,20 +154,21 @@ export class BreadCrumbs extends Component {
     buildCrumbs(crumb) {
         var trail = [];
         var caret = '';
+        var linkOnClick = {};
 
         var crumbs = [{
             name:'Personal Preferences',
             code: 7,
-            url:  global.paths.devReactLink+global.paths.devCategoryLinks+'7'
+            url: global.paths.devCategoryLinks+'7'
         }];
 
         if (crumb.code !== 7) {
             crumb.name = this.Localization(crumb.name);
 
             if (crumb.hasOwnProperty('code') && !crumb.isPage) {
-                crumb['url'] = global.paths.devReactLink+global.paths.devCategoryLinks+crumb.code;
+                crumb['url'] = global.paths.devCategoryLinks+crumb.code;
             } else if (crumb.hasOwnProperty('code') && crumb.isPage) {
-                crumbs.push({name: crumb.category, url: global.paths.devReactLink+global.paths.devCategoryLinks+crumb.code});
+                crumbs.push({name: crumb.category, url: global.paths.devCategoryLinks+crumb.code});
                 crumb['url'] = crumb.url;
             } else {
                 crumb['url'] = '#';
@@ -177,9 +180,18 @@ export class BreadCrumbs extends Component {
 
         return trail = crumbs.map(function(item, key) {
             if (key > 0 && key < crumbs.length) caret = 'fa fa-caret-right';
-            this.HandleRegularLink.bind(this, item.url);
+            if (item.url.indexOf("GatewayServlet") !== -1) {
+                linkOnClick = this.HandleWebFacingLink.bind(this, item.url);
+            }
+            else if (item.url.indexOf("popup") !== -1) {
+                linkOnClick = this.HandlePopupLink.bind(this, item.url);
+            }
+            else {
+                linkOnClick = this.HandleRegularLink.bind(this, item.url);
+            }
+
             return (
-                <a key={key} className={"breadcrumbs__link"}>
+                <a key={key} className={"breadcrumbs__link"} onClick={linkOnClick}>
                     <span className={"breadcrumbs__caret " + caret}></span>
                     {item.name}
                 </a>
