@@ -132,7 +132,7 @@ export class Accordion extends Component {
             var commonSenseLinkList = this.props.links.results.map(function(item, key) {
                 link__text = this.Localization(item.name, this.props.language);
 
-                link = global.paths.devReactLink+global.paths.devCategoryLinks+(item.code);
+                link = global.paths.prodReactLink+global.paths.prodCategoryLinks+(item.code);
 
                 return (
                     <Section key={key}>

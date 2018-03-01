@@ -71,7 +71,7 @@ export class App extends Component {
           */
         $.when(
             $.ajax({
-                url: global.endpoints.accordion.dev,
+                url: global.endpoints.accordion.prod,
                 dataType: 'json',
                 cache: false,
                 success: function(data) {
@@ -86,7 +86,7 @@ export class App extends Component {
             }),
 
             $.ajax({
-                url: global.endpoints.companies.dev,
+                url: global.endpoints.companies.prod,
                 dataType: 'json',
                 cache: false,
                 success: function(data) {
@@ -98,7 +98,7 @@ export class App extends Component {
             }),
 
             $.ajax({
-                url: global.endpoints.session.dev,
+                url: global.endpoints.session.prod,
                 dataType: 'json',
                 cache: false,
                 success: function(data) {
@@ -122,7 +122,7 @@ export class App extends Component {
                     defaultCompany: this.defaultCompany,
                     language: this.language,
                     routes: this.routes,
-                    logoPath: global.paths.dev+'images/logo/'+this.defaultCompany+'/logo.gif'
+                    logoPath: global.paths.prod+'images/logo/'+this.defaultCompany+'/logo.gif'
                 });
 
 
@@ -133,7 +133,7 @@ export class App extends Component {
     updateCompany(e) {
         this.setState({
             defaultCompany: e.target.value,
-            logoPath: global.paths.dev+'images/logo/'+e.target.value+'/logo.gif'
+            logoPath: global.paths.prod+'images/logo/'+e.target.value+'/logo.gif'
         });
 
         /* Update default company */
@@ -159,7 +159,7 @@ export class App extends Component {
             this.routesToComponents.push(<Route
                 exact
                 key={key}
-                path={global.paths.devReactLink+comp.path}
+                path={global.paths.prodReactLink+comp.path}
                 component={comp.component} />);
         }, this);
 
@@ -176,7 +176,7 @@ export class App extends Component {
                     <Route
                         exact
                         key={key}
-                        path={global.paths.devReactLink+global.paths.devCategoryLinks+global.paths.devCategoryLinksParam}
+                        path={global.paths.prodReactLink+global.paths.prodCategoryLinks+global.paths.prodCategoryLinksParam}
                         render={(props) => (
                             <Dashboard {...props} company={this.state.defaultCompany} language={this.state.language} />
                         )}
@@ -191,7 +191,7 @@ export class App extends Component {
                          * consistent piece of information in between language switches
                          * and whatever name users want to give their links.
                          */
-                        componentName = comp.url.split(global.paths.devBuildComponent);
+                        componentName = comp.url.split(global.paths.prodBuildComponent);
 
                         if (componentName.length > 1) {
                             componentName = this.Camelize(componentName[1], true);
@@ -203,7 +203,7 @@ export class App extends Component {
                                 code: item.code,
                                 category: item.name,
                                 name: comp.name,
-                                url: global.paths.dev+comp.url,
+                                url: comp.url,
                                 isPage: true
                             };
 
@@ -211,7 +211,7 @@ export class App extends Component {
                                 <Route
                                     exact
                                     key={key}
-                                    path={global.paths.dev+comp.url}
+                                    path={global.paths.prod+comp.url}
                                     render={(props) => (
                                         <Component {...props} page={page} company={this.state.defaultCompany} language={this.state.language}  />
                                     )}

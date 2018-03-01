@@ -21,8 +21,6 @@ global.paths = {
     prodCategoryLinksParam: ':code',
     devBuildComponent: 'commonsense/react/',
     prodBuildComponent: 'react/'
-    // prodCategoryLinks: 'com.sia.commonsense.shared.LoginServlet?code=',
-    // prodCategoryLinksParam: ''
 };
 
 /*TODO: find a better way to reduce the effort required to switch between dev and prod environments
@@ -30,35 +28,35 @@ global.paths = {
  */
 global.endpoints = {
     companies:  {
-        prod: global.paths.dev+'services/user/portal/companies',
+        prod: global.paths.prod+'services/user/portal/companies',
         dev: '/webservices/Companies.json'
     },
     accordion: {
-        prod: global.paths.dev+'services/user/portal/menu',
+        prod: global.paths.prod+'services/user/portal/menu',
         dev: '/webservices/FullMenu.json'
     },
     accountsPayable:  {
-        prod: global.paths.dev+'services/finance/accounts-payable',
+        prod: global.paths.prod+'services/finance/accounts-payable',
         dev: '/webservices/AccountsPayable.json'
     },
     cashDisbursement: {
-        prod: global.paths.dev+'services/finance/accounts-payable/cash-disbursement',
+        prod: global.paths.prod+'services/finance/accounts-payable/cash-disbursement',
         dev: '/webservices/AccountsPayableCashDisbursement.json'
     },
     summary: {
-        prod: global.paths.dev+'services/finance/accounts-payable/summary',
+        prod: global.paths.prod+'services/finance/accounts-payable/summary',
         dev: '/webservices/AccountsPayableSummary.json'
     },
     toolBox: {
-        prod: global.paths.devReactLink+'webservices/AccountsPayableToolbox.json', /* TODO: Create data endpoint for this */
+        prod: global.paths.prodReactLink+'webservices/AccountsPayableToolbox.json', /* TODO: Create data endpoint for this */
         dev: '/webservices/AccountsPayableToolbox.json'
     },
     sliding: {
-        prod: global.paths.devReactLink+'webservices/AccountsPayableSlidingToolBox.json', /* TODO: Create data endpoint for this  */
+        prod: global.paths.prodReactLink+'webservices/AccountsPayableSlidingToolBox.json', /* TODO: Create data endpoint for this  */
         dev: '/webservices/AccountsPayableSlidingToolBox.json'
     },
     session: {
-        prod: global.paths.dev+'services/user/session',
+        prod: global.paths.prod+'services/user/session',
         dev: '/webservices/Session.json'
     }
 };

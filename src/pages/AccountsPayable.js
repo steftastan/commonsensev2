@@ -32,10 +32,10 @@ import { SlidingToolBox } from './../components/widgets/sliding-toolbox.js';
 const options = {
     widgets : [{
         name: 'toolBox',
-        endpoint: global.endpoints.toolBox.dev
+        endpoint: global.endpoints.toolBox.prod
     }, {
         name: 'dataTable',
-        endpoint: global.endpoints.accountsPayable.dev,
+        endpoint: global.endpoints.accountsPayable.prod,
         bootStrapClass : 'col-12',
         options: {
             sizePerPageList: [ {
@@ -50,13 +50,13 @@ const options = {
     }, {
         name: 'dataTable',
         title: 'cashDisbursement',
-        endpoint: global.endpoints.cashDisbursement.dev,
+        endpoint: global.endpoints.cashDisbursement.prod,
         bootStrapClass : 'col-lg-6 col-sm-12',
         options: {}
     }, {
         name: 'dataChart',
         title: 'accountsPayableChart',
-        endpoint: global.endpoints.cashDisbursement.dev,
+        endpoint: global.endpoints.cashDisbursement.prod,
         bootStrapClass : 'col-lg-6 col-sm-12',
         type: 'pie',
         aggregateBy: 'type',
@@ -66,12 +66,12 @@ const options = {
     }, {
         name: 'dataTable',
         title: 'Testing Table',
-        endpoint: global.endpoints.summary.dev,
+        endpoint: global.endpoints.summary.prod,
         bootStrapClass : 'col-lg-6 col-sm-12',
         options: {}
     }, {
         name: 'slidingToolbox',
-        endpoint: global.endpoints.sliding.dev
+        endpoint: global.endpoints.sliding.prod
     }
 ]};
 

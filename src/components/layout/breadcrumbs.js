@@ -157,16 +157,16 @@ export class BreadCrumbs extends Component {
         var crumbs = [{
             name:'Personal Preferences',
             code: 7,
-            url: global.paths.devCategoryLinks+'7'
+            url: global.paths.prodBuildComponent+global.paths.prodCategoryLinks+'7'
         }];
 
         if (crumb.code !== 7) {
             crumb.name = this.Localization(crumb.name, this.props.language);
 
             if (crumb.hasOwnProperty('code') && !crumb.isPage) {
-                crumb['url'] = global.paths.devCategoryLinks+crumb.code;
+                crumb['url'] = global.paths.prodBuildComponent+global.paths.prodCategoryLinks+crumb.code;
             } else if (crumb.hasOwnProperty('code') && crumb.isPage) {
-                crumbs.push({name: crumb.category, url: global.paths.devCategoryLinks+crumb.code});
+                crumbs.push({name: crumb.category, url: global.paths.prodBuildComponent+global.paths.prodCategoryLinks+crumb.code});
                 crumb['url'] = crumb.url;
             } else {
                 crumb['url'] = '#';
@@ -176,8 +176,11 @@ export class BreadCrumbs extends Component {
         }
 
 
+        console.log(crumbs);
+
         return trail = crumbs.map(function(item, key) {
             if (key > 0 && key < crumbs.length) caret = 'fa fa-caret-right';
+
             if (item.url.indexOf("GatewayServlet") !== -1) {
                 linkOnClick = this.HandleWebFacingLink.bind(this, item.url);
             }
