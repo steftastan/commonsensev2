@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import './global.variables.js';
-import { Camelize, GetCompany, GetSession, SetSession } from './helper.functions.js';
+import { Camelize, GetSession, SetSession, Localization } from './helper.functions.js';
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Header } from './components/layout/header.js';
@@ -28,12 +28,14 @@ export class App extends Component {
       this.componentList = [];
       this.GetSession = GetSession;
       this.SetSession = SetSession;
-      this.GetCompany = GetCompany;
       this.Camelize = Camelize;
+      this.Localization = Localization;
       this.updateCompany = this.updateCompany.bind(this);
       this.companies = {};
+      this.language = '';
+      this.employeeName = '';
+      this.defaultCompany = '';
       this.accordion = {};
-      this.defaultCompany = {};
       this.routesToComponents = [];
       this.routes = {};
       this.companyDropDown = 'companyList';
@@ -41,6 +43,7 @@ export class App extends Component {
           routes: null,
           loaded: false,
           accordion: null,
+          language: '',
           companies: [],
           employeeName: '',
           defaultCompany: '',
@@ -88,18 +91,20 @@ export class App extends Component {
                 cache: false,
                 success: function(data) {
                     this.companies = data;
-                    this.employeeName = data.employeeName;
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.error(this.state.url, status, err.toString());
+                }.bind(this)
+            }),
 
-                    /**
-                      * Obtain default company data, necessary to display icon and to highlight
-                      * the correct company name on the top left drop down list.
-                      */
-                    for (var i = 0; i < data.results.length; i++) {
-                        if (data.results[i].default === true) {
-                            this.defaultCompany = data.results[i];
-                        }
-                    }
-
+            $.ajax({
+                url: global.endpoints.session.dev,
+                dataType: 'json',
+                cache: false,
+                success: function(data) {
+                    this.employeeName = data.userId;
+                    this.defaultCompany = data.fileName;
+                    this.language = data.language;
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(this.state.url, status, err.toString());
@@ -114,24 +119,15 @@ export class App extends Component {
                     accordion: this.accordion,
                     companies: this.companies,
                     employeeName: this.employeeName,
-                    defaultCompany: this.defaultCompany.name,
+                    defaultCompany: this.defaultCompany,
+                    language: this.language,
                     routes: this.routes,
-                    logoPath: global.paths.dev+'images/logo/'+this.defaultCompany.name+'/logo.gif'
+                    logoPath: global.paths.dev+'images/logo/'+this.defaultCompany+'/logo.gif'
                 });
 
-            /* Set default company*/
-            //this.SetSession(null, this.defaultCompany.name, null);
 
         }.bind(this));
 
-    }
-
-    componentWillReceiveProps(nextProps) {
-        /**
-         * Set the dropdown list to the default company.
-         */
-        if (nextProps) {
-        }
     }
 
     updateCompany(e) {
@@ -142,12 +138,6 @@ export class App extends Component {
 
         /* Update default company */
         this.SetSession(null, this.defaultCompany.name, null);
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-      if (prevState.routes !== this.state.routes) {
-          //this.setState({ loaded : true });
-      }
     }
 
     render() {
@@ -173,6 +163,7 @@ export class App extends Component {
         }, this);
 
         if (this.state.routes && this.state.routes.length) {
+
             this.state.routes.map(function(item, key) {
 
                 /**
@@ -185,15 +176,18 @@ export class App extends Component {
                         exact
                         key={key}
                         path={global.paths.devReactLink+global.paths.devCategoryLinks+global.paths.devCategoryLinksParam}
-                        render={(code) => (
-                            <Dashboard {...code} />
+                        render={(props) => (
+                            <Dashboard {...props} company={this.state.defaultCompany} language={this.state.language} />
                         )}
                     />);
 
                 if (item.sublinks && item.sublinks.length) {
                     item.sublinks.map(function(comp, key) {
+                        var componentName =  this.Localization(comp.name, 'en_CA');
+                        console.log(componentName);
+                        /// get this workin on prod
                         try {
-                            let Component = require('./pages/'+this.Camelize(comp.name, true)+'.js').default;
+                            let Component = require('./pages/'+this.Camelize(componentName, true)+'.js').default;
                             page = {
                                 code: item.code,
                                 category: item.name,
@@ -208,14 +202,16 @@ export class App extends Component {
                                     key={key}
                                     path={global.paths.dev+comp.url}
                                     render={(props) => (
-                                        <Component {...props} page={page} />
+                                        <Component {...props} page={page} company={this.state.defaultCompany} language={this.state.language}  />
                                     )}
                                 />);
                         } catch(err) {
                             /** Render dashboard in case of pages that don't exist yet
                              * TODO: Uncomment the console message to see a list components that still need to be created.
-                             * console.log('Failed to create a route for the Component: '+this.Camelize(comp.name, true));
+                             *
                              */
+
+                             //TODO:  routes failing on prod... probably because its creatin components w french names?
                              console.log('Failed to create a route for the Component: '+this.Camelize(comp.name, true));
                         }
 
@@ -228,18 +224,21 @@ export class App extends Component {
             <div className="wrapper wrapper__app App">
                 <Accordion
                     links={this.state.accordion}
-                    employeeName={this.state.employeeName}>
+                    employeeName={this.state.employeeName}
+                    language={this.state.language}>
                     <CompanyList
                         onChange={this.updateCompany}
                         defaultCompanyName={this.state.defaultCompany}
                         defaultCompanyIcon={this.state.logoPath}
-                        companies={this.state.companies}/>
+                        companies={this.state.companies}
+                        language={this.state.language} />
                  </Accordion>
                  <section id="contentWrapper" className="wrapper wrapper__content wrapper__content--inner">
                      <Header
                         companies={this.state.companies}
                         defaultCompanyName={this.state.defaultCompany}
-                        defaultCompanyIcon={this.state.logoPath} />
+                        defaultCompanyIcon={this.state.logoPath}
+                        language={this.state.language} />
                     <Switch>
                         {this.routesToComponents}
                     </Switch>

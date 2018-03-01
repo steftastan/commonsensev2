@@ -56,7 +56,7 @@ export class DataChart extends Component {
     componentWillMount() {
         var chartData = this.processData(); // The new object with the aggregated data.
         var type = this.props.options.type || 'pie'; //Default to pie chart if no type was specified.
-        var chartLabel = this.Localization(this.props.options.label) || '';
+        var chartLabel = this.Localization(this.props.options.label, this.props.language) || '';
         var buildTable = this.props.options.buildTable;
         var labels = [];
         var data = [];
@@ -125,7 +125,7 @@ export class DataChart extends Component {
     }
 
     render() {
-        var title__text = this.Localization(this.props.options.title);
+        var title__text = this.Localization(this.props.options.title, this.props.language);
         var bootStrapClass = this.props.options.buildTable ? 'col-lg-6' : 'col-12';
 
         return (

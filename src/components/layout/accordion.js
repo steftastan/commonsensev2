@@ -125,12 +125,12 @@ export class Accordion extends Component {
     render() {
         var link = "";
         var link__text;
-        var welcome__text = this.Localization('welcome');
-        var filterNavigation__text = this.Localization('filterNavigation');
+        var welcome__text = this.Localization('welcome', this.props.language);
+        var filterNavigation__text = this.Localization('filterNavigation', this.props.language);
 
         if (this.props.links && this.props.links.results) {
             var commonSenseLinkList = this.props.links.results.map(function(item, key) {
-                link__text = this.Localization(item.name);
+                link__text = this.Localization(item.name, this.props.language);
 
                 link = global.paths.devReactLink+global.paths.devCategoryLinks+(item.code);
 
