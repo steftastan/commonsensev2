@@ -119,9 +119,9 @@ export class GenericComponent extends Component {
     }
 
     render() {
+        console.log(this.props.options);
         var content = (this.state.widgets && this.state.widgets.length ? <div>{this.state.widgets}</div> : <div className="spinner"></div>);
 
-        console.log(this.props.options);
         return (
             <div>
                 <BreadCrumbs breadcrumbs={this.props.page} language={this.props.language}>
