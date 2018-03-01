@@ -4,8 +4,10 @@
  * For language switching, company switch management, etc.
  */
 
-global.loggedIn = true;
-global.company = 'BOW';
+/** FLAGS to conveniently switch between dev and prod environments */
+// global.env = 'dev';
+// global.env = 'prod';
+
 global.paths = {
     dev: '/',
     prod: '/commonsense/',
@@ -16,7 +18,9 @@ global.paths = {
     devCategoryLinks: 'dashboard/',
     devCategoryLinksParam: ':code',
     prodCategoryLinks: 'dashboard/',
-    prodCategoryLinksParam: ':code'
+    prodCategoryLinksParam: ':code',
+    devBuildComponent: 'commonsense/react/',
+    prodBuildComponent: 'react/'
     // prodCategoryLinks: 'com.sia.commonsense.shared.LoginServlet?code=',
     // prodCategoryLinksParam: ''
 };

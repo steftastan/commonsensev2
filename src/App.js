@@ -144,6 +144,7 @@ export class App extends Component {
         var code;
         var links = {};
         var page = [];
+        var componentName;
         var staticPages = [
             {component: Login, path: 'login'},
             {component: ChangePassword, path: 'change-password'},
@@ -183,11 +184,21 @@ export class App extends Component {
 
                 if (item.sublinks && item.sublinks.length) {
                     item.sublinks.map(function(comp, key) {
-                        var componentName =  this.Localization(comp.name, 'en_CA');
-                        console.log(componentName);
-                        /// get this workin on prod
+
+                        /**
+                         * We will build the components and point to the routes by
+                         * taking the info from the URL value, because it's the one
+                         * consistent piece of information in between language switches
+                         * and whatever name users want to give their links.
+                         */
+                        componentName = comp.url.split(global.paths.devBuildComponent);
+
+                        if (componentName.length > 1) {
+                            componentName = this.Camelize(componentName[1], true);
+                        }
+
                         try {
-                            let Component = require('./pages/'+this.Camelize(componentName, true)+'.js').default;
+                            let Component = require('./pages/'+componentName+'.js').default;
                             page = {
                                 code: item.code,
                                 category: item.name,
@@ -208,11 +219,8 @@ export class App extends Component {
                         } catch(err) {
                             /** Render dashboard in case of pages that don't exist yet
                              * TODO: Uncomment the console message to see a list components that still need to be created.
-                             *
+                             * console.log('Failed to create a route for the Component: '+this.Camelize(comp.name, true));
                              */
-
-                             //TODO:  routes failing on prod... probably because its creatin components w french names?
-                             console.log('Failed to create a route for the Component: '+this.Camelize(comp.name, true));
                         }
 
                     }, this);

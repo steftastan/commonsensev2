@@ -119,7 +119,14 @@
     }
 
     @include tablet {
-        margin: 15px 10px;
+        margin: 15px;
+        overflow: hidden;
+        column-width: 25em;
+        column-width: 25em;
+        -moz-column-width: 25em;
+        -webkit-column-width: 25em;
+        -moz-column-gap: 1em;
+        -webkit-column-gap:1em;
     }
 }
 

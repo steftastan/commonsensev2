@@ -89,34 +89,34 @@
   color: #787678; }
 
 .category.green:hover {
-  background-color: #00884B; }
+  background-color: #116639; }
 
 .category.indigo:hover {
   background-color: #473793; }
 
 .category.magenta:hover {
-  background-color: #A91F62; }
+  background-color: #831b4c; }
 
 .category.red:hover {
-  background-color: #AB2323; }
+  background-color: #83231e; }
 
 .category.lime:hover {
-  background-color: #5B8121; }
+  background-color: #426200; }
 
 .category.teal:hover {
   background-color: #008673; }
 
 .category.warmgray:hover {
-  background-color: #605757; }
+  background-color: #4b4545; }
 
 .category.purple:hover {
-  background-color: #7732BB; }
+  background-color: #71237c; }
 
 .category.orange:hover {
-  background-color: #D97D27; }
+  background-color: #ad6418; }
 
 .category.gray:hover {
-  background-color: #59585A; }
+  background-color: #464646; }
 
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
@@ -330,7 +330,14 @@ body {
       margin: 10px; } }
   @media only screen and (min-device-width: 767px) {
     .wrapper__content--categoryGrid {
-      margin: 15px 10px; } }
+      margin: 15px;
+      overflow: hidden;
+      column-width: 25em;
+      column-width: 25em;
+      -moz-column-width: 25em;
+      -webkit-column-width: 25em;
+      -moz-column-gap: 1em;
+      -webkit-column-gap: 1em; } }
 
 .wrapper__dataTable {
   display: inline-block;
@@ -1817,10 +1824,14 @@ th.react-bs-table-expand-cell > div {
   .category {
     padding: 30px 20px; }
   .category__text {
-    width: auto; }
+    width: 60%; }
   .category__item {
-    padding: 0 10px;
-    margin: 0 0 20px 0; }
+    display: inline-block;
+    float: none;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 10px 0; }
   .category__icon--desktop {
     padding: 15px;
     font-size: 40px;

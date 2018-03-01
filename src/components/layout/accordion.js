@@ -147,40 +147,36 @@ export class Accordion extends Component {
             }, this);
         }
 
-        /** TODO: using flag loggedIn = false to simulate session and hide this accordion. remove later. */
-        if (global.loggedIn === true) {
-            var accordion = (
-                <nav id="nav" className="wrapper leftnav leftnav--toggle">
-                    <ul className="leftnav__list">
-                        <li className="leftnav__fixed">
-                            <div className="leftnav__section--fixed">
-                                <span className="leftnav__user">{welcome__text + this.props.employeeName}</span>
-                                <form className="form">
-                                    <i className="form__icon form__icon--company  fa fa-building"></i>
-                                    {this.props.children}
-                                </form>
-                            </div>
-                            <div id="langWrapper--mobile"></div>
-                        </li>
-                        <li className="leftnav__fixed">
-                            <div className="leftnav__section--fixed">
-                                <span className="leftnav__search"></span>
-                                <form className="form">
-                                    <i className="form__icon form__icon--search fa fa-search"></i>
-                                    <input id="searchInput" className="form__item form__filterLeftNav" type="text" placeholder={filterNavigation__text} />
-                                </form>
-                            </div>
+        var accordion = (
+            <nav id="nav" className="wrapper leftnav leftnav--toggle">
+                <ul className="leftnav__list">
+                    <li className="leftnav__fixed">
+                        <div className="leftnav__section--fixed">
+                            <span className="leftnav__user">{welcome__text + this.props.employeeName}</span>
+                            <form className="form">
+                                <i className="form__icon form__icon--company  fa fa-building"></i>
+                                {this.props.children}
+                            </form>
+                        </div>
+                        <div id="langWrapper--mobile"></div>
+                    </li>
+                    <li className="leftnav__fixed">
+                        <div className="leftnav__section--fixed">
+                            <span className="leftnav__search"></span>
+                            <form className="form">
+                                <i className="form__icon form__icon--search fa fa-search"></i>
+                                <input id="searchInput" className="form__item form__filterLeftNav" type="text" placeholder={filterNavigation__text} />
+                            </form>
+                        </div>
 
-                        </li>
+                    </li>
 
-                    </ul>
-                    <ul id="linkList" className="leftnav__list">
-                        {commonSenseLinkList}
-                    </ul>
-                </nav>
-            );
-        }
-
+                </ul>
+                <ul id="linkList" className="leftnav__list">
+                    {commonSenseLinkList}
+                </ul>
+            </nav>
+        );
 
         return (
             <div>

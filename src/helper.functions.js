@@ -161,6 +161,7 @@ export function HandleRegularLink(link) {
   * Converts any given string to camelCase, in order to match tke
   * key values in the languages dictionary.
   * It also changes any ampersands to the literal word 'and'
+  * Replaces hyphens for spaces to allow  words to be camelcased.
   * Removes parentheses, hyphens, slashes and dots. If any more characters
   * need to be removed, add them inside the [brackets] in the second regular expression.
 	* @param firstLetterUpper {boolean} Flag that specifies if the first letter should be kept uppercase or not.
@@ -169,6 +170,7 @@ export function HandleRegularLink(link) {
  export function Camelize(str, firstLetterUpper) {
 	if (str.indexOf(' ') !== -1) str = str.toLowerCase();
     return str.replace(/&/g, "and")
+		.replace(/-/g, " ")
 		.replace(/[()-/.]/g, "")
 		.replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
 			if (index === 0 && !firstLetterUpper) {
