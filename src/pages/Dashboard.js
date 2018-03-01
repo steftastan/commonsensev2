@@ -28,7 +28,7 @@ export class Dashboard extends Component {
 
     componentDidMount() {
         $.ajax({
-            url: global.endpoints.accordion.prod,
+            url: global.endpoints.accordion.dev,
             dataType: 'json',
             cache: false,
             success: function(data) {

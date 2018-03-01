@@ -157,26 +157,22 @@ export class BreadCrumbs extends Component {
         var crumbs = [{
             name:'Personal Preferences',
             code: 7,
-            url: global.paths.prodBuildComponent+global.paths.prodCategoryLinks+'7'
+            url: global.paths.devBuildComponent+global.paths.devCategoryLinks+'7'
         }];
 
         if (crumb.code !== 7) {
             crumb.name = this.Localization(crumb.name, this.props.language);
 
             if (crumb.hasOwnProperty('code') && !crumb.isPage) {
-                crumb['url'] = global.paths.prodBuildComponent+global.paths.prodCategoryLinks+crumb.code;
+                crumb['url'] = global.paths.devBuildComponent+global.paths.devCategoryLinks+crumb.code;
             } else if (crumb.hasOwnProperty('code') && crumb.isPage) {
-                crumbs.push({name: crumb.category, url: global.paths.prodBuildComponent+global.paths.prodCategoryLinks+crumb.code});
+                crumbs.push({name: crumb.category, url: global.paths.devBuildComponent+global.paths.devCategoryLinks+crumb.code});
                 crumb['url'] = crumb.url;
             } else {
                 crumb['url'] = '#';
             }
-
             crumbs.push(crumb);
         }
-
-
-        console.log(crumbs);
 
         return trail = crumbs.map(function(item, key) {
             if (key > 0 && key < crumbs.length) caret = 'fa fa-caret-right';

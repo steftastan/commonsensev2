@@ -102,7 +102,7 @@ export class ToolBox extends Component {
         navButton.addEventListener('mousedown', this.toggleNav, false);
         this.toolBoxWrapper = document.getElementById(this.toolBoxId);
 
-        if (this.state.prodice === 'mobile') {
+        if (this.state.device === 'mobile') {
             this.toolBoxWrapper.addEventListener('click', this.animateToolBox);
         } else {
 

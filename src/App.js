@@ -71,7 +71,7 @@ export class App extends Component {
           */
         $.when(
             $.ajax({
-                url: global.endpoints.accordion.prod,
+                url: global.endpoints.accordion.dev,
                 dataType: 'json',
                 cache: false,
                 success: function(data) {
@@ -86,7 +86,7 @@ export class App extends Component {
             }),
 
             $.ajax({
-                url: global.endpoints.companies.prod,
+                url: global.endpoints.companies.dev,
                 dataType: 'json',
                 cache: false,
                 success: function(data) {
@@ -98,7 +98,7 @@ export class App extends Component {
             }),
 
             $.ajax({
-                url: global.endpoints.session.prod,
+                url: global.endpoints.session.dev,
                 dataType: 'json',
                 cache: false,
                 success: function(data) {
@@ -122,7 +122,7 @@ export class App extends Component {
                     defaultCompany: this.defaultCompany,
                     language: this.language,
                     routes: this.routes,
-                    logoPath: global.paths.prod+'images/logo/'+this.defaultCompany+'/logo.gif'
+                    logoPath: global.paths.dev+'images/logo/'+this.defaultCompany+'/logo.gif'
                 });
 
 
@@ -133,7 +133,7 @@ export class App extends Component {
     updateCompany(e) {
         this.setState({
             defaultCompany: e.target.value,
-            logoPath: global.paths.prod+'images/logo/'+e.target.value+'/logo.gif'
+            logoPath: global.paths.dev+'images/logo/'+e.target.value+'/logo.gif'
         });
 
         /* Update default company */
@@ -144,6 +144,7 @@ export class App extends Component {
         var code;
         var links = {};
         var page = [];
+        var options = {};
         var componentName;
         var staticPages = [
             {component: Login, path: 'login'},
@@ -151,17 +152,19 @@ export class App extends Component {
             {component: Dashboard, path: 'dashboard'}
         ];
 
+        var route = {};
+
         /* Create routes to pages that aren't returned from the DB
          * The Dashboard is code 7 in the links list. Update dashboard path to this:
          * servlet/com.sia.commonsense.shared.LoginServlet?code=7
          */
-        staticPages.map(function(comp, key) {
-            this.routesToComponents.push(<Route
-                exact
-                key={key}
-                path={global.paths.prodReactLink+comp.path}
-                component={comp.component} />);
-        }, this);
+        // staticPages.map(function(comp, key) {
+        //     this.routesToComponents.push(<Route
+        //         exact
+        //         key={key}
+        //         path={global.paths.devReactLink+comp.path}
+        //         component={comp.component} />);
+        // }, this);
 
         if (this.state.routes && this.state.routes.length) {
 
@@ -172,18 +175,19 @@ export class App extends Component {
                  * Each category will render depending on the value of
                  * the code parameter passed via URL.
                  */
-                this.routesToComponents.push(
-                    <Route
-                        exact
-                        key={key}
-                        path={global.paths.prodReactLink+global.paths.prodCategoryLinks+global.paths.prodCategoryLinksParam}
-                        render={(props) => (
-                            <Dashboard {...props} company={this.state.defaultCompany} language={this.state.language} />
-                        )}
-                    />);
+                // this.routesToComponents.push(
+                //     <Route
+                //         exact
+                //         key={key}
+                //         path={global.paths.devReactLink+global.paths.devCategoryLinks+global.paths.devCategoryLinksParam}
+                //         render={(props) => (
+                //             <Dashboard {...props} company={this.state.defaultCompany} language={this.state.language} />
+                //         )}
+                //     />);
 
                 if (item.sublinks && item.sublinks.length) {
-                    item.sublinks.map(function(comp, key) {
+
+                    this.routesToComponents = item.sublinks.map(function(comp, key) {
 
                         /**
                          * We will build the components and point to the routes by
@@ -191,42 +195,51 @@ export class App extends Component {
                          * consistent piece of information in between language switches
                          * and whatever name users want to give their links.
                          */
-                        componentName = comp.url.split(global.paths.prodBuildComponent);
-
-                        if (componentName.length > 1) {
-                            componentName = this.Camelize(componentName[1], true);
-                        }
-
                         try {
-                            let Component = require('./pages/'+componentName+'.js').default;
-                            page = {
-                                code: item.code,
-                                category: item.name,
-                                name: comp.name,
-                                url: comp.url,
-                                isPage: true
-                            };
+                            componentName = comp.url.split(global.paths.devBuildComponent);
+                            if (componentName.length > 1) {
+                                componentName = this.Camelize(componentName[1], true);
+                                let Component = require('./pages/GenericComponent.js').default;
+                                if (global.pages[componentName]) {
 
-                            this.routesToComponents.push(
-                                <Route
-                                    exact
-                                    key={key}
-                                    path={global.paths.prod+comp.url}
-                                    render={(props) => (
-                                        <Component {...props} page={page} company={this.state.defaultCompany} language={this.state.language}  />
-                                    )}
-                                />);
+                                    options = global.pages[componentName];
+                                    page = {
+                                        code: item.code,
+                                        category: item.name,
+                                        name: comp.name,
+                                        url: comp.url,
+                                        isPage: true
+                                    };
+
+                                    return (
+                                        <Route
+                                            exact
+                                            key={key}
+                                            path={global.paths.dev+comp.url}
+                                            render={(props) => (
+                                                <Component {...props} options={options} page={page} company={this.state.defaultCompany} language={this.state.language}  />
+                                            )}
+                                        />
+                                    );
+                                }
+                            }
+
                         } catch(err) {
                             /** Render dashboard in case of pages that don't exist yet
                              * TODO: Uncomment the console message to see a list components that still need to be created.
-                             * console.log('Failed to create a route for the Component: '+this.Camelize(comp.name, true));
+                             *
                              */
+                             console.log(err);
+                             console.log('Failed to create a route for the Component: '+this.Camelize(comp.name, true));
                         }
-
                     }, this);
+
+                    console.log(this.routesToComponents);
                 }
             }, this);
         }
+
+        // console.log(this.routesToComponents);
 
         return (
             <div className="wrapper wrapper__app App">

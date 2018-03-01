@@ -30,7 +30,7 @@ export function SetSession(language, filename, user) {
 	filename = filename ? filename : 'SERVICE'; // do get session here
 
 	$.ajax({
-		url: global.endpoints.session.prod,
+		url: global.endpoints.session.dev,
 		method: 'PUT',
 		cache: false,
 		// data: data,
@@ -49,7 +49,7 @@ export function SetSession(language, filename, user) {
  */
 export function GetSession(cb) {
 	$.ajax({
-		url: global.endpoints.session.prod,
+		url: global.endpoints.session.dev,
 		method: 'GET',
 		cache: false,
 		success: function(data, status) {
@@ -63,7 +63,7 @@ export function GetSession(cb) {
 
 export function HandleWebFacingLink(link) {
 
-	 window.open(global.paths.prodServletLink + link + "&turnCacheOff=" + (new Date()).getTime(), "appa", "scrollbars=yes,status=1,resizable=yes,menubar=0,screenX=0,screenY=0,left=0,top=0,width=" + (window.availWidth-10) + ",height=" + (window.availHeight-50));
+	 window.open(global.paths.devServletLink + link + "&turnCacheOff=" + (new Date()).getTime(), "appa", "scrollbars=yes,status=1,resizable=yes,menubar=0,screenX=0,screenY=0,left=0,top=0,width=" + (window.availWidth-10) + ",height=" + (window.availHeight-50));
 };
 
 export function HandlePopupLink(link, windowName, width, height) {
@@ -71,15 +71,15 @@ export function HandlePopupLink(link, windowName, width, height) {
 	windowName = windowName ? windowName : '';
 	width = width ? width : 1024;
 	height = height ? height : 768;
-	window.open(global.paths.prodServletLink + link, windowName, "height=" + height + ",width=" + width + ",resizeable=yes,menubar=0,toolbar=0,location=0,directories=0,scrollbars=1,status=0");
+	window.open(global.paths.devServletLink + link, windowName, "height=" + height + ",width=" + width + ",resizeable=yes,menubar=0,toolbar=0,location=0,directories=0,scrollbars=1,status=0");
 };
 
 export function HandleRegularLink(link) {
 
 	if (link.indexOf("react") != -1) {
-		window.location.href = global.paths.prod+link;
+		window.location.href = global.paths.dev+link;
 	} else {
-		window.location.href = global.paths.prodServletLink+link;
+		window.location.href = global.paths.devServletLink+link;
 	}
 
 };

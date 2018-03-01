@@ -28,35 +28,35 @@ global.paths = {
  */
 global.endpoints = {
     companies:  {
-        prod: global.paths.prod+'services/user/portal/companies',
+        prod: global.paths.dev+'services/user/portal/companies',
         dev: '/webservices/Companies.json'
     },
     accordion: {
-        prod: global.paths.prod+'services/user/portal/menu',
+        prod: global.paths.dev+'services/user/portal/menu',
         dev: '/webservices/FullMenu.json'
     },
     accountsPayable:  {
-        prod: global.paths.prod+'services/finance/accounts-payable',
+        prod: global.paths.dev+'services/finance/accounts-payable',
         dev: '/webservices/AccountsPayable.json'
     },
     cashDisbursement: {
-        prod: global.paths.prod+'services/finance/accounts-payable/cash-disbursement',
+        prod: global.paths.dev+'services/finance/accounts-payable/cash-disbursement',
         dev: '/webservices/AccountsPayableCashDisbursement.json'
     },
     summary: {
-        prod: global.paths.prod+'services/finance/accounts-payable/summary',
+        prod: global.paths.dev+'services/finance/accounts-payable/summary',
         dev: '/webservices/AccountsPayableSummary.json'
     },
     toolBox: {
-        prod: global.paths.prodReactLink+'webservices/AccountsPayableToolbox.json', /* TODO: Create data endpoint for this */
+        prod: global.paths.devReactLink+'webservices/AccountsPayableToolbox.json', /* TODO: Create data endpoint for this */
         dev: '/webservices/AccountsPayableToolbox.json'
     },
     sliding: {
-        prod: global.paths.prodReactLink+'webservices/AccountsPayableSlidingToolBox.json', /* TODO: Create data endpoint for this  */
+        prod: global.paths.devReactLink+'webservices/AccountsPayableSlidingToolBox.json', /* TODO: Create data endpoint for this  */
         dev: '/webservices/AccountsPayableSlidingToolBox.json'
     },
     session: {
-        prod: global.paths.prod+'services/user/session',
+        prod: global.paths.dev+'services/user/session',
         dev: '/webservices/Session.json'
     }
 };
@@ -79,3 +79,86 @@ global.colors =  [
     'rgb(194, 45, 213)',
     'rgb(90, 62, 200)'
 ];
+
+global.pages = {
+    AccountsPayable: {
+        widgets : [{
+            name: 'toolBox',
+            endpoint: global.endpoints.toolBox.dev
+        }, {
+            name: 'dataTable',
+            title: 'Accounts Payable',
+            endpoint: global.endpoints.accountsPayable.dev,
+            bootStrapClass : 'col-12',
+            options: {
+                sizePerPageList: [ {
+                text: '25', value: 25
+                }, {
+                text: '50', value: 50
+                }, {
+                text: '500', value: 500
+                }],
+                sizePerPage: 25
+            }
+        }, {
+            name: 'dataTable',
+            title: 'cashDisbursement',
+            endpoint: global.endpoints.cashDisbursement.dev,
+            bootStrapClass : 'col-lg-6 col-sm-12',
+            options: {}
+        }, {
+            name: 'dataChart',
+            title: 'accountsPayableChart',
+            endpoint: global.endpoints.cashDisbursement.dev,
+            bootStrapClass : 'col-lg-6 col-sm-12',
+            type: 'pie',
+            aggregateBy: 'type',
+            calculateBy: 'totalDue',
+            label: 'accountsPayableChart',
+            buildTable: true
+        }, {
+            name: 'dataTable',
+            title: 'Testing Table',
+            endpoint: global.endpoints.summary.dev,
+            bootStrapClass : 'col-lg-6 col-sm-12',
+            options: {}
+        }, {
+            name: 'slidingToolbox',
+            endpoint: global.endpoints.sliding.dev
+        }
+    ]},
+    Payroll: {
+        widgets : [{
+            name: 'dataTable',
+            title: 'Payroll',
+            endpoint: global.endpoints.accountsPayable.dev,
+            bootStrapClass : 'col-12',
+            options: {
+                sizePerPageList: [ {
+                text: '25', value: 25
+                }, {
+                text: '50', value: 50
+                }, {
+                text: '500', value: 500
+                }],
+                sizePerPage: 25
+            }
+        }, {
+            name: 'dataChart',
+            title: 'Payroll',
+            endpoint: global.endpoints.cashDisbursement.dev,
+            bootStrapClass : 'col-lg-6 col-sm-12',
+            type: 'pie',
+            aggregateBy: 'type',
+            calculateBy: 'totalDue',
+            label: 'accountsPayableChart',
+            buildTable: true
+        }, {
+            name: 'dataTable',
+            title: 'Payroll',
+            endpoint: global.endpoints.summary.dev,
+            bootStrapClass : 'col-lg-6 col-sm-12',
+            options: {}
+        }
+    ]}
+};
