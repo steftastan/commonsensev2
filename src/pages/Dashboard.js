@@ -41,6 +41,7 @@ export class Dashboard extends Component {
     };
 
     componentDidUpdate(prevProps, prevState) {
+
         const {match} = this.props;
         const id = match.params.code;
         var crumbs = {};
@@ -66,7 +67,7 @@ export class Dashboard extends Component {
     }
 
     render() {
-        var categoryName__text = (this.state.categoryName ? this.Localization(this.state.categoryName) : '');
+        var categoryName__text = (this.state.categoryName ? this.Localization(this.state.categoryName, this.props.language) : '');
         var breadcrumbs = (this.state.breadcrumbs ? this.state.breadcrumbs : '');
         var linkOnClick = {};
 
@@ -100,7 +101,7 @@ export class Dashboard extends Component {
 
         return (
             <div>
-                <BreadCrumbs breadcrumbs={this.state.breadcrumbs}/>
+                <BreadCrumbs breadcrumbs={this.state.breadcrumbs} language={this.props.language} />
                 <div className="container-fluid wrapper__content--categoryGrid">
                     {dashboardLinks}
                 </div>

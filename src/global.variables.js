@@ -55,7 +55,7 @@ global.endpoints = {
     },
     session: {
         prod: global.paths.dev+'services/user/session',
-        dev: null /* No need for session storage on dev */
+        dev: '/webservices/Session.json'
     }
 };
 

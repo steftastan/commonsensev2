@@ -26,36 +26,42 @@ import './global.variables.js';
  * @param user [String] the corresponding username
  */
 export function SetSession(language, filename, user) {
+	user = user ? user : 'ETASTAN';
+	filename = filename ? filename : 'SERVICE';
 
-	language = language ? language : GetLanguage(); //Get DefaultLanguage func
-	filename = filename ? filename : '';
-	user = user ? user : ''; //Get DefaultLanguage user
+	// var data = 'userId='+user+'&language='+language+'&fileName='+filename;
 
 	$.ajax({
 		url: global.endpoints.session.dev,
 		method: 'PUT',
 		cache: false,
-		data: {language: language, filename: filename, user: user},
+		// data: data,
+		data: JSON.stringify({ userId : user, language: language, fileName : filename}),
 		success: function(data, status) {
 			console.log(data);
+			window.location.reload();
+			// success = true;
+			// cb(success);
+			// console.log('Updated session info.');
 		},
 		error: function(xhr, status, err) {
-			console.error(xhr, err.toString());
+			// cb(success);
+			console.error(xhr, status, err.toString());
 		}
    });
+
 }
 
 /**
  * Function that gets session details
  */
-export function GetSession() {
-
+export function GetSession(cb) {
 	$.ajax({
 		url: global.endpoints.session.dev,
 		method: 'GET',
 		cache: false,
 		success: function(data, status) {
-			console.log(data);
+			cb(data);
 		},
 		error: function(xhr, status, err) {
 			console.error(xhr, err.toString());
@@ -83,13 +89,6 @@ export function HandleRegularLink(link) {
 
 };
 
-export function GetLanguage() {
-	// TODO: Switch this to either obtain from session or default to english
-    var defaultLanguage = 'en_CA';
-    return defaultLanguage;
-}
-
-
  /**
    * Retrieve and process data for any widget.
    * @param key [Integer] React's internal variable to identify items in an array.
@@ -108,7 +107,7 @@ export function GetLanguage() {
 
  /**
   * Localization function, takes in key and returns its matching test in the current active language.
-  * @param dictionary_entry [String], a string of code that represents the key in our translation object.
+  * @param entry [String], a string of code that represents the key in our translation object.
   * The formar per dictionary entry is as follows:
   *
   * "dashboard" : ["Dashboard", "Tableau de Bord"],
@@ -129,11 +128,11 @@ export function GetLanguage() {
   * 3) Print the variable__text as you normally would.
   *
   */
- export function Localization(entry) {
+ export function Localization(entry, lang) {
      var translation;
      var phrase;
 	 var dictionary_entry;
-     var defaultLang = GetLanguage();
+     var defaultLang = lang ? lang : 'en_CA';
 
      if (entry) {
 

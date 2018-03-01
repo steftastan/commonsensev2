@@ -61,10 +61,10 @@ export class DataTable extends Component {
                 sizePerPage: 10,  // which size per page you want to locate as default
                 pageStartIndex: 1, // where to start counting the pages
                 paginationSize: 5,  // the pagination bar size.
-                prePage: this.Localization('prev'), // Previous page button text
-                nextPage: this.Localization('next'), // Next page button text
-                firstPage: this.Localization('first'), // First page button text
-                lastPage: this.Localization('last'), // Last page button text
+                prePage: this.Localization('prev', this.props.language), // Previous page button text
+                nextPage: this.Localization('next', this.props.language), // Next page button text
+                firstPage: this.Localization('first', this.props.language), // First page button text
+                lastPage: this.Localization('last', this.props.language), // Last page button text
                 paginationShowsTotal: true,  // Accept bool or function
                 paginationPosition: 'top'  // default is bottom, top and both is all available
             };
@@ -88,7 +88,7 @@ export class DataTable extends Component {
                          * it triggers the code below, so a new "All" option will be added even if it already exists.
                          */
                         options.sizePerPageList['All'] = {
-                            text: this.Localization('all'), value: tableData.length
+                            text: this.Localization('all', this.props.language), value: tableData.length
                         };
                     }
                 }
@@ -103,8 +103,8 @@ export class DataTable extends Component {
 
             tableHeaders = dataColumns.map(function(item, key) {
                  filterBy = (dataColumns && (dataColumns.indexOf(item) !== -1)) ? { type: 'TextFilter' } : {};
-                 headerName__text = this.Localization(item);
-                 title__text = this.Localization(this.props.options.title);
+                 headerName__text = this.Localization(item, this.props.language);
+                 title__text = this.Localization(this.props.options.title, this.props.language);
                  return (
                      <TableHeaderColumn width='100' key={key} dataSort={true} filter={filterBy} isKey={key === 0 ? true : false} dataField={item}>{headerName__text}</TableHeaderColumn>
                  );

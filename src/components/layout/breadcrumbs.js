@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './../../global.variables.js';
 import $ from 'jquery';
 import { Link } from 'react-router-dom';
-import { Localization, WhichDevice, GetLanguage, GetCompany, GetSession, SetSession, HandleWebFacingLink, HandlePopupLink, HandleRegularLink } from './../../helper.functions.js';
+import { Localization, WhichDevice,  GetSession, SetSession, HandleWebFacingLink, HandlePopupLink, HandleRegularLink } from './../../helper.functions.js';
 
 /**
  * BREADCRUMBS LAYOUT COMPONENT
@@ -18,8 +18,6 @@ export class BreadCrumbs extends Component {
       super(props);
       this.Localization = Localization;
       this.WhichDevice = WhichDevice;
-      this.GetLanguage = GetLanguage;
-      this.GetCompany = GetCompany;
       this.SetSession = SetSession;
       this.HandleWebFacingLink = HandleWebFacingLink;
       this.HandlePopupLink = HandlePopupLink;
@@ -33,11 +31,11 @@ export class BreadCrumbs extends Component {
       this.buildCrumbs = this.buildCrumbs.bind(this);
       this.state = {
           open: true,
-          selectedLang: this.GetLanguage(),
+          selectedLang: this.props.language,
           breadcrumbs: [],
           trail: []
       };
-      this.defaultLang = this.GetLanguage;
+      this.defaultLang = this.props.language;
       this.openClassName = '';
       this.navButtonId = 'navButton';
       this.navButton = {};
@@ -102,7 +100,7 @@ export class BreadCrumbs extends Component {
 
         /* Grab the default language from the global variable and set it.  */
         if (this.langWrapper) {
-            selectedLang = document.getElementById(this.GetLanguage());
+            selectedLang = document.getElementById(this.props.language); // TODO CHANGE
             this.toggleLang(selectedLang, true, true);
         }
     }
@@ -163,7 +161,7 @@ export class BreadCrumbs extends Component {
         }];
 
         if (crumb.code !== 7) {
-            crumb.name = this.Localization(crumb.name);
+            crumb.name = this.Localization(crumb.name, this.props.language);
 
             if (crumb.hasOwnProperty('code') && !crumb.isPage) {
                 crumb['url'] = global.paths.devCategoryLinks+crumb.code;
@@ -294,7 +292,7 @@ export class BreadCrumbs extends Component {
     }
 
     render() {
-        var logout__text =  this.Localization('logout');
+        var logout__text =  this.Localization('logout', this.props.language);
 
         return (
             <section id="breadcrumbs" className="breadcrumbs">

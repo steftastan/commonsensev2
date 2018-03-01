@@ -114,19 +114,19 @@ export class AccountsPayable extends Component {
 
                         // if there are widgets of type data table
                         if (widget.name === 'dataTable') {
-                            this.widgets.push(<DataTable index={key} key={key} options={widget} results={result} />);
+                            this.widgets.push(<DataTable index={key} key={key} options={widget} results={result} language={this.props.language} />);
                         }
 
                         // if there are widgets of type graphic chart
                         if (widget.name === 'dataChart') {
-                            this.widgets.push(<DataChart index={key} key={key} options={widget} results={result} />);
+                            this.widgets.push(<DataChart index={key} key={key} options={widget} results={result} language={this.props.language}/>);
                         }
 
                         // if there is a toolbox
                         if (widget.name === 'toolBox') {
                             this.widgets.push(
                                 <div key={key} className="wrapper wrapper__content--widgetToolBox">
-                                    <ToolBox key={key} options={widget} results={result} />
+                                    <ToolBox key={key} options={widget} results={result} language={this.props.language}/>
                                 </div>
                             );
                         }
@@ -138,7 +138,8 @@ export class AccountsPayable extends Component {
                                     index={key}
                                     key={key}
                                     options={widget}
-                                    results={result} />
+                                    results={result}
+                                    language={this.props.language} />
                             );
                         }
                     }
@@ -167,10 +168,10 @@ export class AccountsPayable extends Component {
 
     render() {
         var content = (this.state.widgets && this.state.widgets.length ? <div>{this.state.widgets}</div> : <div className="spinner"></div>);
-        
+
         return (
             <div>
-                <BreadCrumbs breadcrumbs={this.props.page}>
+                <BreadCrumbs breadcrumbs={this.props.page} language={this.props.language}>
                     <div id="toolBoxHolder" className="toolBoxHolder"></div>
                 </BreadCrumbs>
                 {content}
