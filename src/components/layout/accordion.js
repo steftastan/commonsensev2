@@ -212,7 +212,7 @@ export class Section extends Component {
         event.preventDefault();
 
         if (event.target.hasAttribute("href")) {
-          window.location = event.target.href;
+          window.location.href = event.target.href;
         }
 
         if(this.state.open) {
