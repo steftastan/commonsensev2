@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import './global.variables.js';
+import './global.pages.js';
 import { Camelize, SetLanguage, SetCompany, Localization } from './helper.functions.js';
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
