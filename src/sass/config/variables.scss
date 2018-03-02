@@ -67,16 +67,16 @@ $orange-30: #F6851F;
 $gray-50: #787678;
 
 /* Darker accent colors */
-$green-50: #00884B;
+$green-60: #116639;
 $indigo-70: #473793;
-$magenta-60: #A91F62;
-$red-60: #AB2323;
-$lime-50: #5B8121;
+$magenta-70: #831b4c;
+$red-70: #83231e;
+$lime-60: #426200;
 $teal-50: #008673;
-$warmgray-60: #605757;
-$purple-60: #7732BB;
-$orange-40: #D97D27;
-$gray-60: #59585A;
+$warmgray-70: #4b4545;
+$purple-70: #71237c;
+$orange-50: #ad6418;
+$gray-70: #464646;
 
 
 /* Assigning colors to classes of the same name, as well as their hover version */
@@ -134,7 +134,7 @@ $gray-60: #59585A;
 }
 
 .category.green:hover {
-    background-color: $green-50;
+    background-color: $green-60;
 }
 
 .category.indigo:hover {
@@ -142,15 +142,15 @@ $gray-60: #59585A;
 }
 
 .category.magenta:hover {
-    background-color: $magenta-60;
+    background-color: $magenta-70;
 }
 
 .category.red:hover {
-    background-color: $red-60;
+    background-color: $red-70;
 }
 
 .category.lime:hover {
-    background-color: $lime-50;
+    background-color: $lime-60;
 }
 
 .category.teal:hover {
@@ -158,17 +158,17 @@ $gray-60: #59585A;
 }
 
 .category.warmgray:hover {
-    background-color: $warmgray-60;
+    background-color: $warmgray-70;
 }
 
 .category.purple:hover {
-    background-color: $purple-60;
+    background-color: $purple-70;
 }
 
 .category.orange:hover {
-    background-color: $orange-40;
+    background-color: $orange-50;
 }
 
 .category.gray:hover {
-    background-color: $gray-60;
+    background-color: $gray-70;
 }

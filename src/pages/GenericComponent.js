@@ -29,55 +29,7 @@ import { SlidingToolBox } from './../components/widgets/sliding-toolbox.js';
  *
  */
 
-const options = {
-    widgets : [{
-        name: 'toolBox',
-        endpoint: global.endpoints.toolBox.dev
-    }, {
-        name: 'dataTable',
-        endpoint: global.endpoints.accountsPayable.dev,
-        bootStrapClass : 'col-12',
-        options: {
-            sizePerPageList: [ {
-            text: '25', value: 25
-            }, {
-            text: '50', value: 50
-            }, {
-            text: '500', value: 500
-            }],
-            sizePerPage: 25
-        }
-    }, {
-        name: 'dataTable',
-        title: 'cashDisbursement',
-        endpoint: global.endpoints.cashDisbursement.dev,
-        bootStrapClass : 'col-lg-6 col-sm-12',
-        options: {}
-    }, {
-        name: 'dataChart',
-        title: 'accountsPayableChart',
-        endpoint: global.endpoints.cashDisbursement.dev,
-        bootStrapClass : 'col-lg-6 col-sm-12',
-        type: 'pie',
-        aggregateBy: 'type',
-        calculateBy: 'totalDue',
-        label: 'accountsPayableChart',
-        buildTable: true
-    }, {
-        name: 'dataTable',
-        title: 'Testing Table',
-        endpoint: global.endpoints.summary.dev,
-        bootStrapClass : 'col-lg-6 col-sm-12',
-        options: {}
-    }, {
-        name: 'slidingToolbox',
-        endpoint: global.endpoints.sliding.dev
-    }
-]};
-
-
-
-export class AccountsPayable extends Component {
+export class GenericComponent extends Component {
 
     constructor(props) {
       super(props);
@@ -103,9 +55,9 @@ export class AccountsPayable extends Component {
        /**
         * Begin the process of loading widgets after the component has finished mounting.
         */
-       if (prevState.loaded !== this.state.loaded) {
-           for (var i = 0; i < options.widgets.length; i++) {
-               this.GetWidget(i, options.widgets[i], function(key, result, widget) {
+       if (prevState.loaded !== this.state.loaded && this.props.options) {
+           for (var i = 0; i < this.props.options.widgets.length; i++) {
+               this.GetWidget(i, this.props.options.widgets[i], function(key, result, widget) {
 
                    if (result) {
                        /**
@@ -180,4 +132,4 @@ export class AccountsPayable extends Component {
     }
 };
 
-export default AccountsPayable;
+export default GenericComponent;

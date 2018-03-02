@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './../../global.variables.js';
 import $ from 'jquery';
 import { Link } from 'react-router-dom';
-import { Localization, WhichDevice,  GetSession, SetSession, HandleWebFacingLink, HandlePopupLink, HandleRegularLink } from './../../helper.functions.js';
+import { Localization, WhichDevice,  GetSession, SetLanguage, HandleWebFacingLink, HandlePopupLink, HandleRegularLink } from './../../helper.functions.js';
 
 /**
  * BREADCRUMBS LAYOUT COMPONENT
@@ -18,7 +18,7 @@ export class BreadCrumbs extends Component {
       super(props);
       this.Localization = Localization;
       this.WhichDevice = WhichDevice;
-      this.SetSession = SetSession;
+      this.SetLanguage = SetLanguage;
       this.HandleWebFacingLink = HandleWebFacingLink;
       this.HandlePopupLink = HandlePopupLink;
       this.HandleRegularLink = HandleRegularLink;
@@ -130,7 +130,7 @@ export class BreadCrumbs extends Component {
                     });
 
                     /* Language is saved to session here */
-                    this.SetSession(languages[i].id);
+                    this.SetLanguage(languages[i].id);
 
                     clickedLang = document.getElementById(languages[i].id);
                     if (!clickedLang.classList.contains(this.selectedClass)) {
@@ -157,27 +157,26 @@ export class BreadCrumbs extends Component {
         var crumbs = [{
             name:'Personal Preferences',
             code: 7,
-            url: global.paths.devCategoryLinks+'7'
+            url: global.paths.devBuildComponent+global.paths.devCategoryLinks+'7'
         }];
 
         if (crumb.code !== 7) {
             crumb.name = this.Localization(crumb.name, this.props.language);
 
             if (crumb.hasOwnProperty('code') && !crumb.isPage) {
-                crumb['url'] = global.paths.devCategoryLinks+crumb.code;
+                crumb['url'] = global.paths.devBuildComponent+global.paths.devCategoryLinks+crumb.code;
             } else if (crumb.hasOwnProperty('code') && crumb.isPage) {
-                crumbs.push({name: crumb.category, url: global.paths.devCategoryLinks+crumb.code});
+                crumbs.push({name: crumb.category, url: global.paths.devBuildComponent+global.paths.devCategoryLinks+crumb.code});
                 crumb['url'] = crumb.url;
             } else {
                 crumb['url'] = '#';
             }
-
             crumbs.push(crumb);
         }
 
-
         return trail = crumbs.map(function(item, key) {
             if (key > 0 && key < crumbs.length) caret = 'fa fa-caret-right';
+
             if (item.url.indexOf("GatewayServlet") !== -1) {
                 linkOnClick = this.HandleWebFacingLink.bind(this, item.url);
             }

@@ -22,46 +22,53 @@ import './global.variables.js';
 /**
  * Function that saves session details
  * @param language [String] the selected language
- * @param filename [String] the selected company
- * @param user [String] the corresponding username
  */
-export function SetSession(language, filename, user) {
-	user = user ? user : 'ETASTAN';
-	filename = filename ? filename : 'SERVICE';
-
-	// var data = 'userId='+user+'&language='+language+'&fileName='+filename;
-
+export function SetLanguage(language) {
 	$.ajax({
 		url: global.endpoints.session.dev,
 		method: 'PUT',
 		cache: false,
-		// data: data,
-		data: JSON.stringify({ userId : user, language: language, fileName : filename}),
+		data: JSON.stringify({language: language}),
 		success: function(data, status) {
-			console.log(data);
 			window.location.reload();
-			// success = true;
-			// cb(success);
-			// console.log('Updated session info.');
 		},
 		error: function(xhr, status, err) {
-			// cb(success);
 			console.error(xhr, status, err.toString());
 		}
    });
-
 }
+
+/**
+ * Function that saves session details
+ * @param fileName [String] the selected company
+ */
+export function SetCompany(fileName) {
+	$.ajax({
+		url: global.endpoints.session.dev,
+		method: 'PUT',
+		cache: false,
+		data: JSON.stringify({fileName: fileName}),
+		success: function(data, status) {
+			console.log(data);
+			//window.location.reload();
+		},
+		error: function(xhr, status, err) {
+			console.error(xhr, status, err.toString());
+		}
+   });
+}
+
 
 /**
  * Function that gets session details
  */
-export function GetSession(cb) {
+export function GetSession() {
 	$.ajax({
 		url: global.endpoints.session.dev,
 		method: 'GET',
 		cache: false,
 		success: function(data, status) {
-			cb(data);
+			console.log('data');
 		},
 		error: function(xhr, status, err) {
 			console.error(xhr, err.toString());
@@ -70,10 +77,12 @@ export function GetSession(cb) {
 }
 
 export function HandleWebFacingLink(link) {
+
 	 window.open(global.paths.devServletLink + link + "&turnCacheOff=" + (new Date()).getTime(), "appa", "scrollbars=yes,status=1,resizable=yes,menubar=0,screenX=0,screenY=0,left=0,top=0,width=" + (window.availWidth-10) + ",height=" + (window.availHeight-50));
 };
 
 export function HandlePopupLink(link, windowName, width, height) {
+
 	windowName = windowName ? windowName : '';
 	width = width ? width : 1024;
 	height = height ? height : 768;
@@ -81,6 +90,7 @@ export function HandlePopupLink(link, windowName, width, height) {
 };
 
 export function HandleRegularLink(link) {
+
 	if (link.indexOf("react") != -1) {
 		window.location.href = global.paths.dev+link;
 	} else {
@@ -95,14 +105,21 @@ export function HandleRegularLink(link) {
    * @param widget [Object] The widget's configuration as it appears in the options constant.
    * @param cb [Function] A call back function that allows us to return data within the scope of the asynchronous function.
    */
- export function GetWidget(key, widget, cb) {
-	 $.getJSON(widget.endpoint, function(data) {
-		 // Process data, some of it may be the value pertaining to a results property.
-		 // Additionally, some data may or be not already be in array format. We tranform it to ensure we always return an Array.
-		 data = data.hasOwnProperty('results') ? data.results : data;
-		 data = (!(data instanceof Array)) ?  Object.values(data) : data ;
-		 cb(key, data, widget);
-	 });
+export function GetWidget(key, widget, cb) {
+  	 /* Polyfill because IE does not support Object.values function */
+  	 const valuesPolyfill = function values (object) {
+  		 return Object.keys(object).map(key => object[key]);
+  	 };
+
+  	 const values = Object.values || valuesPolyfill;
+
+  	 $.getJSON(widget.endpoint, function(data) {
+  		 // Process data, some of it may be the value pertaining to a results property.
+  		 // Additionally, some data may or be not already be in array format. We tranform it to ensure we always return an Array.
+  		 data = data.hasOwnProperty('results') ? data.results : data;
+  		 data = (!(data instanceof Array)) ?  values(data) : data;
+  		 cb(key, data, widget);
+  	 });
 }
 
  /**
@@ -161,6 +178,7 @@ export function HandleRegularLink(link) {
   * Converts any given string to camelCase, in order to match tke
   * key values in the languages dictionary.
   * It also changes any ampersands to the literal word 'and'
+  * Replaces hyphens for spaces to allow  words to be camelcased.
   * Removes parentheses, hyphens, slashes and dots. If any more characters
   * need to be removed, add them inside the [brackets] in the second regular expression.
 	* @param firstLetterUpper {boolean} Flag that specifies if the first letter should be kept uppercase or not.
@@ -169,6 +187,7 @@ export function HandleRegularLink(link) {
  export function Camelize(str, firstLetterUpper) {
 	if (str.indexOf(' ') !== -1) str = str.toLowerCase();
     return str.replace(/&/g, "and")
+		.replace(/-/g, " ")
 		.replace(/[()-/.]/g, "")
 		.replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
 			if (index === 0 && !firstLetterUpper) {

@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import './global.variables.js';
-import { Camelize, GetSession, SetSession, Localization } from './helper.functions.js';
+import { Camelize, SetLanguage, SetCompany, Localization } from './helper.functions.js';
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Header } from './components/layout/header.js';
@@ -26,8 +26,8 @@ export class App extends Component {
     constructor(props) {
       super(props);
       this.componentList = [];
-      this.GetSession = GetSession;
-      this.SetSession = SetSession;
+      this.SetLanguage = SetLanguage;
+      this.SetCompany = SetCompany;
       this.Camelize = Camelize;
       this.Localization = Localization;
       this.updateCompany = this.updateCompany.bind(this);
@@ -137,13 +137,14 @@ export class App extends Component {
         });
 
         /* Update default company */
-        this.SetSession(null, this.defaultCompany.name, null);
+
+        this.SetCompany(e.target.value);
     }
 
     render() {
         var code;
         var links = {};
-        var page = [];
+        var componentName;
         var staticPages = [
             {component: Login, path: 'login'},
             {component: ChangePassword, path: 'change-password'},
@@ -182,36 +183,52 @@ export class App extends Component {
                     />);
 
                 if (item.sublinks && item.sublinks.length) {
-                    item.sublinks.map(function(comp, key) {
-                        var componentName =  this.Localization(comp.name, 'en_CA');
-                        console.log(componentName);
-                        /// get this workin on prod
-                        try {
-                            let Component = require('./pages/'+this.Camelize(componentName, true)+'.js').default;
-                            page = {
-                                code: item.code,
-                                category: item.name,
-                                name: comp.name,
-                                url: global.paths.dev+comp.url,
-                                isPage: true
-                            };
 
-                            this.routesToComponents.push(
-                                <Route
-                                    exact
-                                    key={key}
-                                    path={global.paths.dev+comp.url}
-                                    render={(props) => (
-                                        <Component {...props} page={page} company={this.state.defaultCompany} language={this.state.language}  />
-                                    )}
-                                />);
+                    item.sublinks.map(function(comp, key) {
+
+                        var options = {};
+                        var page = [];
+                        /**
+                         * We will build the components and point to the routes by
+                         * taking the info from the URL value, because it's the one
+                         * consistent piece of information in between language switches
+                         * and whatever name users want to give their links.
+                         */
+
+                        try {
+                            let Component = require('./pages/GenericComponent.js').default;
+                            componentName = comp.url.split(global.paths.devBuildComponent);
+                            if (componentName.length > 1) componentName = this.Camelize(componentName[1], true);
+                            if (global.pages[componentName]) {
+
+                                options = global.pages[componentName];
+
+                                page = {
+                                    code: item.code,
+                                    category: item.name,
+                                    name: comp.name,
+                                    url: comp.url,
+                                    isPage: true
+                                };
+
+                                this.routesToComponents.push(
+                                    <Route
+                                        exact
+                                        key={key}
+                                        path={global.paths.dev+comp.url}
+                                        render={(props) => (
+                                            <Component {...props} options={options} page={page} company={this.state.defaultCompany} language={this.state.language}  />
+                                        )}
+                                    />
+                                );
+
+                            }
+
                         } catch(err) {
                             /** Render dashboard in case of pages that don't exist yet
                              * TODO: Uncomment the console message to see a list components that still need to be created.
                              *
                              */
-
-                             //TODO:  routes failing on prod... probably because its creatin components w french names?
                              console.log('Failed to create a route for the Component: '+this.Camelize(comp.name, true));
                         }
 
