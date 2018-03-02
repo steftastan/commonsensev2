@@ -55,7 +55,7 @@ export class GenericComponent extends Component {
        /**
         * Begin the process of loading widgets after the component has finished mounting.
         */
-       if (prevState.loaded !== this.state.loaded) {
+       if (prevState.loaded !== this.state.loaded && this.props.options) {
            for (var i = 0; i < this.props.options.widgets.length; i++) {
                this.GetWidget(i, this.props.options.widgets[i], function(key, result, widget) {
 
@@ -119,7 +119,6 @@ export class GenericComponent extends Component {
     }
 
     render() {
-        console.log(this.props.options);
         var content = (this.state.widgets && this.state.widgets.length ? <div>{this.state.widgets}</div> : <div className="spinner"></div>);
 
         return (

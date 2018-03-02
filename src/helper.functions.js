@@ -22,19 +22,13 @@ import './global.variables.js';
 /**
  * Function that saves session details
  * @param language [String] the selected language
- * @param filename [String] the selected company
- * @param user [String] the corresponding username
  */
-export function SetSession(language, filename, user) {
-	user = user ? user : 'ETASTAN'; // do get session here
-	filename = filename ? filename : 'SERVICE'; // do get session here
-
+export function SetLanguage(language) {
 	$.ajax({
 		url: global.endpoints.session.dev,
 		method: 'PUT',
 		cache: false,
-		// data: data,
-		data: JSON.stringify({ userId : user, language: language, fileName : filename}),
+		data: JSON.stringify({language: language}),
 		success: function(data, status) {
 			window.location.reload();
 		},
@@ -45,15 +39,36 @@ export function SetSession(language, filename, user) {
 }
 
 /**
+ * Function that saves session details
+ * @param fileName [String] the selected company
+ */
+export function SetCompany(fileName) {
+	$.ajax({
+		url: global.endpoints.session.dev,
+		method: 'PUT',
+		cache: false,
+		data: JSON.stringify({fileName: fileName}),
+		success: function(data, status) {
+			console.log(data);
+			//window.location.reload();
+		},
+		error: function(xhr, status, err) {
+			console.error(xhr, status, err.toString());
+		}
+   });
+}
+
+
+/**
  * Function that gets session details
  */
-export function GetSession(cb) {
+export function GetSession() {
 	$.ajax({
 		url: global.endpoints.session.dev,
 		method: 'GET',
 		cache: false,
 		success: function(data, status) {
-			cb(data);
+			console.log('data');
 		},
 		error: function(xhr, status, err) {
 			console.error(xhr, err.toString());

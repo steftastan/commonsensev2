@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './../../global.variables.js';
 import $ from 'jquery';
 import { Link } from 'react-router-dom';
-import { Localization, WhichDevice,  GetSession, SetSession, HandleWebFacingLink, HandlePopupLink, HandleRegularLink } from './../../helper.functions.js';
+import { Localization, WhichDevice,  GetSession, SetLanguage, HandleWebFacingLink, HandlePopupLink, HandleRegularLink } from './../../helper.functions.js';
 
 /**
  * BREADCRUMBS LAYOUT COMPONENT
@@ -18,7 +18,7 @@ export class BreadCrumbs extends Component {
       super(props);
       this.Localization = Localization;
       this.WhichDevice = WhichDevice;
-      this.SetSession = SetSession;
+      this.SetLanguage = SetLanguage;
       this.HandleWebFacingLink = HandleWebFacingLink;
       this.HandlePopupLink = HandlePopupLink;
       this.HandleRegularLink = HandleRegularLink;
@@ -130,7 +130,7 @@ export class BreadCrumbs extends Component {
                     });
 
                     /* Language is saved to session here */
-                    this.SetSession(languages[i].id);
+                    this.SetLanguage(languages[i].id);
 
                     clickedLang = document.getElementById(languages[i].id);
                     if (!clickedLang.classList.contains(this.selectedClass)) {

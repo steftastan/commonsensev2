@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import './global.variables.js';
-import { Camelize, GetSession, SetSession, Localization } from './helper.functions.js';
+import { Camelize, SetLanguage, SetCompany, Localization } from './helper.functions.js';
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Header } from './components/layout/header.js';
@@ -26,8 +26,8 @@ export class App extends Component {
     constructor(props) {
       super(props);
       this.componentList = [];
-      this.GetSession = GetSession;
-      this.SetSession = SetSession;
+      this.SetLanguage = SetLanguage;
+      this.SetCompany = SetCompany;
       this.Camelize = Camelize;
       this.Localization = Localization;
       this.updateCompany = this.updateCompany.bind(this);
@@ -137,14 +137,13 @@ export class App extends Component {
         });
 
         /* Update default company */
-        this.SetSession(null, this.defaultCompany.name, null);
+
+        this.SetCompany(e.target.value);
     }
 
     render() {
         var code;
         var links = {};
-        var page = [];
-        var options = {};
         var componentName;
         var staticPages = [
             {component: Login, path: 'login'},
@@ -187,6 +186,8 @@ export class App extends Component {
 
                     item.sublinks.map(function(comp, key) {
 
+                        var options = {};
+                        var page = [];
                         /**
                          * We will build the components and point to the routes by
                          * taking the info from the URL value, because it's the one
@@ -195,9 +196,9 @@ export class App extends Component {
                          */
 
                         try {
+                            let Component = require('./pages/GenericComponent.js').default;
                             componentName = comp.url.split(global.paths.devBuildComponent);
                             if (componentName.length > 1) componentName = this.Camelize(componentName[1], true);
-                            let Component = require('./pages/GenericComponent.js').default;
                             if (global.pages[componentName]) {
 
                                 options = global.pages[componentName];
@@ -219,7 +220,8 @@ export class App extends Component {
                                             <Component {...props} options={options} page={page} company={this.state.defaultCompany} language={this.state.language}  />
                                         )}
                                     />
-                                );    
+                                );
+
                             }
 
                         } catch(err) {
@@ -227,7 +229,6 @@ export class App extends Component {
                              * TODO: Uncomment the console message to see a list components that still need to be created.
                              *
                              */
-                             console.log(err);
                              console.log('Failed to create a route for the Component: '+this.Camelize(comp.name, true));
                         }
 
