@@ -1,11 +1,12 @@
-// import { BrowserRouter } from 'react-router-dom';
-import { BrowserRouter, Router } from 'react-router-dom';
-import createBrowserHistory from 'history/createBrowserHistory';
+
+import "babel-polyfill";
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './css/App.css';
 import App from './App';
+import { BrowserRouter, Router } from 'react-router-dom';
+import createBrowserHistory from 'history/createBrowserHistory';
 import registerServiceWorker from './registerServiceWorker';
+import './css/App.css';
 
 ReactDOM.render((
     <BrowserRouter>

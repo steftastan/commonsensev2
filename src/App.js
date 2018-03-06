@@ -212,6 +212,8 @@ export class App extends Component {
                                     isPage: true
                                 };
 
+                                console.log(global.paths.dev+comp.url);
+
                                 this.routesToComponents.push(
                                     <Route
                                         exact
