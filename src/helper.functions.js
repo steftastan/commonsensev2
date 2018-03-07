@@ -1,15 +1,15 @@
-import React from 'react';
 import $ from 'jquery';
 import './global.languages.js';
 import './global.variables.js';
 
 /**
  * HELPER FUNCTION LIBRARY.
- * A library of globally-available functions that each perform very specific tasks.
- * Please thoroughly document every function that is added here, and keep
+ * A library of global functions dedicated to general tasks.
+ *
+ * Please document every new function that is added here, and keep
  * this use strictly for global helper functions only.
  *
- * What can be considered a global helper, ask yourself the following questions.
+ * What can be considered a global helper, ask yourself the following questions:
  *
  * 1) Does my code need to be used in two or more components of my application?
  * 2) Did I have to copy and paste a block of code onto another component?
@@ -20,7 +20,7 @@ import './global.variables.js';
  */
 
 /**
- * Function that saves session details
+ * Set the language of the user's choice.
  * @param language [String] the selected language
  */
 export function SetLanguage(language) {
@@ -39,7 +39,7 @@ export function SetLanguage(language) {
 }
 
 /**
- * Function that saves session details
+ * Update the company stored in the user's profile
  * @param fileName [String] the selected company
  */
 export function SetCompany(fileName) {
@@ -49,8 +49,7 @@ export function SetCompany(fileName) {
 		cache: false,
 		data: JSON.stringify({fileName: fileName}),
 		success: function(data, status) {
-			console.log(data);
-			//window.location.reload();
+			window.location.reload();
 		},
 		error: function(xhr, status, err) {
 			console.error(xhr, status, err.toString());
@@ -58,31 +57,14 @@ export function SetCompany(fileName) {
    });
 }
 
-
 /**
- * Function that gets session details
+ * These  functions allow us to handle links in various scenenarios
  */
-export function GetSession() {
-	$.ajax({
-		url: global.endpoints.session.dev,
-		method: 'GET',
-		cache: false,
-		success: function(data, status) {
-			console.log('data');
-		},
-		error: function(xhr, status, err) {
-			console.error(xhr, err.toString());
-		}
-   });
-}
-
 export function HandleWebFacingLink(link) {
-
 	 window.open(global.paths.devServletLink + link + "&turnCacheOff=" + (new Date()).getTime(), "appa", "scrollbars=yes,status=1,resizable=yes,menubar=0,screenX=0,screenY=0,left=0,top=0,width=" + (window.availWidth-10) + ",height=" + (window.availHeight-50));
 };
 
 export function HandlePopupLink(link, windowName, width, height) {
-
 	windowName = windowName ? windowName : '';
 	width = width ? width : 1024;
 	height = height ? height : 768;
@@ -90,23 +72,24 @@ export function HandlePopupLink(link, windowName, width, height) {
 };
 
 export function HandleRegularLink(link) {
-
-	if (link.indexOf("react") != -1) {
+	if (link.indexOf("react") !== -1) {
+		/* Build link with /react/ portion in the URL (for pages made with the new Common Sense) */
 		window.location.href = global.paths.dev+link;
 	} else {
+		/* Build link wih /servlet/ portion in the URL (Old Common Sense compatible)*/
 		window.location.href = global.paths.devServletLink+link;
 	}
-
 };
 
  /**
-   * Retrieve and process data for any widget.
+   * Retrieve and process data for any widget in the GenericComponent file.
    * @param key [Integer] React's internal variable to identify items in an array.
    * @param widget [Object] The widget's configuration as it appears in the options constant.
    * @param cb [Function] A call back function that allows us to return data within the scope of the asynchronous function.
    */
 export function GetWidget(key, widget, cb) {
-  	 /* Polyfill because IE does not support Object.values function */
+
+	 /* Polyfill because IE does not support Object.values function */
   	 const valuesPolyfill = function values (object) {
   		 return Object.keys(object).map(key => object[key]);
   	 };
@@ -178,11 +161,12 @@ export function GetWidget(key, widget, cb) {
   * Converts any given string to camelCase, in order to match tke
   * key values in the languages dictionary.
   * It also changes any ampersands to the literal word 'and'
-  * Replaces hyphens for spaces to allow  words to be camelcased.
-  * Removes parentheses, hyphens, slashes and dots. If any more characters
-  * need to be removed, add them inside the [brackets] in the second regular expression.
-	* @param firstLetterUpper {boolean} Flag that specifies if the first letter should be kept uppercase or not.
-	* If not specified, always lowercase the letter.
+  * Replaces hyphens for spaces to allow  words to be camelCased.
+  * Removes parentheses, hyphens, slashes and dots.
+  *
+  * @param firstLetterUpper {boolean} Flag that specifies if the first letter should be kept uppercase or not.
+  * This is useful in the scenario where we build our routes in App.js
+  * If not specified, always lowercase the letter.
   */
  export function Camelize(str, firstLetterUpper) {
 	if (str.indexOf(' ') !== -1) str = str.toLowerCase();
@@ -200,9 +184,10 @@ export function GetWidget(key, widget, cb) {
 
  /**
   * Replaces spaces and special characters to hyphens
-	* Use this to build URLs when necessary
+  * Use this to build URL friendly strings.
+  * Example input: "Hello this is a test"
+  * Example output: "hello-this-is-a-test"
   */
-
  export function Hyphenize(myStr) {
     myStr = myStr.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`);
     if(myStr.charAt(0) === '-') {
@@ -234,14 +219,6 @@ export function WhichDevice() {
 
     return device;
 }
-
-/**
- * Sets the default company in the global variable per result received from Web Service.
- */
-export function GetCompany() {
-    return global.company;
-}
-
 
 /**
  * Transform an RGB code to RGBA and apply the specified opacity

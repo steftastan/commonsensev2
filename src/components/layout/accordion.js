@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './../../global.variables.js';
-import { Localization, GetCompany, HandleWebFacingLink, HandlePopupLink, HandleRegularLink} from './../../helper.functions.js';
+import { Localization, HandleWebFacingLink, HandlePopupLink, HandleRegularLink} from './../../helper.functions.js';
 
 /**
  * ACCORDION/LEFT NAV COMPONENT
@@ -13,7 +13,6 @@ export class Accordion extends Component {
     constructor(props) {
       super(props);
       this.Localization = Localization;
-      this.GetCompany = GetCompany;
       this.filterLinkList = this.filterLinkList.bind(this);
       this.toggleElem = this.toggleElem.bind(this);
     }

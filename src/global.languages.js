@@ -1,3 +1,8 @@
+/** GLOBAL.LANGUAGES
+ * Use this file to translate any texts that don't
+ * already have a translation available in the DB.
+ */
+
 global.languages  = {
   "welcome": ["Welcome, ", "Bienvenue, "],
   "farewell": ["Goodbye", "Au revoir"],

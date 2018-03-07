@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './../../global.variables.js';
 import $ from 'jquery';
 import { Link } from 'react-router-dom';
-import { Localization, WhichDevice,  GetSession, SetLanguage, HandleWebFacingLink, HandlePopupLink, HandleRegularLink } from './../../helper.functions.js';
+import { Localization, WhichDevice, SetLanguage, HandleWebFacingLink, HandlePopupLink, HandleRegularLink } from './../../helper.functions.js';
 
 /**
  * BREADCRUMBS LAYOUT COMPONENT

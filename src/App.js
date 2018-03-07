@@ -53,9 +53,6 @@ export class App extends Component {
     }
 
     componentWillMount() {
-        var link;
-        var comps = {};
-        var routes = [];
 
         /** https://css-tricks.com/multiple-simultaneous-ajax-requests-one-callback-jquery/
           * Although the guide referenced above says these AJAX queries will
@@ -143,13 +140,11 @@ export class App extends Component {
     }
 
     render() {
-        var code;
-        var links = {};
+
         var componentName;
         var staticPages = [
             {component: Login, path: 'login'},
-            {component: ChangePassword, path: 'change-password'},
-            {component: Dashboard, path: 'dashboard'}
+            {component: ChangePassword, path: 'change-password'}
         ];
 
         /* Create routes to pages that aren't returned from the DB
@@ -167,6 +162,17 @@ export class App extends Component {
         if (this.state.routes && this.state.routes.length) {
 
             this.state.routes.map(function(item, key) {
+
+                /* Build a route to render the Personal Preferences page for a dashboard link with no param. */
+                 this.routesToComponents.push(
+                     <Route
+                         exact
+                         key={key}
+                         path={global.paths.devReactLink+global.paths.devCategoryLinks}
+                         render={(props) => (
+                             <Dashboard {...props} code={7} language={this.state.language} />
+                         )}
+                     />);
 
                 /**
                  * Build routes to the Dashboard component.
@@ -189,11 +195,28 @@ export class App extends Component {
 
                         var options = {};
                         var page = [];
+
                         /**
-                         * We will build the components and point to the routes by
-                         * taking the info from the URL value, because it's the one
-                         * consistent piece of information in between language switches
-                         * and whatever name users want to give their links.
+                         * BUILDING ROUTES FOR ALL COMMON SENSE PAGES.
+                         *
+                         * The following block of code performs 2 important tasks:
+                         *
+                         * 1) Creates a dynamic component by using data consumed from Web Service.
+                         * We determine what our Component (Common Sense Page should be called) by
+                         * extracting the name assigned to it in the URL field:
+                         * Example: Accounts Payable's React-friendly URL is "react/accounts-payable"
+                         * The variable componentName assumes the value of the URL after the slash.
+                         * Then we convert it to UpperCamelCase to help us baptize our Generic Component.
+                         *
+                         * NOTE: We have to add the extra step of switching this string to UpperCamelCase because
+                         * it's a ReactJS standard to use upper case names for components.
+                         *
+                         * 2) Build Routes for all our dynamic pages
+                         * React uses ReactRouter to service the site.
+                         * We use client-side routing to handle all the different URL's and have them be serviced by our index.html file.
+                         * NOTE: More info in the Facebook Create React App ReadMe:
+                         * https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#serving-apps-with-client-side-routing
+                         * Here we are building our Route and passing all the data props that the Generic Component needs to render the widgets.
                          */
 
                         try {
@@ -228,9 +251,8 @@ export class App extends Component {
                         } catch(err) {
                             /** Render dashboard in case of pages that don't exist yet
                              * TODO: Uncomment the console message to see a list components that still need to be created.
-                             *
+                             * console.log('Failed to create a route for the Component: '+this.Camelize(comp.name, true));
                              */
-                             console.log('Failed to create a route for the Component: '+this.Camelize(comp.name, true));
                         }
 
                     }, this);
