@@ -14,8 +14,6 @@ export class Header extends Component {
     }
 
     render() {
-
-        var icon;
         var defaultCompanyName = (this.props.defaultCompanyName ? this.props.defaultCompanyName : '');
         var commonSense = (this.props.defaultCompanyName ? 'CommonSense 2.0' : '');
 

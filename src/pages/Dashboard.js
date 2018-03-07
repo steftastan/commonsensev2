@@ -43,7 +43,7 @@ export class Dashboard extends Component {
     componentDidUpdate(prevProps, prevState) {
 
         const {match} = this.props;
-        const id = match.params.code;
+        const id = match.params.code || this.props.code;
         var crumbs = {};
 
         if (prevState.data !== this.state.data) {

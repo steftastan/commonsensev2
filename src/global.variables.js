@@ -23,9 +23,7 @@ global.paths = {
     prodBuildComponent: 'react/'
 };
 
-/*TODO: find a better way to reduce the effort required to switch between dev and prod environments
- * Like determine which environment to use based on the port number or something
- */
+/*TODO: find a better way to reduce the effort required to switch between dev and prod environments. */
 global.endpoints = {
     companies:  {
         prod: global.paths.dev+'services/user/portal/companies',

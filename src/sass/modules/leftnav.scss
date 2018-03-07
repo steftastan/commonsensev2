@@ -101,7 +101,7 @@
     position: relative;
     display: inline-block;
     vertical-align: middle;
-    background-color: $blue-90;
+    background-color: transparent;
     margin: 0 10px 0 0;
     font-size: 18px;
 }
@@ -246,12 +246,6 @@
 
     /* Hamburger button */
     .leftnav__hamburger {
-
-
-
-
-
-
         top: 32px;
         left: 0px;
         width: 50px;
@@ -281,7 +275,16 @@
     }
 
     .leftnav__section {
-       padding: 15px 10px;
+       padding: 12px 10px;
+       -webkit-transition: all 0.2s ease-in;
+       -moz-transition: all 0.2s ease-in;
+       -o-transition: all 0.2s ease-in;
+       -ms-transition: all 0.2s ease-in;
+       transition: all 0.2s ease-in;
+    }
+
+    .leftnav__section:hover {
+        background-color: $blue-70;
     }
 
     .leftnav__item {

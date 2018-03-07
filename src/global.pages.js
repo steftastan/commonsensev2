@@ -1,5 +1,6 @@
 global.pages = {
 
+    /* FINANCIALS - ACCOUNTS PAYABLE */
     AccountsPayable: {
         widgets : [{
             name: 'toolBox',
@@ -47,6 +48,7 @@ global.pages = {
         }
     ]},
 
+    /* FINANCIALS - PAYROLL */
     Payroll: {
         widgets : [{
             name: 'dataTable',
@@ -81,4 +83,5 @@ global.pages = {
             options: {}
         }
     ]}
+
 };

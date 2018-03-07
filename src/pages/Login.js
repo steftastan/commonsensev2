@@ -1,24 +1,12 @@
-import $ from 'jquery';
 import { Localization } from './../helper.functions.js';
 import React, { Component } from 'react';
 
-/** DASHBOARD
- */
-
-const options = {
-    breadcrumbs: [{
-        name:'login',
-        path:'/'
-    }]
-};
+/** LOGIN SCREEN */
 
 export class Login extends Component {
 
     constructor(props) {
       super(props);
-      this.state = {
-          dashboardLinks: {}
-      };
     }
 
     render() {
