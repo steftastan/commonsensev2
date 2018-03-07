@@ -308,7 +308,7 @@ export class BreadCrumbs extends Component {
                             <span id="fr_CA" className="rightnav__lang">FR</span>
                             </div>
                         </div>
-                        <Link className="rightnav__logout" to="/logout">{logout__text}</Link>
+                        <Link className="rightnav__logout" to="/commonsense">{logout__text}</Link>
                     </div>
                 </div>
             </section>

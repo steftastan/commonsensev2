@@ -101,15 +101,17 @@ export class DataTable extends Component {
 
             dataColumns = Object.keys(tableData[0]);
 
-            tableHeaders = dataColumns.map(function(item, key) {
-                 filterBy = (dataColumns && (dataColumns.indexOf(item) !== -1)) ? { type: 'TextFilter' } : {};
-                 headerName__text = this.Localization(item, this.props.language);
-                 title__text = this.Localization(this.props.options.title, this.props.language);
-                 return (
-                     <TableHeaderColumn width='100' key={key} dataSort={true} filter={filterBy} isKey={key === 0 ? true : false} dataField={item}>{headerName__text}</TableHeaderColumn>
-                 );
+            if (dataColumns.length) {
+                tableHeaders = dataColumns.map(function(item, key) {
+                    filterBy = (dataColumns && (dataColumns.indexOf(item) !== -1)) ? { type: 'TextFilter' } : {};
+                    headerName__text = this.Localization(item, this.props.language);
+                    title__text = this.Localization(this.props.options.title, this.props.language);
+                    return (
+                        <TableHeaderColumn width='100' key={key} dataSort={true} filter={filterBy} isKey={key === 0 ? true : false} dataField={item}>{headerName__text}</TableHeaderColumn>
+                    );
 
-             }, this);
+                }, this);
+            }
 
         }
 

@@ -25,7 +25,7 @@ export class DataChart extends Component {
     }
 
     /*
-     * Build data to build in the statistics chart.
+     * Build data to in the statistics chart.
      * Reference to this solution: https://stackoverflow.com/questions/21874436/summarize-and-group-json-object-in-jquery
      */
     processData() {

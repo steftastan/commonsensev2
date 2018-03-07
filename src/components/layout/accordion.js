@@ -17,14 +17,6 @@ export class Accordion extends Component {
       this.toggleElem = this.toggleElem.bind(this);
     }
 
-    componentWillMount() {
-        document.addEventListener('keyup', this.filterLinkList, false);
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener('keyup', this.filterLinkList, false);
-    }
-
     /**
      * logic behind showing or hiding the navigation elements when the search function is used
      * @param elem - an HTML element or array of HTML elements to be hidden and shown.
@@ -63,8 +55,11 @@ export class Accordion extends Component {
         }
     }
 
+    /**
+     * Logic for filtering the link list according to the search
+     * criteria entered by the user in the search box.
+     */
     filterLinkList() {
-        // Declare variables
         var inputBox, filter, ul, li, a, i, j;
         var result;
         var mainLinkClass = 'leftnav__child';
@@ -120,6 +115,16 @@ export class Accordion extends Component {
             }
         }
     }
+
+
+    componentWillMount() {
+        document.addEventListener('keyup', this.filterLinkList, false);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('keyup', this.filterLinkList, false);
+    }
+
 
     render() {
         var link = "";
@@ -196,12 +201,6 @@ export class Section extends Component {
           sectionClass: "leftnav__section",
           className: 'leftnav__item '
       };
-    }
-
-    getInitialState() {
-        return {
-            open: false
-        }
     }
 
     handleClick(event) {

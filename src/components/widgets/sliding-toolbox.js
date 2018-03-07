@@ -25,16 +25,6 @@ export class SlidingToolBox extends Component {
       };
     }
 
-    /*
-     * Add click listening feature to open and close the accordion.
-     */
-
-     componentDidMount() {
-         var button = document.getElementById(this.button);
-         button.addEventListener('mousedown', this.openToolBox, false);
-         document.addEventListener('mousedown', this.clickAnywhereToClose, false);
-     }
-
     openToolBox(e) {
         e.stopPropagation();
         var toolBox = document.getElementById(this.toolBox);
@@ -62,6 +52,15 @@ export class SlidingToolBox extends Component {
             this.openToolBox(event);
         }
     }
+
+    /*
+     * Add click listening feature to open and close the accordion.
+     */
+     componentDidMount() {
+         var button = document.getElementById(this.button);
+         button.addEventListener('mousedown', this.openToolBox, false);
+         document.addEventListener('mousedown', this.clickAnywhereToClose, false);
+     }
 
     render() {
         var links;

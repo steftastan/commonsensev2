@@ -43,6 +43,14 @@ export class GenericComponent extends Component {
       };
     }
 
+
+    /**
+     * Setting this flag to true allows the component to begin loading the components.
+     */
+    componentDidMount() {
+        this.setState({loaded:true});
+    }
+
     /**
      * Perform all ajax tasks here
      * Maybe update the state. in any case the widgets should render and data should be applied on componentDidUpdate
@@ -109,14 +117,6 @@ export class GenericComponent extends Component {
             }
         }
      }
-
-    /*
-     * Setting this flag to true allows the component to begin loading the components.
-     */
-    componentDidMount() {
-
-        this.setState({loaded:true});
-    }
 
     render() {
         var content = (this.state.widgets && this.state.widgets.length ? <div>{this.state.widgets}</div> : <div className="spinner"></div>);

@@ -78,74 +78,6 @@ export class ToolBox extends Component {
         }
     }
 
-    componentWillMount() {
-        /**
-         * Obtain ToolBox data in order to build navigation
-         */
-        var device = this.WhichDevice();
-
-        if (device !== 'mobile') {
-            this.menuClass = 'dropdown-submenu';
-            this.wrapperClass = 'navbar navbar-default navbar-fixed-top';
-            this.navClass = 'nav navbar-nav';
-            this.tbClass = 'dropdown-menu multi-level';
-        }
-
-        this.setState({toolBox: this.props.results, device: device});
-    }
-
-    componentDidMount() {
-        var navButton = document.getElementById(this.toolButtonId);
-        document.addEventListener('mousedown', this.clickAnywhereToClose, false);
-
-        /* Add click event to the tool box button on mobile */
-        navButton.addEventListener('mousedown', this.toggleNav, false);
-        this.toolBoxWrapper = document.getElementById(this.toolBoxId);
-
-        if (this.state.device === 'mobile') {
-            this.toolBoxWrapper.addEventListener('click', this.animateToolBox);
-        } else {
-
-            $(document).ready(function() {
-                $('.navbar a.toolBox__toggle').on('click', function(e) {
-                    var $el = $(this);
-                    var $parent = $(this).offsetParent();
-
-                    $(this).parent("li").toggleClass('open');
-                    if(!$parent.parent().hasClass('nav')) {
-                        $el.next().css({"top": $el[0].offsetTop, "left": $parent.outerWidth() - 4});
-                    }
-
-                    $('.nav li.open').not($(this).parents("li")).removeClass("open");
-
-                    return false;
-                });
-
-                $("#toolBox").detach().appendTo("#toolBoxHolder");
-            });
-
-            $(document).mouseup(function(e) {
-                var container = $(".navbar a.toolBox__toggle");
-
-                // if the target of the click isn't the container nor a descendant of the container
-                if (!container.is(e.target) && container.has(e.target).length === 0) {
-                    $('.nav li.open').removeClass("open");
-                }
-            });
-        }
-    }
-
-    componentDidUpdate() {
-        /**
-         * Add mouse events here to trigger animation.
-         */
-        this.toolBoxWrapper = document.getElementById(this.toolBoxId);
-
-        if (this.WhichDevice() === 'mobile') {
-            this.toolBoxWrapper.addEventListener('click', this.animateToolBox);
-        }
-    }
-
     /**
      * Function to animate the toolbox, recursively allows children to call this
      * function back to keep exploring children elements, regardless of depth.
@@ -219,6 +151,74 @@ export class ToolBox extends Component {
              if (oldGroup) {
                  oldGroup.classList.remove(this.inactive);
              }
+        }
+    }
+
+    componentWillMount() {
+        /**
+         * Obtain ToolBox data in order to build navigation
+         */
+        var device = this.WhichDevice();
+
+        if (device !== 'mobile') {
+            this.menuClass = 'dropdown-submenu';
+            this.wrapperClass = 'navbar navbar-default navbar-fixed-top';
+            this.navClass = 'nav navbar-nav';
+            this.tbClass = 'dropdown-menu multi-level';
+        }
+
+        this.setState({toolBox: this.props.results, device: device});
+    }
+
+    componentDidMount() {
+        var navButton = document.getElementById(this.toolButtonId);
+        document.addEventListener('mousedown', this.clickAnywhereToClose, false);
+
+        /* Add click event to the tool box button on mobile */
+        navButton.addEventListener('mousedown', this.toggleNav, false);
+        this.toolBoxWrapper = document.getElementById(this.toolBoxId);
+
+        if (this.state.device === 'mobile') {
+            this.toolBoxWrapper.addEventListener('click', this.animateToolBox);
+        } else {
+
+            $(document).ready(function() {
+                $('.navbar a.toolBox__toggle').on('click', function(e) {
+                    var $el = $(this);
+                    var $parent = $(this).offsetParent();
+
+                    $(this).parent("li").toggleClass('open');
+                    if(!$parent.parent().hasClass('nav')) {
+                        $el.next().css({"top": $el[0].offsetTop, "left": $parent.outerWidth() - 4});
+                    }
+
+                    $('.nav li.open').not($(this).parents("li")).removeClass("open");
+
+                    return false;
+                });
+
+                $("#toolBox").detach().appendTo("#toolBoxHolder");
+            });
+
+            $(document).mouseup(function(e) {
+                var container = $(".navbar a.toolBox__toggle");
+
+                // if the target of the click isn't the container nor a descendant of the container
+                if (!container.is(e.target) && container.has(e.target).length === 0) {
+                    $('.nav li.open').removeClass("open");
+                }
+            });
+        }
+    }
+
+    componentDidUpdate() {
+        /**
+         * Add mouse events here to trigger animation.
+         */
+        this.toolBoxWrapper = document.getElementById(this.toolBoxId);
+
+        if (this.WhichDevice() === 'mobile') {
+            this.toolBoxWrapper.addEventListener('click', this.animateToolBox);
         }
     }
 

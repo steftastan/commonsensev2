@@ -52,6 +52,17 @@ export class App extends Component {
       }
     }
 
+    /* Function that gets triggered when the company dropdown list is used to switch companies */
+    updateCompany(e) {
+        this.setState({
+            defaultCompany: e.target.value,
+            logoPath: global.paths.dev+'images/logo/'+e.target.value+'/logo.gif'
+        });
+
+        /* Update default company */
+        this.SetCompany(e.target.value);
+    }
+
     componentWillMount() {
 
         /** https://css-tricks.com/multiple-simultaneous-ajax-requests-one-callback-jquery/
@@ -126,17 +137,6 @@ export class App extends Component {
 
         }.bind(this));
 
-    }
-
-    updateCompany(e) {
-        this.setState({
-            defaultCompany: e.target.value,
-            logoPath: global.paths.dev+'images/logo/'+e.target.value+'/logo.gif'
-        });
-
-        /* Update default company */
-
-        this.SetCompany(e.target.value);
     }
 
     render() {
