@@ -1,4 +1,4 @@
-import './../global.variables.js';
+import './../global.config.js';
 import $ from 'jquery';
 import React, { Component } from 'react';
 import { GetWidget, ObjectToArray } from './../helper.functions.js';
@@ -64,8 +64,10 @@ export class GenericComponent extends Component {
         * Begin the process of loading widgets after the component has finished mounting.
         */
        if (prevState.loaded !== this.state.loaded && this.props.options) {
+
            for (var i = 0; i < this.props.options.widgets.length; i++) {
                this.GetWidget(i, this.props.options.widgets[i], function(key, result, widget) {
+
 
                    if (result) {
                        /**

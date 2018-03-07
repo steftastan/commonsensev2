@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './../../global.variables.js';
+import './../../global.config.js';
 import { Localization } from './../../helper.functions.js';
 
 /**

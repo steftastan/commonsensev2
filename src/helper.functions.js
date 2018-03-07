@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import './global.languages.js';
-import './global.variables.js';
+import './global.config.js';
 
 /**
  * HELPER FUNCTION LIBRARY.
@@ -25,7 +25,7 @@ import './global.variables.js';
  */
 export function SetLanguage(language) {
 	$.ajax({
-		url: global.endpoints.session.dev,
+		url: global.endpoints[global.env].SESSION,
 		method: 'PUT',
 		cache: false,
 		data: JSON.stringify({language: language}),
@@ -44,7 +44,7 @@ export function SetLanguage(language) {
  */
 export function SetCompany(fileName) {
 	$.ajax({
-		url: global.endpoints.session.dev,
+		url: global.endpoints[global.env].SESSION,
 		method: 'PUT',
 		cache: false,
 		data: JSON.stringify({fileName: fileName}),
@@ -61,23 +61,23 @@ export function SetCompany(fileName) {
  * These  functions allow us to handle links in various scenenarios
  */
 export function HandleWebFacingLink(link) {
-	 window.open(global.paths.devServletLink + link + "&turnCacheOff=" + (new Date()).getTime(), "appa", "scrollbars=yes,status=1,resizable=yes,menubar=0,screenX=0,screenY=0,left=0,top=0,width=" + (window.availWidth-10) + ",height=" + (window.availHeight-50));
+	 window.open(global.paths[global.env].SERVLET_LINK + link + "&turnCacheOff=" + (new Date()).getTime(), "appa", "scrollbars=yes,status=1,resizable=yes,menubar=0,screenX=0,screenY=0,left=0,top=0,width=" + (window.availWidth-10) + ",height=" + (window.availHeight-50));
 };
 
 export function HandlePopupLink(link, windowName, width, height) {
 	windowName = windowName ? windowName : '';
 	width = width ? width : 1024;
 	height = height ? height : 768;
-	window.open(global.paths.devServletLink + link, windowName, "height=" + height + ",width=" + width + ",resizeable=yes,menubar=0,toolbar=0,location=0,directories=0,scrollbars=1,status=0");
+	window.open(global.paths[global.env].SERVLET_LINK + link, windowName, "height=" + height + ",width=" + width + ",resizeable=yes,menubar=0,toolbar=0,location=0,directories=0,scrollbars=1,status=0");
 };
 
 export function HandleRegularLink(link) {
 	if (link.indexOf("react") !== -1) {
 		/* Build link with /react/ portion in the URL (for pages made with the new Common Sense) */
-		window.location.href = global.paths.dev+link;
+		window.location.href = global.paths[global.env].BASE_URL+link;
 	} else {
 		/* Build link wih /servlet/ portion in the URL (Old Common Sense compatible)*/
-		window.location.href = global.paths.devServletLink+link;
+		window.location.href = global.paths[global.env].SERVLET_LINK+link;
 	}
 };
 

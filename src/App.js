@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import './global.variables.js';
+import './global.config.js';
 import './global.pages.js';
 import { Camelize, SetLanguage, SetCompany, Localization } from './helper.functions.js';
 import React, { Component } from 'react';
@@ -56,7 +56,7 @@ export class App extends Component {
     updateCompany(e) {
         this.setState({
             defaultCompany: e.target.value,
-            logoPath: global.paths.dev+'images/logo/'+e.target.value+'/logo.gif'
+            logoPath: global.paths[global.env].BASE_URL+'images/logo/'+e.target.value+'/logo.gif'
         });
 
         /* Update default company */
@@ -79,8 +79,23 @@ export class App extends Component {
           *
           */
         $.when(
+
             $.ajax({
-                url: global.endpoints.accordion.dev,
+                url: global.endpoints[global.env].SESSION,
+                dataType: 'json',
+                cache: false,
+                success: function(data) {
+                    this.employeeName = data.userId;
+                    this.defaultCompany = data.fileName;
+                    this.language = data.language;
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.error(this.state.url, status, err.toString());
+                }.bind(this)
+            }),
+
+            $.ajax({
+                url: global.endpoints[global.env].ACCORDION,
                 dataType: 'json',
                 cache: false,
                 success: function(data) {
@@ -95,25 +110,11 @@ export class App extends Component {
             }),
 
             $.ajax({
-                url: global.endpoints.companies.dev,
+                url: global.endpoints[global.env].COMPANIES,
                 dataType: 'json',
                 cache: false,
                 success: function(data) {
                     this.companies = data;
-                }.bind(this),
-                error: function(xhr, status, err) {
-                    console.error(this.state.url, status, err.toString());
-                }.bind(this)
-            }),
-
-            $.ajax({
-                url: global.endpoints.session.dev,
-                dataType: 'json',
-                cache: false,
-                success: function(data) {
-                    this.employeeName = data.userId;
-                    this.defaultCompany = data.fileName;
-                    this.language = data.language;
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(this.state.url, status, err.toString());
@@ -131,7 +132,7 @@ export class App extends Component {
                     defaultCompany: this.defaultCompany,
                     language: this.language,
                     routes: this.routes,
-                    logoPath: global.paths.dev+'images/logo/'+this.defaultCompany+'/logo.gif'
+                    logoPath: global.paths[global.env].BASE_URL+'images/logo/'+this.defaultCompany+'/logo.gif'
                 });
 
 
@@ -155,7 +156,7 @@ export class App extends Component {
             this.routesToComponents.push(<Route
                 exact
                 key={key}
-                path={global.paths.devReactLink+comp.path}
+                path={global.paths[global.env].REACT_LINK+comp.path}
                 component={comp.component} />);
         }, this);
 
@@ -168,7 +169,7 @@ export class App extends Component {
                      <Route
                          exact
                          key={key}
-                         path={global.paths.devReactLink+global.paths.devCategoryLinks}
+                         path={global.paths[global.env].REACT_LINK+global.paths[global.env].DASHBOARD}
                          render={(props) => (
                              <Dashboard {...props} code={7} language={this.state.language} />
                          )}
@@ -183,7 +184,7 @@ export class App extends Component {
                     <Route
                         exact
                         key={key}
-                        path={global.paths.devReactLink+global.paths.devCategoryLinks+global.paths.devCategoryLinksParam}
+                        path={global.paths[global.env].REACT_LINK+global.paths[global.env].DASHBOARD+':code'}
                         render={(props) => (
                             <Dashboard {...props} company={this.state.defaultCompany} language={this.state.language} />
                         )}
@@ -221,7 +222,8 @@ export class App extends Component {
 
                         try {
                             let Component = require('./pages/GenericComponent.js').default;
-                            componentName = comp.url.split(global.paths.devBuildComponent);
+                            componentName = comp.url.split(global.paths[global.env].BUILD_ROUTE);
+
                             if (componentName.length > 1) componentName = this.Camelize(componentName[1], true);
                             if (global.pages[componentName]) {
 
@@ -239,7 +241,7 @@ export class App extends Component {
                                     <Route
                                         exact
                                         key={key}
-                                        path={global.paths.dev+comp.url}
+                                        path={global.paths[global.env].BASE_URL+comp.url}
                                         render={(props) => (
                                             <Component {...props} options={options} page={page} company={this.state.defaultCompany} language={this.state.language}  />
                                         )}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './../../global.variables.js';
+import './../../global.config.js';
 import $ from 'jquery';
 import { Link } from 'react-router-dom';
 import { Localization, WhichDevice, SetLanguage, HandleWebFacingLink, HandlePopupLink, HandleRegularLink } from './../../helper.functions.js';
@@ -153,20 +153,20 @@ export class BreadCrumbs extends Component {
         var trail = [];
         var caret = '';
         var linkOnClick = {};
+        var linkToCategory = global.paths[global.env].BUILD_ROUTE+global.paths[global.env].DASHBOARD;
 
         var crumbs = [{
-            name:'Personal Preferences',
+            name: this.Localization('personalPreferences', this.props.language),
             code: 7,
-            url: global.paths.devBuildComponent+global.paths.devCategoryLinks+'7'
+            url: linkToCategory+'7'
         }];
 
         if (crumb.code !== 7) {
             crumb.name = this.Localization(crumb.name, this.props.language);
-
             if (crumb.hasOwnProperty('code') && !crumb.isPage) {
-                crumb['url'] = global.paths.devBuildComponent+global.paths.devCategoryLinks+crumb.code;
+                crumb['url'] = linkToCategory+crumb.code;
             } else if (crumb.hasOwnProperty('code') && crumb.isPage) {
-                crumbs.push({name: crumb.category, url: global.paths.devBuildComponent+global.paths.devCategoryLinks+crumb.code});
+                crumbs.push({name: crumb.category, url: linkToCategory+crumb.code});
                 crumb['url'] = crumb.url;
             } else {
                 crumb['url'] = '#';

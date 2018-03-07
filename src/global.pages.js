@@ -1,14 +1,14 @@
-global.pages = {
+import './global.config.js';
 
-    /* FINANCIALS - ACCOUNTS PAYABLE */
+global.pages = {
     AccountsPayable: {
         widgets : [{
             name: 'toolBox',
-            endpoint: global.endpoints.toolBox.dev
+            endpoint: global.endpoints[global.env].ACCOUNTS_PAYABLE_TOOLBOX
         }, {
             name: 'dataTable',
             title: 'Accounts Payable',
-            endpoint: global.endpoints.accountsPayable.dev,
+            endpoint: global.endpoints[global.env].ACCOUNTS_PAYABLE,
             bootStrapClass : 'col-12',
             options: {
                 sizePerPageList: [ {
@@ -23,13 +23,13 @@ global.pages = {
         }, {
             name: 'dataTable',
             title: 'cashDisbursement',
-            endpoint: global.endpoints.cashDisbursement.dev,
+            endpoint: global.endpoints[global.env].ACCOUNTS_PAYABLE_CASH_DISBURSEMENT,
             bootStrapClass : 'col-lg-6 col-sm-12',
             options: {}
         }, {
             name: 'dataChart',
             title: 'accountsPayableChart',
-            endpoint: global.endpoints.cashDisbursement.dev,
+            endpoint: global.endpoints[global.env].ACCOUNTS_PAYABLE_CASH_DISBURSEMENT,
             bootStrapClass : 'col-lg-6 col-sm-12',
             type: 'pie',
             aggregateBy: 'type',
@@ -39,21 +39,20 @@ global.pages = {
         }, {
             name: 'dataTable',
             title: 'Testing Table',
-            endpoint: global.endpoints.summary.dev,
+            endpoint: global.endpoints[global.env].ACCOUNTS_PAYABLE_SUMMARY,
             bootStrapClass : 'col-lg-6 col-sm-12',
             options: {}
         }, {
             name: 'slidingToolbox',
-            endpoint: global.endpoints.sliding.dev
+            endpoint: global.endpoints[global.env].ACCOUNTS_PAYABLE_SLIDING
         }
     ]},
 
-    /* FINANCIALS - PAYROLL */
     Payroll: {
         widgets : [{
             name: 'dataTable',
             title: 'Payroll',
-            endpoint: global.endpoints.accountsPayable.dev,
+            endpoint: global.endpoints[global.env].PAYROLL,
             bootStrapClass : 'col-12',
             options: {
                 sizePerPageList: [ {
@@ -68,7 +67,7 @@ global.pages = {
         }, {
             name: 'dataChart',
             title: 'Payroll',
-            endpoint: global.endpoints.cashDisbursement.dev,
+            endpoint: global.endpoints[global.env].PAYROLL_SUMMARY,
             bootStrapClass : 'col-lg-6 col-sm-12',
             type: 'pie',
             aggregateBy: 'type',
@@ -78,10 +77,9 @@ global.pages = {
         }, {
             name: 'dataTable',
             title: 'Payroll',
-            endpoint: global.endpoints.summary.dev,
+            endpoint: global.endpoints[global.env].PAYROLL_SUMMARY,
             bootStrapClass : 'col-lg-6 col-sm-12',
             options: {}
         }
     ]}
-
 };

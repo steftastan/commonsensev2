@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './../../global.variables.js';
+import './../../global.config.js';
 import { Localization, HandleWebFacingLink, HandlePopupLink, HandleRegularLink} from './../../helper.functions.js';
 
 /**
@@ -136,7 +136,7 @@ export class Accordion extends Component {
             var commonSenseLinkList = this.props.links.results.map(function(item, key) {
                 link__text = this.Localization(item.name, this.props.language);
 
-                link = global.paths.devReactLink+global.paths.devCategoryLinks+(item.code);
+                link = global.paths[global.env].REACT_LINK+global.paths[global.env].DASHBOARD+(item.code);
 
                 return (
                     <Section key={key}>

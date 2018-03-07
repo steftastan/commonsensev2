@@ -1,4 +1,4 @@
-import './../global.variables.js';
+import './../global.config.js';
 import $ from 'jquery';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
@@ -28,7 +28,7 @@ export class Dashboard extends Component {
 
     componentDidMount() {
         $.ajax({
-            url: global.endpoints.accordion.dev,
+            url: global.endpoints[global.env].ACCORDION,
             dataType: 'json',
             cache: false,
             success: function(data) {

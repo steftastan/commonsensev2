@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 import $ from 'jquery';
-import './../../global.variables.js';
+import './../../global.config.js';
 import { Localization, ConvertRgbToRgba } from './../../helper.functions.js';
 import RC2 from 'react-chartjs2';
 
